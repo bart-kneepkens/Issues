@@ -12,6 +12,18 @@ struct Option {
     let text: String
 }
 
+extension Option {
+    init(_ dto: OptionDTO) {
+        self.id = dto.id ?? 0
+        self.text = dto.text ?? ""
+    }
+}
+
+struct OptionDTO: Decodable {
+    var id: Int?
+    var text: String?
+}
+
 struct Issue: Identifiable {
     let id: Int
     let title: String
@@ -19,6 +31,25 @@ struct Issue: Identifiable {
     let options: [Option]
 }
 
+extension Issue {
+    init(_ dto: IssueDTO) {
+        self.id = dto.id ?? 0
+        self.title = dto.title ?? ""
+        self.text = dto.text ?? ""
+        self.options = dto.options.map({ Option($0) })
+    }
+}
+
+struct IssueDTO: Decodable {
+    var id: Int?
+    var title: String?
+    var author: String?
+    var editor: String?
+    var pic1: String?
+    var pic2: String?
+    var text: String?
+    var options: [OptionDTO] = []
+}
 #if DEBUG
 extension Issue {
     static let filler: Issue = Issue(id: -1,

@@ -8,7 +8,5 @@
 import Combine
 
 class IssuesViewModel: ObservableObject {
-    @Published var issues: [Issue] = [
-        Issue.filler,
-    ]
+    @Published var issues: [Issue] = IssuesService.shared.issues
 }
