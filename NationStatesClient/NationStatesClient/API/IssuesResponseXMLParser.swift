@@ -1,5 +1,5 @@
 //
-//  IssuesXMLParser.swift
+//  IssuesResponseXMLParser.swift
 //  NationStatesClient
 //
 //  Created by Bart Kneepkens on 10/10/2020.
@@ -7,18 +7,19 @@
 
 import Foundation
 
-class IssuesXMLParser: NSObject {
+class IssuesResponseXMLParser: NationStatesXMLParser {
     var issues: [IssueDTO] = []
     private var currentIssue: IssueDTO = .init()
     private var currentOption: OptionDTO = .init()
     private var foundCharacters: String = ""
-}
-
-extension IssuesXMLParser {
     
+    override init(_ data: Data) {
+        super.init(data)
+        self.parser.delegate = self
+    }
 }
 
-extension IssuesXMLParser: XMLParserDelegate {    
+extension IssuesResponseXMLParser: XMLParserDelegate {
     func parser(_ parser: XMLParser, foundCharacters string: String) {
         foundCharacters += string.trimmingCharacters(in: .whitespacesAndNewlines)
     }

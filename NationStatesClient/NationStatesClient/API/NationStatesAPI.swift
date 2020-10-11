@@ -8,38 +8,54 @@
 import Foundation
 import Combine
 
-enum NationStates {
-    static let baseUrl = URL(string: "https://www.nationstates.net/cgi-bin/api.cgi")!
-}
+struct NationStatesAPI {}
 
 enum Shard: String {
     case issues
 }
 
-typealias IssuesResponse = [IssueDTO]
-
-extension NationStates {
-    static func url(for shards: [Shard], nation nationName: String) -> URL? {
-        guard var components = URLComponents(url: baseUrl, resolvingAgainstBaseURL: true) else { return nil }
+extension NationStatesAPI {
+    static func answerIssue(_ issue: Issue,
+                            option: Option,
+                            completionHandler: @escaping (Result<String, APIError>) -> Void) {
+        guard let nationName = Authorization.shared.nationName else { fatalError() }
+        guard let url = URLBuilder.answerIssueUrl(for: nationName, issue: issue, option: option) else { fatalError() }
+        guard let password = Authorization.shared.password else { fatalError() }
         
-        components.queryItems = [
-            URLQueryItem(name: "nation", value: nationName),
-            URLQueryItem(name: "q", value: shards.map({ $0.rawValue }).joined(separator: "+")),
-        ]
+        var request = URLRequest(url: url)
+        request.addValue(password, forHTTPHeaderField: "X-Password")
         
-        return components.url
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 403 {
+                    completionHandler(.failure(.unauthorized))
+                } else if httpResponse.statusCode == 409 {
+                    completionHandler(.failure(.conflict))
+                }
+            }
+            
+            guard error == nil else { return }
+            guard let data = data else { return }
+            
+            let parser = AnswerIssueResponseXMLParser(data)
+            parser.parse()
+            
+            guard parser.ok else { return }
+            completionHandler(.success(parser.text))
+        }
     }
 }
 
 enum APIError: Error {
-    case unauthorized
+    case unauthorized // 403
+    case conflict // 409
 }
 
-extension NationStates {
+extension NationStatesAPI {
     static func request(for shards: [Shard],
                         nation nationName: String,
-                        completionHandler: @escaping (Result<IssuesResponse, APIError>) -> Void) {
-        guard let url = NationStates.url(for: shards, nation: nationName) else { fatalError() }
+                        completionHandler: @escaping (Result<[IssueDTO], APIError>) -> Void) {
+        guard let url = URLBuilder.fetchIssuesUrl(for: nationName) else { fatalError() }
         guard let password = Authorization.shared.password else { fatalError() }
     
         var request = URLRequest(url: url)
@@ -51,17 +67,17 @@ extension NationStates {
                 if let httpResponse = response as? HTTPURLResponse {
                     if httpResponse.statusCode == 403 {
                         completionHandler(.failure(.unauthorized))
+                    } else if httpResponse.statusCode == 409 {
+                        completionHandler(.failure(.conflict))
                     }
                 }
                 guard error == nil else { return }
                 guard let data = data else { return }
-                let parser = XMLParser(data: data)
-                let delegate = IssuesXMLParser()
-                
-                parser.delegate = delegate
+
+                let parser = IssuesResponseXMLParser(data)
                 parser.parse()
                 
-                completionHandler(.success(delegate.issues))
+                completionHandler(.success(parser.issues))
         }.resume()
     }
 }

@@ -21,7 +21,7 @@ class IssuesService: IssuesProvider, ObservableObject {
     
     func fetchIssues() {
         guard let nationName = Authorization.shared.nationName else { return }
-        NationStates.request(for: [.issues], nation: nationName) { result in
+        NationStatesAPI.request(for: [.issues], nation: nationName) { result in
             switch result {
             case .success(let response): self.issues = response.map({ Issue($0) })
             default: break
