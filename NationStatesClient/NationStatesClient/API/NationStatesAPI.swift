@@ -11,7 +11,29 @@ import Combine
 struct NationStatesAPI {}
 
 enum Shard: String {
+    case ping
     case issues
+}
+
+extension NationStatesAPI {
+    static func ping(_ completionHandler: @escaping (Result<Never, APIError>) -> Void) {
+        guard let nationName = Authorization.shared.nationName else { fatalError() }
+        guard let url = URLBuilder.url(for: nationName, with: .ping) else { fatalError() }
+        guard let password = Authorization.shared.password else { fatalError() }
+        
+        var request = URLRequest(url: url)
+        request.addValue(password, forHTTPHeaderField: "X-Password")
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 403 {
+                    completionHandler(.failure(.unauthorized))
+                } else if httpResponse.statusCode == 409 {
+                    completionHandler(.failure(.conflict))
+                }
+            }
+        }
+    }
 }
 
 extension NationStatesAPI {
@@ -55,7 +77,7 @@ extension NationStatesAPI {
     static func request(for shards: [Shard],
                         nation nationName: String,
                         completionHandler: @escaping (Result<[IssueDTO], APIError>) -> Void) {
-        guard let url = URLBuilder.fetchIssuesUrl(for: nationName) else { fatalError() }
+        guard let url = URLBuilder.url(for: nationName, with: .issues) else { fatalError() }
         guard let password = Authorization.shared.password else { fatalError() }
     
         var request = URLRequest(url: url)

@@ -10,12 +10,12 @@ import Foundation
 struct URLBuilder {
     fileprivate static let baseUrl = URL(string: "https://www.nationstates.net/cgi-bin/api.cgi")!
     
-    static func fetchIssuesUrl(for nationName: String) -> URL? {
+    static func url(for nationName: String, with shard: Shard) -> URL? {
         guard var components = URLComponents(url: baseUrl, resolvingAgainstBaseURL: true) else { return nil }
         
         components.queryItems = [
             URLQueryItem(name: "nation", value: nationName),
-            URLQueryItem(name: "q", value: Shard.issues.rawValue),
+            URLQueryItem(name: "q", value: shard.rawValue),
         ]
         
         return components.url

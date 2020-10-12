@@ -30,6 +30,8 @@
 		AEFF41CF2533808F00206676 /* NationStatesXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41CE2533808F00206676 /* NationStatesXMLParser.swift */; };
 		AEFF41DA2533834300206676 /* AnswerIssueResponseXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41D92533834300206676 /* AnswerIssueResponseXMLParser.swift */; };
 		AEFF41E02533849D00206676 /* AnswerIssueResponseXMLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41DF2533849D00206676 /* AnswerIssueResponseXMLParserTests.swift */; };
+		AEFF41E82535033600206676 /* PingResponseXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41E72535033600206676 /* PingResponseXMLParser.swift */; };
+		AEFF41ED253503B600206676 /* PingResponseXMLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41EC253503B600206676 /* PingResponseXMLParserTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +81,8 @@
 		AEFF41CE2533808F00206676 /* NationStatesXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationStatesXMLParser.swift; sourceTree = "<group>"; };
 		AEFF41D92533834300206676 /* AnswerIssueResponseXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerIssueResponseXMLParser.swift; sourceTree = "<group>"; };
 		AEFF41DF2533849D00206676 /* AnswerIssueResponseXMLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerIssueResponseXMLParserTests.swift; sourceTree = "<group>"; };
+		AEFF41E72535033600206676 /* PingResponseXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingResponseXMLParser.swift; sourceTree = "<group>"; };
+		AEFF41EC253503B600206676 /* PingResponseXMLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingResponseXMLParserTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +117,7 @@
 				AEFF41C92532776500206676 /* URLBuilder.swift */,
 				AEFF41CE2533808F00206676 /* NationStatesXMLParser.swift */,
 				AE15A6E625321084004478C3 /* IssuesResponseXMLParser.swift */,
+				AEFF41E72535033600206676 /* PingResponseXMLParser.swift */,
 				AEFF41D92533834300206676 /* AnswerIssueResponseXMLParser.swift */,
 			);
 			path = API;
@@ -233,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				AEFF41DF2533849D00206676 /* AnswerIssueResponseXMLParserTests.swift */,
+				AEFF41EC253503B600206676 /* PingResponseXMLParserTests.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -380,6 +386,7 @@
 				AE15A6C325310372004478C3 /* SecureStorage.swift in Sources */,
 				AE8981AF2530FD8D00D62766 /* Authorization.swift in Sources */,
 				AE8764F8252FADEF00EFE031 /* IssueDetailViewModel.swift in Sources */,
+				AEFF41E82535033600206676 /* PingResponseXMLParser.swift in Sources */,
 				AE15A6CB25310387004478C3 /* UserDefaultsStorage.swift in Sources */,
 				AE8764A7252E6F2900EFE031 /* ContentView.swift in Sources */,
 				AE8764A5252E6F2900EFE031 /* NationStatesClientApp.swift in Sources */,
@@ -392,6 +399,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE8764B7252E6F2A00EFE031 /* NationStatesClientTests.swift in Sources */,
+				AEFF41ED253503B600206676 /* PingResponseXMLParserTests.swift in Sources */,
 				AEFF41E02533849D00206676 /* AnswerIssueResponseXMLParserTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

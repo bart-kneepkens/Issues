@@ -16,5 +16,6 @@ class IssueDetailViewModel: ObservableObject {
     
     func answer(with option: Option) {
         // TODO: Call API
+        IssuesService.shared.answer(issue: issue, option: option)
     }
 }

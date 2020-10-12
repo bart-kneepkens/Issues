@@ -18,6 +18,7 @@ class IssuesService: IssuesProvider, ObservableObject {
     static let shared = IssuesService()
     
     @Published var issues: [Issue] = []
+    @Published var answeredIssueResult: String?
     
     func fetchIssues() {
         guard let nationName = Authorization.shared.nationName else { return }
@@ -30,6 +31,11 @@ class IssuesService: IssuesProvider, ObservableObject {
     }
     
     func answer(issue: Issue, option: Option) {
-        
+        NationStatesAPI.answerIssue(issue, option: option) { result in
+            switch result {
+            case .success(let desc): self.answeredIssueResult = desc
+            default: break
+            }
+        }
     }
 }
