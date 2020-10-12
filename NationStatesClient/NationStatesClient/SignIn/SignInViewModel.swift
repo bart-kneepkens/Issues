@@ -20,7 +20,10 @@ class SignInViewModel: ObservableObject {
         
         NationStatesAPI.ping { result in
             switch result {
-            case .success(()): self.shouldNavigateForward = true
+            case .success(()):
+                DispatchQueue.main.async {
+                    self.shouldNavigateForward = true
+                }
             case .failure(let error): break
             }
         }
