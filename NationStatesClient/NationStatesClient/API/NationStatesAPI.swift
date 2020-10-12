@@ -16,7 +16,7 @@ enum Shard: String {
 }
 
 extension NationStatesAPI {
-    static func ping(_ completionHandler: @escaping (Result<Never, APIError>) -> Void) {
+    static func ping(_ completionHandler: @escaping (Result<(), APIError>) -> Void) {
         guard let nationName = Authorization.shared.nationName else { fatalError() }
         guard let url = URLBuilder.url(for: nationName, with: .ping) else { fatalError() }
         guard let password = Authorization.shared.password else { fatalError() }
@@ -32,7 +32,19 @@ extension NationStatesAPI {
                     completionHandler(.failure(.conflict))
                 }
             }
-        }
+            
+            guard error == nil else { return }
+            guard let data = data else { return }
+            
+            let parser = PingResponseXMLParser(data)
+            parser.parse()
+            
+            if parser.ping {
+                completionHandler(.success(()))
+            } else {
+                completionHandler(.failure(.pingFailed))
+            }
+        }.resume()
     }
 }
 
@@ -71,6 +83,7 @@ extension NationStatesAPI {
 enum APIError: Error {
     case unauthorized // 403
     case conflict // 409
+    case pingFailed
 }
 
 extension NationStatesAPI {

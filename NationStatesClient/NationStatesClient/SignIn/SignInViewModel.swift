@@ -9,13 +9,20 @@ import Foundation
 import Combine
 
 class SignInViewModel: ObservableObject {
-    @Published var nationName: String = ""
-    @Published var password: String = ""
+    @Published var nationName: String = "Elest Adra"
+    @Published var password: String = "Cacvu3-cekxed-coxpac"
+    
+    @Published var shouldNavigateForward: Bool = false
     
     func attemptSignIn() {
         Authorization.shared.nationName = nationName
         Authorization.shared.password = password
         
-        IssuesService.shared.fetchIssues()
+        NationStatesAPI.ping { result in
+            switch result {
+            case .success(()): self.shouldNavigateForward = true
+            case .failure(let error): break
+            }
+        }
     }
 }

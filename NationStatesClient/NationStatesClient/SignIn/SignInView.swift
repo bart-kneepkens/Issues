@@ -9,14 +9,6 @@ import SwiftUI
 
 struct SignInView: View {
     @ObservedObject var viewModel: SignInViewModel
-    @ObservedObject var issuesService = IssuesService.shared
-    
-    let canNavigateForwardBinding: Binding<Bool> = Binding {
-        IssuesService.shared.issues.count > 1
-    } set: { _ in
-        
-    }
-
     
     var body: some View {
         ZStack {
@@ -36,7 +28,7 @@ struct SignInView: View {
             }
             NavigationLink(
                 destination: IssuesView(viewModel: IssuesViewModel()).navigationBarBackButtonHidden(true),
-                isActive: canNavigateForwardBinding,
+                isActive: $viewModel.shouldNavigateForward,
                 label: {
                     EmptyView()
                 })
