@@ -25,13 +25,14 @@
 		AE8764F0252FADE400EFE031 /* IssueDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8764EF252FADE400EFE031 /* IssueDetailView.swift */; };
 		AE8764F8252FADEF00EFE031 /* IssueDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8764F7252FADEF00EFE031 /* IssueDetailViewModel.swift */; };
 		AE8981AA2530FBA000D62766 /* IssuesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8981A92530FBA000D62766 /* IssuesService.swift */; };
-		AE8981AF2530FD8D00D62766 /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8981AE2530FD8D00D62766 /* Authorization.swift */; };
+		AE8981AF2530FD8D00D62766 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8981AE2530FD8D00D62766 /* Authentication.swift */; };
 		AEFF41CA2532776500206676 /* URLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41C92532776500206676 /* URLBuilder.swift */; };
 		AEFF41CF2533808F00206676 /* NationStatesXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41CE2533808F00206676 /* NationStatesXMLParser.swift */; };
 		AEFF41DA2533834300206676 /* AnswerIssueResponseXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41D92533834300206676 /* AnswerIssueResponseXMLParser.swift */; };
 		AEFF41E02533849D00206676 /* AnswerIssueResponseXMLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41DF2533849D00206676 /* AnswerIssueResponseXMLParserTests.swift */; };
 		AEFF41E82535033600206676 /* PingResponseXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41E72535033600206676 /* PingResponseXMLParser.swift */; };
 		AEFF41ED253503B600206676 /* PingResponseXMLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41EC253503B600206676 /* PingResponseXMLParserTests.swift */; };
+		AEFF41F225364CA600206676 /* AuthorizationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41F125364CA600206676 /* AuthorizationHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,13 +77,14 @@
 		AE8764EF252FADE400EFE031 /* IssueDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailView.swift; sourceTree = "<group>"; };
 		AE8764F7252FADEF00EFE031 /* IssueDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailViewModel.swift; sourceTree = "<group>"; };
 		AE8981A92530FBA000D62766 /* IssuesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssuesService.swift; sourceTree = "<group>"; };
-		AE8981AE2530FD8D00D62766 /* Authorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authorization.swift; sourceTree = "<group>"; };
+		AE8981AE2530FD8D00D62766 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		AEFF41C92532776500206676 /* URLBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLBuilder.swift; sourceTree = "<group>"; };
 		AEFF41CE2533808F00206676 /* NationStatesXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationStatesXMLParser.swift; sourceTree = "<group>"; };
 		AEFF41D92533834300206676 /* AnswerIssueResponseXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerIssueResponseXMLParser.swift; sourceTree = "<group>"; };
 		AEFF41DF2533849D00206676 /* AnswerIssueResponseXMLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerIssueResponseXMLParserTests.swift; sourceTree = "<group>"; };
 		AEFF41E72535033600206676 /* PingResponseXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingResponseXMLParser.swift; sourceTree = "<group>"; };
 		AEFF41EC253503B600206676 /* PingResponseXMLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingResponseXMLParserTests.swift; sourceTree = "<group>"; };
+		AEFF41F125364CA600206676 /* AuthorizationHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 				AE15A6E625321084004478C3 /* IssuesResponseXMLParser.swift */,
 				AEFF41E72535033600206676 /* PingResponseXMLParser.swift */,
 				AEFF41D92533834300206676 /* AnswerIssueResponseXMLParser.swift */,
+				AEFF41F125364CA600206676 /* AuthorizationHeader.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -158,7 +161,7 @@
 				AE8764AD252E6F2A00EFE031 /* Info.plist */,
 				AE8764AA252E6F2A00EFE031 /* Preview Content */,
 				AE8981A92530FBA000D62766 /* IssuesService.swift */,
-				AE8981AE2530FD8D00D62766 /* Authorization.swift */,
+				AE8981AE2530FD8D00D62766 /* Authentication.swift */,
 			);
 			path = NationStatesClient;
 			sourceTree = "<group>";
@@ -384,8 +387,9 @@
 				AE8764E2252FA92C00EFE031 /* IssuesViewModel.swift in Sources */,
 				AE8764D3252FA4E500EFE031 /* SignInView.swift in Sources */,
 				AE15A6C325310372004478C3 /* SecureStorage.swift in Sources */,
-				AE8981AF2530FD8D00D62766 /* Authorization.swift in Sources */,
+				AE8981AF2530FD8D00D62766 /* Authentication.swift in Sources */,
 				AE8764F8252FADEF00EFE031 /* IssueDetailViewModel.swift in Sources */,
+				AEFF41F225364CA600206676 /* AuthorizationHeader.swift in Sources */,
 				AEFF41E82535033600206676 /* PingResponseXMLParser.swift in Sources */,
 				AE15A6CB25310387004478C3 /* UserDefaultsStorage.swift in Sources */,
 				AE8764A7252E6F2900EFE031 /* ContentView.swift in Sources */,

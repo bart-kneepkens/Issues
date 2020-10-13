@@ -15,17 +15,18 @@ class SignInViewModel: ObservableObject {
     @Published var shouldNavigateForward: Bool = false
     
     func attemptSignIn() {
-        Authorization.shared.nationName = nationName
-        Authorization.shared.password = password
-        
-        NationStatesAPI.ping { result in
+        NationStatesAPI.ping(nationName: nationName, password: password) { result in
             switch result {
-            case .success(()):
+            case .success(let authentication):
+//                tuple.
                 DispatchQueue.main.async {
                     self.shouldNavigateForward = true
                 }
+                
+                
             case .failure(let error): break
             }
         }
+    
     }
 }

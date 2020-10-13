@@ -1,5 +1,5 @@
 //
-//  Authorization.swift
+//  Authentication.swift
 //  NationStatesClient
 //
 //  Created by Bart Kneepkens on 09/10/2020.
@@ -7,19 +7,21 @@
 
 import Foundation
 
-enum AuthorizationMode {
-    case pin
-    case autologin
-    case password
+enum AuthenticationMode {
+    case pin(String)
+    case autologin(String)
+    case password(String)
 }
 
-class Authorization {
-    static let shared = Authorization()
+class Authentication {
+    static let shared = Authentication()
     private let storage: SecureStorage
     
     init() {
         self.storage = UserDefaultsStorage()
         self.nationName = storage.retrieve(key: StorageKey.nationName)
+        self.autoLogin = storage.retrieve(key: StorageKey.autoLogin)
+        self.pin = storage.retrieve(key: StorageKey.pin)
     }
     
     var nationName: String? {
@@ -28,30 +30,25 @@ class Authorization {
         }
     }
     
-    var password: String? {
-        didSet {
-            self.storage.store(password, key: StorageKey.password)
-        }
-    }
+    var password: String? // Not to be stored
     
-    var autoLoginKey: String? {
+    var autoLogin: String? {
         didSet {
-            self.storage.store(autoLoginKey, key: StorageKey.autoLoginKey)
+            self.storage.store(autoLogin, key: StorageKey.autoLogin)
         }
     }
     
     var pin: String? {
         didSet {
-            self.storage.store(autoLoginKey, key: StorageKey.pin)
+            self.storage.store(pin, key: StorageKey.pin)
         }
     }
 }
 
-extension Authorization {
+extension Authentication {
     struct StorageKey {
         static let nationName = "nationName"
-        static let password = "password"
-        static let autoLoginKey = "autoLoginKey"
+        static let autoLogin = "autoLogin"
         static let pin = "pin"
     }
 }

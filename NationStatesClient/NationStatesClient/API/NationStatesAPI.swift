@@ -16,21 +16,21 @@ enum Shard: String {
 }
 
 extension NationStatesAPI {
-    static func ping(_ completionHandler: @escaping (Result<(), APIError>) -> Void) {
-        guard let nationName = Authorization.shared.nationName else { fatalError() }
+    static func ping(nationName: String,
+                     password: String,
+                     _ completionHandler: @escaping (Result<(autologin: String?, pin: String?), APIError>) -> Void) {
         guard let url = URLBuilder.url(for: nationName, with: .ping) else { fatalError() }
-        guard let password = Authorization.shared.password else { fatalError() }
         
         var request = URLRequest(url: url)
         request.addValue(password, forHTTPHeaderField: "X-Password")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 403 {
-                    completionHandler(.failure(.unauthorized))
-                } else if httpResponse.statusCode == 409 {
-                    completionHandler(.failure(.conflict))
-                }
+            guard let httpResponse = response as? HTTPURLResponse else { return }
+            
+            if httpResponse.statusCode == 403 {
+                completionHandler(.failure(.unauthorized))
+            } else if httpResponse.statusCode == 409 {
+                completionHandler(.failure(.conflict))
             }
             
             guard error == nil else { return }
@@ -40,7 +40,9 @@ extension NationStatesAPI {
             parser.parse()
             
             if parser.ping {
-                completionHandler(.success(()))
+                let autoLogin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.autologin("").header)
+                let pin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.pin("").header)
+                completionHandler(.success((autoLogin, pin)))
             } else {
                 completionHandler(.failure(.pingFailed))
             }
@@ -52,9 +54,9 @@ extension NationStatesAPI {
     static func answerIssue(_ issue: Issue,
                             option: Option,
                             completionHandler: @escaping (Result<String, APIError>) -> Void) {
-        guard let nationName = Authorization.shared.nationName else { fatalError() }
+        guard let nationName = Authentication.shared.nationName else { fatalError() }
         guard let url = URLBuilder.answerIssueUrl(for: nationName, issue: issue, option: option) else { fatalError() }
-        guard let password = Authorization.shared.password else { fatalError() }
+        guard let password = Authentication.shared.password else { fatalError() }
         
         var request = URLRequest(url: url)
         request.addValue(password, forHTTPHeaderField: "X-Password")
@@ -91,10 +93,10 @@ extension NationStatesAPI {
                         nation nationName: String,
                         completionHandler: @escaping (Result<[IssueDTO], APIError>) -> Void) {
         guard let url = URLBuilder.url(for: nationName, with: .issues) else { fatalError() }
-        guard let password = Authorization.shared.password else { fatalError() }
+//        guard let password = AuthenticationMode.shared.password else { fatalError() }
     
         var request = URLRequest(url: url)
-        request.addValue(password, forHTTPHeaderField: "X-Password")
+//        request.addValue(password, forHTTPHeaderField: "X-Password")
         
         URLSession
             .shared
