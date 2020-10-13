@@ -32,7 +32,7 @@
 		AEFF41E02533849D00206676 /* AnswerIssueResponseXMLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41DF2533849D00206676 /* AnswerIssueResponseXMLParserTests.swift */; };
 		AEFF41E82535033600206676 /* PingResponseXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41E72535033600206676 /* PingResponseXMLParser.swift */; };
 		AEFF41ED253503B600206676 /* PingResponseXMLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41EC253503B600206676 /* PingResponseXMLParserTests.swift */; };
-		AEFF41F225364CA600206676 /* AuthorizationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41F125364CA600206676 /* AuthorizationHeader.swift */; };
+		AEFF41FD2536589A00206676 /* URLRequest+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41FC2536589A00206676 /* URLRequest+Extras.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,7 +84,7 @@
 		AEFF41DF2533849D00206676 /* AnswerIssueResponseXMLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerIssueResponseXMLParserTests.swift; sourceTree = "<group>"; };
 		AEFF41E72535033600206676 /* PingResponseXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingResponseXMLParser.swift; sourceTree = "<group>"; };
 		AEFF41EC253503B600206676 /* PingResponseXMLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingResponseXMLParserTests.swift; sourceTree = "<group>"; };
-		AEFF41F125364CA600206676 /* AuthorizationHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationHeader.swift; sourceTree = "<group>"; };
+		AEFF41FC2536589A00206676 /* URLRequest+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Extras.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +121,7 @@
 				AE15A6E625321084004478C3 /* IssuesResponseXMLParser.swift */,
 				AEFF41E72535033600206676 /* PingResponseXMLParser.swift */,
 				AEFF41D92533834300206676 /* AnswerIssueResponseXMLParser.swift */,
-				AEFF41F125364CA600206676 /* AuthorizationHeader.swift */,
+				AEFF41FC2536589A00206676 /* URLRequest+Extras.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -379,6 +379,7 @@
 				AEFF41DA2533834300206676 /* AnswerIssueResponseXMLParser.swift in Sources */,
 				AEFF41CF2533808F00206676 /* NationStatesXMLParser.swift in Sources */,
 				AE15A6D925310852004478C3 /* NationStatesAPI.swift in Sources */,
+				AEFF41FD2536589A00206676 /* URLRequest+Extras.swift in Sources */,
 				AE8764D8252FA4F100EFE031 /* SignInViewModel.swift in Sources */,
 				AE8764E7252FAA0C00EFE031 /* Issue.swift in Sources */,
 				AE8764DD252FA92300EFE031 /* IssuesView.swift in Sources */,
@@ -389,7 +390,6 @@
 				AE15A6C325310372004478C3 /* SecureStorage.swift in Sources */,
 				AE8981AF2530FD8D00D62766 /* Authentication.swift in Sources */,
 				AE8764F8252FADEF00EFE031 /* IssueDetailViewModel.swift in Sources */,
-				AEFF41F225364CA600206676 /* AuthorizationHeader.swift in Sources */,
 				AEFF41E82535033600206676 /* PingResponseXMLParser.swift in Sources */,
 				AE15A6CB25310387004478C3 /* UserDefaultsStorage.swift in Sources */,
 				AE8764A7252E6F2900EFE031 /* ContentView.swift in Sources */,

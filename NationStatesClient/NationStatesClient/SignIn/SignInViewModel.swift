@@ -18,7 +18,10 @@ class SignInViewModel: ObservableObject {
         NationStatesAPI.ping(nationName: nationName, password: password) { result in
             switch result {
             case .success(let authentication):
-//                tuple.
+                
+                Authentication.shared.autoLogin = authentication.autologin
+                Authentication.shared.pin = authentication.pin
+                
                 DispatchQueue.main.async {
                     self.shouldNavigateForward = true
                 }

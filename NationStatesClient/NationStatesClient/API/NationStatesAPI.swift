@@ -22,7 +22,7 @@ extension NationStatesAPI {
         guard let url = URLBuilder.url(for: nationName, with: .ping) else { fatalError() }
         
         var request = URLRequest(url: url)
-        request.addValue(password, forHTTPHeaderField: "X-Password")
+        request.setupPasswordAuthenticationHeader(password)
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard let httpResponse = response as? HTTPURLResponse else { return }
@@ -40,8 +40,8 @@ extension NationStatesAPI {
             parser.parse()
             
             if parser.ping {
-                let autoLogin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.autologin("").header)
-                let pin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.pin("").header)
+                let autoLogin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.autologin.header)
+                let pin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.pin.header)
                 completionHandler(.success((autoLogin, pin)))
             } else {
                 completionHandler(.failure(.pingFailed))
@@ -56,10 +56,9 @@ extension NationStatesAPI {
                             completionHandler: @escaping (Result<String, APIError>) -> Void) {
         guard let nationName = Authentication.shared.nationName else { fatalError() }
         guard let url = URLBuilder.answerIssueUrl(for: nationName, issue: issue, option: option) else { fatalError() }
-        guard let password = Authentication.shared.password else { fatalError() }
         
         var request = URLRequest(url: url)
-        request.addValue(password, forHTTPHeaderField: "X-Password")
+        request.setupAuthenticationHeaders()
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let httpResponse = response as? HTTPURLResponse {
@@ -93,10 +92,9 @@ extension NationStatesAPI {
                         nation nationName: String,
                         completionHandler: @escaping (Result<[IssueDTO], APIError>) -> Void) {
         guard let url = URLBuilder.url(for: nationName, with: .issues) else { fatalError() }
-//        guard let password = AuthenticationMode.shared.password else { fatalError() }
     
         var request = URLRequest(url: url)
-//        request.addValue(password, forHTTPHeaderField: "X-Password")
+        request.setupAuthenticationHeaders()
         
         URLSession
             .shared

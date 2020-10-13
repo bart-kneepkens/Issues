@@ -8,9 +8,17 @@
 import Foundation
 
 enum AuthenticationMode {
-    case pin(String)
-    case autologin(String)
-    case password(String)
+    case pin
+    case autologin
+    case password
+    
+    var header: String {
+        switch self {
+        case .password: return "X-Password"
+        case .autologin: return "X-Autologin"
+        case .pin: return "X-Pin"
+        }
+    }
 }
 
 class Authentication {
