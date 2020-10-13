@@ -77,7 +77,7 @@ extension NationStatesAPI {
             
             guard parser.ok else { return }
             completionHandler(.success(parser.text))
-        }
+        }.resume()
     }
 }
 

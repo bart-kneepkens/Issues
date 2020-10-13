@@ -8,9 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var viewModel = ContentViewViewModel()
+    
     var body: some View {
         NavigationView {
-            SignInView(viewModel: SignInViewModel())
+            if viewModel.canPerformSilentLogin {
+                IssuesView(viewModel: IssuesViewModel())
+            } else {
+                SignInView(viewModel: SignInViewModel())
+            }
         }
     }
 }

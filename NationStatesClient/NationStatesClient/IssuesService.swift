@@ -14,7 +14,6 @@ protocol IssuesProvider {
 }
 
 class IssuesService: IssuesProvider, ObservableObject {
-    
     static let shared = IssuesService()
     
     @Published var issues: [Issue] = []
@@ -24,7 +23,8 @@ class IssuesService: IssuesProvider, ObservableObject {
         guard let nationName = Authentication.shared.nationName else { return }
         NationStatesAPI.request(for: [.issues], nation: nationName) { result in
             switch result {
-            case .success(let response): self.issues = response.map({ Issue($0) })
+            case .success(let response):
+                self.issues = response.map({ Issue($0) })
             default: break
             }
         }
@@ -33,7 +33,9 @@ class IssuesService: IssuesProvider, ObservableObject {
     func answer(issue: Issue, option: Option) {
         NationStatesAPI.answerIssue(issue, option: option) { result in
             switch result {
-            case .success(let desc): self.answeredIssueResult = desc
+            case .success(let desc):
+                self.answeredIssueResult = desc
+                self.issues = self.issues.filter({ $0.id != issue.id })
             default: break
             }
         }

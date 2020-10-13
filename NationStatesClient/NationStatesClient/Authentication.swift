@@ -32,6 +32,10 @@ class Authentication {
         self.pin = storage.retrieve(key: StorageKey.pin)
     }
     
+    var canPerformSilentLogin: Bool {
+        return nationName != nil && (autoLogin != nil || pin != nil)
+    }
+    
     var nationName: String? {
         didSet {
             self.storage.store(nationName, key: StorageKey.nationName)
