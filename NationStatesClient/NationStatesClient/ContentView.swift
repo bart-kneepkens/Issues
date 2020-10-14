@@ -9,13 +9,18 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var viewModel = ContentViewViewModel()
+    var issuesService = IssuesService()
     
     var body: some View {
         NavigationView {
             if viewModel.canPerformSilentLogin {
-                IssuesView(viewModel: IssuesViewModel())
+                IssuesView(viewModel: IssuesViewModel(service: self.issuesService))
             } else {
-                SignInView(viewModel: SignInViewModel())
+                SignInView(viewModel: SignInViewModel(service: self.issuesService))
+            }
+        }.onAppear {
+            if viewModel.canPerformSilentLogin {
+                self.issuesService.fetchIssues()
             }
         }
     }

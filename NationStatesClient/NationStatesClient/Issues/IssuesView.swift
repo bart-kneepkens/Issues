@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct IssuesView: View {
-    @ObservedObject var viewModel: IssuesViewModel
+    @StateObject var viewModel: IssuesViewModel
     
     var body: some View {
         List(viewModel.issues, id: \.id) { issue in
-            NavigationLink(issue.title, destination: IssueDetailView(viewModel: IssueDetailViewModel(issue)))
-        }.navigationTitle("Issues")
+            NavigationLink(issue.title, destination: IssueDetailView(viewModel: IssueDetailViewModel(issue, service: viewModel.service)))
+        }
+        .navigationTitle("Issues")
     }
 }
 
 struct IssuesView_Previews: PreviewProvider {
-    static var viewModel = IssuesViewModel()
+    static var viewModel = IssuesViewModel(service: IssuesService())
     
     static var previews: some View {
         NavigationView {

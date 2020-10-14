@@ -10,16 +10,14 @@ import Combine
 
 class IssuesViewModel: ObservableObject {
     @Published var issues: [Issue] = []
+    private(set) var service: IssuesService
     
     var cancellable: Cancellable?
     
-    init() {
-        self.cancellable = IssuesService.shared.$issues
+    init(service: IssuesService) {
+        self.service = service
+        self.cancellable = service.$issues
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { serviceIssues in
-                self.issues = serviceIssues
-            })
-        
-        IssuesService.shared.fetchIssues()
+            .assign(to: \.issues, on: self)
     }
 }
