@@ -15,16 +15,22 @@ struct IssueDetailView: View {
         let shouldRenderCompletedView = viewModel.answeredIssueResult != nil
         
         ZStack {
-            ScrollView {
-                Text(viewModel.issue.text)
-                ForEach(viewModel.issue.options, id: \.id) { option in
-                    Divider()
-                    Button(action: {
-                        viewModel.answer(with: option)
-                    }, label: {
-                        Text(option.text).font(.callout)
-                    }).buttonStyle(PlainButtonStyle())
-                }.padding(.horizontal)
+            VStack {
+                List {
+                    VStack {
+                        Text(viewModel.issue.title).font(.headline)
+                        Text(viewModel.issue.text)
+                    }.padding(.horizontal)
+                    ForEach(viewModel.issue.options, id: \.id) { option in
+                    Section {
+                        Button(action: {
+                            viewModel.answer(with: option)
+                        }, label: {
+                            Text(option.text).font(.callout)
+                        }).buttonStyle(PlainButtonStyle())
+                    }
+                    }
+                }.listStyle(InsetGroupedListStyle())
             }
             
             if shouldRenderCompletedView {
@@ -46,7 +52,7 @@ struct IssueDetailView: View {
                 }
             }
         }
-        .navigationTitle(viewModel.issue.title)
+        .navigationTitle("Issue #\(viewModel.issue.id)")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
