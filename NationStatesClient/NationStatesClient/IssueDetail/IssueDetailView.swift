@@ -17,18 +17,19 @@ struct IssueDetailView: View {
         ZStack {
             VStack {
                 List {
-                    VStack {
-                        Text(viewModel.issue.title).font(.headline)
-                        Text(viewModel.issue.text)
-                    }.padding(.horizontal)
-                    ForEach(viewModel.issue.options, id: \.id) { option in
                     Section {
-                        Button(action: {
-                            viewModel.answer(with: option)
-                        }, label: {
-                            Text(option.text).font(.callout)
-                        }).buttonStyle(PlainButtonStyle())
+                        Text(viewModel.issue.title).font(.headline).multilineTextAlignment(.center)
+                        Text(viewModel.issue.text)
                     }
+                    
+                    ForEach(viewModel.issue.options, id: \.id) { option in
+                        Section {
+                            Button(action: {
+                                viewModel.answer(with: option)
+                            }, label: {
+                                Text(option.text).font(.callout)
+                            }).buttonStyle(PlainButtonStyle())
+                        }
                     }
                 }.listStyle(InsetGroupedListStyle())
             }
@@ -52,7 +53,7 @@ struct IssueDetailView: View {
                 }
             }
         }
-        .navigationTitle("Issue #\(viewModel.issue.id)")
+        .navigationTitle("Elest Adra Issue #\(viewModel.issue.id)")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
