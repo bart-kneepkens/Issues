@@ -13,6 +13,9 @@ class SignInViewModel: ObservableObject {
     @Published var password: String = "Cacvu3-cekxed-coxpac"
     @Published var shouldNavigateForward: Bool = false
     
+    @Published var signingIn = false
+    @Published var signInError: Error?
+    
     var issuesService: IssuesService
     
     init(service: IssuesService) {
@@ -20,23 +23,31 @@ class SignInViewModel: ObservableObject {
     }
     
     func attemptSignIn() {
+        self.signingIn = true
         NationStatesAPI.ping(nationName: nationName, password: password) { result in
-            switch result {
-            case .success(let authentication):
-                
-                Authentication.shared.nationName = self.nationName
-                Authentication.shared.autoLogin = authentication.autologin
-                Authentication.shared.pin = authentication.pin
-                
-                self.issuesService.fetchIssues()
-                
-                DispatchQueue.main.async {
-                    self.shouldNavigateForward = true
+            DispatchQueue.main.async {
+                self.signingIn = false
+                switch result {
+                case .success(let authentication):
+                    
+                    Authentication.shared.nationName = self.nationName
+                    Authentication.shared.autoLogin = authentication.autologin
+                    Authentication.shared.pin = authentication.pin
+                    
+                    self.issuesService.fetchIssues()
+                    
+//                    DispatchQueue.main.async {
+                        self.shouldNavigateForward = true
+//                    }
+                    
+                    
+                case .failure(let error):
+//                    DispatchQueue.main.async {
+                        self.signInError = error
+//                    }
                 }
-                
-                
-            case .failure(_): break
             }
+            
         }
     
     }
