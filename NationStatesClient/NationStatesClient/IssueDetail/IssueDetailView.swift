@@ -18,8 +18,12 @@ struct IssueDetailView: View {
             VStack {
                 List {
                     Section {
-                        Text(viewModel.issue.title).font(.headline).multilineTextAlignment(.center)
-                        Text(viewModel.issue.text)
+                        VStack {
+                            Text(viewModel.issue.title)
+                                .font(.title3)
+                            RemoteImage(url: URLBuilder.imageUrl(for: viewModel.issue.imageName)).aspectRatio(contentMode: .fit)
+                            Text(viewModel.issue.text)
+                        }
                     }
                     
                     ForEach(viewModel.issue.options, id: \.id) { option in

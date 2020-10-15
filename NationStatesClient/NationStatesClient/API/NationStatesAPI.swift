@@ -15,6 +15,13 @@ enum Shard: String {
     case issues
 }
 
+enum APIError: Error {
+    case unauthorized // 403
+    case conflict // 409
+    case pingFailed
+}
+
+
 extension NationStatesAPI {
     static func ping(nationName: String,
                      password: String,
@@ -81,11 +88,17 @@ extension NationStatesAPI {
     }
 }
 
-enum APIError: Error {
-    case unauthorized // 403
-    case conflict // 409
-    case pingFailed
+extension NationStatesAPI {
+    static func fetchImageData(_ name: String, completionHandler: @escaping (Result<Data?, APIError>) -> Void) {
+        guard let url = URLBuilder.imageUrl(for: name) else { return }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard error == nil else { return }
+            completionHandler(.success(data))
+        }
+    }
 }
+
 
 extension NationStatesAPI {
     static func request(for shards: [Shard],

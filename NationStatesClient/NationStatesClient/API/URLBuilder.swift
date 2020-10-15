@@ -33,4 +33,8 @@ struct URLBuilder {
         
         return components.url
     }
+    
+    static func imageUrl(for imageName: String) -> URL? {
+        return URL(string: "https://www.nationstates.net/images/newspaper/\(imageName)-1.jpg")
+    }
 }
