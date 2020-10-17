@@ -42,7 +42,7 @@ extension IssuesResponseXMLParser: XMLParserDelegate {
         case "TITLE":
             currentIssue.title = foundCharacters
         case "TEXT":
-            currentIssue.text = foundCharacters
+            currentIssue.text = foundCharacters.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil) // Remove HTML tags for now
         case "AUTHOR":
             currentIssue.author = foundCharacters
         case "EDITOR":
@@ -52,7 +52,7 @@ extension IssuesResponseXMLParser: XMLParserDelegate {
         case "PIC2":
             currentIssue.pic2 = foundCharacters
         case "OPTION":
-            currentOption.text = foundCharacters
+            currentOption.text = foundCharacters.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil) // Remove HTML tags for now
             currentIssue.options.append(currentOption)
             currentOption = .init()
         case "ISSUE":
