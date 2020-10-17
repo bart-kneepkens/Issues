@@ -9,12 +9,12 @@ import SwiftUI
 
 struct RemoteImage: View {
     private enum LoadState {
-        case loading, success, failure
+        case empty, success, failure
     }
     
     private class Loader: ObservableObject {
         var data = Data()
-        var state = LoadState.loading
+        var state = LoadState.empty
         
         init(url: URL?) {
             guard let parsedURL = url else {
@@ -37,32 +37,18 @@ struct RemoteImage: View {
     }
     
     @StateObject private var loader: Loader
-    var loading: Image
     var failure: Image
     
     var body: some View {
-        selectImage()
-            .resizable()
-    }
-    
-    init(url: URL?, loading: Image = Image(systemName: "photo"), failure: Image = Image(systemName: "multiply.circle")) {
-        _loader = StateObject(wrappedValue: Loader(url: url))
-        self.loading = loading
-        self.failure = failure
-    }
-    
-    private func selectImage() -> Image {
-        switch loader.state {
-        case .loading:
-            return loading
-        case .failure:
-            return failure
-        default:
-            if let image = UIImage(data: loader.data) {
-                return Image(uiImage: image)
-            } else {
-                return failure
-            }
+        let uiImage = UIImage(data: loader.data)
+        
+        if loader.state == .success && uiImage != nil {
+            Image(uiImage: uiImage!).resizable()
         }
+    }
+    
+    init(url: URL?, failure: Image = Image(systemName: "multiply.circle")) {
+        _loader = StateObject(wrappedValue: Loader(url: url))
+        self.failure = failure
     }
 }
