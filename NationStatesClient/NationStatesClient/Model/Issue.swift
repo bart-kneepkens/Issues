@@ -10,6 +10,8 @@ import Foundation
 struct Option: Identifiable {
     let id: Int
     let text: String
+    
+    static let dismiss = Option(id: -1, text: "")
 }
 
 extension Option {

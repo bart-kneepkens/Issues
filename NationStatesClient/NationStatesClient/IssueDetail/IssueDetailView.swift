@@ -29,15 +29,16 @@ struct IssueDetailView: View {
                         }
                     }
                     
-                    Button("Respond to this issue") {
-                        showingOptions.toggle()
+                    Section {
+                        Button("Respond to this issue") {
+                            showingOptions.toggle()
+                        }
                     }
-                    .sheet(isPresented: $showingOptions, content: {
-                        IssueDetailOptionsView(viewModel: self.viewModel)
-                    })
-                    
-                    
-                }.listStyle(InsetGroupedListStyle())
+                }
+                .listStyle(InsetGroupedListStyle())
+                .sheet(isPresented: $showingOptions, content: {
+                    IssueDetailOptionsView(viewModel: self.viewModel)
+                })
             }
             
             // show card and swipe between responses
@@ -60,7 +61,7 @@ struct IssueDetailView: View {
                 }
             }
         }
-        .navigationTitle("Elest Adra Issue #\(viewModel.issue.id)")
+        .navigationTitle("\(Authentication.shared.nationName ?? "") Issue #\(viewModel.issue.id)")
         .navigationBarTitleDisplayMode(.inline)
     }
 }

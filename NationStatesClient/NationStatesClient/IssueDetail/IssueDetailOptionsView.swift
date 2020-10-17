@@ -10,6 +10,7 @@ import SwiftUI
 struct IssueDetailOptionsView: View {
     var viewModel: IssueDetailViewModel
     @State var selectedOption: Option? = nil
+    @State var isDismissing = false
     
     var body: some View {
         List {
@@ -29,6 +30,11 @@ struct IssueDetailOptionsView: View {
                     }
                 }
             }
+            Section {
+                Button("Dismiss this issue") {
+                    self.isDismissing.toggle()
+                }.foregroundColor(.red)
+            }
         }
         .listStyle(InsetGroupedListStyle())
         .alert(item: $selectedOption) { option -> Alert in
@@ -38,6 +44,11 @@ struct IssueDetailOptionsView: View {
                     viewModel.answer(with: option)
                   })
         }
+        .alert(isPresented: $isDismissing, content: {
+            Alert(title: Text("Dismiss issue?"), primaryButton: .cancel(), secondaryButton: .destructive(Text("Dismiss")){
+                viewModel.answer(with: Option.dismiss)
+            })
+        })
     }
 }
 
