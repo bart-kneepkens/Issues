@@ -11,6 +11,8 @@ struct IssueDetailView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: IssueDetailViewModel
     
+    @State var showingOptions = false
+    
     var body: some View {
         let shouldRenderCompletedView = viewModel.answeredIssueResult != nil
         
@@ -21,23 +23,24 @@ struct IssueDetailView: View {
                         VStack {
                             Text(viewModel.issue.title)
                                 .font(.title3)
-                            RemoteImage(url: URLBuilder.imageUrl(for: viewModel.issue.imageName)).aspectRatio(contentMode: .fit)
+                            RemoteImage(url: URLBuilder.imageUrl(for: viewModel.issue.imageName))
+                                .aspectRatio(contentMode: .fit)
                             Text(viewModel.issue.text)
                         }
                     }
                     
-                    ForEach(viewModel.issue.options, id: \.id) { option in
-                        Section {
-                            Button(action: {
-                                viewModel.answer(with: option)
-                            }, label: {
-                                Text(option.text).font(.callout)
-                            }).buttonStyle(PlainButtonStyle())
-                        }
+                    Button("Respond to this issue") {
+                        showingOptions.toggle()
                     }
+                    .sheet(isPresented: $showingOptions, content: {
+                        IssueDetailOptionsView(viewModel: self.viewModel)
+                    })
+                    
+                    
                 }.listStyle(InsetGroupedListStyle())
             }
             
+            // show card and swipe between responses
             if shouldRenderCompletedView {
                 Color.black.opacity(0.3)
                 VStack {
