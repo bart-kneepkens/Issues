@@ -11,6 +11,7 @@ import Combine
 class IssuesService: ObservableObject {
     @Published var issues: [Issue] = []
     @Published var answeredIssueResult: String?
+    @Published var anweringIssue = false
     
     func fetchIssues() {
         guard let nationName = Authentication.shared.nationName else { return }
@@ -27,7 +28,9 @@ class IssuesService: ObservableObject {
     }
     
     func answer(issue: Issue, option: Option) {
+        self.anweringIssue = true
         NationStatesAPI.answerIssue(issue, option: option) { result in
+            self.anweringIssue = false
             switch result {
             case .success(let desc):
                 self.answeredIssueResult = desc

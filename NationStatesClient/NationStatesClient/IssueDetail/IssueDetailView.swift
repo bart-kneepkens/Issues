@@ -10,56 +10,41 @@ import SwiftUI
 struct IssueDetailView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: IssueDetailViewModel
-    
     @State var showingOptions = false
     
-    var body: some View {
-        let shouldRenderCompletedView = viewModel.answeredIssueResult != nil
-        
-        ZStack {
-            VStack {
-                List {
-                    Section {
-                        VStack {
-                            Text(viewModel.issue.title)
-                                .font(.title3)
-                            RemoteImage(url: URLBuilder.imageUrl(for: viewModel.issue.imageName))
-                                .aspectRatio(contentMode: .fit)
-                            Text(viewModel.issue.text)
-                        }
-                    }
-                    
-                    Section {
-                        Button("Respond to this issue") {
-                            showingOptions.toggle()
-                        }
+    var contents: some View {
+        if viewModel.answeringIssue && viewModel.answeredIssueResult == nil {
+            return AnyView(ProgressView())
+        } else if let answerResult = viewModel.answeredIssueResult {
+            return AnyView(Text(answerResult))
+        } else {
+            return AnyView(Button("Respond to this issue") {
+                showingOptions.toggle()
+            })
+        }
+    }
+    
+    var body: some View { 
+        VStack {
+            List {
+                Section {
+                    VStack {
+                        Text(viewModel.issue.title)
+                            .font(.title3)
+                        RemoteImage(url: URLBuilder.imageUrl(for: viewModel.issue.imageName))
+                            .aspectRatio(contentMode: .fit)
+                        Text(viewModel.issue.text)
                     }
                 }
-                .listStyle(InsetGroupedListStyle())
-                .sheet(isPresented: $showingOptions, content: {
-                    IssueDetailOptionsView(viewModel: self.viewModel)
-                })
-            }
-            
-            // show card and swipe between responses
-            if shouldRenderCompletedView {
-                Color.black.opacity(0.3)
-                VStack {
-                    Spacer()
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 25, style: .continuous)
-                            .padding()
-                            .foregroundColor(Color(UIColor.secondarySystemBackground))
-                        
-                        VStack {
-                            Text(viewModel.answeredIssueResult ?? "Result")
-                            Button("Bye") {
-                                self.presentationMode.wrappedValue.dismiss()
-                            }
-                        }
-                    }.frame(height: 300)
+                
+                Section {
+                    contents
                 }
             }
+            .listStyle(InsetGroupedListStyle())
+            .sheet(isPresented: $showingOptions, content: {
+                IssueDetailOptionsView(viewModel: self.viewModel)
+            })
         }
         .navigationTitle("\(Authentication.shared.nationName ?? "") Issue #\(viewModel.issue.id)")
         .navigationBarTitleDisplayMode(.inline)

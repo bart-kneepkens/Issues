@@ -35,20 +35,15 @@ class SignInViewModel: ObservableObject {
                     Authentication.shared.pin = authentication.pin
                     
                     self.issuesService.fetchIssues()
-                    
-//                    DispatchQueue.main.async {
-                        self.shouldNavigateForward = true
-//                    }
+                    self.shouldNavigateForward = true
                     
                     
                 case .failure(let error):
-//                    DispatchQueue.main.async {
-                        self.signInError = error
-//                    }
+                    self.signInError = error
                 }
             }
             
         }
-    
+        
     }
 }

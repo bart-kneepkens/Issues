@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct IssueDetailOptionsView: View {
+    @Environment(\.presentationMode) var presentationMode
     var viewModel: IssueDetailViewModel
     @State var selectedOption: Option? = nil
     @State var isDismissing = false
@@ -29,26 +30,28 @@ struct IssueDetailOptionsView: View {
                         }
                     }
                 }
+                .alert(item: $selectedOption) { option -> Alert in
+                    Alert(title: Text("Accept position #\(option.id + 1)?"),
+                          primaryButton: .cancel(),
+                          secondaryButton: .default(Text("Accept")) {
+                            viewModel.answer(with: option)
+                            presentationMode.wrappedValue.dismiss()
+                          })
+                }
             }
             Section {
                 Button("Dismiss this issue") {
                     self.isDismissing.toggle()
                 }.foregroundColor(.red)
             }
+            .alert(isPresented: $isDismissing, content: {
+                Alert(title: Text("Dismiss issue?"), primaryButton: .cancel(), secondaryButton: .destructive(Text("Dismiss")){
+                    viewModel.answer(with: Option.dismiss)
+                    presentationMode.wrappedValue.dismiss()
+                })
+            })
         }
         .listStyle(InsetGroupedListStyle())
-        .alert(item: $selectedOption) { option -> Alert in
-            Alert(title: Text("Accept position #\(option.id + 1)?"),
-                  primaryButton: .cancel(),
-                  secondaryButton: .default(Text("Accept")) {
-                    viewModel.answer(with: option)
-                  })
-        }
-        .alert(isPresented: $isDismissing, content: {
-            Alert(title: Text("Dismiss issue?"), primaryButton: .cancel(), secondaryButton: .destructive(Text("Dismiss")){
-                viewModel.answer(with: Option.dismiss)
-            })
-        })
     }
 }
 
