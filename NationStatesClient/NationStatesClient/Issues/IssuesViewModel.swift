@@ -10,14 +10,20 @@ import Combine
 
 class IssuesViewModel: ObservableObject {
     @Published var issues: [Issue] = []
+    @Published var fetchingIssues = false
     private(set) var service: IssuesService
     
-    var cancellable: Cancellable?
+    var cancellables: [Cancellable?] = []
     
     init(service: IssuesService) {
         self.service = service
-        self.cancellable = service.$issues
+        self.cancellables.append(service.$issues
             .receive(on: DispatchQueue.main)
-            .assign(to: \.issues, on: self)
+            .assign(to: \.issues, on: self))
+        
+        self.cancellables.append(service.$fetchingIssues
+                                    .receive(on: DispatchQueue.main)
+                                    .assign(to: \.fetchingIssues, on: self))
+        
     }
 }
