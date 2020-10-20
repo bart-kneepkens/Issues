@@ -29,10 +29,13 @@ struct IssueDetailView: View {
             List {
                 Section {
                     VStack {
-                        Text(viewModel.issue.title)
-                            .font(.title3)
-                        RemoteImage(url: URLBuilder.imageUrl(for: viewModel.issue.imageName))
-                            .aspectRatio(contentMode: .fit)
+                        HStack {
+                            Text(viewModel.issue.title).font(.system(size: 24, weight: .bold))
+                            Spacer()
+                        }
+                        
+                        RemoteImage(url: URLBuilder.imageUrl(for: viewModel.issue.imageName)).aspectRatio(contentMode: .fit)
+                        
                         Text(viewModel.issue.text)
                     }
                 }
