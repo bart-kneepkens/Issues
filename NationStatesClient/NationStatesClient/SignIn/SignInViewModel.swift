@@ -18,32 +18,22 @@ class SignInViewModel: ObservableObject {
     
     var issuesService: IssuesService
     
+    private var cancellable: Cancellable?
+    
     init(service: IssuesService) {
         self.issuesService = service
     }
     
     func attemptSignIn() {
         self.signingIn = true
-        NationStatesAPI.ping(nationName: nationName, password: password) { result in
-            DispatchQueue.main.async {
-                self.signingIn = false
-                switch result {
-                case .success(let authentication):
-                    
-                    Authentication.shared.nationName = self.nationName
-                    Authentication.shared.autoLogin = authentication.autologin
-                    Authentication.shared.pin = authentication.pin
-                    
-                    self.issuesService.fetchIssues()
-                    self.shouldNavigateForward = true
-                    
-                    
-                case .failure(let error):
-                    self.signInError = error
-                }
-            }
+        self.cancellable = NationStatesAPI.ping(nationName: nationName, password: password).sink(receiveCompletion: { _ in }, receiveValue: { (pair) in
+            Authentication.shared.nationName = self.nationName
+            Authentication.shared.autoLogin = pair.autologin
+            Authentication.shared.pin = pair.pin
             
-        }
+            self.issuesService.fetchIssues()
+            self.shouldNavigateForward = true
+        })
         
     }
 }

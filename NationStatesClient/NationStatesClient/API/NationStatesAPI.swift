@@ -21,39 +21,33 @@ enum APIError: Error {
     case pingFailed
 }
 
-
 extension NationStatesAPI {
-    static func ping(nationName: String,
-                     password: String,
-                     _ completionHandler: @escaping (Result<(autologin: String?, pin: String?), APIError>) -> Void) {
+    static func ping(nationName: String, password: String) -> AnyPublisher<(autologin: String?, pin: String?), Error> {
         guard let url = URLBuilder.url(for: nationName, with: .ping) else { fatalError() }
         
         var request = URLRequest(url: url)
         request.setupPasswordAuthenticationHeader(password)
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let httpResponse = response as? HTTPURLResponse else { return }
-            
-            if httpResponse.statusCode == 403 {
-                completionHandler(.failure(.unauthorized))
-            } else if httpResponse.statusCode == 409 {
-                completionHandler(.failure(.conflict))
+        return URLSession.shared
+            .dataTaskPublisher(for: request)
+            .tryMap { (result) -> (autologin: String?, pin: String?) in
+                guard let httpResponse = result.response as? HTTPURLResponse else { return (autologin: nil, pin: nil) }
+                guard httpResponse.statusCode != 403 else { throw APIError.unauthorized }
+                guard httpResponse.statusCode != 409 else { throw APIError.conflict }
+                
+                let parser = PingResponseXMLParser(result.data)
+                parser.parse()
+                
+                if parser.ping {
+                    let autoLogin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.autologin.header)
+                    let pin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.pin.header)
+                    return (autologin: autoLogin, pin: pin)
+                }
+                
+                return (autologin: nil, pin: nil)
             }
-            
-            guard error == nil else { return }
-            guard let data = data else { return }
-            
-            let parser = PingResponseXMLParser(data)
-            parser.parse()
-            
-            if parser.ping {
-                let autoLogin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.autologin.header)
-                let pin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.pin.header)
-                completionHandler(.success((autoLogin, pin)))
-            } else {
-                completionHandler(.failure(.pingFailed))
-            }
-        }.resume()
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
     }
 }
 
