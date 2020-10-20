@@ -12,14 +12,16 @@ struct IssuesView: View {
     
     var body: some View {
         Group {
-            if viewModel.fetchingIssues {
-                ProgressView()
-            } else {
-                List(viewModel.issues, id: \.id) { issue in
-                    NavigationLink(issue.title, destination: IssueDetailView(viewModel: IssueDetailViewModel(issue, service: viewModel.service)))
+            List {
+                if viewModel.fetchingIssues {
+                    ProgressView()
+                } else {
+                    ForEach(viewModel.issues, id: \.id) { issue in
+                        NavigationLink(issue.title, destination: IssueDetailView(viewModel: IssueDetailViewModel(issue, service: viewModel.service)))
+                    }
                 }
-                .listStyle(InsetGroupedListStyle())
             }
+            .listStyle(InsetGroupedListStyle())
         }.navigationTitle("Issues")
     }
 }
