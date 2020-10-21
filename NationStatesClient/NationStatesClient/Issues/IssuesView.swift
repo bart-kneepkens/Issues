@@ -8,20 +8,36 @@
 import SwiftUI
 
 struct IssuesView: View {
-    @StateObject var viewModel: IssuesViewModel
+    @ObservedObject var service: IssuesService
+    
+    var errorView: some View {
+        if let error = self.service.error {
+            return AnyView(
+                HStack {
+                    Image(systemName: "exclamationmark.triangle")
+                        .resizable()
+                        .frame(height: 22)
+                        .aspectRatio(1, contentMode: .fit)
+                    Text(error.text)
+                }
+            )
+        }
+        return AnyView(EmptyView())
+    }
     
     var body: some View {
         Group {
             List {
-                if viewModel.fetchingIssues {
+                if service.fetchingIssues {
                     ProgressView()
                 } else {
-                    ForEach(viewModel.issues, id: \.id) { issue in
-                        NavigationLink(issue.title, destination: IssueDetailView(viewModel: IssueDetailViewModel(issue, service: viewModel.service)))
+                    Section(header: EmptyView(), footer: errorView) {
+                        ForEach(service.issues, id: \.id) { issue in
+                            NavigationLink(issue.title, destination: IssueDetailView(viewModel: IssueDetailViewModel(issue, service: service)))
+                        }
                     }
                 }
-            }
-            .listStyle(InsetGroupedListStyle())
+            }.listStyle(InsetGroupedListStyle())
         }.navigationTitle("Issues")
     }
 }
@@ -31,7 +47,7 @@ struct IssuesView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            IssuesView(viewModel: viewModel)
+            IssuesView(service: IssuesService())
         }
     }
 }

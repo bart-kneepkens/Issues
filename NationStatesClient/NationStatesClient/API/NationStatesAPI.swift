@@ -18,7 +18,17 @@ enum Shard: String {
 enum APIError: Error {
     case unauthorized // 403
     case conflict // 409
-    case pingFailed
+    case notConnected
+}
+
+extension APIError {
+    var text: String {
+        switch self {
+        case .notConnected: return "There appears to be no internet connection. Are you connected?"
+        default:
+            return ""
+        }
+    }
 }
 
 extension NationStatesAPI {
@@ -106,6 +116,15 @@ extension NationStatesAPI {
         URLSession
             .shared
             .dataTask(with: request) { data, response, error in
+                if let error = error {
+                    let code = (error as NSError).code
+                    
+                    if code == NSURLErrorNotConnectedToInternet {
+                        completionHandler(.failure(.notConnected))
+                        return
+                    }
+                }
+                
                 if let httpResponse = response as? HTTPURLResponse {
                     if httpResponse.statusCode == 403 {
                         completionHandler(.failure(.unauthorized))

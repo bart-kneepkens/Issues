@@ -14,7 +14,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             if viewModel.canPerformSilentLogin {
-                IssuesView(viewModel: IssuesViewModel(service: self.issuesService))
+                IssuesView(service: self.issuesService)
             } else {
                 SignInView(viewModel: SignInViewModel(service: self.issuesService))
             }

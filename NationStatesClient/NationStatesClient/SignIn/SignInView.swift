@@ -61,7 +61,7 @@ struct SignInView: View {
                 })
             }
             NavigationLink(
-                destination: IssuesView(viewModel: IssuesViewModel(service: viewModel.issuesService)).navigationBarBackButtonHidden(true),
+                destination: IssuesView(service: viewModel.issuesService).navigationBarBackButtonHidden(true),
                 isActive: $viewModel.shouldNavigateForward,
                 label: {
                     EmptyView()
