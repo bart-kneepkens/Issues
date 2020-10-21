@@ -13,10 +13,10 @@ struct IssueDetailView: View {
     @State var showingOptions = false
     
     var contents: some View {
-        if viewModel.answeringIssue && viewModel.answeredIssueResult == nil {
+        if viewModel.answeringIssue && viewModel.answeredIssueResult.isEmpty {
             return AnyView(ProgressView())
-        } else if let answerResult = viewModel.answeredIssueResult {
-            return AnyView(Text(answerResult))
+        } else if !viewModel.answeredIssueResult.isEmpty {
+            return AnyView(Text(viewModel.answeredIssueResult))
         } else {
             return AnyView(Button("Respond to this issue") {
                 showingOptions.toggle()

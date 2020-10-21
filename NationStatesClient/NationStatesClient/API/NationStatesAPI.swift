@@ -33,7 +33,10 @@ extension APIError {
 }
 
 extension NationStatesAPI {
-    static func authenticatedRequest(using request: URLRequest) -> AnyPublisher<(data: Data, response: URLResponse), APIError> {
+    static func authenticatedRequest(using url: URL) -> AnyPublisher<(data: Data, response: URLResponse), APIError> {
+        var request = URLRequest(url: url)
+        request.setupAuthenticationHeaders()
+        
         return URLSession
             .shared
             .dataTaskPublisher(for: request)
@@ -77,33 +80,17 @@ extension NationStatesAPI {
 }
 
 extension NationStatesAPI {
-    static func answerIssue(_ issue: Issue,
-                            option: Option,
-                            completionHandler: @escaping (Result<String, APIError>) -> Void) {
+    static func answerIssue(_ issue: Issue, option: Option) -> AnyPublisher<String, APIError> {
         guard let nationName = Authentication.shared.nationName else { fatalError() }
         guard let url = URLBuilder.answerIssueUrl(for: nationName, issue: issue, option: option) else { fatalError() }
         
-        var request = URLRequest(url: url)
-        request.setupAuthenticationHeaders()
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 403 {
-                    completionHandler(.failure(.unauthorized))
-                } else if httpResponse.statusCode == 409 {
-                    completionHandler(.failure(.conflict))
-                }
+        return authenticatedRequest(using: url)
+            .map { result -> String in
+                let parser = AnswerIssueResponseXMLParser(result.data)
+                parser.parse()
+                return parser.text
             }
-            
-            guard error == nil else { return }
-            guard let data = data else { return }
-            
-            let parser = AnswerIssueResponseXMLParser(data)
-            parser.parse()
-            
-            guard parser.ok else { return }
-            completionHandler(.success(parser.text))
-        }.resume()
+            .eraseToAnyPublisher()
     }
 }
 
@@ -123,10 +110,7 @@ extension NationStatesAPI {
     static func request(for shards: [Shard], nation nationName: String) -> AnyPublisher<[IssueDTO], APIError> {
         guard let url = URLBuilder.url(for: nationName, with: .issues) else { fatalError() }
         
-        var request = URLRequest(url: url)
-        request.setupAuthenticationHeaders()
-        
-        return authenticatedRequest(using: request)
+        return authenticatedRequest(using: url)
             .map({ result -> [IssueDTO] in
                 let parser = IssuesResponseXMLParser(result.data)
                 parser.parse()

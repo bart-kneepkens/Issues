@@ -38,7 +38,8 @@ struct IssuesView: View {
                     }
                 }
             }.listStyle(InsetGroupedListStyle())
-        }.navigationTitle("Issues")
+        }
+        .navigationTitle("Issues")
     }
 }
 

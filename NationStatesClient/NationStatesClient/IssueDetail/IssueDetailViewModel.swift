@@ -10,7 +10,7 @@ import Foundation
 
 class IssueDetailViewModel: ObservableObject {
     @Published var issue: Issue
-    @Published var answeredIssueResult: String?
+    @Published var answeredIssueResult: String = ""
     @Published var answeringIssue = false
     
     private(set) var service: IssuesService

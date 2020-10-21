@@ -16,7 +16,6 @@ class AnswerIssueResponseXMLParser: NationStatesXMLParser {
         super.init(data)
         self.parser.delegate = self
     }
-
 }
 
 extension AnswerIssueResponseXMLParser: XMLParserDelegate {
@@ -30,7 +29,7 @@ extension AnswerIssueResponseXMLParser: XMLParserDelegate {
             foundCharacters = ""
         }
         if elementName == "DESC" {
-            self.text = foundCharacters
+            self.text = "\(foundCharacters.prefix(1).capitalized)\(foundCharacters.dropFirst())" // Capitalize first word, since it returned all lower case by the server.
             foundCharacters = ""
             self.parser.abortParsing()
         }
