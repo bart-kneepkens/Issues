@@ -16,21 +16,26 @@ class IssuesService: ObservableObject {
     
     @Published var error: APIError?
     
+    private var cancellables: [Cancellable] = []
+    
     func fetchIssues() {
         guard let nationName = Authentication.shared.nationName else { return }
         self.fetchingIssues = true
         
-        NationStatesAPI.request(for: [.issues], nation: nationName) { result in
-            DispatchQueue.main.async {
-                self.fetchingIssues = false
-                switch result {
-                case .success(let response):
-                    self.issues = response.map({ Issue($0) })
-                case .failure(let error):
+        self.cancellables.append(
+            NationStatesAPI.request(for: [.issues], nation: nationName)
+                .handleEvents(receiveCompletion: { _ in
+                    self.fetchingIssues = false
+                })
+                .catch({ (error) -> AnyPublisher<[IssueDTO], Never> in
                     self.error = error
-                }
-            }
-        }
+                    return Just([]).eraseToAnyPublisher()
+                })
+                .map({ dtos -> [Issue] in
+                    return dtos.map({ Issue($0) })
+                })
+                .assign(to: \.issues, on: self)
+        )
     }
     
     func answer(issue: Issue, option: Option) {

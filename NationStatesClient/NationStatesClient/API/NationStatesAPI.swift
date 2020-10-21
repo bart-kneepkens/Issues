@@ -19,6 +19,7 @@ enum APIError: Error {
     case unauthorized // 403
     case conflict // 409
     case notConnected
+    case unknown(error: Error)
 }
 
 extension APIError {
@@ -26,12 +27,26 @@ extension APIError {
         switch self {
         case .notConnected: return "There appears to be no internet connection. Are you connected?"
         default:
-            return ""
+            return "Unknown Error"
         }
     }
 }
 
 extension NationStatesAPI {
+    static func authenticatedRequest(using request: URLRequest) -> AnyPublisher<(data: Data, response: URLResponse), APIError> {
+        return URLSession
+            .shared
+            .dataTaskPublisher(for: request)
+            .mapError({ (error) -> APIError in
+                if (error as NSError).code == NSURLErrorNotConnectedToInternet {
+                    return APIError.notConnected
+                }
+                return APIError.unknown(error: error)
+            })
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
     static func ping(nationName: String, password: String) -> AnyPublisher<(autologin: String?, pin: String?), Error> {
         guard let url = URLBuilder.url(for: nationName, with: .ping) else { fatalError() }
         
@@ -105,40 +120,18 @@ extension NationStatesAPI {
 
 
 extension NationStatesAPI {
-    static func request(for shards: [Shard],
-                        nation nationName: String,
-                        completionHandler: @escaping (Result<[IssueDTO], APIError>) -> Void) {
+    static func request(for shards: [Shard], nation nationName: String) -> AnyPublisher<[IssueDTO], APIError> {
         guard let url = URLBuilder.url(for: nationName, with: .issues) else { fatalError() }
-    
+        
         var request = URLRequest(url: url)
         request.setupAuthenticationHeaders()
         
-        URLSession
-            .shared
-            .dataTask(with: request) { data, response, error in
-                if let error = error {
-                    let code = (error as NSError).code
-                    
-                    if code == NSURLErrorNotConnectedToInternet {
-                        completionHandler(.failure(.notConnected))
-                        return
-                    }
-                }
-                
-                if let httpResponse = response as? HTTPURLResponse {
-                    if httpResponse.statusCode == 403 {
-                        completionHandler(.failure(.unauthorized))
-                    } else if httpResponse.statusCode == 409 {
-                        completionHandler(.failure(.conflict))
-                    }
-                }
-                guard error == nil else { return }
-                guard let data = data else { return }
-
-                let parser = IssuesResponseXMLParser(data)
+        return authenticatedRequest(using: request)
+            .map({ result -> [IssueDTO] in
+                let parser = IssuesResponseXMLParser(result.data)
                 parser.parse()
-                
-                completionHandler(.success(parser.issues))
-        }.resume()
+                return parser.issues
+            })
+            .eraseToAnyPublisher()
     }
 }
