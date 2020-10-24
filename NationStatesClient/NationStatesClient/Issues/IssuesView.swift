@@ -28,15 +28,11 @@ struct IssuesView: View {
     var body: some View {
         Group {
             List {
-                if service.fetchingIssues {
-                    ProgressView()
-                } else {
-                    Section(header: EmptyView(), footer: errorView) {
-                        ForEach(service.issues, id: \.id) { issue in
-                            NavigationLink(issue.title, destination: IssueDetailView(viewModel: IssueDetailViewModel(issue, service: service)))
-                        }
+                Section(header: EmptyView(), footer: errorView) {
+                    ForEach(service.issues, id: \.id) { issue in
+                        NavigationLink(issue.title, destination: IssueDetailView(viewModel: IssueDetailViewModel(issue, service: service)))
                     }
-                }
+                }.redacted(reason:service.fetchingIssues ? .placeholder : [])
             }.listStyle(InsetGroupedListStyle())
         }
         .navigationTitle("Issues")

@@ -37,6 +37,7 @@ struct IssueDetailView: View {
                         RemoteImage(url: URLBuilder.imageUrl(for: viewModel.issue.imageName)).aspectRatio(contentMode: .fit)
                         
                         Text(viewModel.issue.text)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 
