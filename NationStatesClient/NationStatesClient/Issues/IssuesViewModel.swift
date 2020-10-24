@@ -24,6 +24,5 @@ class IssuesViewModel: ObservableObject {
         self.cancellables.append(service.$fetchingIssues
                                     .receive(on: DispatchQueue.main)
                                     .assign(to: \.fetchingIssues, on: self))
-        
     }
 }
