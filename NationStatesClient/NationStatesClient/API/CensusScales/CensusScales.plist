@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>scales</key>
+	<array>
+        <string>Civil Rights##Martin Luther King, Jr. Units##p20</string>
+        <string>Economy##Krugman-Greenspan Business Outlook Index##e1</string>
+        <string>Political Freedoms##Diebold Election Inking Scale##p23</string>
+        <string>Population##Capita##c15</string>
+        <string>Wealth Gaps##Rich-to-Poor Income Ratio##u8</string>
+        <string>Death Rate##Bus Surprisal Index##l26</string>
+        <string>Compassion##Kitten Softness Rating##p25</string>
+        <string>Eco-Friendliness##Dolphin Recycling Awareness Index##o1</string>
+        <string>Social Conservatism##Bush-Santorum Dawning Terror Index##t19</string>
+        <string>Nudity##Cheeks Per Square Mile##p17</string>
+        <string>Industry: Automobile Manufacturing##Henry Ford Productivity Index##i51</string>
+        <string>Industry: Cheese Exports##Mozzarella Productivity Index##i61</string>
+        <string>Industry: Basket Weaving##Hickory Productivity Index##i32</string>
+        <string>Industry: Information Technology##Fann-Boi Productivity Index##b5</string>
+        <string>Industry: Pizza Delivery##Pepperoni Propulsion Productivity Index##i25</string>
+        <string>Industry: Trout Fishing##Nemo Depletion Efficiency Index##i23</string>
+        <string>Industry: Arms Manufacturing##Charon Conveyancy Index##m1</string>
+        <string>Sector: Agriculture##Mu-Bah-Daggs Productivity Index##a12</string>
+        <string>Industry: Beverage Sales##Addison-Fukk Productivity Rating##i9</string>
+        <string>Industry: Timber Woodchipping##Tasmanian Pulp Environmental Export Index##i30</string>
+        <string>Industry: Mining##Blue Sky Asbestos Index##i22</string>
+        <string>Industry: Insurance##Risk Expulsion Effectiveness Rating##b10</string>
+        <string>Industry: Furniture Restoration##Spitz-Pollish Productivity Index##d26</string>
+        <string>Industry: Retail##Shrinkwrap Consignment Productivity Index##i56</string>
+        <string>Industry: Book Publishing##Bella Potter Productivity e-Index##i10</string>
+        <string>Industry: Gambling##Kelly Criterion Productivity Index##i29</string>
+        <string>Sector: Manufacturing##Gooback-Jerbs Productivity Index##i60</string>
+        <string>Government Size##Bureaucratic Comprehensiveness Rating Scale Index##g1</string>
+        <string>Welfare##Safety Net Mesh Density Rating##t57</string>
+        <string>Public Healthcare##Theresa-Nightingale Rating##n8</string>
+        <string>Law Enforcement##Orwell Orderliness Index##s5</string>
+        <string>Business Subsidization##Gilded Widget Scale##e2</string>
+        <string>Religiousness##Prayers Per Hour##b25</string>
+        <string>Income Equality##Marx-Engels Emancipation Scale##k5</string>
+        <string>Niceness##Average Smiles Per Day##p59</string>
+        <string>Rudeness##Insults Per Minute##p71</string>
+        <string>Intelligence##Quips Per Hour##p50</string>
+        <string>Ignorance##Missed References Per Hour##x13</string>
+        <string>Political Apathy##Whatever##e7</string>
+        <string>Health##Bananas Ingested Per Day##n6</string>
+        <string>Cheerfulness##Percentage of Water Glasses Perceived Half-Full##p24</string>
+        <string>Weather##Meters of Sunlight##o10</string>
+        <string>Compliance##Law-Abiding Acts Per Hour##i43</string>
+        <string>Safety##Bubble-Rapp Safety Rating##d35</string>
+        <string>Lifespan##Years##p41</string>
+        <string>Ideological Radicality##Paul-Nader Subjective Decentrality Index##p61</string>
+        <string>Defense Forces##Total War Preparedness Rating##m8</string>
+        <string>Pacifism##Cheeks Turned Per Day##t49</string>
+        <string>Economic Freedom##Rand Index##i19</string>
+        <string>Taxation##Effective Tax Rate##e5</string>
+        <string>Freedom From Taxation##Hayek Index##e9</string>
+        <string>Corruption##Kickbacks Per Hour##e17</string>
+        <string>Integrity##Percentage of Bribes Refused##t17</string>
+        <string>Authoritarianism##MilliStalins##k8</string>
+        <string>Youth Rebelliousness##Stark-Dean Displacement Index##p35</string>
+        <string>Culture##Snufflebottom-Wiggendum Pentatonic Scale##k9</string>
+        <string>Employment##Workforce Participation Rate##c13</string>
+        <string>Public Transport##Societal Mobility Rating##i26</string>
+        <string>Tourism##Tourists Per Hour##o12</string>
+        <string>Weaponization##Weapons Per Person##d19</string>
+        <string>Recreational Drug Use##Pineapple Fondness Rating##n5</string>
+        <string>Obesity##Obesity Rate##i40</string>
+        <string>Secularism##Atheism Rate##b1</string>
+        <string>Environmental Beauty##Pounds of Wildlife Per Square Mile##l16</string>
+        <string>Charmlessness##Kardashian Reflex Score##d21</string>
+        <string>Influence##Soft Power Disbursement Rating##o5</string>
+        <string>World Assembly Endorsements##Valid Endorsements##wa1</string>
+        <string>Averageness##Average Standardized Normality Scale##t33</string>
+        <string>Human Development Index##HDI##c18</string>
+        <string>Primitiveness##Scary Big Number Scale##t34</string>
+        <string>Scientific Advancement##Kurzweil Singularity Index##w8</string>
+        <string>Inclusiveness##Mandela-Wollstonecraft Non-Discrimination Index##p30</string>
+        <string>Average Income##Standard Monetary Units##e4</string>
+        <string>Average Income of Poor##Standard Monetary Units##r3</string>
+        <string>Average Income of Rich##Standard Monetary Units##i28</string>
+        <string>Public Education##Edu-tellignce® Test Score##p53</string>
+        <string>Economic Output##Standard Monetary Units##i6</string>
+        <string>Crime##Crimes Per Hour##d27</string>
+        <string>Foreign Aid##Clooney Contribution Index##i41</string>
+        <string>Black Market##Standard Monetary Units##u5</string>
+        <string>Residency##Days##t45</string>
+        <string>Z-Day: Survivors##Capita##d34</string>
+        <string>Z-Day: Zombies##Capita##x5</string>
+        <string>Z-Day: Dead##Capita##d25</string>
+        <string>Z-Day: Zombification##Romero-Brooks Index##x5</string>
+        <string>Average Disposable Income##Standard Monetary Units##t38</string>
+        <string>International Artwork##Bank##c13</string>
+        <string>Unknown##Mystery Units##x12</string>
+	</array>
+</dict>
+</plist>

@@ -29,7 +29,7 @@ extension AnswerIssueResponseXMLParser: XMLParserDelegate {
             foundCharacters = ""
         }
         if elementName == "DESC" {
-            self.text = "\(foundCharacters.prefix(1).capitalized)\(foundCharacters.dropFirst())" // Capitalize first word, since it returned all lower case by the server.
+            self.text = "\(foundCharacters.prefix(1).capitalized)\(foundCharacters.dropFirst())." // Capitalize first word, since it returned all lower case by the server.
             foundCharacters = ""
             self.parser.abortParsing()
         }
