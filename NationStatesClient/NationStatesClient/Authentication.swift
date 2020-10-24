@@ -21,7 +21,7 @@ enum AuthenticationMode {
     }
 }
 
-class Authentication {
+class Authentication: ObservableObject {
     static let shared = Authentication()
     private let storage: SecureStorage
     
@@ -54,6 +54,14 @@ class Authentication {
         didSet {
             self.storage.store(pin, key: StorageKey.pin)
         }
+    }
+    
+    func clear() {
+        self.nationName = nil
+        self.password = nil
+        self.autoLogin = nil
+        self.pin = nil
+        self.objectWillChange.send()
     }
 }
 

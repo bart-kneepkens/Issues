@@ -15,9 +15,6 @@ struct IssuesView: View {
             return AnyView(
                 HStack {
                     Image(systemName: "exclamationmark.triangle")
-                        .resizable()
-                        .frame(height: 22)
-                        .aspectRatio(1, contentMode: .fit)
                     Text(error.text)
                 }
             )
@@ -32,10 +29,17 @@ struct IssuesView: View {
                     ForEach(service.issues, id: \.id) { issue in
                         NavigationLink(issue.title, destination: IssueDetailView(viewModel: IssueDetailViewModel(issue, service: service)))
                     }
-                }.redacted(reason:service.fetchingIssues ? .placeholder : [])
-            }.listStyle(InsetGroupedListStyle())
+                }
+                .redacted(reason:service.fetchingIssues ? .placeholder : [])
+            }
+            .listStyle(InsetGroupedListStyle())
         }
         .navigationTitle("Issues")
+        .navigationBarItems(trailing: NavigationLink(
+                                destination: NationView(),
+                                label: {
+                                    Image(systemName: "gear")
+                                }))
     }
 }
 

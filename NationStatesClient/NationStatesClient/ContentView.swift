@@ -8,18 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var viewModel = ContentViewViewModel()
+    @ObservedObject var authenthication = Authentication.shared
     var issuesService = IssuesService()
     
     var body: some View {
         NavigationView {
-            if viewModel.canPerformSilentLogin {
+            if authenthication.canPerformSilentLogin {
                 IssuesView(service: self.issuesService)
             } else {
                 SignInView(viewModel: SignInViewModel(service: self.issuesService))
             }
-        }.onAppear {
-            if viewModel.canPerformSilentLogin {
+        }
+        .onAppear {
+            if authenthication.canPerformSilentLogin {
                 self.issuesService.fetchIssues()
             }
         }
