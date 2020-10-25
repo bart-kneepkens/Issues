@@ -13,10 +13,10 @@ struct IssueDetailView: View {
     @State var showingOptions = false
     
     var contents: some View {
-        if viewModel.answeringIssue && viewModel.answeredIssueResult.isEmpty {
+        if viewModel.answeringIssue && viewModel.answeredIssueResponse == nil {
             return AnyView(ProgressView())
-        } else if !viewModel.answeredIssueResult.isEmpty {
-            return AnyView(Text(viewModel.answeredIssueResult))
+        } else if let response = viewModel.answeredIssueResponse {
+            return AnyView(IssueAnsweredSection(response: response))
         } else {
             return AnyView(Button("Respond to this issue") {
                 showingOptions.toggle()
@@ -41,9 +41,7 @@ struct IssueDetailView: View {
                     }
                 }
                 
-                Section {
-                    contents
-                }
+                contents
             }
             .listStyle(InsetGroupedListStyle())
             .sheet(isPresented: $showingOptions, content: {
@@ -60,6 +58,12 @@ struct IssueDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             IssueDetailView(viewModel: viewModel)
+        }.onAppear {
+            viewModel.answeredIssueResponse = .init(
+                result: "This is the result of your actions",
+                rankings: [.init(id: 2, score: 2, change: 0.5, percentualChange: 0.23)],
+                reclassificiations: [.init(type: 1, from: "Stronk", to: "Much Stronker")],
+                headlines: ["Headline 1", "Headline 2"])
         }
     }
 }

@@ -80,15 +80,15 @@ extension NationStatesAPI {
 }
 
 extension NationStatesAPI {
-    static func answerIssue(_ issue: Issue, option: Option) -> AnyPublisher<String, APIError> {
+    static func answerIssue(_ issue: Issue, option: Option) -> AnyPublisher<AnswerIssueResponse, APIError> {
         guard let nationName = Authentication.shared.nationName else { fatalError() }
         guard let url = URLBuilder.answerIssueUrl(for: nationName, issue: issue, option: option) else { fatalError() }
         
         return authenticatedRequest(using: url)
-            .map { result -> String in
+            .map { result -> AnswerIssueResponse in
                 let parser = AnswerIssueResponseXMLParser(result.data)
                 parser.parse()
-                return parser.text
+                return AnswerIssueResponse(result: parser.text, rankings: parser.rankings, reclassificiations: parser.reclassifications, headlines: parser.headlines)
             }
             .eraseToAnyPublisher()
     }

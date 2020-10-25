@@ -11,8 +11,8 @@ import Combine
 class IssuesService: ObservableObject {
     @Published var fetchingIssues = false
     @Published var issues: [Issue] = []
-    @Published var answeredIssueResult: String = ""
     @Published var anweringIssue = false
+    @Published var answerIssueResponse: AnswerIssueResponse?
     
     @Published var error: APIError?
     
@@ -41,19 +41,14 @@ class IssuesService: ObservableObject {
     func answer(issue: Issue, option: Option) {
         self.cancellables.append(
             NationStatesAPI.answerIssue(issue, option: option)
-                .handleEvents(receiveCompletion: { completion in
-                    self.fetchingIssues = false
+                .sink(receiveCompletion: { completion in
                     switch completion {
-                    case .finished:
-                        self.issues = self.issues.filter({ $0.id != issue.id })
-                    default: break
+                    case .failure(let error): self.error = error
+                    default: self.anweringIssue = false
                     }
+                }, receiveValue: { response in
+                    self.answerIssueResponse = response
                 })
-                .catch({ (error) -> AnyPublisher<String, Never> in
-                    self.error = error
-                    return Just("").eraseToAnyPublisher()
-                })
-                .assign(to: \.answeredIssueResult, on: self)
         )
     }
 }

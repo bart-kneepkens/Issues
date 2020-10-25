@@ -7,14 +7,21 @@
 
 import Foundation
 
-struct RankingDTO: Equatable {
+struct AnswerIssueResponse {
+    let result: String
+    let rankings: [RankingDTO]
+    let reclassificiations: [ReclassifyDTO]
+    let headlines: [HeadlineDTO]
+}
+
+struct RankingDTO: Equatable, Hashable {
     var id: Int?
     var score: Float?
     var change: Float?
     var percentualChange: Float?
 }
 
-struct ReclassifyDTO: Equatable {
+struct ReclassifyDTO: Equatable, Hashable {
     var type: Int?
     var from: String?
     var to: String?

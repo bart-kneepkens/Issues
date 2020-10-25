@@ -30,7 +30,6 @@
 		AE8764F8252FADEF00EFE031 /* IssueDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8764F7252FADEF00EFE031 /* IssueDetailViewModel.swift */; };
 		AE8981AA2530FBA000D62766 /* IssuesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8981A92530FBA000D62766 /* IssuesService.swift */; };
 		AE8981AF2530FD8D00D62766 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8981AE2530FD8D00D62766 /* Authentication.swift */; };
-		AE8C0C33253C674900B70102 /* IsssueAnsweredViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C0C32253C674900B70102 /* IsssueAnsweredViewModel.swift */; };
 		AE95F1212538E3BC00860D25 /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE95F1202538E3BC00860D25 /* RemoteImage.swift */; };
 		AE95F129253B18E400860D25 /* IssueDetailOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE95F128253B18E400860D25 /* IssueDetailOptionsView.swift */; };
 		AEDED2CE253C6372007A376F /* IssueAnsweredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDED2CD253C6372007A376F /* IssueAnsweredView.swift */; };
@@ -90,7 +89,6 @@
 		AE8764F7252FADEF00EFE031 /* IssueDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailViewModel.swift; sourceTree = "<group>"; };
 		AE8981A92530FBA000D62766 /* IssuesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssuesService.swift; sourceTree = "<group>"; };
 		AE8981AE2530FD8D00D62766 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
-		AE8C0C32253C674900B70102 /* IsssueAnsweredViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsssueAnsweredViewModel.swift; sourceTree = "<group>"; };
 		AE95F1202538E3BC00860D25 /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
 		AE95F128253B18E400860D25 /* IssueDetailOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailOptionsView.swift; sourceTree = "<group>"; };
 		AEDED2CD253C6372007A376F /* IssueAnsweredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueAnsweredView.swift; sourceTree = "<group>"; };
@@ -188,7 +186,6 @@
 				AE15A6CF253107AF004478C3 /* API */,
 				AE8981A52530F0ED00D62766 /* Persistence */,
 				AE8764EE252FADC800EFE031 /* IssueDetail */,
-				AEDED2D2253C63FC007A376F /* IssueAnswered */,
 				AE8764ED252FADBC00EFE031 /* Model */,
 				AE8764EC252FAD9E00EFE031 /* Issues */,
 				AE8764EB252FAD9200EFE031 /* SignIn */,
@@ -199,6 +196,7 @@
 				AE8764AA252E6F2A00EFE031 /* Preview Content */,
 				AE8981A92530FBA000D62766 /* IssuesService.swift */,
 				AE8981AE2530FD8D00D62766 /* Authentication.swift */,
+				AE95F1202538E3BC00860D25 /* RemoteImage.swift */,
 			);
 			path = NationStatesClient;
 			sourceTree = "<group>";
@@ -259,9 +257,9 @@
 		AE8764EE252FADC800EFE031 /* IssueDetail */ = {
 			isa = PBXGroup;
 			children = (
+				AEDED2D2253C63FC007A376F /* IssueAnswered */,
 				AE8764EF252FADE400EFE031 /* IssueDetailView.swift */,
 				AE8764F7252FADEF00EFE031 /* IssueDetailViewModel.swift */,
-				AE95F1202538E3BC00860D25 /* RemoteImage.swift */,
 				AE95F128253B18E400860D25 /* IssueDetailOptionsView.swift */,
 			);
 			path = IssueDetail;
@@ -280,7 +278,6 @@
 			isa = PBXGroup;
 			children = (
 				AEDED2CD253C6372007A376F /* IssueAnsweredView.swift */,
-				AE8C0C32253C674900B70102 /* IsssueAnsweredViewModel.swift */,
 			);
 			path = IssueAnswered;
 			sourceTree = "<group>";
@@ -440,7 +437,6 @@
 				AE8764E2252FA92C00EFE031 /* IssuesViewModel.swift in Sources */,
 				AE8764D3252FA4E500EFE031 /* SignInView.swift in Sources */,
 				AE15A6C325310372004478C3 /* SecureStorage.swift in Sources */,
-				AE8C0C33253C674900B70102 /* IsssueAnsweredViewModel.swift in Sources */,
 				AEDED2CE253C6372007A376F /* IssueAnsweredView.swift in Sources */,
 				AE8981AF2530FD8D00D62766 /* Authentication.swift in Sources */,
 				AE8764F8252FADEF00EFE031 /* IssueDetailViewModel.swift in Sources */,
