@@ -4,6 +4,7 @@
 <dict>
 	<key>scales</key>
 	<array>
+        <!-- Taken from Stately, an Android client for NationStates -->
         <string>Civil Rights##Martin Luther King, Jr. Units##p20</string>
         <string>Economy##Krugman-Greenspan Business Outlook Index##e1</string>
         <string>Political Freedoms##Diebold Election Inking Scale##p23</string>

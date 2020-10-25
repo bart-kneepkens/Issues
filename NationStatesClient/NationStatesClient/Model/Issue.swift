@@ -54,6 +54,7 @@ struct IssueDTO: Decodable {
     var text: String?
     var options: [OptionDTO] = []
 }
+
 #if DEBUG
 extension Issue {
     static let filler: Issue = Issue(id: -1,
