@@ -7,6 +7,8 @@
 
 import Foundation
 
+fileprivate let API_VERSION_QUERY_ITEM = URLQueryItem(name: "v", value: "11")
+
 struct URLBuilder {
     fileprivate static let baseUrl = URL(string: "https://www.nationstates.net/cgi-bin/api.cgi")!
     
@@ -14,6 +16,7 @@ struct URLBuilder {
         guard var components = URLComponents(url: baseUrl, resolvingAgainstBaseURL: true) else { return nil }
         
         components.queryItems = [
+            API_VERSION_QUERY_ITEM,
             URLQueryItem(name: "nation", value: nationName),
             URLQueryItem(name: "q", value: shard.rawValue),
         ]
@@ -25,6 +28,7 @@ struct URLBuilder {
         guard var components = URLComponents(url: baseUrl, resolvingAgainstBaseURL: true) else { return nil }
         
         components.queryItems = [
+            API_VERSION_QUERY_ITEM,
             URLQueryItem(name: "nation", value: nationName),
             URLQueryItem(name: "c", value: "issue"),
             URLQueryItem(name: "issue", value: String(issue.id)),

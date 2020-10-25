@@ -8,6 +8,14 @@
 import Foundation
 
 extension URLRequest {
+    mutating func setupUserAgentHeader() {
+        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        let nationName = Authentication.shared.nationName
+        
+        let userAgent = "Issues-iOS-v\(appVersion ?? "-1")-\(nationName ?? "NO_NATION")"
+        self.addValue(userAgent, forHTTPHeaderField: "User-Agent")
+    }
+    
     mutating func setupPasswordAuthenticationHeader(_ password: String) {
         self.addValue(password, forHTTPHeaderField: AuthenticationMode.password.header)
     }

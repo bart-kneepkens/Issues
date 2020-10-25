@@ -35,6 +35,7 @@ extension APIError {
 extension NationStatesAPI {
     static func authenticatedRequest(using url: URL) -> AnyPublisher<(data: Data, response: URLResponse), APIError> {
         var request = URLRequest(url: url)
+        request.setupUserAgentHeader()
         request.setupAuthenticationHeaders()
         
         return URLSession
@@ -54,6 +55,7 @@ extension NationStatesAPI {
         guard let url = URLBuilder.url(for: nationName, with: .ping) else { fatalError() }
         
         var request = URLRequest(url: url)
+        request.setupUserAgentHeader()
         request.setupPasswordAuthenticationHeader(password)
         
         return URLSession.shared
