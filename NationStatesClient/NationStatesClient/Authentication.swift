@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 enum AuthenticationMode {
     case pin
@@ -24,8 +25,9 @@ enum AuthenticationMode {
 class Authentication: ObservableObject {
     static let shared = Authentication()
     private let storage: SecureStorage
+    private var cancellables: [Cancellable] = []
     
-    init() {
+    private init() {
         self.storage = UserDefaultsStorage()
         self.nationName = storage.retrieve(key: StorageKey.nationName)
         self.autoLogin = storage.retrieve(key: StorageKey.autoLogin)
@@ -56,11 +58,29 @@ class Authentication: ObservableObject {
         }
     }
     
+    var isSigningIn: Bool = false
+    @Published var signInSuccessful: Bool = false
+    
+    func attemptSignIn() {
+        if canPerformSilentLogin, let nationName = self.nationName {
+            self.isSigningIn = true
+            self.cancellables.append(NationStatesAPI.ping(nationName: nationName).sink(receiveCompletion: { completion in
+                self.isSigningIn = false
+                self.objectWillChange.send()
+            }, receiveValue: { ping in
+                if ping {
+                    self.signInSuccessful = true
+                }
+            }))
+        }
+    }
+    
     func clear() {
         self.nationName = nil
         self.password = nil
         self.autoLogin = nil
         self.pin = nil
+        self.signInSuccessful = false
         self.objectWillChange.send()
     }
 }

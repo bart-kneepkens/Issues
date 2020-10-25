@@ -8,23 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var authenthication = Authentication.shared
+    @ObservedObject var authentication = Authentication.shared
     var issuesService = IssuesService()
     
     var body: some View {
         NavigationView {
-            if authenthication.canPerformSilentLogin {
+            if authentication.signInSuccessful {
                 IssuesView(service: self.issuesService)
+            } else if authentication.isSigningIn {
+                ProgressView("Signing in..")
             } else {
                 SignInView(viewModel: SignInViewModel(service: self.issuesService))
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
-        .onAppear {
-            if authenthication.canPerformSilentLogin {
+        .onReceive(authentication.$signInSuccessful, perform: { successful in
+            if successful {
                 self.issuesService.fetchIssues()
             }
-        }
+        })
     }
 }
 

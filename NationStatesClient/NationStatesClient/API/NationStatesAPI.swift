@@ -8,7 +8,9 @@
 import Foundation
 import Combine
 
-struct NationStatesAPI {}
+struct NationStatesAPI {
+    private init() {}
+}
 
 enum Shard: String {
     case ping
@@ -33,7 +35,7 @@ extension APIError {
 }
 
 extension NationStatesAPI {
-    static func authenticatedRequest(using url: URL) -> AnyPublisher<(data: Data, response: URLResponse), APIError> {
+    private static func authenticatedRequest(using url: URL) -> AnyPublisher<(data: Data, response: URLResponse), APIError> {
         var request = URLRequest(url: url)
         request.setupUserAgentHeader()
         request.setupAuthenticationHeaders()
@@ -77,6 +79,18 @@ extension NationStatesAPI {
                 return (autologin: nil, pin: nil)
             }
             .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    static func ping(nationName: String) -> AnyPublisher<Bool, APIError> {
+        guard let url = URLBuilder.url(for: nationName, with: .ping) else { fatalError() }
+    
+        return authenticatedRequest(using: url)
+            .map { result -> Bool in
+                let parser = PingResponseXMLParser(result.data)
+                parser.parse()
+                return parser.ping
+            }
             .eraseToAnyPublisher()
     }
 }
