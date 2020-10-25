@@ -55,6 +55,9 @@ struct IssueDTO: Decodable {
     var options: [OptionDTO] = []
 }
 
+extension OptionDTO: Equatable {}
+extension IssueDTO: Equatable {}
+
 #if DEBUG
 extension Issue {
     static let filler: Issue = Issue(id: -1,

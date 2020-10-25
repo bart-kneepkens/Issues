@@ -21,7 +21,7 @@ class IssuesResponseXMLParser: NationStatesXMLParser {
 
 extension IssuesResponseXMLParser: XMLParserDelegate {
     func parser(_ parser: XMLParser, foundCharacters string: String) {
-        foundCharacters += string.trimmingCharacters(in: .newlines)
+        foundCharacters += string.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {

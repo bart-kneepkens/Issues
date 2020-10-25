@@ -11,7 +11,7 @@ import XCTest
 class AnswerIssueResponseXMLParserTests: XCTestCase {
     
     let OK_RESPONSE = """
-        <NATION id="elest_adra">
+    <NATION id="elest_adra">
     <ISSUE id="991" choice="1">
         <OK>1</OK>
         <DESC>charities reserve the right to not help those who go against religious teachings</DESC>

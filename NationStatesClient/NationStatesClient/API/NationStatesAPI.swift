@@ -124,7 +124,6 @@ extension NationStatesAPI {
     }
 }
 
-
 extension NationStatesAPI {
     static func request(for shards: [Shard], nation nationName: String) -> AnyPublisher<[IssueDTO], APIError> {
         guard let url = URLBuilder.url(for: nationName, with: .issues) else { fatalError() }

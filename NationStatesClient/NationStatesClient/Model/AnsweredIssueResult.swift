@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct RankingDTO {
+struct RankingDTO: Equatable, Hashable {
     var id: Int?
     var score: Float?
     var change: Float?
     var percentualChange: Float?
 }
 
-struct Ranking: Equatable, Hashable {
+struct Ranking: Hashable {
     let scale: CensusScale
     let score: Float
     let change: Float
@@ -28,13 +28,13 @@ struct Ranking: Equatable, Hashable {
     }
 }
 
-struct ReclassifyDTO {
+struct ReclassifyDTO: Equatable, Hashable {
     var type: Int?
     var from: String?
     var to: String?
 }
 
-struct Reclassify: Equatable, Hashable {
+struct Reclassify: Hashable {
     let scale: CensusScale
     let from: String
     let to: String
