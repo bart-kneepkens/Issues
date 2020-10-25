@@ -19,6 +19,7 @@ struct ContentView: View {
                 SignInView(viewModel: SignInViewModel(service: self.issuesService))
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
         .onAppear {
             if authenthication.canPerformSilentLogin {
                 self.issuesService.fetchIssues()

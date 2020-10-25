@@ -7,34 +7,12 @@
 
 import Foundation
 
-struct AnswerIssueResponse {
-    let result: String
-    let rankings: [RankingDTO]
-    let reclassificiations: [ReclassifyDTO]
-    let headlines: [HeadlineDTO]
-}
-
-struct RankingDTO: Equatable, Hashable {
-    var id: Int?
-    var score: Float?
-    var change: Float?
-    var percentualChange: Float?
-}
-
-struct ReclassifyDTO: Equatable, Hashable {
-    var type: Int?
-    var from: String?
-    var to: String?
-}
-
-typealias HeadlineDTO = String
-
 class AnswerIssueResponseXMLParser: NationStatesXMLParser {
     var ok: Bool = false
     var text: String = ""
     var rankings: [RankingDTO] = []
     var reclassifications: [ReclassifyDTO] = []
-    var headlines: [HeadlineDTO] = []
+    var headlines: [Headline] = []
     
     private var currentRanking: RankingDTO = .init()
     private var currentReclassification: ReclassifyDTO = .init()
@@ -48,7 +26,7 @@ class AnswerIssueResponseXMLParser: NationStatesXMLParser {
 
 extension AnswerIssueResponseXMLParser: XMLParserDelegate {
     func parser(_ parser: XMLParser, foundCharacters string: String) {
-        foundCharacters += string.trimmingCharacters(in: .whitespacesAndNewlines)
+        foundCharacters += string.trimmingCharacters(in: .newlines)
     }
     
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {

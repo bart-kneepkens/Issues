@@ -8,7 +8,6 @@
 import Foundation
 
 extension URLRequest {
-    
     mutating func setupPasswordAuthenticationHeader(_ password: String) {
         self.addValue(password, forHTTPHeaderField: AuthenticationMode.password.header)
     }

@@ -10,7 +10,7 @@ import Foundation
 
 class IssueDetailViewModel: ObservableObject {
     @Published var issue: Issue
-    @Published var answeredIssueResponse: AnswerIssueResponse?
+    @Published var answeredIssueResult: AnsweredIssueResult?
     @Published var answeringIssue = false
     
     private(set) var service: IssuesService
@@ -21,9 +21,9 @@ class IssueDetailViewModel: ObservableObject {
         self.service = service
         
         self.cancellables.append(
-            service.$answerIssueResponse
+            service.$answeredIssueResult
                 .receive(on: DispatchQueue.main)
-                .assign(to: \.answeredIssueResponse, on: self)
+                .assign(to: \.answeredIssueResult, on: self)
         )
         
         self.cancellables.append(

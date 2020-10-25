@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CensusScale {
+struct CensusScale: Equatable, Hashable {
     let id: Int
     let name: String
     let unit: String
@@ -25,4 +25,8 @@ extension CensusScale {
         self.unit = components[1]
         self.bannerImageName = components[2]
     }
+}
+
+extension CensusScale {
+    static var unknown: CensusScale = .init(id: -1, name: "Unknown", unit: "Mystery Units", bannerImageName: "x12")
 }

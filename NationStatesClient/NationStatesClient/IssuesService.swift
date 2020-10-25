@@ -12,7 +12,7 @@ class IssuesService: ObservableObject {
     @Published var fetchingIssues = false
     @Published var issues: [Issue] = []
     @Published var anweringIssue = false
-    @Published var answerIssueResponse: AnswerIssueResponse?
+    @Published var answeredIssueResult: AnsweredIssueResult?
     
     @Published var error: APIError?
     
@@ -47,7 +47,7 @@ class IssuesService: ObservableObject {
                     default: self.anweringIssue = false
                     }
                 }, receiveValue: { response in
-                    self.answerIssueResponse = response
+                    self.answeredIssueResult = AnsweredIssueResult(dto: response)
                 })
         )
     }

@@ -8,14 +8,20 @@
 import Foundation
 
 class CensusScalesLoader {
-    let scales: [CensusScale]
+    static let shared = CensusScalesLoader()
     
-    init() {
+    private var scales: [Int: CensusScale] = [:]
+    
+    func load() {
         guard let url = Bundle.main.url(forResource: "CensusScales", withExtension: "plist") else { fatalError() }
         guard let rootDictionary = NSDictionary(contentsOf: url) else { fatalError() }
         guard let scalesData = rootDictionary.value(forKey: "scales") as? [String] else { fatalError() }
-        self.scales = scalesData.enumerated().map({ enumerator -> CensusScale in
-            return CensusScale(enumerator.element, id: enumerator.offset)
-        })
+        scalesData.enumerated().forEach { enumerator in
+            self.scales[enumerator.offset] = CensusScale(enumerator.element, id: enumerator.offset)
+        }
+    }
+    
+    func scale(for id: Int) -> CensusScale? {
+        return scales[id]
     }
 }
