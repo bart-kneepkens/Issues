@@ -9,7 +9,9 @@ import SwiftUI
 
 struct IssueDetailOptionsView: View {
     @Environment(\.presentationMode) var presentationMode
+    
     var viewModel: IssueDetailViewModel
+    
     @State var selectedOption: Option? = nil
     @State var isDismissing = false
     
@@ -34,8 +36,8 @@ struct IssueDetailOptionsView: View {
                     Alert(title: Text("Accept position #\(option.id + 1)?"),
                           primaryButton: .cancel(),
                           secondaryButton: .default(Text("Accept")) {
-                            viewModel.answer(with: option)
                             presentationMode.wrappedValue.dismiss()
+                            viewModel.answer(with: option)
                           })
                 }
             }
@@ -46,8 +48,8 @@ struct IssueDetailOptionsView: View {
             }
             .alert(isPresented: $isDismissing, content: {
                 Alert(title: Text("Dismiss issue?"), primaryButton: .cancel(), secondaryButton: .destructive(Text("Dismiss")){
-                    viewModel.answer(with: Option.dismiss)
                     presentationMode.wrappedValue.dismiss()
+                    viewModel.answer(with: Option.dismiss)
                 })
             })
         }
@@ -55,8 +57,8 @@ struct IssueDetailOptionsView: View {
     }
 }
 
-struct IssueDetailOptionsView_Previews: PreviewProvider {
-    static var previews: some View {
-        IssueDetailOptionsView(viewModel: .init(Issue.filler, service: .init()))
-    }
-}
+//struct IssueDetailOptionsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        IssueDetailOptionsView(viewModel: .init(.filler, provider: MaterializedProvider()))
+//    }
+//}

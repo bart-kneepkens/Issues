@@ -9,22 +9,23 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var authentication = Authentication.shared
-    var issuesService = IssuesService()
+    
+    var issueProvider = MockedProvider()
     
     var body: some View {
         NavigationView {
             if authentication.signInSuccessful {
-                IssuesView(service: self.issuesService)
+                IssuesView(viewModel: IssuesViewModel(provider: self.issueProvider) )
             } else if authentication.isSigningIn {
                 ProgressView("Signing in..")
             } else {
-                SignInView(viewModel: SignInViewModel(service: self.issuesService))
+                SignInView(viewModel: SignInViewModel())
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .onReceive(authentication.$signInSuccessful, perform: { successful in
             if successful {
-                self.issuesService.fetchIssues()
+//                self.issuesService.fetchIssues()
             }
         })
     }

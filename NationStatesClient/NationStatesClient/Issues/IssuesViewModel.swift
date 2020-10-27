@@ -9,20 +9,29 @@ import Foundation
 import Combine
 
 class IssuesViewModel: ObservableObject {
-    @Published var issues: [Issue] = []
-    @Published var fetchingIssues = false
-    private(set) var service: IssuesService
+    var issues: [Issue] = []
+    var error: APIError? = nil
+    var isFetchingIssues: Bool = false
     
-    var cancellables: [Cancellable?] = []
+    private(set) var provider: IssueProvider
+    private var cancellables: [Cancellable] = []
     
-    init(service: IssuesService) {
-        self.service = service
-        self.cancellables.append(service.$issues
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.issues, on: self))
-        
-        self.cancellables.append(service.$fetchingIssues
-                                    .receive(on: DispatchQueue.main)
-                                    .assign(to: \.fetchingIssues, on: self))
+    init(provider: IssueProvider) {
+        self.provider = provider
+    }
+    
+    func initialize() {
+        cancellables.append(
+            self.provider.fetchIssues()
+                .receive(on: DispatchQueue.main)
+                .catch({ error -> AnyPublisher<[Issue], Never> in
+                    self.error = error
+                    return Just([]).eraseToAnyPublisher()
+                })
+                .handleEvents(receiveCompletion: { _ in
+                    self.objectWillChange.send()
+                })
+                .assign(to: \.issues, on: self)
+        )
     }
 }

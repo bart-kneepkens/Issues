@@ -16,13 +16,7 @@ class SignInViewModel: ObservableObject {
     @Published var signingIn = false
     @Published var signInError: Error?
     
-    var issuesService: IssuesService
-    
     private var cancellable: Cancellable?
-    
-    init(service: IssuesService) {
-        self.issuesService = service
-    }
     
     func attemptSignIn() {
         self.signingIn = true
@@ -31,7 +25,7 @@ class SignInViewModel: ObservableObject {
             Authentication.shared.autoLogin = pair.autologin
             Authentication.shared.pin = pair.pin
             
-            self.issuesService.fetchIssues()
+//            self.issuesService.fetchIssues()
             self.shouldNavigateForward = true
         })
         

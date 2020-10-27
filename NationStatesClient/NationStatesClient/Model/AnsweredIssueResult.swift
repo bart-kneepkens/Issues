@@ -68,3 +68,9 @@ struct AnsweredIssueResult {
         self.rankings = dto.rankings.map({ Ranking(dto: $0)})
     }
 }
+
+#if DEBUG
+extension AnsweredIssueResult {
+    static var filler: AnsweredIssueResult = AnsweredIssueResult(dto: .init(resultText: "This is the result", headlines: ["Headlines", "Is a song by drake"], reclassifications: [], rankings: []))
+}
+#endif

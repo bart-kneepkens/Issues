@@ -61,7 +61,7 @@ struct SignInView: View {
                 })
             }
             NavigationLink(
-                destination: IssuesView(service: viewModel.issuesService).navigationBarBackButtonHidden(true),
+                destination: IssuesView(viewModel: IssuesViewModel(provider: MockedProvider())).navigationBarBackButtonHidden(true),
                 isActive: $viewModel.shouldNavigateForward,
                 label: {
                     EmptyView()
@@ -71,7 +71,7 @@ struct SignInView: View {
 }
 
 struct SignInView_Previews: PreviewProvider {
-    static var viewModel = SignInViewModel(service: IssuesService())
+    static var viewModel = SignInViewModel()
     static var previews: some View {
         SignInView(viewModel: viewModel)
     }

@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import Combine
 
 struct IssuesView: View {
-    @ObservedObject var service: IssuesService
+    @StateObject var viewModel: IssuesViewModel
     
     var errorView: some View {
-        if let error = self.service.error {
+        if let error = self.viewModel.error {
             return AnyView(
                 HStack {
                     Image(systemName: "exclamationmark.triangle")
@@ -26,11 +27,11 @@ struct IssuesView: View {
         Group {
             List {
                 Section(header: EmptyView(), footer: errorView) {
-                    ForEach(service.issues, id: \.id) { issue in
-                        NavigationLink(issue.title, destination: IssueDetailView(viewModel: IssueDetailViewModel(issue, service: service)))
+                    ForEach(viewModel.issues, id: \.id) { issue in
+                        NavigationLink(issue.title, destination: IssueDetailView(viewModel: .init(issue, provider: self.viewModel.provider)))
                     }
                 }
-                .redacted(reason:service.fetchingIssues ? .placeholder : [])
+                .redacted(reason: self.viewModel.isFetchingIssues ? .placeholder : [])
             }
             .listStyle(InsetGroupedListStyle())
         }
@@ -40,15 +41,18 @@ struct IssuesView: View {
                                 label: {
                                     Image(systemName: "gear")
                                 }))
-    }
-}
-
-struct IssuesView_Previews: PreviewProvider {
-    static var viewModel = IssuesViewModel(service: IssuesService())
-    
-    static var previews: some View {
-        NavigationView {
-            IssuesView(service: IssuesService())
+        .onAppear {
+            if self.viewModel.issues.isEmpty {
+                self.viewModel.initialize()
+            }
         }
     }
 }
+//
+//struct IssuesView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationView {
+//            IssuesView(viewModel: IssuesViewModel(provider: MaterializedProvider()))
+//        }
+//    }
+//}
