@@ -11,6 +11,18 @@ import Combine
 struct IssuesView: View {
     @StateObject var viewModel: IssuesViewModel
     
+    var fetchingIndicator: some View {
+        Group {
+            if self.viewModel.isFetchingIssues {
+                Section {
+                    ProgressView()
+                }
+            } else {
+                EmptyView()
+            }
+        }
+    }
+    
     var errorView: some View {
         if let error = self.viewModel.error {
             return AnyView(
@@ -24,17 +36,16 @@ struct IssuesView: View {
     }
     
     var body: some View {
-        Group {
-            List {
-                Section(header: EmptyView(), footer: errorView) {
-                    ForEach(viewModel.issues, id: \.id) { issue in
-                        NavigationLink(issue.title, destination: IssueDetailView(viewModel: .init(issue, provider: self.viewModel.provider)))
-                    }
+        List {
+            Section(header: EmptyView(), footer: errorView) {
+                ForEach(viewModel.issues, id: \.id) { issue in
+                    NavigationLink(issue.title, destination: IssueDetailView(viewModel: .init(issue, provider: self.viewModel.provider)))
                 }
-                .redacted(reason: self.viewModel.isFetchingIssues ? .placeholder : [])
             }
-            .listStyle(InsetGroupedListStyle())
+            .redacted(reason: self.viewModel.isFetchingIssues ? .placeholder : [])
+            fetchingIndicator
         }
+        .listStyle(InsetGroupedListStyle())
         .navigationTitle("Issues")
         .navigationBarItems(trailing: NavigationLink(
                                 destination: NationView(),
@@ -42,9 +53,7 @@ struct IssuesView: View {
                                     Image(systemName: "gear")
                                 }))
         .onAppear {
-            if self.viewModel.issues.isEmpty {
-                self.viewModel.initialize()
-            }
+            self.viewModel.initialize()
         }
     }
 }

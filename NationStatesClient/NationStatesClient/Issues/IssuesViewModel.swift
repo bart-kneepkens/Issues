@@ -21,6 +21,7 @@ class IssuesViewModel: ObservableObject {
     }
     
     func initialize() {
+        isFetchingIssues = true
         cancellables.append(
             self.provider.fetchIssues()
                 .receive(on: DispatchQueue.main)
@@ -28,7 +29,8 @@ class IssuesViewModel: ObservableObject {
                     self.error = error
                     return Just([]).eraseToAnyPublisher()
                 })
-                .handleEvents(receiveCompletion: { _ in
+                .handleEvents(receiveCompletion: { comp in
+                    self.isFetchingIssues = false
                     self.objectWillChange.send()
                 })
                 .assign(to: \.issues, on: self)

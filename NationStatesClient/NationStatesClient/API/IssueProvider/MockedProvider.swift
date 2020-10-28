@@ -10,7 +10,7 @@ import Combine
 
 #if DEBUG
 class MockedProvider: IssueProvider {
-    let issues: [Issue]
+    var issues: [Issue]
     let answerResult: AnsweredIssueResult
     let delay: Int
     
@@ -34,6 +34,9 @@ class MockedProvider: IssueProvider {
         return Just(self.answerResult)
             .delay(for: .seconds(delay), scheduler: DispatchQueue.main)
             .mapError({ _ in APIError.conflict })
+            .handleEvents(receiveCompletion: { _ in
+                self.issues = self.issues.filter({ $0.id != issue.id })
+            })
             .eraseToAnyPublisher()
     }
 }

@@ -5,6 +5,7 @@
 //  Created by Bart Kneepkens on 27/10/2020.
 //
 
+import Foundation
 import Combine
 
 class APIIssueProvider: IssueProvider {
@@ -14,6 +15,7 @@ class APIIssueProvider: IssueProvider {
         }
         return NationStatesAPI
             .request(for: [.issues], nation: nationName)
+            .throttle(for: .seconds(5), scheduler: DispatchQueue.main, latest: false)
             .map { dtos -> [Issue] in
                 return dtos.map({ Issue($0) })
             }

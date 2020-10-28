@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var authentication = Authentication.shared
     
-    var issueProvider = MockedProvider()
+    var issueProvider = APIIssueProvider()
     
     var body: some View {
         NavigationView {

@@ -9,25 +9,32 @@ import Foundation
 import Combine
 
 class SignInViewModel: ObservableObject {
-    @Published var nationName: String = "Elest Adra"
-    @Published var password: String = "Cacvu3-cekxed-coxpac"
-    @Published var shouldNavigateForward: Bool = false
+    var nationName: String = "Elest Adra"
+    var password: String = "Caac"
+    var shouldNavigateForward: Bool = false
     
-    @Published var signingIn = false
-    @Published var signInError: Error?
+    @Published var isSigningIn = false
+    var signInError: Error?
     
     private var cancellable: Cancellable?
     
     func attemptSignIn() {
-        self.signingIn = true
-        self.cancellable = NationStatesAPI.ping(nationName: nationName, password: password).sink(receiveCompletion: { _ in }, receiveValue: { (pair) in
-            Authentication.shared.nationName = self.nationName
-            Authentication.shared.autoLogin = pair.autologin
-            Authentication.shared.pin = pair.pin
-            
-//            self.issuesService.fetchIssues()
-            self.shouldNavigateForward = true
-        })
-        
+        self.isSigningIn = true
+        self.cancellable =
+            NationStatesAPI.ping(nationName: nationName, password: password)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let err):
+                    self.signInError = err
+                default: break
+                }
+                
+                self.isSigningIn = false
+            }, receiveValue: { authenticationPair in
+                Authentication.shared.nationName = self.nationName
+                Authentication.shared.autoLogin = authenticationPair.autologin
+                Authentication.shared.pin = authenticationPair.pin
+                self.shouldNavigateForward = true
+            })
     }
 }
