@@ -15,11 +15,11 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             if authentication.signInSuccessful {
-                IssuesView(viewModel: IssuesViewModel(provider: self.issueProvider) )
+                IssuesView(viewModel: IssuesViewModel(provider: self.issueProvider))
             } else if authentication.isSigningIn {
                 ProgressView("Signing in..")
             } else {
-                SignInView(viewModel: SignInViewModel())
+                SignInView(viewModel: SignInViewModel(provider: self.issueProvider))
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())

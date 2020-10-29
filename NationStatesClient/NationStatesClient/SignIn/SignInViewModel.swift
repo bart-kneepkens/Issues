@@ -9,11 +9,16 @@ import Foundation
 import Combine
 
 class SignInViewModel: ObservableObject {
-    var nationName: String = "Elest Adra"
-    var password: String = "Caac"
-    var shouldNavigateForward: Bool = false
+    private var provider: IssueProvider
+    
+    init(provider: IssueProvider) {
+        self.provider = provider
+    }
     
     @Published var isSigningIn = false
+    var nationName: String = "Elest Adra"
+    var password: String = "Caac"
+    var authenticationSuccessful: Bool = false
     var signInError: Error?
     
     private var cancellable: Cancellable?
@@ -34,7 +39,11 @@ class SignInViewModel: ObservableObject {
                 Authentication.shared.nationName = self.nationName
                 Authentication.shared.autoLogin = authenticationPair.autologin
                 Authentication.shared.pin = authenticationPair.pin
-                self.shouldNavigateForward = true
+                self.authenticationSuccessful = true
             })
+    }
+    
+    func issuesViewModel() -> IssuesViewModel {
+        return .init(provider: self.provider)
     }
 }
