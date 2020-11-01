@@ -144,7 +144,7 @@ extension NationStatesAPI {
 }
 
 extension NationStatesAPI {
-    static func request(for shards: [Shard], authentication: AuthenticationPair) -> AnyPublisher<[IssueDTO], APIError> {
+    static func fetchIssues(authentication: AuthenticationPair) -> AnyPublisher<[IssueDTO], APIError> {
         guard let url = URLBuilder.url(for: authentication.nationName, with: .issues) else { fatalError() }
         
         return authenticatedRequest(using: url, method: .regular(authentication))

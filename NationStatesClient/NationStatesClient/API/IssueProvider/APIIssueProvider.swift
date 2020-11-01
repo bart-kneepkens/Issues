@@ -21,7 +21,7 @@ class APIIssueProvider: IssueProvider {
         }
         
         return NationStatesAPI
-            .request(for: [.issues], authentication: pair)
+            .fetchIssues(authentication: pair)
             .throttle(for: .seconds(5), scheduler: DispatchQueue.main, latest: false)
             .map { dtos -> [Issue] in
                 return dtos.map({ Issue($0) })
