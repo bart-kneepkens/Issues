@@ -7,25 +7,6 @@
 
 import Foundation
 
-struct Option: Identifiable {
-    let id: Int
-    let text: String
-    
-    static let dismiss = Option(id: -1, text: "")
-}
-
-extension Option {
-    init(_ dto: OptionDTO) {
-        self.id = dto.id ?? 0
-        self.text = dto.text ?? ""
-    }
-}
-
-struct OptionDTO: Decodable {
-    var id: Int?
-    var text: String?
-}
-
 struct Issue: Identifiable {
     let id: Int
     let title: String
@@ -55,7 +36,6 @@ struct IssueDTO: Decodable {
     var options: [OptionDTO] = []
 }
 
-extension OptionDTO: Equatable {}
 extension IssueDTO: Equatable {}
 
 #if DEBUG
