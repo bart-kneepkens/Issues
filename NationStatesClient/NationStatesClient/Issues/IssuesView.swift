@@ -24,15 +24,14 @@ struct IssuesView: View {
     }
     
     var errorView: some View {
-        if let error = self.viewModel.error {
-            return AnyView(
+        Group {
+            if let error = self.viewModel.error {
                 HStack {
                     Image(systemName: "exclamationmark.triangle")
                     Text(error.text)
                 }
-            )
+            }
         }
-        return AnyView(EmptyView())
     }
     
     var body: some View {
@@ -57,11 +56,11 @@ struct IssuesView: View {
         }
     }
 }
-//
-//struct IssuesView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NavigationView {
-//            IssuesView(viewModel: IssuesViewModel(provider: MaterializedProvider()))
-//        }
-//    }
-//}
+
+struct IssuesView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            IssuesView(viewModel: IssuesViewModel(provider: MockedIssueProvider(), authenticationContainer: .init()))
+        }
+    }
+}

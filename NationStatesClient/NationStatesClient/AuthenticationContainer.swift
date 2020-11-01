@@ -8,20 +8,6 @@
 import Foundation
 import Combine
 
-enum AuthenticationMode {
-    case pin
-    case autologin
-    case password
-    
-    var header: String {
-        switch self {
-        case .password: return "X-Password"
-        case .autologin: return "X-Autologin"
-        case .pin: return "X-Pin"
-        }
-    }
-}
-
 class AuthenticationContainer: ObservableObject {
     private let storage: SecureStorage
     

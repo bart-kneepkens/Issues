@@ -17,6 +17,20 @@ enum Shard: String {
     case issues
 }
 
+enum AuthenticationMode {
+    case pin
+    case autologin
+    case password
+    
+    var header: String {
+        switch self {
+        case .password: return "X-Password"
+        case .autologin: return "X-Autologin"
+        case .pin: return "X-Pin"
+        }
+    }
+}
+
 enum APIError: Error {
     case unauthorized // 403
     case conflict // 409

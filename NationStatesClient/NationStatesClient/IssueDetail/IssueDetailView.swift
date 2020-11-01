@@ -12,14 +12,16 @@ struct IssueDetailView: View {
     @State var showingOptions = false
     
     var contents: some View {
-        if viewModel.isAnsweringIssue && viewModel.answeredIssueResult == nil {
-            return AnyView(ProgressView())
-        } else if let result = viewModel.answeredIssueResult {
-            return AnyView(IssueAnsweredSection(result: result))
-        } else {
-            return AnyView(Button("Respond to this issue") {
-                showingOptions.toggle()
-            })
+        Group {
+            if viewModel.isAnsweringIssue && viewModel.answeredIssueResult == nil {
+                ProgressView()
+            } else if let result = viewModel.answeredIssueResult {
+                IssueAnsweredSection(result: result)
+            } else {
+                Button("Respond to this issue") {
+                    showingOptions.toggle()
+                }
+            }
         }
     }
     
