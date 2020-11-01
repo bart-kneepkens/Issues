@@ -243,13 +243,10 @@
 		AE8764A3252E6F2900EFE031 /* NationStatesClient */ = {
 			isa = PBXGroup;
 			children = (
-				AE32F96E2544D5480037954D /* Nation */,
+				AEECD736254F45DC00D536AF /* Features */,
 				AE15A6CF253107AF004478C3 /* API */,
 				AE8981A52530F0ED00D62766 /* Persistence */,
-				AE8764EE252FADC800EFE031 /* IssueDetail */,
 				AE8764ED252FADBC00EFE031 /* Model */,
-				AE8764EC252FAD9E00EFE031 /* Issues */,
-				AE8764EB252FAD9200EFE031 /* SignIn */,
 				AE8764A4252E6F2900EFE031 /* NationStatesClientApp.swift */,
 				AE616F16254F0D5200C9107C /* ContentViewModel.swift */,
 				AE8764A6252E6F2900EFE031 /* ContentView.swift */,
@@ -343,6 +340,17 @@
 				AEDED2CD253C6372007A376F /* IssueAnsweredView.swift */,
 			);
 			path = IssueAnswered;
+			sourceTree = "<group>";
+		};
+		AEECD736254F45DC00D536AF /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				AE8764EC252FAD9E00EFE031 /* Issues */,
+				AE8764EB252FAD9200EFE031 /* SignIn */,
+				AE8764EE252FADC800EFE031 /* IssueDetail */,
+				AE32F96E2544D5480037954D /* Nation */,
+			);
+			path = Features;
 			sourceTree = "<group>";
 		};
 		AEFF41DE2533848900206676 /* API */ = {

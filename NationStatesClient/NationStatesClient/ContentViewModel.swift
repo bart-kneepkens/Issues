@@ -40,7 +40,7 @@ class ContentViewModel: ObservableObject {
         
         self.state = .signingIn
         
-        // Attempt a silent loging
+        // Attempt a silent log in
         self.cancellables.append(
             self.authenticationProvider.authenticate().sink(receiveCompletion: { completion in
                 switch completion {
