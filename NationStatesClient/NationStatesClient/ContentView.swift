@@ -10,7 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var authentication = Authentication.shared
     
-    var issueProvider = APIIssueProvider()
+    let issueProvider = MockedProvider()
+    let authenticationProvider = MockedAuthenticationProvider()
     
     var body: some View {
         NavigationView {
@@ -19,7 +20,7 @@ struct ContentView: View {
             } else if authentication.isSigningIn {
                 ProgressView("Signing in..")
             } else {
-                SignInView(viewModel: SignInViewModel(provider: self.issueProvider))
+                SignInView(viewModel: SignInViewModel(issueProvider: self.issueProvider, authenticationProvider: self.authenticationProvider))
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())

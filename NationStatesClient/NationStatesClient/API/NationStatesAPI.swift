@@ -24,6 +24,15 @@ enum APIError: Error {
     case unknown(error: Error)
 }
 
+typealias SimpleAuthenticationPair = (nationName: String, password: String)
+typealias AuthenticationPair = (nationName: String, autologin: String?, pin: String?)
+
+enum APIAuthenticationMethod {
+    case simple(SimpleAuthenticationPair)
+//    case regular(AuthenticationPair)
+    case regular
+}
+
 extension APIError {
     var text: String {
         switch self {
@@ -35,10 +44,17 @@ extension APIError {
 }
 
 extension NationStatesAPI {
-    private static func authenticatedRequest(using url: URL) -> AnyPublisher<(data: Data, response: URLResponse), APIError> {
+    private static func authenticatedRequest(using url: URL,
+                                             method: APIAuthenticationMethod = .regular) -> AnyPublisher<(data: Data, response: URLResponse), APIError> {
         var request = URLRequest(url: url)
         request.setupUserAgentHeader()
-        request.setupAuthenticationHeaders()
+        
+        switch method {
+        case .simple(let simplePair):
+            request.setupPasswordAuthenticationHeader(simplePair.password)
+        case .regular:
+            request.setupAuthenticationHeaders()
+        }
         
         return URLSession
             .shared
@@ -53,32 +69,22 @@ extension NationStatesAPI {
             .eraseToAnyPublisher()
     }
     
-    static func ping(nationName: String, password: String) -> AnyPublisher<(autologin: String?, pin: String?), Error> {
+    static func ping(nationName: String, password: String) -> AnyPublisher<AuthenticationPair, APIError> {
         guard let url = URLBuilder.url(for: nationName, with: .ping) else { fatalError() }
         
-        var request = URLRequest(url: url)
-        request.setupUserAgentHeader()
-        request.setupPasswordAuthenticationHeader(password)
-        
-        return URLSession.shared
-            .dataTaskPublisher(for: request)
-            .tryMap { (result) -> (autologin: String?, pin: String?) in
-                guard let httpResponse = result.response as? HTTPURLResponse else { return (autologin: nil, pin: nil) }
-                guard httpResponse.statusCode != 403 else { throw APIError.unauthorized }
-                guard httpResponse.statusCode != 409 else { throw APIError.conflict }
-                
+        return authenticatedRequest(using: url,
+                                    method: .simple((nationName: nationName, password: password)))
+            .map { result -> AuthenticationPair in
                 let parser = PingResponseXMLParser(result.data)
                 parser.parse()
-                
-                if parser.ping {
+                if parser.ping, let httpResponse = result.response as? HTTPURLResponse {
                     let autoLogin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.autologin.header)
                     let pin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.pin.header)
-                    return (autologin: autoLogin, pin: pin)
+                    return (nationName: nationName, autologin: autoLogin, pin: pin)
                 }
                 
-                return (autologin: nil, pin: nil)
+                return (nationName: nationName, autologin: nil, pin: nil)
             }
-            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
     

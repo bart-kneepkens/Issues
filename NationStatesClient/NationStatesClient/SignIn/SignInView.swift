@@ -16,7 +16,7 @@ struct SignInView: View {
     }
     
     var body: some View {
-        Group {
+        ZStack {
             Form {
                 Section {
                     Image("banner")
@@ -63,6 +63,7 @@ struct SignInView: View {
                 Alert(title: Text("Can't sign in"), message: Text("Please check your credentials and try again"), dismissButton: nil)
             })
             
+            
             NavigationLink(
                 destination: IssuesView(viewModel: viewModel.issuesViewModel()).navigationBarBackButtonHidden(true),
                 isActive: $viewModel.authenticationSuccessful,
@@ -74,7 +75,7 @@ struct SignInView: View {
 }
 
 struct SignInView_Previews: PreviewProvider {
-    static var viewModel = SignInViewModel(provider: MockedProvider())
+    static var viewModel = SignInViewModel(issueProvider: MockedProvider(), authenticationProvider: MockedAuthenticationProvider())
     static var previews: some View {
         SignInView(viewModel: viewModel)
     }

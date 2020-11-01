@@ -9,15 +9,17 @@ import Foundation
 import Combine
 
 class SignInViewModel: ObservableObject {
-    private var provider: IssueProvider
+    private var authenticationProvider: AuthenticationProvider
+    private var issueProvider: IssueProvider
     
-    init(provider: IssueProvider) {
-        self.provider = provider
+    init(issueProvider: IssueProvider, authenticationProvider: AuthenticationProvider) {
+        self.issueProvider = issueProvider
+        self.authenticationProvider = authenticationProvider
     }
     
     @Published var isSigningIn = false
     var nationName: String = "Elest Adra"
-    var password: String = "Caac"
+    var password: String = "Cacvu3-cekxed-coxpac"
     var authenticationSuccessful: Bool = false
     var signInError: Error?
     
@@ -25,8 +27,8 @@ class SignInViewModel: ObservableObject {
     
     func attemptSignIn() {
         self.isSigningIn = true
-        self.cancellable =
-            NationStatesAPI.ping(nationName: nationName, password: password)
+        self.cancellable = self.authenticationProvider
+            .authenticate(nationName: nationName, password: password)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let err):
@@ -35,6 +37,8 @@ class SignInViewModel: ObservableObject {
                 }
                 
                 self.isSigningIn = false
+                
+                self.objectWillChange.send()
             }, receiveValue: { authenticationPair in
                 Authentication.shared.nationName = self.nationName
                 Authentication.shared.autoLogin = authenticationPair.autologin
@@ -44,6 +48,6 @@ class SignInViewModel: ObservableObject {
     }
     
     func issuesViewModel() -> IssuesViewModel {
-        return .init(provider: self.provider)
+        return .init(provider: self.issueProvider)
     }
 }
