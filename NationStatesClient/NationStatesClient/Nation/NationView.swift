@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-// TODO: add proper model / viewmodel
 struct NationView: View {
     @Environment(\.presentationMode) var presentationMode
+    let viewModel: NationViewModel
     
     var body: some View {
         List {
@@ -19,7 +19,7 @@ struct NationView: View {
             Section(header: Text("Account")) {
                 Button("Sign out") {
                     presentationMode.wrappedValue.dismiss()
-                    Authentication.shared.clear()
+                    self.viewModel.signOut()
                 }.foregroundColor(.red)
             }
         }.listStyle(InsetGroupedListStyle())
@@ -29,7 +29,7 @@ struct NationView: View {
 struct NationView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            NationView()
+            NationView(viewModel: .init(authenticationContainer: .init()))
         }
     }
 }

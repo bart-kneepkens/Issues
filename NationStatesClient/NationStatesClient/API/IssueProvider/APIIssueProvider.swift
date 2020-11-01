@@ -9,12 +9,19 @@ import Foundation
 import Combine
 
 class APIIssueProvider: IssueProvider {
+    let authenticationContainer: AuthenticationContainer
+    
+    init(container: AuthenticationContainer) {
+        self.authenticationContainer = container
+    }
+    
     func fetchIssues() -> AnyPublisher<[Issue], APIError> {
-        guard let nationName = Authentication.shared.nationName else {
+        guard let pair = authenticationContainer.pair else {
             return Fail(error: APIError.unauthorized).eraseToAnyPublisher()
         }
+        
         return NationStatesAPI
-            .request(for: [.issues], nation: nationName)
+            .request(for: [.issues], authentication: pair)
             .throttle(for: .seconds(5), scheduler: DispatchQueue.main, latest: false)
             .map { dtos -> [Issue] in
                 return dtos.map({ Issue($0) })
@@ -23,7 +30,11 @@ class APIIssueProvider: IssueProvider {
     }
     
     func answerIssue(issue: Issue, option: Option) -> AnyPublisher<AnsweredIssueResult?, APIError> {
-        return NationStatesAPI.answerIssue(issue, option: option)
+        guard let pair = authenticationContainer.pair else {
+            return Fail(error: APIError.unauthorized).eraseToAnyPublisher()
+        }
+        
+        return NationStatesAPI.answerIssue(issue, option: option, authentication: pair)
             .map({ AnsweredIssueResult(dto: $0 )})
             .eraseToAnyPublisher()
     }

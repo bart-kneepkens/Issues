@@ -9,7 +9,6 @@ import SwiftUI
 
 struct IssueDetailView: View {
     @StateObject var viewModel: IssueDetailViewModel
-    
     @State var showingOptions = false
     
     var contents: some View {
@@ -43,7 +42,7 @@ struct IssueDetailView: View {
             contents
         }
         .listStyle(InsetGroupedListStyle())
-        .navigationTitle("\(Authentication.shared.nationName ?? "") Issue #\(viewModel.issue.id)")
+        .navigationTitle("\(viewModel.nationName) Issue #\(viewModel.issue.id)")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showingOptions, content: {
             IssueDetailOptionsView(viewModel: self.viewModel)

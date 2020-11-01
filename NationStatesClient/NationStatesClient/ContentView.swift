@@ -8,32 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var authentication = Authentication.shared
-    
-    let issueProvider = MockedProvider()
-    let authenticationProvider = MockedAuthenticationProvider()
+    @ObservedObject var viewModel: ContentViewModel
     
     var body: some View {
         NavigationView {
-            if authentication.signInSuccessful {
-                IssuesView(viewModel: IssuesViewModel(provider: self.issueProvider))
-            } else if authentication.isSigningIn {
+            if viewModel.state == ContentViewModelState.signedIn {
+                IssuesView(viewModel: self.viewModel.issuesViewModel)
+            } else if viewModel.state == ContentViewModelState.signingIn {
                 ProgressView("Signing in..")
             } else {
-                SignInView(viewModel: SignInViewModel(issueProvider: self.issueProvider, authenticationProvider: self.authenticationProvider))
+                SignInView(viewModel: self.viewModel.signInViewModel)
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
-        .onReceive(authentication.$signInSuccessful, perform: { successful in
-            if successful {
-//                self.issuesService.fetchIssues()
-            }
-        })
+        .onAppear {
+            self.viewModel.onAppear()
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(viewModel: ContentViewModel())
     }
 }

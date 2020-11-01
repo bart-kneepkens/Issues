@@ -39,7 +39,7 @@ struct IssuesView: View {
         List {
             Section(header: EmptyView(), footer: errorView) {
                 ForEach(viewModel.issues, id: \.id) { issue in
-                    NavigationLink(issue.title, destination: IssueDetailView(viewModel: .init(issue, provider: self.viewModel.provider)))
+                    NavigationLink(issue.title, destination: IssueDetailView(viewModel: self.viewModel.issueDetailViewModel(issue: issue)))
                 }
             }
             .redacted(reason: self.viewModel.isFetchingIssues ? .placeholder : [])
@@ -48,7 +48,7 @@ struct IssuesView: View {
         .listStyle(InsetGroupedListStyle())
         .navigationTitle("Issues")
         .navigationBarItems(trailing: NavigationLink(
-                                destination: NationView(),
+                                destination: NationView(viewModel: self.viewModel.nationViewModel),
                                 label: {
                                     Image(systemName: "gear")
                                 }))

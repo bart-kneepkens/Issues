@@ -1,5 +1,5 @@
 //
-//  MockedProvider.swift
+//  MockedIssueProvider.swift
 //  NationStatesClient
 //
 //  Created by Bart Kneepkens on 09/10/2020.
@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 #if DEBUG
-class MockedProvider: IssueProvider {
+class MockedIssueProvider: IssueProvider {
     var issues: [Issue]
     let answerResult: AnsweredIssueResult
     let delay: Int

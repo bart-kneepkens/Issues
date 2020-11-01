@@ -14,10 +14,13 @@ class IssuesViewModel: ObservableObject {
     var isFetchingIssues: Bool = false
     
     private(set) var provider: IssueProvider
+    private(set) var authenticationContainer: AuthenticationContainer
+    
     private var cancellables: [Cancellable] = []
     
-    init(provider: IssueProvider) {
+    init(provider: IssueProvider, authenticationContainer: AuthenticationContainer) {
         self.provider = provider
+        self.authenticationContainer = authenticationContainer
     }
     
     func initialize() {
@@ -35,5 +38,15 @@ class IssuesViewModel: ObservableObject {
                 })
                 .assign(to: \.issues, on: self)
         )
+    }
+}
+
+extension IssuesViewModel {
+    var nationViewModel: NationViewModel {
+        return .init(authenticationContainer: self.authenticationContainer)
+    }
+    
+    func issueDetailViewModel(issue: Issue) -> IssueDetailViewModel {
+        return .init(issue, provider: self.provider, nationName: self.authenticationContainer.pair?.nationName ?? "")
     }
 }

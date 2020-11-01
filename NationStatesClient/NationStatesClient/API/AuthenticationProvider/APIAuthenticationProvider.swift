@@ -9,16 +9,21 @@ import Foundation
 import Combine
 
 class APIAuthenticationProvider: AuthenticationProvider {
-    private let authentication = Authentication.shared
+    private let authenticationContainer: AuthenticationContainer
+    
+    init(authenticationContainer: AuthenticationContainer) {
+        self.authenticationContainer = authenticationContainer
+    }
     
     func authenticate(nationName: String, password: String) -> AnyPublisher<AuthenticationPair, APIError> {
         return NationStatesAPI.ping(nationName: nationName, password: password)
     }
     
     func authenticate() -> AnyPublisher<Bool, APIError> {
-        guard let nationName = authentication.nationName else {
+        guard let pair = authenticationContainer.pair else {
             return Fail(error: APIError.unauthorized).eraseToAnyPublisher()
         }
-        return NationStatesAPI.ping(nationName: nationName)
+        
+        return NationStatesAPI.ping(authentication: pair)
     }
 }

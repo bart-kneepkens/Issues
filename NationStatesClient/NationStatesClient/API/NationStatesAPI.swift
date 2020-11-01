@@ -29,8 +29,7 @@ typealias AuthenticationPair = (nationName: String, autologin: String?, pin: Str
 
 enum APIAuthenticationMethod {
     case simple(SimpleAuthenticationPair)
-//    case regular(AuthenticationPair)
-    case regular
+    case regular(AuthenticationPair)
 }
 
 extension APIError {
@@ -45,15 +44,16 @@ extension APIError {
 
 extension NationStatesAPI {
     private static func authenticatedRequest(using url: URL,
-                                             method: APIAuthenticationMethod = .regular) -> AnyPublisher<(data: Data, response: URLResponse), APIError> {
+                                             method: APIAuthenticationMethod) -> AnyPublisher<(data: Data, response: URLResponse), APIError> {
         var request = URLRequest(url: url)
-        request.setupUserAgentHeader()
         
         switch method {
         case .simple(let simplePair):
+            request.setupUserAgentHeader(nationName: nil)
             request.setupPasswordAuthenticationHeader(simplePair.password)
-        case .regular:
-            request.setupAuthenticationHeaders()
+        case .regular(let pair):
+            request.setupUserAgentHeader(nationName: pair.nationName)
+            request.setupAuthenticationHeaders(pair: pair)
         }
         
         return URLSession
@@ -88,10 +88,10 @@ extension NationStatesAPI {
             .eraseToAnyPublisher()
     }
     
-    static func ping(nationName: String) -> AnyPublisher<Bool, APIError> {
-        guard let url = URLBuilder.url(for: nationName, with: .ping) else { fatalError() }
+    static func ping(authentication: AuthenticationPair) -> AnyPublisher<Bool, APIError> {
+        guard let url = URLBuilder.url(for: authentication.nationName, with: .ping) else { fatalError() }
     
-        return authenticatedRequest(using: url)
+        return authenticatedRequest(using: url, method: .regular(authentication))
             .map { result -> Bool in
                 let parser = PingResponseXMLParser(result.data)
                 parser.parse()
@@ -102,11 +102,10 @@ extension NationStatesAPI {
 }
 
 extension NationStatesAPI {
-    static func answerIssue(_ issue: Issue, option: Option) -> AnyPublisher<AnsweredIssueResultDTO, APIError> {
-        guard let nationName = Authentication.shared.nationName else { fatalError() }
-        guard let url = URLBuilder.answerIssueUrl(for: nationName, issue: issue, option: option) else { fatalError() }
+    static func answerIssue(_ issue: Issue, option: Option, authentication: AuthenticationPair) -> AnyPublisher<AnsweredIssueResultDTO, APIError> {
+        guard let url = URLBuilder.answerIssueUrl(for: authentication.nationName, issue: issue, option: option) else { fatalError() }
         
-        return authenticatedRequest(using: url)
+        return authenticatedRequest(using: url, method: .regular(authentication))
             .map { result -> AnsweredIssueResultDTO in
                 let parser = AnswerIssueResponseXMLParser(result.data)
                 parser.parse()
@@ -131,10 +130,10 @@ extension NationStatesAPI {
 }
 
 extension NationStatesAPI {
-    static func request(for shards: [Shard], nation nationName: String) -> AnyPublisher<[IssueDTO], APIError> {
-        guard let url = URLBuilder.url(for: nationName, with: .issues) else { fatalError() }
+    static func request(for shards: [Shard], authentication: AuthenticationPair) -> AnyPublisher<[IssueDTO], APIError> {
+        guard let url = URLBuilder.url(for: authentication.nationName, with: .issues) else { fatalError() }
         
-        return authenticatedRequest(using: url)
+        return authenticatedRequest(using: url, method: .regular(authentication))
             .map({ result -> [IssueDTO] in
                 let parser = IssuesResponseXMLParser(result.data)
                 parser.parse()

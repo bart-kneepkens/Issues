@@ -13,13 +13,15 @@ class IssueDetailViewModel: ObservableObject {
     @Published var answeredIssueResult: AnsweredIssueResult?
     @Published var isAnsweringIssue = false
     @Published var error: APIError?
+    @Published var nationName: String
     
     private(set) var provider: IssueProvider
     private var cancellables: [Cancellable?] = []
     
-    init(_ issue: Issue, provider: IssueProvider) {
+    init(_ issue: Issue, provider: IssueProvider, nationName: String) {
         self.issue = issue
         self.provider = provider
+        self.nationName = nationName
     }
     
     func answer(with option: Option) {
