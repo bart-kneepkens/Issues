@@ -23,12 +23,17 @@ struct IssuesView: View {
         }
     }
     
-    var errorView: some View {
+    
+    var footerView: some View {
         Group {
             if let error = self.viewModel.error {
                 HStack {
                     Image(systemName: "exclamationmark.triangle")
                     Text(error.text)
+                }
+            } else if let result = self.viewModel.fetchIssuesResult {
+                HStack {
+                    Text("Next issue \(result.timeLeftForNextIssue)")
                 }
             }
         }
@@ -36,7 +41,7 @@ struct IssuesView: View {
     
     var body: some View {
         List {
-            Section(header: EmptyView(), footer: errorView) {
+            Section(header: EmptyView(), footer: footerView) {
                 ForEach(viewModel.issues, id: \.id) { issue in
                     NavigationLink(issue.title, destination: IssueDetailView(viewModel: self.viewModel.issueDetailViewModel(issue: issue)))
                 }

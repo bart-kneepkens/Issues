@@ -9,6 +9,9 @@ import Foundation
 
 class IssuesResponseXMLParser: NationStatesXMLParser {
     var issues: [IssueDTO] = []
+    var timeLeftForNextIssue = ""
+    var nextIssueDate = Date()
+    
     private var currentIssue: IssueDTO = .init()
     private var currentOption: OptionDTO = .init()
     private var foundCharacters: String = ""
@@ -58,6 +61,12 @@ extension IssuesResponseXMLParser: XMLParserDelegate {
         case "ISSUE":
             issues.append(currentIssue)
             currentIssue = .init()
+        case "NEXTISSUE":
+            timeLeftForNextIssue = foundCharacters
+        case "NEXTISSUETIME":
+            if let unixStamp = TimeInterval(foundCharacters) {
+                nextIssueDate = Date(timeIntervalSince1970: unixStamp)
+            }
         default: break
         }
         

@@ -15,6 +15,8 @@ struct NationStatesAPI {
 enum Shard: String {
     case ping
     case issues
+    case nextissue
+    case nextissuetime
 }
 
 enum AuthenticationMode {
@@ -149,14 +151,14 @@ extension NationStatesAPI {
 }
 
 extension NationStatesAPI {
-    static func fetchIssues(authentication: AuthenticationPair) -> AnyPublisher<[IssueDTO], APIError> {
-        guard let url = URLBuilder.url(for: authentication.nationName, with: .issues) else { fatalError() }
+    static func fetchIssues(authentication: AuthenticationPair) -> AnyPublisher<FetchIssuesResultDTO, APIError> {
+        guard let url = URLBuilder.url(for: authentication.nationName, with: [.issues, .nextissue, .nextissuetime]) else { fatalError() }
         
         return authenticatedRequest(using: url, method: .regular(authentication))
-            .map({ result -> [IssueDTO] in
+            .map({ result -> FetchIssuesResultDTO in
                 let parser = IssuesResponseXMLParser(result.data)
                 parser.parse()
-                return parser.issues
+                return FetchIssuesResultDTO(issues: parser.issues, timeLeftForNextIssue: parser.timeLeftForNextIssue, nextIssueDate: parser.nextIssueDate)
             })
             .eraseToAnyPublisher()
     }

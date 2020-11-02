@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 class IssuesViewModel: ObservableObject {
-    var issues: [Issue] = []
+    var fetchIssuesResult: FetchIssuesResult?
     var error: APIError? = nil
     var isFetchingIssues: Bool = false
     
@@ -23,21 +23,27 @@ class IssuesViewModel: ObservableObject {
         self.authenticationContainer = authenticationContainer
     }
     
+    var issues: [Issue] {
+        get {
+            return fetchIssuesResult?.issues ?? []
+        }
+    }
+    
     func initialize() {
         isFetchingIssues = true
         self.objectWillChange.send()
         cancellables.append(
             self.provider.fetchIssues()
                 .receive(on: DispatchQueue.main)
-                .catch({ error -> AnyPublisher<[Issue], Never> in
+                .catch({ error -> AnyPublisher<FetchIssuesResult?, Never> in
                     self.error = error
-                    return Just([]).eraseToAnyPublisher()
+                    return Just(nil).eraseToAnyPublisher()
                 })
                 .handleEvents(receiveCompletion: { comp in
                     self.isFetchingIssues = false
                     self.objectWillChange.send()
                 })
-                .assign(to: \.issues, on: self)
+                .assign(to: \.fetchIssuesResult, on: self)
         )
     }
 }

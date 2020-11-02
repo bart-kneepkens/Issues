@@ -8,6 +8,6 @@
 import Combine
 
 protocol IssueProvider {
-    func fetchIssues() -> AnyPublisher<[Issue], APIError>
+    func fetchIssues() -> AnyPublisher<FetchIssuesResult?, APIError>
     func answerIssue(issue: Issue, option: Option) -> AnyPublisher<AnsweredIssueResult?, APIError>
 }

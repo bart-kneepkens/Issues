@@ -15,17 +15,15 @@ class APIIssueProvider: IssueProvider {
         self.authenticationContainer = container
     }
     
-    func fetchIssues() -> AnyPublisher<[Issue], APIError> {
+    func fetchIssues() -> AnyPublisher<FetchIssuesResult?, APIError> {
         guard let pair = authenticationContainer.pair else {
             return Fail(error: APIError.unauthorized).eraseToAnyPublisher()
         }
         
         return NationStatesAPI
             .fetchIssues(authentication: pair)
+            .map({ FetchIssuesResult($0) })
             .throttle(for: .seconds(5), scheduler: DispatchQueue.main, latest: false)
-            .map { dtos -> [Issue] in
-                return dtos.map({ Issue($0) })
-            }
             .eraseToAnyPublisher()
     }
     
