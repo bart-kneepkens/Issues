@@ -57,7 +57,7 @@ struct IssuesView: View {
                                     Image(systemName: "gear")
                                 }))
         .onAppear {
-            self.viewModel.initialize()
+            self.viewModel.startFetchingIssues() // Throttled accordingly in VM
         }
     }
 }

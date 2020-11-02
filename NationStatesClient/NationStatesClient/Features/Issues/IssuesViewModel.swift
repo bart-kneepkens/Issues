@@ -15,12 +15,18 @@ class IssuesViewModel: ObservableObject {
     
     private(set) var provider: IssueProvider
     private(set) var authenticationContainer: AuthenticationContainer
-    
     private var cancellables: [Cancellable] = []
+    
+    private var shouldFetchPublisher = PassthroughSubject<Bool, Never>()
     
     init(provider: IssueProvider, authenticationContainer: AuthenticationContainer) {
         self.provider = provider
         self.authenticationContainer = authenticationContainer
+        self.cancellables.append(
+            shouldFetchPublisher
+                .throttle(for: .seconds(10), scheduler: DispatchQueue.main, latest: false)
+                .sink { _ in self.fetchIssues() }
+        )
     }
     
     var issues: [Issue] {
@@ -29,10 +35,14 @@ class IssuesViewModel: ObservableObject {
         }
     }
     
-    func initialize() {
-        isFetchingIssues = true
+    func startFetchingIssues() {
+        self.shouldFetchPublisher.send(true)
+    }
+    
+    private func fetchIssues() {
+        self.isFetchingIssues = true
         self.objectWillChange.send()
-        cancellables.append(
+        self.cancellables.append(
             self.provider.fetchIssues()
                 .receive(on: DispatchQueue.main)
                 .catch({ error -> AnyPublisher<FetchIssuesResult?, Never> in
