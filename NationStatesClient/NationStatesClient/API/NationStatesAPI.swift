@@ -73,7 +73,21 @@ extension NationStatesAPI {
         return URLSession
             .shared
             .dataTaskPublisher(for: request)
+            .tryMap({ value -> (data: Data, response: URLResponse) in
+                if let httpResponse = value.response as? HTTPURLResponse {
+                    if httpResponse.statusCode == 409 {
+                        throw APIError.conflict
+                    }
+                    if httpResponse.statusCode == 403 {
+                        throw APIError.unauthorized
+                    }
+                }
+                return value
+            })
             .mapError({ (error) -> APIError in
+                if let apiError = error as? APIError {
+                    return apiError
+                }
                 if (error as NSError).code == NSURLErrorNotConnectedToInternet {
                     return APIError.notConnected
                 }
@@ -133,17 +147,6 @@ extension NationStatesAPI {
 }
 
 extension NationStatesAPI {
-    static func fetchImageData(_ name: String, completionHandler: @escaping (Result<Data?, APIError>) -> Void) {
-        guard let url = URLBuilder.imageUrl(for: name) else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard error == nil else { return }
-            completionHandler(.success(data))
-        }
-    }
-}
-
-extension NationStatesAPI {
     static func fetchIssues(authentication: AuthenticationPair) -> AnyPublisher<[IssueDTO], APIError> {
         guard let url = URLBuilder.url(for: authentication.nationName, with: .issues) else { fatalError() }
         
@@ -154,5 +157,16 @@ extension NationStatesAPI {
                 return parser.issues
             })
             .eraseToAnyPublisher()
+    }
+}
+
+extension NationStatesAPI {
+    static func fetchImageData(_ name: String, completionHandler: @escaping (Result<Data?, APIError>) -> Void) {
+        guard let url = URLBuilder.imageUrl(for: name) else { return }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard error == nil else { return }
+            completionHandler(.success(data))
+        }
     }
 }
