@@ -50,6 +50,8 @@ extension APIError {
     var text: String {
         switch self {
         case .notConnected: return "There appears to be no internet connection. Are you connected?"
+        case .conflict: return "conflict"
+        case .unauthorized: return "unauthorized"
         default:
             return "Unknown Error"
         }

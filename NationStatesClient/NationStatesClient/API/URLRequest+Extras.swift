@@ -20,11 +20,10 @@ extension URLRequest {
     }
     
     mutating func setupAuthenticationHeaders(pair: AuthenticationPair) {
-        if let autologin = pair.autologin {
-            self.addValue(autologin, forHTTPHeaderField: AuthenticationMode.autologin.header)
-        }
         if let pin = pair.pin {
             self.addValue(pin, forHTTPHeaderField: AuthenticationMode.pin.header)
+        } else if let autologin = pair.autologin {
+            self.addValue(autologin, forHTTPHeaderField: AuthenticationMode.autologin.header)
         }
     }
 }

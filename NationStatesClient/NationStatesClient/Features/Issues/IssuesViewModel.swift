@@ -25,6 +25,7 @@ class IssuesViewModel: ObservableObject {
     
     func initialize() {
         isFetchingIssues = true
+        self.objectWillChange.send()
         cancellables.append(
             self.provider.fetchIssues()
                 .receive(on: DispatchQueue.main)
