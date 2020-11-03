@@ -31,7 +31,7 @@ struct IssuesView: View {
                     Image(systemName: "exclamationmark.triangle")
                     Text(error.text)
                 }
-            } else if let result = self.viewModel.fetchIssuesResult {
+            } else if let result = self.viewModel.fetchIssuesResult, self.viewModel.issues.count != 5 {
                 HStack {
                     Text("Next issue \(result.timeLeftForNextIssue)")
                 }
