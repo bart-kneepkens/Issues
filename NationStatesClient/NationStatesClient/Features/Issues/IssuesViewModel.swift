@@ -13,25 +13,31 @@ class IssuesViewModel: ObservableObject {
     var error: APIError? = nil
     var isFetchingIssues: Bool = false
     
-    private(set) var provider: IssueProvider
-    private(set) var authenticationContainer: AuthenticationContainer
-    private var cancellables: [Cancellable] = []
+    private var provider: IssueProvider
+    private var authenticationContainer: AuthenticationContainer
+    private var cancellables: [Cancellable]? = []
     
     private var shouldFetchPublisher = PassthroughSubject<Bool, Never>()
+    
+    private let refreshIssuesTimer = Timer.publish(every: 30, tolerance: 5, on: .main, in: .common).autoconnect()
     
     init(provider: IssueProvider, authenticationContainer: AuthenticationContainer) {
         self.provider = provider
         self.authenticationContainer = authenticationContainer
-        self.cancellables.append(
-            shouldFetchPublisher
+        self.cancellables?.append(
+            self.shouldFetchPublisher
                 .throttle(for: .seconds(10), scheduler: DispatchQueue.main, latest: false)
-                .sink { _ in self.fetchIssues() }
+                .sink { shouldShowProgressIndicator in self.fetchIssues(shouldShowProgressIndicator) }
         )
+        
+        self.cancellables?.append(refreshIssuesTimer.sink(receiveValue: { _ in
+            self.shouldFetchPublisher.send(true)
+        }))
     }
     
     var issues: [Issue] {
         get {
-            return fetchIssuesResult?.issues ?? []
+            return self.fetchIssuesResult?.issues ?? []
         }
     }
     
@@ -39,10 +45,13 @@ class IssuesViewModel: ObservableObject {
         self.shouldFetchPublisher.send(true)
     }
     
-    private func fetchIssues() {
-        self.isFetchingIssues = true
-        self.objectWillChange.send()
-        self.cancellables.append(
+    private func fetchIssues(_ showProgress: Bool) {
+        if showProgress {
+            self.isFetchingIssues = true
+            self.objectWillChange.send()
+        }
+        
+        self.cancellables?.append(
             self.provider.fetchIssues()
                 .receive(on: DispatchQueue.main)
                 .catch({ error -> AnyPublisher<FetchIssuesResult?, Never> in
@@ -50,7 +59,9 @@ class IssuesViewModel: ObservableObject {
                     return Just(nil).eraseToAnyPublisher()
                 })
                 .handleEvents(receiveCompletion: { comp in
-                    self.isFetchingIssues = false
+                    if showProgress {
+                        self.isFetchingIssues = false
+                    }
                     self.objectWillChange.send()
                 })
                 .assign(to: \.fetchIssuesResult, on: self)
