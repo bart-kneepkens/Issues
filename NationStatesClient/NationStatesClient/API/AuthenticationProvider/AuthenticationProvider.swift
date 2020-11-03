@@ -8,6 +8,5 @@
 import Combine
 
 protocol AuthenticationProvider {
-    func authenticate(nationName: String, password: String) -> AnyPublisher<AuthenticationPair, APIError>
-    func authenticate() -> AnyPublisher<Bool, APIError>
+    func authenticate(authenticationContainer: AuthenticationContainer) -> AnyPublisher<Bool, APIError>
 }

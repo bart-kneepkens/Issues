@@ -16,22 +16,20 @@ class IssuesViewModel: ObservableObject {
     private var provider: IssueProvider
     private var authenticationContainer: AuthenticationContainer
     private var cancellables: [Cancellable]? = []
-    
     private var shouldFetchPublisher = PassthroughSubject<Bool, Never>()
-    
-    private let refreshIssuesTimer = Timer.publish(every: 30, tolerance: 5, on: .main, in: .common).autoconnect()
+    private let refreshIssuesTimer = Timer.publish(every: 10, tolerance: 5, on: .main, in: .common).autoconnect()
     
     init(provider: IssueProvider, authenticationContainer: AuthenticationContainer) {
         self.provider = provider
         self.authenticationContainer = authenticationContainer
         self.cancellables?.append(
             self.shouldFetchPublisher
-                .throttle(for: .seconds(10), scheduler: DispatchQueue.main, latest: false)
+                .throttle(for: .seconds(8), scheduler: DispatchQueue.main, latest: false)
                 .sink { shouldShowProgressIndicator in self.fetchIssues(shouldShowProgressIndicator) }
         )
         
         self.cancellables?.append(refreshIssuesTimer.sink(receiveValue: { _ in
-            self.shouldFetchPublisher.send(true)
+            self.shouldFetchPublisher.send(false)
         }))
     }
     
@@ -59,6 +57,11 @@ class IssuesViewModel: ObservableObject {
                     return Just(nil).eraseToAnyPublisher()
                 })
                 .handleEvents(receiveCompletion: { comp in
+                    switch comp {
+                    case .finished:
+                        self.error = nil
+                    }
+                    
                     if showProgress {
                         self.isFetchingIssues = false
                     }
@@ -75,6 +78,6 @@ extension IssuesViewModel {
     }
     
     func issueDetailViewModel(issue: Issue) -> IssueDetailViewModel {
-        return .init(issue, provider: self.provider, nationName: self.authenticationContainer.pair?.nationName ?? "")
+        return .init(issue, provider: self.provider, nationName: self.authenticationContainer.nationName)
     }
 }

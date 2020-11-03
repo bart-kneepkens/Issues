@@ -28,8 +28,10 @@ class ContentViewModel: ObservableObject {
         self.issueProvider = APIIssueProvider(container: self.authenticationContainer)
         self.authenticationProvider = APIAuthenticationProvider(authenticationContainer: self.authenticationContainer)
         
-        self.cancellables.append(self.authenticationContainer.$pair.sink { pair in
-            if pair == nil {
+        self.cancellables.append(self.authenticationContainer.$pair
+                                    .receive(on: DispatchQueue.main)
+                                    .sink { pair in
+        if pair == nil && self.authenticationContainer.nationName.isEmpty {
                 self.state = .initial
             }
         })
@@ -42,10 +44,13 @@ class ContentViewModel: ObservableObject {
         
         // Attempt a silent log in
         self.cancellables.append(
-            self.authenticationProvider.authenticate().sink(receiveCompletion: { completion in
+            self.authenticationProvider.authenticate(authenticationContainer: self.authenticationContainer)
+                .receive(on: DispatchQueue.main)
+                .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished: break
-                case .failure(_): self.state = .initial
+                case .failure(let err):
+                    self.state = .initial
                 }
             }, receiveValue: { success in
                 if success {

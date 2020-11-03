@@ -13,9 +13,11 @@ class AuthenticationContainer: ObservableObject {
     
     init() {
         self.storage = UserDefaultsStorage()
-        if let nationName = storage.retrieve(key: StorageKey.nationName), let autoLogin = storage.retrieve(key: StorageKey.autoLogin), let pin = storage.retrieve(key: StorageKey.pin) {
-            self.pair = (nationName: nationName, autologin: autoLogin, pin: pin)
+        if let autoLogin = storage.retrieve(key: StorageKey.autoLogin), let pin = storage.retrieve(key: StorageKey.pin) {
+            self.pair = (autologin: autoLogin, pin: pin)
         }
+        self.nationName = storage.retrieve(key: StorageKey.nationName) ?? ""
+        self.password = storage.retrieve(key: StorageKey.password) ?? ""
     }
     
     var canPerformSilentLogin: Bool {
@@ -25,14 +27,24 @@ class AuthenticationContainer: ObservableObject {
     @Published var pair: AuthenticationPair? {
         didSet {
             if let pair = pair {
-                self.storage.store(pair.nationName, key: StorageKey.nationName)
                 self.storage.store(pair.autologin, key: StorageKey.autoLogin)
                 self.storage.store(pair.pin, key: StorageKey.pin)
             } else {
-                self.storage.store(nil, key: StorageKey.nationName)
                 self.storage.store(nil, key: StorageKey.autoLogin)
                 self.storage.store(nil, key: StorageKey.pin)
             }
+        }
+    }
+    
+    var nationName: String {
+        didSet {
+            self.storage.store(nationName, key: StorageKey.nationName)
+        }
+    }
+    
+    var password: String {
+        didSet {
+            self.storage.store(password, key: StorageKey.password)
         }
     }
 
@@ -46,5 +58,6 @@ extension AuthenticationContainer {
         static let nationName = "nationName"
         static let autoLogin = "autoLogin"
         static let pin = "pin"
+        static let password = "password"
     }
 }

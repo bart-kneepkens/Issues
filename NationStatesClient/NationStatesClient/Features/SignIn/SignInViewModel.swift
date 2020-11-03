@@ -35,9 +35,13 @@ class SignInViewModel: ObservableObject {
     private var cancellable: Cancellable?
     
     func attemptSignIn() {
+        self.authenticationContainer.nationName = self.nationName
+        self.authenticationContainer.password = self.password
+        
         self.isSigningIn = true
         self.cancellable = self.authenticationProvider
-            .authenticate(nationName: nationName, password: password)
+            .authenticate(authenticationContainer: self.authenticationContainer)
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let err):
@@ -46,11 +50,12 @@ class SignInViewModel: ObservableObject {
                 }
                 
                 self.isSigningIn = false
-                
                 self.objectWillChange.send()
-            }, receiveValue: { authenticationPair in
-                self.authenticationContainer.pair = authenticationPair
-                self.authenticationSuccessful = true
+            }, receiveValue: { success in
+                if success {
+                    self.authenticationSuccessful = true
+                    self.objectWillChange.send()
+                }
             })
     }
     

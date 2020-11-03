@@ -14,16 +14,8 @@ class APIAuthenticationProvider: AuthenticationProvider {
     init(authenticationContainer: AuthenticationContainer) {
         self.authenticationContainer = authenticationContainer
     }
-    
-    func authenticate(nationName: String, password: String) -> AnyPublisher<AuthenticationPair, APIError> {
-        return NationStatesAPI.ping(nationName: nationName, password: password)
-    }
-    
-    func authenticate() -> AnyPublisher<Bool, APIError> {
-        guard let pair = authenticationContainer.pair else {
-            return Fail(error: APIError.unauthorized).eraseToAnyPublisher()
-        }
-        
-        return NationStatesAPI.ping(authentication: pair)
+
+    func authenticate(authenticationContainer: AuthenticationContainer) -> AnyPublisher<Bool, APIError> {
+        return NationStatesAPI.ping(authenticationContainer: self.authenticationContainer)
     }
 }
