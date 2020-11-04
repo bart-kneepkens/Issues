@@ -21,6 +21,8 @@
 		AE4BACCF2544E99900B391B4 /* CensusScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4BACCE2544E99900B391B4 /* CensusScale.swift */; };
 		AE5BDB9C2548BE0400F3954D /* IssueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BDB9B2548BE0400F3954D /* IssueProvider.swift */; };
 		AE5BDBA42548BE3800F3954D /* APIIssueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BDBA32548BE3800F3954D /* APIIssueProvider.swift */; };
+		AE5EF2102553342A0079389F /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EF20F2553342A0079389F /* APIRequest.swift */; };
+		AE5EF218255343100079389F /* APIRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EF217255343100079389F /* APIRequestTests.swift */; };
 		AE616F17254F0D5200C9107C /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE616F16254F0D5200C9107C /* ContentViewModel.swift */; };
 		AE6B13C42545C29800606A6A /* AnsweredIssueResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6B13C32545C29800606A6A /* AnsweredIssueResult.swift */; };
 		AE6B13CC2545D6AB00606A6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6B13CB2545D6AB00606A6A /* AppDelegate.swift */; };
@@ -40,6 +42,7 @@
 		AE8764F8252FADEF00EFE031 /* IssueDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8764F7252FADEF00EFE031 /* IssueDetailViewModel.swift */; };
 		AE8981AA2530FBA000D62766 /* MockedIssueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8981A92530FBA000D62766 /* MockedIssueProvider.swift */; };
 		AE8981AF2530FD8D00D62766 /* AuthenticationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8981AE2530FD8D00D62766 /* AuthenticationContainer.swift */; };
+		AE8AA1A22552F92A0031D112 /* NationStatesAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8AA1A12552F92A0031D112 /* NationStatesAPITests.swift */; };
 		AE95F1212538E3BC00860D25 /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE95F1202538E3BC00860D25 /* RemoteImage.swift */; };
 		AE95F129253B18E400860D25 /* IssueDetailOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE95F128253B18E400860D25 /* IssueDetailOptionsView.swift */; };
 		AEDED2CE253C6372007A376F /* IssueAnsweredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDED2CD253C6372007A376F /* IssueAnsweredView.swift */; };
@@ -86,6 +89,8 @@
 		AE4BACCE2544E99900B391B4 /* CensusScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CensusScale.swift; sourceTree = "<group>"; };
 		AE5BDB9B2548BE0400F3954D /* IssueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueProvider.swift; sourceTree = "<group>"; };
 		AE5BDBA32548BE3800F3954D /* APIIssueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIIssueProvider.swift; sourceTree = "<group>"; };
+		AE5EF20F2553342A0079389F /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+		AE5EF217255343100079389F /* APIRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestTests.swift; sourceTree = "<group>"; };
 		AE616F16254F0D5200C9107C /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		AE6B13C32545C29800606A6A /* AnsweredIssueResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnsweredIssueResult.swift; sourceTree = "<group>"; };
 		AE6B13CB2545D6AB00606A6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +116,7 @@
 		AE8764F7252FADEF00EFE031 /* IssueDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailViewModel.swift; sourceTree = "<group>"; };
 		AE8981A92530FBA000D62766 /* MockedIssueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedIssueProvider.swift; sourceTree = "<group>"; };
 		AE8981AE2530FD8D00D62766 /* AuthenticationContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationContainer.swift; sourceTree = "<group>"; };
+		AE8AA1A12552F92A0031D112 /* NationStatesAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationStatesAPITests.swift; sourceTree = "<group>"; };
 		AE95F1202538E3BC00860D25 /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
 		AE95F128253B18E400860D25 /* IssueDetailOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailOptionsView.swift; sourceTree = "<group>"; };
 		AEDED2CD253C6372007A376F /* IssueAnsweredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueAnsweredView.swift; sourceTree = "<group>"; };
@@ -161,6 +167,7 @@
 				AE15A6D825310852004478C3 /* NationStatesAPI.swift */,
 				AEFF41C92532776500206676 /* URLBuilder.swift */,
 				AEFF41FC2536589A00206676 /* URLRequest+Extras.swift */,
+				AE5EF20F2553342A0079389F /* APIRequest.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -363,6 +370,8 @@
 			isa = PBXGroup;
 			children = (
 				AE6B13D12546014B00606A6A /* Parsers */,
+				AE8AA1A12552F92A0031D112 /* NationStatesAPITests.swift */,
+				AE5EF217255343100079389F /* APIRequestTests.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -514,6 +523,7 @@
 				AE5BDBA42548BE3800F3954D /* APIIssueProvider.swift in Sources */,
 				AE4BACC72544E97600B391B4 /* CensusScalesLoader.swift in Sources */,
 				AEFF41CA2532776500206676 /* URLBuilder.swift in Sources */,
+				AE5EF2102553342A0079389F /* APIRequest.swift in Sources */,
 				AEECD738254F465400D536AF /* Option.swift in Sources */,
 				AE95F129253B18E400860D25 /* IssueDetailOptionsView.swift in Sources */,
 				AE8981AA2530FBA000D62766 /* MockedIssueProvider.swift in Sources */,
@@ -541,9 +551,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE8AA1A22552F92A0031D112 /* NationStatesAPITests.swift in Sources */,
 				AE8764B7252E6F2A00EFE031 /* NationStatesClientTests.swift in Sources */,
 				AE6B13D3254601B600606A6A /* IssuesResponseXMLParserTests.swift in Sources */,
 				AEFF41ED253503B600206676 /* PingResponseXMLParserTests.swift in Sources */,
+				AE5EF218255343100079389F /* APIRequestTests.swift in Sources */,
 				AEFF41E02533849D00206676 /* AnswerIssueResponseXMLParserTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

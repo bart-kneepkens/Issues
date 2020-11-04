@@ -11,8 +11,8 @@ import Combine
 class AuthenticationContainer: ObservableObject {
     private let storage: SecureStorage
     
-    init() {
-        self.storage = UserDefaultsStorage()
+    init(storage: SecureStorage = UserDefaultsStorage()) {
+        self.storage = storage
         if let autoLogin = storage.retrieve(key: StorageKey.autoLogin), let pin = storage.retrieve(key: StorageKey.pin) {
             self.pair = (autologin: autoLogin, pin: pin)
         }

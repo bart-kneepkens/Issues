@@ -8,10 +8,6 @@
 import Foundation
 import Combine
 
-struct NationStatesAPI {
-    private init() {}
-}
-
 enum Shard: String {
     case ping
     case issues
@@ -40,13 +36,7 @@ enum APIError: Error {
     case unknown(error: Error)
 }
 
-typealias SimpleAuthenticationPair = (nationName: String, password: String)
 typealias AuthenticationPair = (autologin: String?, pin: String?)
-
-enum APIAuthenticationMethod {
-    case simple(SimpleAuthenticationPair)
-    case regular(AuthenticationPair)
-}
 
 extension APIError {
     var text: String {
@@ -60,88 +50,34 @@ extension APIError {
     }
 }
 
-extension NationStatesAPI {
-    private static func authenticatedRequest(using url: URL,
-                                             authenticationContainer: AuthenticationContainer) -> AnyPublisher<(data: Data, response: URLResponse), APIError> {
-        var request = URLRequest(url: url)
-        
-        request.setupUserAgentHeader(nationName: authenticationContainer.nationName)
-        if let authenticationPair = authenticationContainer.pair {
-            request.setupAuthenticationHeaders(pair: authenticationPair)
-        } else {
-            request.setupPasswordAuthenticationHeader(authenticationContainer.password)
-        }
-        
-        return URLSession
-            .shared
-            .dataTaskPublisher(for: request)
-            .tryMap({ value -> (data: Data, response: URLResponse) in
-                if let httpResponse = value.response as? HTTPURLResponse {
-                    if httpResponse.statusCode == 409 {
-                        throw APIError.conflict
-                    }
-                    if httpResponse.statusCode == 403 {
-                        throw APIError.unauthorized
-                    }
-                }
-                return value
-            })
-            .tryCatch({ error -> AnyPublisher<(data: Data, response: URLResponse), APIError> in
-                guard let apiError = error as? APIError, let _ = authenticationContainer.pair  else {
-                    throw error
-                }
-                
-                switch apiError {
-                    case .conflict:
-                        print("HTTP call failed with 409, retrying without PIN header")
-                        authenticationContainer.pair?.pin = nil
-                        return NationStatesAPI.authenticatedRequest(using: url, authenticationContainer: authenticationContainer)
-                    case .unauthorized:
-                        print("HTTP call failed with 403, retrying without PIN header and autologin")
-                        authenticationContainer.pair = nil
-                        return NationStatesAPI.authenticatedRequest(using: url, authenticationContainer: authenticationContainer)
-                default: throw apiError
-                }
+struct NationStatesAPI { private init() {}}
 
-            })
-            .mapError({ (error) -> APIError in
-                if let apiError = error as? APIError {
-                    return apiError
-                }
-                if (error as NSError).code == NSURLErrorNotConnectedToInternet {
-                    return APIError.notConnected
-                }
-                return APIError.unknown(error: error)
-            })
-            .handleEvents(receiveOutput: { output in
-                if let httpResponse = output.response as? HTTPURLResponse {
-                    var newPair = authenticationContainer.pair
-                    
-                    if let autoLogin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.autologin.header) {
-                        if newPair == nil {
-                            newPair = (autologin: autoLogin, pin: nil)
-                        }
-                        newPair?.autologin = autoLogin
-                        print("Set auth AUTOLOGIN")
-                    }
-                    if let pin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.pin.header) {
-                        if newPair == nil {
-                            newPair = (autologin: nil, pin: pin)
-                        }
-                        newPair?.pin = pin
-                        print("Set auth PIN")
-                    }
-                    authenticationContainer.pair = newPair // important to propogate changes
-                }
-            })
-            .eraseToAnyPublisher()
+typealias DataResponse = (data: Data, response: URLResponse)
+
+protocol NetworkSession {
+    func publisher(for request: URLRequest) -> AnyPublisher<DataResponse, URLError>
+}
+
+extension URLSession: NetworkSession {
+    func publisher(for request: URLRequest) -> AnyPublisher<DataResponse, URLError> {
+        return self.dataTaskPublisher(for: request).eraseToAnyPublisher()
+    }
+}
+
+extension NationStatesAPI {
+    private static func request(using url: URL,
+                                authenticationContainer: AuthenticationContainer,
+                                session: NetworkSession = URLSession.shared
+    ) -> AnyPublisher<DataResponse, APIError> {
+        return APIRequest(url: url, authenticationContainer: authenticationContainer).publisher
     }
     
-    static func ping(authenticationContainer: AuthenticationContainer) -> AnyPublisher<Bool, APIError> {
+    static func ping(authenticationContainer: AuthenticationContainer, session: NetworkSession = URLSession.shared) -> AnyPublisher<Bool, APIError> {
         guard let url = URLBuilder.url(for: authenticationContainer.nationName, with: .ping) else { fatalError() }
         
-        return authenticatedRequest(using: url,
-                                    authenticationContainer: authenticationContainer)
+        return request(using: url,
+                       authenticationContainer: authenticationContainer,
+                       session: session)
             .map { result -> Bool in
                 let parser = PingResponseXMLParser(result.data)
                 parser.parse()
@@ -155,7 +91,7 @@ extension NationStatesAPI {
     static func answerIssue(_ issue: Issue, option: Option, authenticationContainer: AuthenticationContainer) -> AnyPublisher<AnsweredIssueResultDTO, APIError> {
         guard let url = URLBuilder.answerIssueUrl(for: authenticationContainer.nationName, issue: issue, option: option) else { fatalError() }
         
-        return authenticatedRequest(using: url, authenticationContainer: authenticationContainer)
+        return request(using: url, authenticationContainer: authenticationContainer)
             .map { result -> AnsweredIssueResultDTO in
                 let parser = AnswerIssueResponseXMLParser(result.data)
                 parser.parse()
@@ -172,7 +108,7 @@ extension NationStatesAPI {
     static func fetchIssues(authenticationContainer: AuthenticationContainer) -> AnyPublisher<FetchIssuesResultDTO, APIError> {
         guard let url = URLBuilder.url(for: authenticationContainer.nationName, with: [.issues, .nextissue, .nextissuetime]) else { fatalError() }
         
-        return authenticatedRequest(using: url, authenticationContainer: authenticationContainer)
+        return request(using: url, authenticationContainer: authenticationContainer)
             .map({ result -> FetchIssuesResultDTO in
                 let parser = IssuesResponseXMLParser(result.data)
                 parser.parse()
