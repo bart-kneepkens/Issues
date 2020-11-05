@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+// TODO: maybe convert this to a struct, so APIRequest can return an updated container instead of changing an existing one
 class AuthenticationContainer: ObservableObject {
     private let storage: SecureStorage
     

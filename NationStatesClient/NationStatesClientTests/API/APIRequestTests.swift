@@ -70,6 +70,7 @@ class APIRequest_AuthenticationHeaders_Tests: XCTestCase {
         let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password", pin: "test_pin", autologin: "test_autologin")
         var request = APIRequest(url: mockURL, authenticationContainer: container).authenticated
         
+        // Should use pin if all values are available
         XCTAssertEqual(getPinHeader(request), "test_pin")
         XCTAssertNil(getAutologinHeader(request))
         XCTAssertNil(getPasswordHeader(request))
@@ -77,9 +78,18 @@ class APIRequest_AuthenticationHeaders_Tests: XCTestCase {
         container.pair?.pin = nil
         request = APIRequest(url: mockURL, authenticationContainer: container).authenticated
         
+        // Should use autologin if pin is not available
         XCTAssertEqual(getAutologinHeader(request), "test_autologin")
         XCTAssertNil(getPinHeader(request))
         XCTAssertNil(getPasswordHeader(request))
+        
+        container.pair = nil
+        request = APIRequest(url: mockURL, authenticationContainer: container).authenticated
+        
+        // Should use password if neither pin and autologin is available
+        XCTAssertEqual(getPasswordHeader(request), "test_password")
+        XCTAssertNil(getAutologinHeader(request))
+        XCTAssertNil(getPinHeader(request))
     }
     
     private func getPasswordHeader(_ request: URLRequest) -> String? {
@@ -143,6 +153,36 @@ class APIRequest_Publisher_HTTP_Errors_Tests: XCTestCase {
                 case .failure(let apiError):
                     switch apiError {
                     case .conflict:
+                        expectation.fulfill()
+                    default: break
+                    }
+                default: break
+                }
+            } receiveValue: { _ in }
+        
+        self.waitForExpectations(timeout: 1, handler: nil)
+    }
+}
+
+class APIRequest_Publisher_NSErrors_Tests: XCTestCase {
+    class MockedSession: NetworkSession {
+        func publisher(for request: URLRequest) -> AnyPublisher<DataResponse, URLError> {
+            return Fail(error: URLError(URLError.notConnectedToInternet))
+                .eraseToAnyPublisher()
+        }
+    }
+    
+    func testNotConnected() throws {
+        let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password")
+        let expectation = self.expectation(description: "throws APIError .notConnected in case of URL error NSURLErrorNotConnectedToInternet")
+        
+        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: MockedSession())
+            .publisher
+            .sink { completion in
+                switch completion {
+                case .failure(let apiError):
+                    switch apiError {
+                    case .notConnected:
                         expectation.fulfill()
                     default: break
                     }
@@ -254,6 +294,51 @@ class APIRequest_Publisher_Retry_Mechanism_Tests: XCTestCase {
                     if session.counter == 3 {
                         amountOfCallsExpectation.fulfill()
                     }
+                default: break
+                }
+            } receiveValue: { output in }
+        
+        self.waitForExpectations(timeout: 1, handler: nil)
+    }
+}
+
+class APIRequest_Publisher_AuthenticationContainer_Tests: XCTestCase {
+    class MockedSession: NetworkSession {
+        var statusCodes: [Int]
+        var counter = 0
+        
+        init(statusCodes: [Int]) {
+            self.statusCodes = statusCodes
+        }
+        
+        func publisher(for request: URLRequest) -> AnyPublisher<DataResponse, URLError> {
+            let httpResponse = HTTPURLResponse(url: mockURL, statusCode: self.statusCodes[counter], httpVersion: nil, headerFields: ["X-pin" : "test_pin", "X-autologin": "test_autologin"])!
+            counter += 1
+            
+            return Just((data: Data(), response: httpResponse))
+                .mapError({ failure -> URLError in })
+                .eraseToAnyPublisher()
+        }
+    }
+    
+    func testAuthenticationContainer() {
+        let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password")
+        let session = MockedSession(statusCodes: [200])
+        
+        XCTAssertNil(container.pair)
+    
+        let expectation = self.expectation(description: "Has set `pair` (pin and autologin) on the AuthenticationContainer")
+
+        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: session)
+            .publisher
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    guard let pair = container.pair else { break }
+                    if pair.autologin == "test_autologin" && pair.pin == "test_pin" {
+                        expectation.fulfill()
+                    }
+                    
                 default: break
                 }
             } receiveValue: { output in }
