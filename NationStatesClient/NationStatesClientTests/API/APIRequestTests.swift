@@ -153,3 +153,111 @@ class APIRequest_Publisher_HTTP_Errors_Tests: XCTestCase {
         self.waitForExpectations(timeout: 1, handler: nil)
     }
 }
+
+class APIRequest_Publisher_Retry_Mechanism_Tests: XCTestCase {
+    class MockedSession: NetworkSession {
+        var statusCodes: [Int]
+        var counter = 0
+        
+        init(statusCodes: [Int]) {
+            self.statusCodes = statusCodes
+        }
+        
+        func publisher(for request: URLRequest) -> AnyPublisher<DataResponse, URLError> {
+            let httpResponse = HTTPURLResponse(url: mockURL, statusCode: self.statusCodes[counter], httpVersion: nil, headerFields: nil)!
+            counter += 1
+            
+            return Just((data: Data(), response: httpResponse))
+                .mapError({ failure -> URLError in })
+                .eraseToAnyPublisher()
+        }
+    }
+    
+    func testRetryHTTP409() {
+        let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password", pin: "test_pin", autologin: "test_autologin")
+        let session = MockedSession(statusCodes: [409, 200])
+        
+        let pinHeaderExpectation = self.expectation(description: "Removes pin header after first failure")
+        let autologinHeaderExpectation = self.expectation(description: "Autologin header still available after first failure")
+        let amountOfCallsExpectation = self.expectation(description: "Should be called exactly twice")
+        
+        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: session)
+            .publisher
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    if container.pair?.pin == nil {
+                        pinHeaderExpectation.fulfill()
+                    }
+                    if container.pair?.autologin == "test_autologin" {
+                        autologinHeaderExpectation.fulfill()
+                    }
+                    if session.counter == 2 {
+                        amountOfCallsExpectation.fulfill()
+                    }
+                default: break
+                }
+            } receiveValue: { output in }
+        
+        self.waitForExpectations(timeout: 1, handler: nil)
+    }
+    
+    func testRetryHTTP403() {
+        let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password", pin: "test_pin", autologin: "test_autologin")
+        let session = MockedSession(statusCodes: [403, 200])
+        
+        let authenticationHeadersExpectation = self.expectation(description: "Removes pin and autologin header after first failure")
+        let passwordHeaderExpectation = self.expectation(description: "Uses password header after first failure")
+        let amountOfCallsExpectation = self.expectation(description: "Should be called exactly twice")
+        
+        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: session)
+            .publisher
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    if container.pair == nil {
+                        authenticationHeadersExpectation.fulfill()
+                    }
+                    if container.password == "test_password" {
+                        passwordHeaderExpectation.fulfill()
+                    }
+                    if session.counter == 2 {
+                        amountOfCallsExpectation.fulfill()
+                    }
+                default: break
+                }
+            } receiveValue: { output in }
+        
+        self.waitForExpectations(timeout: 1, handler: nil)
+    }
+    
+    func testRetryHTTP409AndThen403() {
+        let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password", pin: "test_pin", autologin: "test_autologin")
+        let session = MockedSession(statusCodes: [409, 403, 200])
+        
+        let authenticationHeadersExpectation = self.expectation(description: "Has removed pin and autologin")
+        let passwordHeaderExpectation = self.expectation(description: "Uses password")
+        
+        let amountOfCallsExpectation = self.expectation(description: "Should be called exactly thrice")
+        
+        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: session)
+            .publisher
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    if container.pair == nil {
+                        authenticationHeadersExpectation.fulfill()
+                    }
+                    if container.password == "test_password" {
+                        passwordHeaderExpectation.fulfill()
+                    }
+                    if session.counter == 3 {
+                        amountOfCallsExpectation.fulfill()
+                    }
+                default: break
+                }
+            } receiveValue: { output in }
+        
+        self.waitForExpectations(timeout: 1, handler: nil)
+    }
+}
