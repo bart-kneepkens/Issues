@@ -69,6 +69,11 @@ struct AnsweredIssueResult {
     }
 }
 
+struct CompletedIssue {
+    var issue: Issue
+    var result: AnsweredIssueResult
+}
+
 #if DEBUG
 extension AnsweredIssueResult {
     static var filler: AnsweredIssueResult = AnsweredIssueResult(dto: .init(resultText: "This is the result", headlines: ["Headlines", "Is a song by drake"], reclassifications: [], rankings: []))

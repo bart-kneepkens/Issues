@@ -10,18 +10,34 @@ import Foundation
 
 class IssueDetailViewModel: ObservableObject {
     var issue: Issue
-    @Published var answeredIssueResult: AnsweredIssueResult?
+    @Published var answeredIssueResult: AnsweredIssueResult? {
+        didSet {
+            if let result = self.answeredIssueResult {
+                self.issueContainer.didCompleteIssue(.init(issue: self.issue, result: result))
+            }
+        }
+    }
     @Published var isAnsweringIssue = false
     @Published var error: APIError?
     @Published var nationName: String
     
     private(set) var provider: IssueProvider
+    private(set) var issueContainer: IssueContainer
     private var cancellables: [Cancellable?] = []
     
-    init(_ issue: Issue, provider: IssueProvider, nationName: String) {
+    init(_ issue: Issue, provider: IssueProvider, nationName: String, issueContainer: IssueContainer) {
         self.issue = issue
         self.provider = provider
         self.nationName = nationName
+        self.issueContainer = issueContainer
+    }
+    
+    init(completedIssue: CompletedIssue, provider: IssueProvider, nationName: String, issueContainer: IssueContainer) {
+        self.issue = completedIssue.issue
+        self.provider = provider
+        self.nationName = nationName
+        self.issueContainer = issueContainer
+        self.answeredIssueResult = completedIssue.result
     }
     
     func answer(with option: Option) {

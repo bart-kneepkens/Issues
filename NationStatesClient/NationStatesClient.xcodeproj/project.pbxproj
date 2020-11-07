@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AE127F9A254F2A96004445E5 /* NationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE127F99254F2A96004445E5 /* NationViewModel.swift */; };
+		AE1318F625573AFA00A5D693 /* CompletedIssueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1318F525573AFA00A5D693 /* CompletedIssueProvider.swift */; };
 		AE15A6C325310372004478C3 /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15A6C225310372004478C3 /* SecureStorage.swift */; };
 		AE15A6CB25310387004478C3 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15A6CA25310387004478C3 /* UserDefaultsStorage.swift */; };
 		AE15A6D925310852004478C3 /* NationStatesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15A6D825310852004478C3 /* NationStatesAPI.swift */; };
@@ -15,6 +16,7 @@
 		AE210432254B7CA4005AC68C /* AuthenticationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE210431254B7CA4005AC68C /* AuthenticationProvider.swift */; };
 		AE210437254B7E0B005AC68C /* APIAuthenticationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE210436254B7E0B005AC68C /* APIAuthenticationProvider.swift */; };
 		AE21043C254B8C3C005AC68C /* MockedAuthenticationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE21043B254B8C3C005AC68C /* MockedAuthenticationProvider.swift */; };
+		AE2EDE7825573CF100042668 /* MockedCompletedIssueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2EDE7725573CF100042668 /* MockedCompletedIssueProvider.swift */; };
 		AE32F9702544D5600037954D /* NationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32F96F2544D5600037954D /* NationView.swift */; };
 		AE4BACC12544E6E500B391B4 /* CensusScales.plist in Resources */ = {isa = PBXBuildFile; fileRef = AE4BACC02544E6E500B391B4 /* CensusScales.plist */; };
 		AE4BACC72544E97600B391B4 /* CensusScalesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4BACC62544E97600B391B4 /* CensusScalesLoader.swift */; };
@@ -76,6 +78,7 @@
 
 /* Begin PBXFileReference section */
 		AE127F99254F2A96004445E5 /* NationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationViewModel.swift; sourceTree = "<group>"; };
+		AE1318F525573AFA00A5D693 /* CompletedIssueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedIssueProvider.swift; sourceTree = "<group>"; };
 		AE15A6C225310372004478C3 /* SecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorage.swift; sourceTree = "<group>"; };
 		AE15A6CA25310387004478C3 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		AE15A6D825310852004478C3 /* NationStatesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationStatesAPI.swift; sourceTree = "<group>"; };
@@ -83,6 +86,7 @@
 		AE210431254B7CA4005AC68C /* AuthenticationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationProvider.swift; sourceTree = "<group>"; };
 		AE210436254B7E0B005AC68C /* APIAuthenticationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAuthenticationProvider.swift; sourceTree = "<group>"; };
 		AE21043B254B8C3C005AC68C /* MockedAuthenticationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedAuthenticationProvider.swift; sourceTree = "<group>"; };
+		AE2EDE7725573CF100042668 /* MockedCompletedIssueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedCompletedIssueProvider.swift; sourceTree = "<group>"; };
 		AE32F96F2544D5600037954D /* NationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationView.swift; sourceTree = "<group>"; };
 		AE4BACC02544E6E500B391B4 /* CensusScales.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CensusScales.plist; sourceTree = "<group>"; };
 		AE4BACC62544E97600B391B4 /* CensusScalesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CensusScalesLoader.swift; sourceTree = "<group>"; };
@@ -180,6 +184,15 @@
 				AE21043B254B8C3C005AC68C /* MockedAuthenticationProvider.swift */,
 			);
 			path = AuthenticationProvider;
+			sourceTree = "<group>";
+		};
+		AE2EDE7625573CD100042668 /* CompletedIssues */ = {
+			isa = PBXGroup;
+			children = (
+				AE1318F525573AFA00A5D693 /* CompletedIssueProvider.swift */,
+				AE2EDE7725573CF100042668 /* MockedCompletedIssueProvider.swift */,
+			);
+			path = CompletedIssues;
 			sourceTree = "<group>";
 		};
 		AE32F96E2544D5480037954D /* Nation */ = {
@@ -341,6 +354,7 @@
 		AE8981A52530F0ED00D62766 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				AE2EDE7625573CD100042668 /* CompletedIssues */,
 				AE15A6C225310372004478C3 /* SecureStorage.swift */,
 				AE15A6CA25310387004478C3 /* UserDefaultsStorage.swift */,
 			);
@@ -531,6 +545,7 @@
 				AE8764D3252FA4E500EFE031 /* SignInView.swift in Sources */,
 				AE6B13C42545C29800606A6A /* AnsweredIssueResult.swift in Sources */,
 				AE616F17254F0D5200C9107C /* ContentViewModel.swift in Sources */,
+				AE2EDE7825573CF100042668 /* MockedCompletedIssueProvider.swift in Sources */,
 				AE15A6C325310372004478C3 /* SecureStorage.swift in Sources */,
 				AEDED2CE253C6372007A376F /* IssueAnsweredView.swift in Sources */,
 				AE8981AF2530FD8D00D62766 /* AuthenticationContainer.swift in Sources */,
@@ -544,6 +559,7 @@
 				AE4BACCF2544E99900B391B4 /* CensusScale.swift in Sources */,
 				AE8764F0252FADE400EFE031 /* IssueDetailView.swift in Sources */,
 				AE210437254B7E0B005AC68C /* APIAuthenticationProvider.swift in Sources */,
+				AE1318F625573AFA00A5D693 /* CompletedIssueProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,27 +13,54 @@ struct IssuesView: View {
     
     var fetchingIndicator: some View {
         Group {
-            if self.viewModel.isFetchingIssues {
-                Section {
-                    ProgressView()
+            if self.viewModel.selectedIssuesList == .current {
+                if self.viewModel.isFetchingIssues {
+                    Section {
+                        ProgressView()
+                    }
                 }
-            } else {
-                EmptyView()
+            }
+            
+        }
+    }
+    
+    var footerView: some View {
+        Group {
+            if self.viewModel.selectedIssuesList == .current {
+                if let error = self.viewModel.error {
+                    HStack {
+                        Image(systemName: "exclamationmark.triangle")
+                        Text(error.text)
+                    }
+                } else if let result = self.viewModel.fetchIssuesResult, self.viewModel.issues.count != 5 {
+                    HStack {
+                        Text("Next issue \(result.timeLeftForNextIssue)")
+                    }
+                }
             }
         }
     }
     
+    var segmentedPicker: some View {
+        Picker(selection: $viewModel.selectedIssuesList, label: EmptyView(), content:{
+            Text("Current").tag(IssuesListType.current)
+            Text("Past").tag(IssuesListType.past)
+        })
+        .pickerStyle(SegmentedPickerStyle())
+        .padding(.bottom)
+    }
     
-    var footerView: some View {
+    private var listContents: some View {
         Group {
-            if let error = self.viewModel.error {
-                HStack {
-                    Image(systemName: "exclamationmark.triangle")
-                    Text(error.text)
+            if self.viewModel.selectedIssuesList == .current {
+                ForEach(viewModel.issues, id: \.id) { issue in
+                    NavigationLink(issue.title, destination: IssueDetailView(viewModel: self.viewModel.issueDetailViewModel(issue: issue)))
+                        .redacted(reason: self.viewModel.isFetchingIssues ? .placeholder : [])
                 }
-            } else if let result = self.viewModel.fetchIssuesResult, self.viewModel.issues.count != 5 {
-                HStack {
-                    Text("Next issue \(result.timeLeftForNextIssue)")
+            } else {
+                ForEach(viewModel.completedIssues, id: \.issue.id) { completed in
+                    NavigationLink(completed.issue.title, destination: IssueDetailView(viewModel: self.viewModel.issueDetailViewModel(completedIssue: completed)))
+                        .redacted(reason: self.viewModel.isFetchingIssues ? .placeholder : [])
                 }
             }
         }
@@ -41,12 +68,10 @@ struct IssuesView: View {
     
     var body: some View {
         List {
-            Section(header: EmptyView(), footer: footerView) {
-                ForEach(viewModel.issues, id: \.id) { issue in
-                    NavigationLink(issue.title, destination: IssueDetailView(viewModel: self.viewModel.issueDetailViewModel(issue: issue)))
-                }
+            Section(header: segmentedPicker, footer: footerView) {
+                listContents
             }
-            .redacted(reason: self.viewModel.isFetchingIssues ? .placeholder : [])
+            
             fetchingIndicator
         }
         .listStyle(InsetGroupedListStyle())

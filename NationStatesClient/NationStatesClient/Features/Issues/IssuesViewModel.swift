@@ -8,10 +8,28 @@
 import Foundation
 import Combine
 
+enum IssuesListType {
+    case current, past
+}
+
+protocol IssueContainer {
+    func didCompleteIssue(_ completedIssue: CompletedIssue)
+}
+
 class IssuesViewModel: ObservableObject {
-    var fetchIssuesResult: FetchIssuesResult?
+    var fetchIssuesResult: FetchIssuesResult? {
+        didSet {
+            if let result = self.fetchIssuesResult {
+                self.issues = result.issues
+            }
+        }
+    }
     var error: APIError? = nil
     var isFetchingIssues: Bool = false
+    var issues: [Issue] = []
+    var completedIssues: [CompletedIssue] = []
+    
+    @Published var selectedIssuesList: IssuesListType = .current 
     
     private var provider: IssueProvider
     private var authenticationContainer: AuthenticationContainer
@@ -33,12 +51,6 @@ class IssuesViewModel: ObservableObject {
         }))
     }
     
-    var issues: [Issue] {
-        get {
-            return self.fetchIssuesResult?.issues ?? []
-        }
-    }
-    
     func startFetchingIssues() {
         self.shouldFetchPublisher.send(true)
     }
@@ -56,8 +68,8 @@ class IssuesViewModel: ObservableObject {
                     self.error = error
                     return Just(nil).eraseToAnyPublisher()
                 })
-                .handleEvents(receiveCompletion: { comp in
-                    switch comp {
+                .handleEvents(receiveCompletion: { completion in
+                    switch completion {
                     case .finished:
                         self.error = nil
                     }
@@ -72,12 +84,23 @@ class IssuesViewModel: ObservableObject {
     }
 }
 
+extension IssuesViewModel: IssueContainer {
+    func didCompleteIssue(_ completedIssue: CompletedIssue) {
+        self.issues = self.issues.filter({ $0.id != completedIssue.issue.id }) // Remove from current issues
+        self.completedIssues.append(completedIssue)
+    }
+}
+
 extension IssuesViewModel {
     var nationViewModel: NationViewModel {
         return .init(authenticationContainer: self.authenticationContainer)
     }
     
     func issueDetailViewModel(issue: Issue) -> IssueDetailViewModel {
-        return .init(issue, provider: self.provider, nationName: self.authenticationContainer.nationName)
+        return .init(issue, provider: self.provider, nationName: self.authenticationContainer.nationName, issueContainer: self)
+    }
+    
+    func issueDetailViewModel(completedIssue: CompletedIssue) -> IssueDetailViewModel {
+        .init(completedIssue: completedIssue, provider: self.provider, nationName: self.authenticationContainer.nationName, issueContainer: self)
     }
 }
