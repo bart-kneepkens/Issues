@@ -101,6 +101,6 @@ extension IssuesViewModel {
     }
     
     func issueDetailViewModel(completedIssue: CompletedIssue) -> IssueDetailViewModel {
-        .init(completedIssue: completedIssue, provider: self.provider, nationName: self.authenticationContainer.nationName, issueContainer: self)
+        .init(completedIssue: completedIssue, nationName: self.authenticationContainer.nationName)
     }
 }

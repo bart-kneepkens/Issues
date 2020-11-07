@@ -60,7 +60,6 @@ struct IssuesView: View {
             } else {
                 ForEach(viewModel.completedIssues, id: \.issue.id) { completed in
                     NavigationLink(completed.issue.title, destination: IssueDetailView(viewModel: self.viewModel.issueDetailViewModel(completedIssue: completed)))
-                        .redacted(reason: self.viewModel.isFetchingIssues ? .placeholder : [])
                 }
             }
         }

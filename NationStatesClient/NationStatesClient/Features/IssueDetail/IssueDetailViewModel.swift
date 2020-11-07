@@ -13,7 +13,7 @@ class IssueDetailViewModel: ObservableObject {
     @Published var answeredIssueResult: AnsweredIssueResult? {
         didSet {
             if let result = self.answeredIssueResult {
-                self.issueContainer.didCompleteIssue(.init(issue: self.issue, result: result))
+                self.issueContainer?.didCompleteIssue(.init(issue: self.issue, result: result))
             }
         }
     }
@@ -21,8 +21,8 @@ class IssueDetailViewModel: ObservableObject {
     @Published var error: APIError?
     @Published var nationName: String
     
-    private(set) var provider: IssueProvider
-    private(set) var issueContainer: IssueContainer
+    private(set) var provider: IssueProvider?
+    private(set) var issueContainer: IssueContainer?
     private var cancellables: [Cancellable?] = []
     
     init(_ issue: Issue, provider: IssueProvider, nationName: String, issueContainer: IssueContainer) {
@@ -32,18 +32,16 @@ class IssueDetailViewModel: ObservableObject {
         self.issueContainer = issueContainer
     }
     
-    init(completedIssue: CompletedIssue, provider: IssueProvider, nationName: String, issueContainer: IssueContainer) {
+    init(completedIssue: CompletedIssue, nationName: String) {
         self.issue = completedIssue.issue
-        self.provider = provider
         self.nationName = nationName
-        self.issueContainer = issueContainer
         self.answeredIssueResult = completedIssue.result
     }
     
     func answer(with option: Option) {
         self.isAnsweringIssue = true
         self.cancellables.append(
-            provider.answerIssue(issue: self.issue, option: option)
+            provider?.answerIssue(issue: self.issue, option: option)
                 .receive(on: DispatchQueue.main)
                 .handleEvents(receiveCompletion: { _ in
                     self.isAnsweringIssue = false
