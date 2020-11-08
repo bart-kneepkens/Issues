@@ -13,10 +13,18 @@
 		AE15A6CB25310387004478C3 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15A6CA25310387004478C3 /* UserDefaultsStorage.swift */; };
 		AE15A6D925310852004478C3 /* NationStatesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15A6D825310852004478C3 /* NationStatesAPI.swift */; };
 		AE15A6E725321084004478C3 /* IssuesResponseXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15A6E625321084004478C3 /* IssuesResponseXMLParser.swift */; };
+		AE1C5A7025589DB9008811E6 /* OptionMO+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C5A6F25589DB9008811E6 /* OptionMO+.swift */; };
+		AE1C5A7825589E87008811E6 /* IssueMO+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C5A7725589E87008811E6 /* IssueMO+.swift */; };
+		AE1C5A7D25589EB2008811E6 /* AnsweredIssueResultMO+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C5A7C25589EB2008811E6 /* AnsweredIssueResultMO+.swift */; };
+		AE1C5A8225589EBC008811E6 /* ReclassifyMO+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C5A8125589EBC008811E6 /* ReclassifyMO+.swift */; };
+		AE1C5A8725589EC5008811E6 /* RankingMO+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C5A8625589EC5008811E6 /* RankingMO+.swift */; };
+		AE1C5A8C25589F9C008811E6 /* CompletedIssueMO+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C5A8B25589F9C008811E6 /* CompletedIssueMO+.swift */; };
 		AE210432254B7CA4005AC68C /* AuthenticationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE210431254B7CA4005AC68C /* AuthenticationProvider.swift */; };
 		AE210437254B7E0B005AC68C /* APIAuthenticationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE210436254B7E0B005AC68C /* APIAuthenticationProvider.swift */; };
 		AE21043C254B8C3C005AC68C /* MockedAuthenticationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE21043B254B8C3C005AC68C /* MockedAuthenticationProvider.swift */; };
 		AE2EDE7825573CF100042668 /* MockedCompletedIssueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2EDE7725573CF100042668 /* MockedCompletedIssueProvider.swift */; };
+		AE2EDE842558212F00042668 /* CompletedIssuesModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AE2EDE822558212F00042668 /* CompletedIssuesModel.xcdatamodeld */; };
+		AE2EDE8C25584E3200042668 /* PersistentCompletedIssueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2EDE8B25584E3200042668 /* PersistentCompletedIssueProvider.swift */; };
 		AE32F9702544D5600037954D /* NationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32F96F2544D5600037954D /* NationView.swift */; };
 		AE4BACC12544E6E500B391B4 /* CensusScales.plist in Resources */ = {isa = PBXBuildFile; fileRef = AE4BACC02544E6E500B391B4 /* CensusScales.plist */; };
 		AE4BACC72544E97600B391B4 /* CensusScalesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4BACC62544E97600B391B4 /* CensusScalesLoader.swift */; };
@@ -83,10 +91,18 @@
 		AE15A6CA25310387004478C3 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		AE15A6D825310852004478C3 /* NationStatesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationStatesAPI.swift; sourceTree = "<group>"; };
 		AE15A6E625321084004478C3 /* IssuesResponseXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssuesResponseXMLParser.swift; sourceTree = "<group>"; };
+		AE1C5A6F25589DB9008811E6 /* OptionMO+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OptionMO+.swift"; sourceTree = "<group>"; };
+		AE1C5A7725589E87008811E6 /* IssueMO+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IssueMO+.swift"; sourceTree = "<group>"; };
+		AE1C5A7C25589EB2008811E6 /* AnsweredIssueResultMO+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnsweredIssueResultMO+.swift"; sourceTree = "<group>"; };
+		AE1C5A8125589EBC008811E6 /* ReclassifyMO+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReclassifyMO+.swift"; sourceTree = "<group>"; };
+		AE1C5A8625589EC5008811E6 /* RankingMO+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RankingMO+.swift"; sourceTree = "<group>"; };
+		AE1C5A8B25589F9C008811E6 /* CompletedIssueMO+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompletedIssueMO+.swift"; sourceTree = "<group>"; };
 		AE210431254B7CA4005AC68C /* AuthenticationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationProvider.swift; sourceTree = "<group>"; };
 		AE210436254B7E0B005AC68C /* APIAuthenticationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAuthenticationProvider.swift; sourceTree = "<group>"; };
 		AE21043B254B8C3C005AC68C /* MockedAuthenticationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedAuthenticationProvider.swift; sourceTree = "<group>"; };
 		AE2EDE7725573CF100042668 /* MockedCompletedIssueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedCompletedIssueProvider.swift; sourceTree = "<group>"; };
+		AE2EDE832558212F00042668 /* CompletedIssuesModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CompletedIssuesModel.xcdatamodel; sourceTree = "<group>"; };
+		AE2EDE8B25584E3200042668 /* PersistentCompletedIssueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentCompletedIssueProvider.swift; sourceTree = "<group>"; };
 		AE32F96F2544D5600037954D /* NationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationView.swift; sourceTree = "<group>"; };
 		AE4BACC02544E6E500B391B4 /* CensusScales.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CensusScales.plist; sourceTree = "<group>"; };
 		AE4BACC62544E97600B391B4 /* CensusScalesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CensusScalesLoader.swift; sourceTree = "<group>"; };
@@ -176,6 +192,38 @@
 			path = API;
 			sourceTree = "<group>";
 		};
+		AE1C5A6C25589D3A008811E6 /* Provider */ = {
+			isa = PBXGroup;
+			children = (
+				AE1318F525573AFA00A5D693 /* CompletedIssueProvider.swift */,
+				AE2EDE7725573CF100042668 /* MockedCompletedIssueProvider.swift */,
+				AE2EDE8B25584E3200042668 /* PersistentCompletedIssueProvider.swift */,
+			);
+			path = Provider;
+			sourceTree = "<group>";
+		};
+		AE1C5A6D25589D56008811E6 /* Secrets */ = {
+			isa = PBXGroup;
+			children = (
+				AE15A6C225310372004478C3 /* SecureStorage.swift */,
+				AE15A6CA25310387004478C3 /* UserDefaultsStorage.swift */,
+			);
+			path = Secrets;
+			sourceTree = "<group>";
+		};
+		AE1C5A6E25589DAB008811E6 /* ManagedObjects+ */ = {
+			isa = PBXGroup;
+			children = (
+				AE1C5A6F25589DB9008811E6 /* OptionMO+.swift */,
+				AE1C5A7725589E87008811E6 /* IssueMO+.swift */,
+				AE1C5A7C25589EB2008811E6 /* AnsweredIssueResultMO+.swift */,
+				AE1C5A8125589EBC008811E6 /* ReclassifyMO+.swift */,
+				AE1C5A8625589EC5008811E6 /* RankingMO+.swift */,
+				AE1C5A8B25589F9C008811E6 /* CompletedIssueMO+.swift */,
+			);
+			path = "ManagedObjects+";
+			sourceTree = "<group>";
+		};
 		AE21042D254A37E3005AC68C /* AuthenticationProvider */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,8 +237,9 @@
 		AE2EDE7625573CD100042668 /* CompletedIssues */ = {
 			isa = PBXGroup;
 			children = (
-				AE1318F525573AFA00A5D693 /* CompletedIssueProvider.swift */,
-				AE2EDE7725573CF100042668 /* MockedCompletedIssueProvider.swift */,
+				AE1C5A6E25589DAB008811E6 /* ManagedObjects+ */,
+				AE1C5A6C25589D3A008811E6 /* Provider */,
+				AE2EDE822558212F00042668 /* CompletedIssuesModel.xcdatamodeld */,
 			);
 			path = CompletedIssues;
 			sourceTree = "<group>";
@@ -354,9 +403,8 @@
 		AE8981A52530F0ED00D62766 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				AE1C5A6D25589D56008811E6 /* Secrets */,
 				AE2EDE7625573CD100042668 /* CompletedIssues */,
-				AE15A6C225310372004478C3 /* SecureStorage.swift */,
-				AE15A6CA25310387004478C3 /* UserDefaultsStorage.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -521,12 +569,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE21043C254B8C3C005AC68C /* MockedAuthenticationProvider.swift in Sources */,
+				AE2EDE8C25584E3200042668 /* PersistentCompletedIssueProvider.swift in Sources */,
 				AE15A6E725321084004478C3 /* IssuesResponseXMLParser.swift in Sources */,
+				AE1C5A8C25589F9C008811E6 /* CompletedIssueMO+.swift in Sources */,
 				AEFF41DA2533834300206676 /* AnswerIssueResponseXMLParser.swift in Sources */,
 				AEFF41CF2533808F00206676 /* NationStatesXMLParser.swift in Sources */,
 				AE15A6D925310852004478C3 /* NationStatesAPI.swift in Sources */,
+				AE1C5A8725589EC5008811E6 /* RankingMO+.swift in Sources */,
 				AE6B13CC2545D6AB00606A6A /* AppDelegate.swift in Sources */,
 				AEFF41FD2536589A00206676 /* URLRequest+Extras.swift in Sources */,
+				AE2EDE842558212F00042668 /* CompletedIssuesModel.xcdatamodeld in Sources */,
 				AE127F9A254F2A96004445E5 /* NationViewModel.swift in Sources */,
 				AEFCC53C2550BCC1002E754F /* FetchIssuesResult.swift in Sources */,
 				AE8764D8252FA4F100EFE031 /* SignInViewModel.swift in Sources */,
@@ -535,6 +587,7 @@
 				AE8764DD252FA92300EFE031 /* IssuesView.swift in Sources */,
 				AE32F9702544D5600037954D /* NationView.swift in Sources */,
 				AE5BDBA42548BE3800F3954D /* APIIssueProvider.swift in Sources */,
+				AE1C5A7D25589EB2008811E6 /* AnsweredIssueResultMO+.swift in Sources */,
 				AE4BACC72544E97600B391B4 /* CensusScalesLoader.swift in Sources */,
 				AEFF41CA2532776500206676 /* URLBuilder.swift in Sources */,
 				AE5EF2102553342A0079389F /* APIRequest.swift in Sources */,
@@ -543,6 +596,8 @@
 				AE8981AA2530FBA000D62766 /* MockedIssueProvider.swift in Sources */,
 				AE8764E2252FA92C00EFE031 /* IssuesViewModel.swift in Sources */,
 				AE8764D3252FA4E500EFE031 /* SignInView.swift in Sources */,
+				AE1C5A7825589E87008811E6 /* IssueMO+.swift in Sources */,
+				AE1C5A7025589DB9008811E6 /* OptionMO+.swift in Sources */,
 				AE6B13C42545C29800606A6A /* AnsweredIssueResult.swift in Sources */,
 				AE616F17254F0D5200C9107C /* ContentViewModel.swift in Sources */,
 				AE2EDE7825573CF100042668 /* MockedCompletedIssueProvider.swift in Sources */,
@@ -553,6 +608,7 @@
 				AEFF41E82535033600206676 /* PingResponseXMLParser.swift in Sources */,
 				AE15A6CB25310387004478C3 /* UserDefaultsStorage.swift in Sources */,
 				AE8764A7252E6F2900EFE031 /* ContentView.swift in Sources */,
+				AE1C5A8225589EBC008811E6 /* ReclassifyMO+.swift in Sources */,
 				AE210432254B7CA4005AC68C /* AuthenticationProvider.swift in Sources */,
 				AE95F1212538E3BC00860D25 /* RemoteImage.swift in Sources */,
 				AE8764A5252E6F2900EFE031 /* NationStatesClientApp.swift in Sources */,
@@ -884,6 +940,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		AE2EDE822558212F00042668 /* CompletedIssuesModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				AE2EDE832558212F00042668 /* CompletedIssuesModel.xcdatamodel */,
+			);
+			currentVersion = AE2EDE832558212F00042668 /* CompletedIssuesModel.xcdatamodel */;
+			path = CompletedIssuesModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = AE876499252E6F2900EFE031 /* Project object */;
 }

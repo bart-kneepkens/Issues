@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AnsweredIssueResult" representedClassName="AnsweredIssueResultMO" syncable="YES" codeGenerationType="class">
+        <attribute name="resultText" optional="YES" attributeType="String"/>
+        <relationship name="completedIssue" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CompletedIssue" inverseName="result" inverseEntity="CompletedIssue"/>
+        <relationship name="headlines" toMany="YES" deletionRule="Cascade" destinationEntity="Headline" inverseName="answerResult" inverseEntity="Headline"/>
+        <relationship name="rankings" toMany="YES" deletionRule="Cascade" destinationEntity="Ranking" inverseName="answerResult" inverseEntity="Ranking"/>
+        <relationship name="reclassifications" toMany="YES" deletionRule="Cascade" destinationEntity="Reclassify" inverseName="answerResult" inverseEntity="Reclassify"/>
+    </entity>
+    <entity name="CompletedIssue" representedClassName="CompletedIssueMO" syncable="YES" codeGenerationType="class">
+        <relationship name="issue" maxCount="1" deletionRule="Cascade" destinationEntity="Issue" inverseName="completedIssue" inverseEntity="Issue"/>
+        <relationship name="result" maxCount="1" deletionRule="Nullify" destinationEntity="AnsweredIssueResult" inverseName="completedIssue" inverseEntity="AnsweredIssueResult"/>
+    </entity>
+    <entity name="Headline" representedClassName="HeadlineMO" syncable="YES" codeGenerationType="class">
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <relationship name="answerResult" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AnsweredIssueResult" inverseName="headlines" inverseEntity="AnsweredIssueResult"/>
+    </entity>
+    <entity name="Issue" representedClassName="IssueMO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="imageName" optional="YES" attributeType="String"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="completedIssue" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CompletedIssue" inverseName="issue" inverseEntity="CompletedIssue"/>
+        <relationship name="options" toMany="YES" deletionRule="Cascade" destinationEntity="Option" inverseName="issue" inverseEntity="Option"/>
+    </entity>
+    <entity name="Option" representedClassName="OptionMO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="text" attributeType="String"/>
+        <relationship name="issue" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Issue" inverseName="options" inverseEntity="Issue"/>
+    </entity>
+    <entity name="Ranking" representedClassName="RankingMO" syncable="YES" codeGenerationType="class">
+        <attribute name="change" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="percentualChange" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="scaleId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="score" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="answerResult" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AnsweredIssueResult" inverseName="rankings" inverseEntity="AnsweredIssueResult"/>
+    </entity>
+    <entity name="Reclassify" representedClassName="ReclassifyMO" syncable="YES" codeGenerationType="class">
+        <attribute name="from" optional="YES" attributeType="String"/>
+        <attribute name="scaleId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="to" optional="YES" attributeType="String"/>
+        <relationship name="answerResult" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AnsweredIssueResult" inverseName="reclassifications" inverseEntity="AnsweredIssueResult"/>
+    </entity>
+    <elements>
+        <element name="AnsweredIssueResult" positionX="-127.94140625" positionY="-227.015625" width="128" height="118"/>
+        <element name="CompletedIssue" positionX="-409.43359375" positionY="-173.33203125" width="128" height="73"/>
+        <element name="Headline" positionX="180.73046875" positionY="-229.16015625" width="128" height="73"/>
+        <element name="Issue" positionX="-158.71875" positionY="-40.5390625" width="128" height="133"/>
+        <element name="Option" positionX="15.57421875" positionY="4.125" width="128" height="88"/>
+        <element name="Ranking" positionX="181.33984375" positionY="-353.90625" width="128" height="118"/>
+        <element name="Reclassify" positionX="182.8515625" positionY="-136.20703125" width="128" height="103"/>
+    </elements>
+</model>

@@ -29,8 +29,9 @@ class IssuesViewModel: ObservableObject {
     var issues: [Issue] = []
     var completedIssues: [CompletedIssue] = []
     
-    @Published var selectedIssuesList: IssuesListType = .current 
+    @Published var selectedIssuesList: IssuesListType = .current
     
+    private let persistentContainer: CompletedIssueProvider
     private var provider: IssueProvider
     private var authenticationContainer: AuthenticationContainer
     private var cancellables: [Cancellable]? = []
@@ -40,6 +41,7 @@ class IssuesViewModel: ObservableObject {
     init(provider: IssueProvider, authenticationContainer: AuthenticationContainer) {
         self.provider = provider
         self.authenticationContainer = authenticationContainer
+        self.persistentContainer = PersisentCompletedIssueProvider()
         self.cancellables?.append(
             self.shouldFetchPublisher
                 .throttle(for: .seconds(8), scheduler: DispatchQueue.main, latest: false)
@@ -48,6 +50,12 @@ class IssuesViewModel: ObservableObject {
         
         self.cancellables?.append(refreshIssuesTimer.sink(receiveValue: { _ in
             self.shouldFetchPublisher.send(false)
+        }))
+        
+        self.cancellables?.append(persistentContainer.fetchCompletedIssues().sink(receiveCompletion: { completeion in
+            
+        }, receiveValue: { compIssues in
+            self.completedIssues = compIssues
         }))
     }
     
@@ -88,6 +96,7 @@ extension IssuesViewModel: IssueContainer {
     func didCompleteIssue(_ completedIssue: CompletedIssue) {
         self.issues = self.issues.filter({ $0.id != completedIssue.issue.id }) // Remove from current issues
         self.completedIssues.append(completedIssue)
+        self.persistentContainer.storeCompletedIssue(completedIssue)
     }
 }
 
