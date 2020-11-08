@@ -9,6 +9,6 @@ import Foundation
 import Combine
 
 protocol CompletedIssueProvider {
-    func fetchCompletedIssues() -> AnyPublisher<[CompletedIssue], APIError>
+    func fetchCompletedIssues() -> AnyPublisher<[CompletedIssue], Error>
     func storeCompletedIssue(_ completed: CompletedIssue)
 }

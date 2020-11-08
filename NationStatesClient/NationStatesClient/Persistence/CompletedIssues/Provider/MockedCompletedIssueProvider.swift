@@ -14,10 +14,10 @@ class MockedCompletedIssueProvider: CompletedIssueProvider {
         CompletedIssue(issue: Issue.filler, result: AnsweredIssueResult(dto: .init(resultText: "This is the result", headlines: ["Headlines", "Is a song by drake"], reclassifications: [], rankings: [])))
     ]
     
-    func fetchCompletedIssues() -> AnyPublisher<[CompletedIssue], APIError> {
+    func fetchCompletedIssues() -> AnyPublisher<[CompletedIssue], Error> {
         Just(self.completedIssues)
             .delay(for: 3, scheduler: DispatchQueue.main)
-            .mapError { failure -> APIError in }
+            .mapError { failure -> Error in }
             .eraseToAnyPublisher()
     }
     
