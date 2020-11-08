@@ -43,17 +43,16 @@ class PersisentCompletedIssueProvider: CompletedIssueProvider {
         
         let result = try! self.persistentContainer.viewContext.fetch(fetchRequest)
         
-        let results = result.map({ $0 as! CompletedIssueMO }).map({ $0.completedIssue })
+        let results = result.map({ $0 as! CompletedIssueMO }).map({ $0.completedIssue }).compactMap({ $0 })
         
         return Just(results).mapError { _ -> APIError in }.eraseToAnyPublisher()
     }
     
     func storeCompletedIssue(_ completed: CompletedIssue) {
-//        self.persistentContainer.
         
-        let managedObject = NSEntityDescription.insertNewObject(forEntityName: "CompletedIssue", into: self.persistentContainer.viewContext) as! CompletedIssueMO
+//        let managedObject = NSEntityDescription.insertNewObject(forEntityName: "CompletedIssue", into: self.persistentContainer.viewContext) as! CompletedIssueMO
         
-        managedObject.configure(with: completed, context: self.persistentContainer.viewContext)
+        self.persistentContainer.viewContext.insert(CompletedIssueMO(with: completed, context: self.persistentContainer.viewContext))
         
         self.saveContext()
     }

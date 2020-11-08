@@ -7,17 +7,15 @@
 
 import CoreData
 
-extension CompletedIssueMO{
-    func configure(with completedIssue: CompletedIssue, context: NSManagedObjectContext) {
-        let issue = IssueMO(context: context)
-        issue.configure(with: completedIssue.issue, context: context)
-        self.issue = issue
-        let result = AnsweredIssueResultMO(context: context)
-        result.configure(with: completedIssue.result, context: context)
-        self.result = result
+extension CompletedIssueMO {
+    convenience init(with completedIssue: CompletedIssue, context: NSManagedObjectContext) {
+        self.init(context: context)
+        self.issue = IssueMO(with: completedIssue.issue, context: context)
+        self.result = AnsweredIssueResultMO(with: completedIssue.result, context: context)
     }
     
-    var completedIssue: CompletedIssue {
-        return CompletedIssue(issue: self.issue?.issue ?? .filler, result: .filler)
+    var completedIssue: CompletedIssue? {
+        guard let issue = self.issue?.issue, let result = self.result?.answeredIssueResult else { return nil }
+        return CompletedIssue(issue: issue, result: result)
     }
 }
