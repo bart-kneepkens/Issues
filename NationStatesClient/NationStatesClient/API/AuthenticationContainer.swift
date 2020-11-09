@@ -12,7 +12,7 @@ import Combine
 class AuthenticationContainer: ObservableObject {
     private let storage: SecureStorage
     
-    init(storage: SecureStorage = UserDefaultsStorage()) {
+    init(storage: SecureStorage = KeychainSecretsStorage()) {
         self.storage = storage
         if let autoLogin = storage.retrieve(key: StorageKey.autoLogin), let pin = storage.retrieve(key: StorageKey.pin) {
             self.pair = (autologin: autoLogin, pin: pin)
@@ -27,12 +27,12 @@ class AuthenticationContainer: ObservableObject {
     
     @Published var pair: AuthenticationPair? {
         didSet {
-            if let pair = pair {
-                self.storage.store(pair.autologin, key: StorageKey.autoLogin)
-                self.storage.store(pair.pin, key: StorageKey.pin)
-            } else {
-                self.storage.store(nil, key: StorageKey.autoLogin)
-                self.storage.store(nil, key: StorageKey.pin)
+            if let pair = pair, let autologin = pair.autologin, let pin = pair.pin {
+                self.storage.store(autologin, key: StorageKey.autoLogin)
+                self.storage.store(pin, key: StorageKey.pin)
+            } else if pair == nil {
+                self.storage.remove(key: StorageKey.autoLogin)
+                self.storage.remove(key: StorageKey.pin)
             }
         }
     }

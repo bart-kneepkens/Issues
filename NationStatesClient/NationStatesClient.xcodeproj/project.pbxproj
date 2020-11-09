@@ -13,6 +13,7 @@
 		AE115F9F2559EC5200EB1932 /* Headline.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE115F9E2559EC5200EB1932 /* Headline.swift */; };
 		AE115FA42559EC5C00EB1932 /* Reclassify.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE115FA32559EC5C00EB1932 /* Reclassify.swift */; };
 		AE115FA92559EC6B00EB1932 /* CompletedIssue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE115FA82559EC6B00EB1932 /* CompletedIssue.swift */; };
+		AE115FB12559F9C900EB1932 /* KeychainSecretsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE115FB02559F9C900EB1932 /* KeychainSecretsStorage.swift */; };
 		AE127F9A254F2A96004445E5 /* NationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE127F99254F2A96004445E5 /* NationViewModel.swift */; };
 		AE1318F625573AFA00A5D693 /* CompletedIssueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1318F525573AFA00A5D693 /* CompletedIssueProvider.swift */; };
 		AE15A6C325310372004478C3 /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15A6C225310372004478C3 /* SecureStorage.swift */; };
@@ -98,6 +99,7 @@
 		AE115F9E2559EC5200EB1932 /* Headline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Headline.swift; sourceTree = "<group>"; };
 		AE115FA32559EC5C00EB1932 /* Reclassify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reclassify.swift; sourceTree = "<group>"; };
 		AE115FA82559EC6B00EB1932 /* CompletedIssue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedIssue.swift; sourceTree = "<group>"; };
+		AE115FB02559F9C900EB1932 /* KeychainSecretsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainSecretsStorage.swift; sourceTree = "<group>"; };
 		AE127F99254F2A96004445E5 /* NationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationViewModel.swift; sourceTree = "<group>"; };
 		AE1318F525573AFA00A5D693 /* CompletedIssueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedIssueProvider.swift; sourceTree = "<group>"; };
 		AE15A6C225310372004478C3 /* SecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorage.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 			children = (
 				AE15A6C225310372004478C3 /* SecureStorage.swift */,
 				AE15A6CA25310387004478C3 /* UserDefaultsStorage.swift */,
+				AE115FB02559F9C900EB1932 /* KeychainSecretsStorage.swift */,
 			);
 			path = Secrets;
 			sourceTree = "<group>";
@@ -614,6 +617,7 @@
 				AE1C5A7D25589EB2008811E6 /* AnsweredIssueResultMO+.swift in Sources */,
 				AE4BACC72544E97600B391B4 /* CensusScalesLoader.swift in Sources */,
 				AEFF41CA2532776500206676 /* URLBuilder.swift in Sources */,
+				AE115FB12559F9C900EB1932 /* KeychainSecretsStorage.swift in Sources */,
 				AE5EF2102553342A0079389F /* APIRequest.swift in Sources */,
 				AEECD738254F465400D536AF /* Option.swift in Sources */,
 				AE95F129253B18E400860D25 /* IssueDetailOptionsView.swift in Sources */,
