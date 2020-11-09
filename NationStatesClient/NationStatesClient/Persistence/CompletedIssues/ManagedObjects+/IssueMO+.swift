@@ -7,17 +7,26 @@
 
 import CoreData
 
-extension IssueMO {
+extension IssueMO: ModelConfigurable {
+    typealias ModelEquivalent = Issue
+    
+    func configure(with model: Issue, using context: NSManagedObjectContext) {
+        self.id = Int32(model.id)
+        self.imageName = model.imageName
+        self.title = model.title
+        self.text = model.text
+        
+        self.options = NSSet(array: model.options.map({ OptionMO(with: $0, context: context) }))
+    }
+    
     convenience init(with issue: Issue, context: NSManagedObjectContext) {
         self.init(context: context)
-        
-        self.id = Int32(issue.id)
-        self.imageName = issue.imageName
-        self.title = issue.title
-        self.text = issue.text
-        
-        self.options = NSSet(array: issue.options.map({ OptionMO(with: $0, context: context) }))
+        self.configure(with: issue, using: context)
     }
+}
+
+extension IssueMO: DTOConvertible {
+    typealias DTOEquivalent = IssueDTO
     
     var dto: IssueDTO {
         var d = IssueDTO()
@@ -31,9 +40,5 @@ extension IssueMO {
         }
         
         return d
-    }
-    
-    var issue: Issue {
-        Issue(self.dto)
     }
 }

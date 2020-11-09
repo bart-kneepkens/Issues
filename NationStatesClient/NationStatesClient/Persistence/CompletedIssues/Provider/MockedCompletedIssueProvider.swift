@@ -11,7 +11,7 @@ import Combine
 #if DEBUG
 class MockedCompletedIssueProvider: CompletedIssueProvider {
     var completedIssues: [CompletedIssue] = [
-        CompletedIssue(issue: Issue.filler, result: AnsweredIssueResult(dto: .init(resultText: "This is the result", headlines: ["Headlines", "Is a song by drake"], reclassifications: [], rankings: [])))
+        CompletedIssue(issue: Issue.filler, result: .filler)
     ]
     
     func fetchCompletedIssues() -> AnyPublisher<[CompletedIssue], Error> {

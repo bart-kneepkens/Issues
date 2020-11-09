@@ -72,15 +72,7 @@ struct IssueAnsweredSection: View {
 struct IssueAnsweredSection_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            IssueAnsweredSection(result: .init(dto: .init(
-                resultText: "This is the result of your actions",
-                headlines: ["Headline 1", "Headline 2"],
-                reclassifications: [.init(type: 1, from: "Stronk", to: "Much Stronker")],
-                rankings: [
-                    .init(id: 2, score: 2, change: 0.5, percentualChange: 0.23),
-                    .init(id: 2, score: 2, change: 0.5, percentualChange: 1.33)
-                ]
-            )))
+            IssueAnsweredSection(result: .filler)
         }.listStyle(InsetGroupedListStyle())
     }
 }

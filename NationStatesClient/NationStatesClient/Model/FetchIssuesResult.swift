@@ -13,16 +13,19 @@ struct FetchIssuesResult {
     let nextIssueDate: Date
 }
 
-extension FetchIssuesResult {
-    init(_ dto: FetchIssuesResultDTO) {
-        self.issues = dto.issues.map({ Issue($0) })
-        self.timeLeftForNextIssue = dto.timeLeftForNextIssue ?? ""
-        self.nextIssueDate = dto.nextIssueDate ?? Date()
-    }
-}
-
 struct FetchIssuesResultDTO {
     var issues: [IssueDTO] = []
     var timeLeftForNextIssue: String?
     var nextIssueDate: Date?
+}
+
+extension FetchIssuesResult: DTOInitializable {
+    typealias DTOEquivalent = FetchIssuesResultDTO
+    
+    init?(from dto: FetchIssuesResultDTO) {
+        guard let timeLeftForNextIssue = dto.timeLeftForNextIssue, let nextIssueDate = dto.nextIssueDate else { return nil }
+        self.init(issues: dto.issues.compactMap({ Issue(from: $0) }),
+                  timeLeftForNextIssue: timeLeftForNextIssue,
+                  nextIssueDate: nextIssueDate)
+    }
 }

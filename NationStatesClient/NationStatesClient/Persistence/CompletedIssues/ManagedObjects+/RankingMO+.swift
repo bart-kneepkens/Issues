@@ -7,20 +7,26 @@
 
 import CoreData
 
-extension RankingMO {
+extension RankingMO: ModelConfigurable {
+    typealias ModelEquivalent = Ranking
+    
+    func configure(with model: Ranking, using context: NSManagedObjectContext) {
+        self.change = model.change
+        self.percentualChange = model.percentualChange
+        self.scaleId = Int32(model.scale.id)
+        self.score = model.score
+    }
+    
     convenience init(with ranking: Ranking, context: NSManagedObjectContext) {
         self.init(context: context)
-        self.change = ranking.change
-        self.percentualChange = ranking.percentualChange
-        self.scaleId = Int32(ranking.scale.id)
-        self.score = ranking.score
+        self.configure(with: ranking, using: context)
     }
+}
+
+extension RankingMO: DTOConvertible {
+    typealias DTOEquivalent = RankingDTO
     
     var dto: RankingDTO {
         RankingDTO(id: Int(self.scaleId), score: self.score, change: self.change, percentualChange: self.percentualChange)
-    }
-    
-    var ranking: Ranking {
-        Ranking(dto: self.dto)
     }
 }

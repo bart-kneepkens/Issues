@@ -18,14 +18,14 @@ class APIIssueProvider: IssueProvider {
     func fetchIssues() -> AnyPublisher<FetchIssuesResult?, APIError> {
         return NationStatesAPI
             .fetchIssues(authenticationContainer: authenticationContainer)
-            .map({ FetchIssuesResult($0) })
+            .map({ FetchIssuesResult(from: $0) })
             .throttle(for: .seconds(5), scheduler: DispatchQueue.main, latest: false)
             .eraseToAnyPublisher()
     }
     
     func answerIssue(issue: Issue, option: Option) -> AnyPublisher<AnsweredIssueResult?, APIError> {
         return NationStatesAPI.answerIssue(issue, option: option, authenticationContainer: authenticationContainer)
-            .map({ AnsweredIssueResult(dto: $0 )})
+            .map({ AnsweredIssueResult(from: $0 )})
             .eraseToAnyPublisher()
     }
 }

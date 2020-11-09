@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE115F902559DE1700EB1932 /* MO+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE115F8F2559DE1700EB1932 /* MO+Protocols.swift */; };
+		AE115F952559E90200EB1932 /* Models+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE115F942559E90200EB1932 /* Models+Protocols.swift */; };
+		AE115F9A2559EC4700EB1932 /* Ranking.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE115F992559EC4700EB1932 /* Ranking.swift */; };
+		AE115F9F2559EC5200EB1932 /* Headline.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE115F9E2559EC5200EB1932 /* Headline.swift */; };
+		AE115FA42559EC5C00EB1932 /* Reclassify.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE115FA32559EC5C00EB1932 /* Reclassify.swift */; };
+		AE115FA92559EC6B00EB1932 /* CompletedIssue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE115FA82559EC6B00EB1932 /* CompletedIssue.swift */; };
 		AE127F9A254F2A96004445E5 /* NationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE127F99254F2A96004445E5 /* NationViewModel.swift */; };
 		AE1318F625573AFA00A5D693 /* CompletedIssueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1318F525573AFA00A5D693 /* CompletedIssueProvider.swift */; };
 		AE15A6C325310372004478C3 /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15A6C225310372004478C3 /* SecureStorage.swift */; };
@@ -86,6 +92,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AE115F8F2559DE1700EB1932 /* MO+Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MO+Protocols.swift"; sourceTree = "<group>"; };
+		AE115F942559E90200EB1932 /* Models+Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models+Protocols.swift"; sourceTree = "<group>"; };
+		AE115F992559EC4700EB1932 /* Ranking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ranking.swift; sourceTree = "<group>"; };
+		AE115F9E2559EC5200EB1932 /* Headline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Headline.swift; sourceTree = "<group>"; };
+		AE115FA32559EC5C00EB1932 /* Reclassify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reclassify.swift; sourceTree = "<group>"; };
+		AE115FA82559EC6B00EB1932 /* CompletedIssue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedIssue.swift; sourceTree = "<group>"; };
 		AE127F99254F2A96004445E5 /* NationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationViewModel.swift; sourceTree = "<group>"; };
 		AE1318F525573AFA00A5D693 /* CompletedIssueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedIssueProvider.swift; sourceTree = "<group>"; };
 		AE15A6C225310372004478C3 /* SecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorage.swift; sourceTree = "<group>"; };
@@ -223,6 +235,7 @@
 				AE1C5A8625589EC5008811E6 /* RankingMO+.swift */,
 				AE1C5A8B25589F9C008811E6 /* CompletedIssueMO+.swift */,
 				AE1C5A932558ACC0008811E6 /* HeadlineMO+.swift */,
+				AE115F8F2559DE1700EB1932 /* MO+Protocols.swift */,
 			);
 			path = "ManagedObjects+";
 			sourceTree = "<group>";
@@ -384,10 +397,15 @@
 		AE8764ED252FADBC00EFE031 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AE115F942559E90200EB1932 /* Models+Protocols.swift */,
 				AEECD737254F465400D536AF /* Option.swift */,
 				AE8764E6252FAA0C00EFE031 /* Issue.swift */,
 				AE6B13C32545C29800606A6A /* AnsweredIssueResult.swift */,
 				AEFCC53B2550BCC1002E754F /* FetchIssuesResult.swift */,
+				AE115F992559EC4700EB1932 /* Ranking.swift */,
+				AE115F9E2559EC5200EB1932 /* Headline.swift */,
+				AE115FA32559EC5C00EB1932 /* Reclassify.swift */,
+				AE115FA82559EC6B00EB1932 /* CompletedIssue.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -588,7 +606,10 @@
 				AE8764E7252FAA0C00EFE031 /* Issue.swift in Sources */,
 				AE5BDB9C2548BE0400F3954D /* IssueProvider.swift in Sources */,
 				AE8764DD252FA92300EFE031 /* IssuesView.swift in Sources */,
+				AE115F902559DE1700EB1932 /* MO+Protocols.swift in Sources */,
+				AE115F9A2559EC4700EB1932 /* Ranking.swift in Sources */,
 				AE32F9702544D5600037954D /* NationView.swift in Sources */,
+				AE115FA92559EC6B00EB1932 /* CompletedIssue.swift in Sources */,
 				AE5BDBA42548BE3800F3954D /* APIIssueProvider.swift in Sources */,
 				AE1C5A7D25589EB2008811E6 /* AnsweredIssueResultMO+.swift in Sources */,
 				AE4BACC72544E97600B391B4 /* CensusScalesLoader.swift in Sources */,
@@ -615,11 +636,14 @@
 				AE1C5A8225589EBC008811E6 /* ReclassifyMO+.swift in Sources */,
 				AE210432254B7CA4005AC68C /* AuthenticationProvider.swift in Sources */,
 				AE95F1212538E3BC00860D25 /* RemoteImage.swift in Sources */,
+				AE115FA42559EC5C00EB1932 /* Reclassify.swift in Sources */,
 				AE8764A5252E6F2900EFE031 /* NationStatesClientApp.swift in Sources */,
+				AE115F952559E90200EB1932 /* Models+Protocols.swift in Sources */,
 				AE4BACCF2544E99900B391B4 /* CensusScale.swift in Sources */,
 				AE8764F0252FADE400EFE031 /* IssueDetailView.swift in Sources */,
 				AE210437254B7E0B005AC68C /* APIAuthenticationProvider.swift in Sources */,
 				AE1318F625573AFA00A5D693 /* CompletedIssueProvider.swift in Sources */,
+				AE115F9F2559EC5200EB1932 /* Headline.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

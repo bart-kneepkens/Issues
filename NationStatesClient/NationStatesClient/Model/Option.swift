@@ -14,16 +14,18 @@ struct Option: Identifiable {
     static let dismiss = Option(id: -1, text: "")
 }
 
-extension Option {
-    init(_ dto: OptionDTO) {
-        self.id = dto.id ?? 0
-        self.text = dto.text ?? ""
-    }
-}
-
 struct OptionDTO {
     var id: Int?
     var text: String?
 }
 
 extension OptionDTO: Decodable, Equatable {}
+
+extension Option: DTOInitializable {
+    typealias DTOEquivalent = OptionDTO
+    
+    init?(from dto: OptionDTO) {
+        guard let id = dto.id, let text = dto.text else { return nil }
+        self.init(id: id, text: text)
+    }
+}

@@ -15,13 +15,16 @@ struct Issue: Identifiable {
     let imageName: String
 }
 
-extension Issue {
-    init(_ dto: IssueDTO) {
-        self.id = dto.id ?? 0
-        self.title = dto.title ?? ""
-        self.text = dto.text ?? ""
-        self.options = dto.options.map({ Option($0) })
-        self.imageName = dto.pic1 ?? ""
+extension Issue: DTOInitializable {
+    typealias DTOEquivalent = IssueDTO
+    
+    init?(from dto: IssueDTO) {
+        guard let id = dto.id, let title = dto.title, let text = dto.text, let imageName = dto.pic1 else { return nil }
+        self.init(id: id,
+                  title: title,
+                  text: text,
+                  options: dto.options.compactMap({ Option(from: $0) }),
+                  imageName: imageName)
     }
 }
 
