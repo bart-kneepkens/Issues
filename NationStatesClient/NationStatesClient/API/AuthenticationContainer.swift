@@ -11,7 +11,7 @@ import Combine
 class AuthenticationContainer: ObservableObject {
     private let storage: SecureStorage
     
-    init(storage: SecureStorage = UserDefaultsStorage()) {
+    init(storage: SecureStorage = KeychainSecretsStorage()) {
         self.storage = storage
         self.autologin = storage.retrieve(key: StorageKey.autoLogin)
         self.pin = storage.retrieve(key: StorageKey.pin)
@@ -55,7 +55,6 @@ class AuthenticationContainer: ObservableObject {
         self.autologin = nil
         self.pin = nil
         self.hasSignedOut = true
-        self.objectWillChange.send()
     }
 }
 

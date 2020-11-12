@@ -9,8 +9,7 @@ import Foundation
 
 class KeychainSecretsStorage: SecureStorage {
     func store(_ value: String?, key: String) {
-        
-        guard let value = value else {
+        guard let value = value, !value.isEmpty else {
             self.remove(key: key)
             return
         }
@@ -46,7 +45,7 @@ class KeychainSecretsStorage: SecureStorage {
         ]
         
         var result: AnyObject?
-        let status: OSStatus = withUnsafeMutablePointer(to: &result) {
+        let _: OSStatus = withUnsafeMutablePointer(to: &result) {
             SecItemCopyMatching(query as CFDictionary, UnsafeMutablePointer($0))
         }
         
