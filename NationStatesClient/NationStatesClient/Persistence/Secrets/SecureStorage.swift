@@ -8,7 +8,6 @@
 import Foundation
 
 protocol SecureStorage {
-    func store(_ value: String, key: String)
-    func remove(key: String)
+    func store(_ value: String?, key: String)
     func retrieve(key: String) -> String?
 }

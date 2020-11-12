@@ -23,11 +23,15 @@ class APIRequest {
         var request = URLRequest(url: url)
         request.setupUserAgentHeader(nationName: self.authenticationContainer.nationName)
         
-        if let authenticationPair = self.authenticationContainer.pair {
-            request.setupAuthenticationHeaders(pair: authenticationPair)
+        if let pin = self.authenticationContainer.pin {
+            request.setupPinHeader(pin)
+        } else if let autologin = self.authenticationContainer.autologin {
+            request.setupAutologinHeader(autologin)
         } else {
             request.setupPasswordAuthenticationHeader(self.authenticationContainer.password)
         }
+        
+        print("API Request with url \(url.absoluteString) with headers: \(request.allHTTPHeaderFields ?? [:])")
         
         return request
     }
@@ -39,18 +43,19 @@ class APIRequest {
                 return output
             })
             .tryCatch({ error -> AnyPublisher<DataResponse, APIError> in
-                guard let apiError = error as? APIError, let _ = self.authenticationContainer.pair  else {
+                guard let apiError = error as? APIError, self.authenticationContainer.pin != nil || self.authenticationContainer.autologin != nil else {
                     throw error
                 }
                 
                 switch apiError {
                 case .conflict:
                     print("HTTP call failed with 409, retrying without PIN header")
-                    self.authenticationContainer.pair?.pin = nil
+                    self.authenticationContainer.pin = nil
                     return APIRequest(url: self.url, authenticationContainer: self.authenticationContainer, session: self.session).publisher
                 case .unauthorized:
                     print("HTTP call failed with 403, retrying without PIN header and autologin")
-                    self.authenticationContainer.pair = nil
+                    self.authenticationContainer.pin = nil
+                    self.authenticationContainer.autologin = nil
                     return APIRequest(url: self.url, authenticationContainer: self.authenticationContainer, session: self.session).publisher
                 default: throw apiError
                 }
@@ -67,23 +72,14 @@ class APIRequest {
             })
             .handleEvents(receiveOutput: { output in
                 if let httpResponse = output.response as? HTTPURLResponse {
-                    var newPair = self.authenticationContainer.pair
-                    
                     if let autoLogin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.autologin.header) {
-                        if newPair == nil {
-                            newPair = (autologin: autoLogin, pin: nil)
-                        }
-                        newPair?.autologin = autoLogin
+                        self.authenticationContainer.autologin = autoLogin
                         print("Set auth AUTOLOGIN")
                     }
                     if let pin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.pin.header) {
-                        if newPair == nil {
-                            newPair = (autologin: nil, pin: pin)
-                        }
-                        newPair?.pin = pin
+                        self.authenticationContainer.pin = pin
                         print("Set auth PIN")
                     }
-                    self.authenticationContainer.pair = newPair // important to propogate changes
                 }
             })
             .eraseToAnyPublisher()
@@ -98,6 +94,9 @@ extension APIRequest {
             }
             if httpResponse.statusCode == 403 {
                 throw APIError.unauthorized
+            }
+            if httpResponse.statusCode == 404 {
+                throw APIError.notFound
             }
         }
     }

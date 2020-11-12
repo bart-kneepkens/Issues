@@ -56,6 +56,7 @@ struct SignInView: View {
                         Button("Sign In") {
                             viewModel.attemptSignIn()
                         }
+                        .disabled(viewModel.signInButtonDisabled)
                     }
                 }
             }

@@ -18,7 +18,6 @@ struct NationView: View {
             }
             Section(header: Text("Account")) {
                 Button("Sign out") {
-                    presentationMode.wrappedValue.dismiss()
                     self.viewModel.signOut()
                 }.foregroundColor(.red)
             }

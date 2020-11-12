@@ -36,7 +36,7 @@ class IssuesViewModel: ObservableObject {
     private var authenticationContainer: AuthenticationContainer
     private var cancellables: [Cancellable]? = []
     private var shouldFetchPublisher = PassthroughSubject<Bool, Never>()
-    private let refreshIssuesTimer = Timer.publish(every: 10, tolerance: 5, on: .main, in: .common).autoconnect()
+    private let refreshIssuesTimer = Timer.publish(every: 20, tolerance: 5, on: .main, in: .common).autoconnect()
     
     init(provider: IssueProvider, authenticationContainer: AuthenticationContainer) {
         self.provider = provider
@@ -45,17 +45,22 @@ class IssuesViewModel: ObservableObject {
         self.cancellables?.append(
             self.shouldFetchPublisher
                 .throttle(for: .seconds(8), scheduler: DispatchQueue.main, latest: false)
-                .sink { shouldShowProgressIndicator in self.fetchIssues(shouldShowProgressIndicator) }
+                .sink { shouldShowProgressIndicator in self.fetchIssues(shouldShowProgressIndicator)}
         )
         
-        self.cancellables?.append(refreshIssuesTimer.sink(receiveValue: { _ in
-            self.shouldFetchPublisher.send(false)
-        }))
+        self.cancellables?.append(refreshIssuesTimer.sink(receiveValue: { _ in self.shouldFetchPublisher.send(false) }))
         
-        self.cancellables?.append(persistentContainer.fetchCompletedIssues().sink(receiveCompletion: { completeion in
+        self.cancellables?.append(persistentContainer.fetchCompletedIssues().sink(receiveCompletion: { completion in
             
         }, receiveValue: { compIssues in
             self.completedIssues = compIssues
+        }))
+        
+        // Disable the refresh timer when signed out
+        self.cancellables?.append(authenticationContainer.$hasSignedOut.sink(receiveValue: { signedOut in
+            if signedOut {
+                self.refreshIssuesTimer.upstream.connect().cancel()
+            }
         }))
     }
     

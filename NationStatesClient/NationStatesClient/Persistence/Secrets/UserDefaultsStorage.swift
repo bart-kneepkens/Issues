@@ -9,7 +9,7 @@ import Foundation
 
 // NOT SECURE, TODO: change to secure keychain
 class UserDefaultsStorage: SecureStorage {
-    func store(_ value: String, key: String) {
+    func store(_ value: String?, key: String) {
         UserDefaults.standard.setValue(value, forKey: key)
     }
     

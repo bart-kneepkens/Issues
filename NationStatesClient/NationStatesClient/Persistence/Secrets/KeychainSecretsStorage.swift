@@ -8,7 +8,12 @@
 import Foundation
 
 class KeychainSecretsStorage: SecureStorage {
-    func store(_ value: String, key: String) {
+    func store(_ value: String?, key: String) {
+        
+        guard let value = value else {
+            self.remove(key: key)
+            return
+        }
         
         guard let valueData = value.data(using: .utf8), let keyData = key.data(using: .utf8) else { return }
         
@@ -33,7 +38,6 @@ class KeychainSecretsStorage: SecureStorage {
     }
     
     func retrieve(key: String) -> String? {
-        
         let query: [String:Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrSynchronizable as String: true,

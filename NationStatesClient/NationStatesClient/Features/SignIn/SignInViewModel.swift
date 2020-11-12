@@ -8,13 +8,6 @@
 import Foundation
 import Combine
 
-enum signinState {
-    case initial
-    case signingIn
-    case signinError
-    case signedIn
-}
-
 class SignInViewModel: ObservableObject {
     private var authenticationProvider: AuthenticationProvider
     private var authenticationContainer: AuthenticationContainer
@@ -27,8 +20,8 @@ class SignInViewModel: ObservableObject {
     }
     
     @Published var isSigningIn = false
-    var nationName: String = "Elest Adra"
-    var password: String = "Cacvu3-cekxed-coxpac"
+    @Published var nationName: String = ""
+    @Published var password: String = ""
     var authenticationSuccessful: Bool = false
     var signInError: Error?
     
@@ -38,13 +31,16 @@ class SignInViewModel: ObservableObject {
         self.authenticationContainer.nationName = self.nationName
         self.authenticationContainer.password = self.password
         
+        self.signInError = nil
         self.isSigningIn = true
+        
         self.cancellable = self.authenticationProvider
             .authenticate(authenticationContainer: self.authenticationContainer)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let err):
+                    self.authenticationContainer.password = "" // Clear password to prevent autologin
                     self.signInError = err
                 default: break
                 }
@@ -57,6 +53,10 @@ class SignInViewModel: ObservableObject {
                     self.objectWillChange.send()
                 }
             })
+    }
+    
+    var signInButtonDisabled: Bool {
+        nationName.isEmpty || password.count < 2 // Yes, this is really the only password requirement on NS
     }
     
     func issuesViewModel() -> IssuesViewModel {

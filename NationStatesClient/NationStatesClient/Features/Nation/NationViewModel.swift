@@ -15,6 +15,6 @@ class NationViewModel: ObservableObject {
     }
     
     func signOut() {
-        self.authenticationContainer.clear()
+        self.authenticationContainer.signOut()
     }
 }

@@ -8,33 +8,19 @@
 import Foundation
 import Combine
 
-// TODO: maybe convert this to a struct, so APIRequest can return an updated container instead of changing an existing one
 class AuthenticationContainer: ObservableObject {
     private let storage: SecureStorage
     
-    init(storage: SecureStorage = KeychainSecretsStorage()) {
+    init(storage: SecureStorage = UserDefaultsStorage()) {
         self.storage = storage
-        if let autoLogin = storage.retrieve(key: StorageKey.autoLogin), let pin = storage.retrieve(key: StorageKey.pin) {
-            self.pair = (autologin: autoLogin, pin: pin)
-        }
+        self.autologin = storage.retrieve(key: StorageKey.autoLogin)
+        self.pin = storage.retrieve(key: StorageKey.pin)
         self.nationName = storage.retrieve(key: StorageKey.nationName) ?? ""
         self.password = storage.retrieve(key: StorageKey.password) ?? ""
     }
     
     var canPerformSilentLogin: Bool {
-        return self.pair != nil
-    }
-    
-    @Published var pair: AuthenticationPair? {
-        didSet {
-            if let pair = pair, let autologin = pair.autologin, let pin = pair.pin {
-                self.storage.store(autologin, key: StorageKey.autoLogin)
-                self.storage.store(pin, key: StorageKey.pin)
-            } else if pair == nil {
-                self.storage.remove(key: StorageKey.autoLogin)
-                self.storage.remove(key: StorageKey.pin)
-            }
-        }
+        return !self.nationName.isEmpty && !self.password.isEmpty
     }
     
     var nationName: String {
@@ -48,9 +34,28 @@ class AuthenticationContainer: ObservableObject {
             self.storage.store(password, key: StorageKey.password)
         }
     }
+    
+    var autologin: String? {
+        didSet {
+            self.storage.store(autologin, key: StorageKey.autoLogin)
+        }
+    }
+    
+    var pin: String? {
+        didSet {
+            self.storage.store(pin, key: StorageKey.pin)
+        }
+    }
+    
+    @Published var hasSignedOut: Bool = false
 
-    func clear() {
-        self.pair = nil
+    func signOut() {
+        self.nationName = ""
+        self.password = ""
+        self.autologin = nil
+        self.pin = nil
+        self.hasSignedOut = true
+        self.objectWillChange.send()
     }
 }
 

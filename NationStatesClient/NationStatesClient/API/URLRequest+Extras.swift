@@ -19,11 +19,11 @@ extension URLRequest {
         self.addValue(password, forHTTPHeaderField: AuthenticationMode.password.header)
     }
     
-    mutating func setupAuthenticationHeaders(pair: AuthenticationPair) {
-        if let pin = pair.pin {
-            self.addValue(pin, forHTTPHeaderField: AuthenticationMode.pin.header)
-        } else if let autologin = pair.autologin {
-            self.addValue(autologin, forHTTPHeaderField: AuthenticationMode.autologin.header)
-        }
+    mutating func setupPinHeader(_ pin: String) {
+        self.addValue(pin, forHTTPHeaderField: AuthenticationMode.pin.header)
+    }
+    
+    mutating func setupAutologinHeader(_ autologin: String) {
+        self.addValue(autologin, forHTTPHeaderField: AuthenticationMode.autologin.header)
     }
 }

@@ -28,13 +28,13 @@ class ContentViewModel: ObservableObject {
         self.issueProvider = APIIssueProvider(container: self.authenticationContainer)
         self.authenticationProvider = APIAuthenticationProvider(authenticationContainer: self.authenticationContainer)
         
-        self.cancellables.append(self.authenticationContainer.$pair
+        self.cancellables.append(self.authenticationContainer.$hasSignedOut
                                     .receive(on: DispatchQueue.main)
-                                    .sink { pair in
-        if pair == nil && self.authenticationContainer.nationName.isEmpty {
-                self.state = .initial
-            }
-        })
+                                    .sink { signedOut in
+                                        if signedOut {
+                                            self.state = .initial
+                                        }
+                                    })
     }
     
     func onAppear() {
@@ -49,7 +49,7 @@ class ContentViewModel: ObservableObject {
                 .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished: break
-                case .failure(let err):
+                case .failure(_):
                     self.state = .initial
                 }
             }, receiveValue: { success in
