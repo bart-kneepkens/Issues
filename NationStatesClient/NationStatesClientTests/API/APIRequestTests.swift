@@ -26,12 +26,8 @@ private func authenticationContainerWith(nationName: String = "",
     let container = AuthenticationContainer(storage: MockedSecureStorage())
     container.nationName = nationName
     container.password = password
-    
-    if autologin == nil && pin == nil {
-        container.pair = nil
-    } else {
-        container.pair = (autologin: autologin, pin: pin)
-    }
+    container.pin = pin
+    container.autologin = autologin
     
     return container
 }
@@ -75,7 +71,7 @@ class APIRequest_AuthenticationHeaders_Tests: XCTestCase {
         XCTAssertNil(getAutologinHeader(request))
         XCTAssertNil(getPasswordHeader(request))
         
-        container.pair?.pin = nil
+        container.pin = nil
         request = APIRequest(url: mockURL, authenticationContainer: container).authenticated
         
         // Should use autologin if pin is not available
@@ -83,7 +79,7 @@ class APIRequest_AuthenticationHeaders_Tests: XCTestCase {
         XCTAssertNil(getPinHeader(request))
         XCTAssertNil(getPasswordHeader(request))
         
-        container.pair = nil
+        container.autologin = nil
         request = APIRequest(url: mockURL, authenticationContainer: container).authenticated
         
         // Should use password if neither pin and autologin is available
@@ -226,10 +222,10 @@ class APIRequest_Publisher_Retry_Mechanism_Tests: XCTestCase {
             .sink { completion in
                 switch completion {
                 case .finished:
-                    if container.pair?.pin == nil {
+                    if container.pin == nil {
                         pinHeaderExpectation.fulfill()
                     }
-                    if container.pair?.autologin == "test_autologin" {
+                    if container.autologin == "test_autologin" {
                         autologinHeaderExpectation.fulfill()
                     }
                     if session.counter == 2 {
@@ -255,7 +251,7 @@ class APIRequest_Publisher_Retry_Mechanism_Tests: XCTestCase {
             .sink { completion in
                 switch completion {
                 case .finished:
-                    if container.pair == nil {
+                    if container.pin == nil && container.autologin == nil {
                         authenticationHeadersExpectation.fulfill()
                     }
                     if container.password == "test_password" {
@@ -285,7 +281,7 @@ class APIRequest_Publisher_Retry_Mechanism_Tests: XCTestCase {
             .sink { completion in
                 switch completion {
                 case .finished:
-                    if container.pair == nil {
+                    if container.pin == nil && container.autologin == nil {
                         authenticationHeadersExpectation.fulfill()
                     }
                     if container.password == "test_password" {
@@ -325,7 +321,8 @@ class APIRequest_Publisher_AuthenticationContainer_Tests: XCTestCase {
         let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password")
         let session = MockedSession(statusCodes: [200])
         
-        XCTAssertNil(container.pair)
+        XCTAssertNil(container.pin)
+        XCTAssertNil(container.autologin)
     
         let expectation = self.expectation(description: "Has set `pair` (pin and autologin) on the AuthenticationContainer")
 
@@ -334,8 +331,7 @@ class APIRequest_Publisher_AuthenticationContainer_Tests: XCTestCase {
             .sink { completion in
                 switch completion {
                 case .finished:
-                    guard let pair = container.pair else { break }
-                    if pair.autologin == "test_autologin" && pair.pin == "test_pin" {
+                    if container.autologin == "test_autologin" && container.pin == "test_pin" {
                         expectation.fulfill()
                     }
                     
