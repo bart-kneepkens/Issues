@@ -8,62 +8,104 @@
 import WidgetKit
 import SwiftUI
 import Intents
+import Combine
 
-struct Provider: IntentTimelineProvider {
+
+class Provider: TimelineProvider {
+    let container: AuthenticationContainer
+    let issuesProvider: IssueProvider
+    private var cancellables: [Cancellable]? = []
+    
+    init() {
+        self.container = AuthenticationContainer()
+        self.issuesProvider = MockedIssueProvider()
+    }
+
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent())
+        .init(date: Date(), issues: [])
     }
-
-    func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration)
-        completion(entry)
+    
+    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
+        completion(.init(date: Date(), issues: []))
     }
-
-    func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .second, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
-            entries.append(entry)
-        }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
+    
+    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
+        self.cancellables?.append(issuesProvider.fetchIssues().sink(receiveCompletion: { completion in
+            // TODO
+            print(completion)
+        }, receiveValue: { fetchIssueResult in
+            let timeline = Timeline(entries: [SimpleEntry(date: Date().addingTimeInterval(5), issues: fetchIssueResult?.issues ?? [])], policy: .atEnd)
+            
+            completion(timeline)
+        }))
     }
 }
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
-    let configuration: ConfigurationIntent
+    var issues: [Issue]
 }
 
 struct IssuesExtensionEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        Text(entry.date, style: .offset)
+        VStack {
+            ForEach(entry.issues, id: \.id) { issue in
+                    HStack {
+                        Text("\(issue.title)")
+                    Spacer()
+                }
+                Divider()
+            }
+        }.padding()
+    }
+}
+
+struct IssuesAmountView: View {
+    var entry: Provider.Entry
+    
+    var body: some View {
+        VStack {
+            ZStack {
+                Image(systemName: "person.fill").resizable().frame(width: 40, height: 40, alignment: .center)
+                ZStack {
+                    Circle().foregroundColor(.red)
+                        .overlay(Text("\(entry.issues.count)").font(.headline))
+                }
+                .frame(width: 30, height: 30, alignment: .center)
+                .offset(x: 20, y: -20)
+                
+                Text("Issues")
+                    .offset(x: 0, y: 35)
+            }
+        }
     }
 }
 
 @main
 struct IssuesExtension: Widget {
     let kind: String = "IssuesExtension"
+    @Environment(\.widgetFamily) var family
+    
+    func extensionView(entry: Provider.Entry) -> some View {
+        return Group {
+            IssuesAmountView(entry: entry)
+        }
+    }
 
     var body: some WidgetConfiguration {
-        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
-            IssuesExtensionEntryView(entry: entry)
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+           extensionView(entry: entry)
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Issues Widget")
+        .description("TODO: fill out this text")
     }
 }
 
 struct IssuesExtension_Previews: PreviewProvider {
     static var previews: some View {
-        IssuesExtensionEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent()))
+        IssuesAmountView(entry: SimpleEntry(date: Date(), issues: [.filler]))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
