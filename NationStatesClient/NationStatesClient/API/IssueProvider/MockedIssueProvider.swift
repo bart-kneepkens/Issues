@@ -14,7 +14,7 @@ class MockedIssueProvider: IssueProvider {
     let answerResult: AnsweredIssueResult
     let delay: Int
     
-    init(issues: [Issue] = [Issue.filler],
+    init(issues: [Issue] = [Issue.filler()],
          answerResult: AnsweredIssueResult = AnsweredIssueResult.filler,
          delay: Int = 1
     ) {

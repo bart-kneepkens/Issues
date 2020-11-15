@@ -11,7 +11,7 @@ import Combine
 #if DEBUG
 class MockedCompletedIssueProvider: CompletedIssueProvider {
     var completedIssues: [CompletedIssue] = [
-        CompletedIssue(issue: Issue.filler, result: .filler)
+        CompletedIssue(issue: Issue.filler(), result: .filler)
     ]
     
     func fetchCompletedIssues() -> AnyPublisher<[CompletedIssue], Error> {

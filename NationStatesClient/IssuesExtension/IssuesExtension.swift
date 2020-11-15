@@ -10,6 +10,10 @@ import SwiftUI
 import Intents
 import Combine
 
+struct IssuesEntry: TimelineEntry {
+    let date: Date
+    var issues: [Issue]
+}
 
 class Provider: TimelineProvider {
     let container: AuthenticationContainer
@@ -21,65 +25,23 @@ class Provider: TimelineProvider {
         self.issuesProvider = MockedIssueProvider()
     }
 
-    func placeholder(in context: Context) -> SimpleEntry {
+    func placeholder(in context: Context) -> IssuesEntry {
         .init(date: Date(), issues: [])
     }
     
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
+    func getSnapshot(in context: Context, completion: @escaping (IssuesEntry) -> Void) {
         completion(.init(date: Date(), issues: []))
     }
     
-    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<IssuesEntry>) -> Void) {
         self.cancellables?.append(issuesProvider.fetchIssues().sink(receiveCompletion: { completion in
             // TODO
             print(completion)
         }, receiveValue: { fetchIssueResult in
-            let timeline = Timeline(entries: [SimpleEntry(date: Date().addingTimeInterval(5), issues: fetchIssueResult?.issues ?? [])], policy: .atEnd)
+            let timeline = Timeline(entries: [IssuesEntry(date: Date().addingTimeInterval(5), issues: fetchIssueResult?.issues ?? [])], policy: .atEnd)
             
             completion(timeline)
         }))
-    }
-}
-
-struct SimpleEntry: TimelineEntry {
-    let date: Date
-    var issues: [Issue]
-}
-
-struct IssuesExtensionEntryView : View {
-    var entry: Provider.Entry
-
-    var body: some View {
-        VStack {
-            ForEach(entry.issues, id: \.id) { issue in
-                    HStack {
-                        Text("\(issue.title)")
-                    Spacer()
-                }
-                Divider()
-            }
-        }.padding()
-    }
-}
-
-struct IssuesAmountView: View {
-    var entry: Provider.Entry
-    
-    var body: some View {
-        VStack {
-            ZStack {
-                Image(systemName: "person.fill").resizable().frame(width: 40, height: 40, alignment: .center)
-                ZStack {
-                    Circle().foregroundColor(.red)
-                        .overlay(Text("\(entry.issues.count)").font(.headline))
-                }
-                .frame(width: 30, height: 30, alignment: .center)
-                .offset(x: 20, y: -20)
-                
-                Text("Issues")
-                    .offset(x: 0, y: 35)
-            }
-        }
     }
 }
 
@@ -90,7 +52,13 @@ struct IssuesExtension: Widget {
     
     func extensionView(entry: Provider.Entry) -> some View {
         return Group {
-            IssuesAmountView(entry: entry)
+            if family == .systemSmall {
+                SmallExtensionView(entry: entry)
+            } else if family == .systemMedium {
+                MediumExtensionView(entry: entry)
+            } else {
+                EmptyView()
+            }
         }
     }
 
@@ -100,12 +68,5 @@ struct IssuesExtension: Widget {
         }
         .configurationDisplayName("Issues Widget")
         .description("TODO: fill out this text")
-    }
-}
-
-struct IssuesExtension_Previews: PreviewProvider {
-    static var previews: some View {
-        IssuesAmountView(entry: SimpleEntry(date: Date(), issues: [.filler]))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
