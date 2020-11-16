@@ -12,59 +12,81 @@ import Combine
 
 struct IssuesEntry: TimelineEntry {
     let date: Date
-    var issues: [Issue]
+    let issues: [Issue]
 }
 
 class Provider: TimelineProvider {
-    let container: AuthenticationContainer
+    @StateObject var container: AuthenticationContainer = AuthenticationContainer()
+    
     let issuesProvider: IssueProvider
     private var cancellables: [Cancellable]? = []
     
     init() {
-        self.container = AuthenticationContainer()
         self.issuesProvider = MockedIssueProvider()
+    }
+    
+    var canAuthenticate: Bool {
+        container.canPerformSilentLogin
     }
 
     func placeholder(in context: Context) -> IssuesEntry {
-        .init(date: Date(), issues: [])
+        .init(date: Date(), issues: [.filler()])
     }
     
     func getSnapshot(in context: Context, completion: @escaping (IssuesEntry) -> Void) {
-        completion(.init(date: Date(), issues: []))
+        completion(.init(date: Date(), issues: [.filler()]))
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<IssuesEntry>) -> Void) {
+        
+        // fetch Issues
         self.cancellables?.append(issuesProvider.fetchIssues().sink(receiveCompletion: { completion in
             // TODO
             print(completion)
         }, receiveValue: { fetchIssueResult in
-            let timeline = Timeline(entries: [IssuesEntry(date: Date().addingTimeInterval(5), issues: fetchIssueResult?.issues ?? [])], policy: .atEnd)
+            
+            guard let result = fetchIssueResult else { return }
+            
+            let timeline = Timeline(entries: [IssuesEntry(date: Date(), issues: result.issues)], policy: .after(result.nextIssueDate))
             
             completion(timeline)
         }))
     }
 }
 
-@main
-struct IssuesExtension: Widget {
-    let kind: String = "IssuesExtension"
-    @Environment(\.widgetFamily) var family
+struct IssuesExtensionContents: View {
+    @Environment(\.widgetFamily) var family: WidgetFamily
+    let provider: Provider
     
-    func extensionView(entry: Provider.Entry) -> some View {
-        return Group {
-            if family == .systemSmall {
+    let entry: Provider.Entry
+    
+    @ViewBuilder
+    var body: some View {
+        if !provider.canAuthenticate {
+            Text("Please sign in to view issues")
+        } else {
+            switch family {
+            case .systemSmall:
                 SmallExtensionView(entry: entry)
-            } else if family == .systemMedium {
+            case .systemMedium:
                 MediumExtensionView(entry: entry)
-            } else {
+            case .systemLarge:
+                LargeExtensionView(entry: entry)
+            @unknown default:
                 EmptyView()
             }
         }
     }
+}
 
+@main
+struct IssuesExtension: Widget {
+    let kind: String = "IssuesExtension"
+    let provider = Provider()
+    
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
-           extensionView(entry: entry)
+        StaticConfiguration(kind: kind, provider: provider) { entry in
+            IssuesExtensionContents(provider: provider, entry: entry)
         }
         .configurationDisplayName("Issues Widget")
         .description("TODO: fill out this text")

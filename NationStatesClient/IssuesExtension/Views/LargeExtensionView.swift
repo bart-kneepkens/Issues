@@ -12,20 +12,25 @@ struct LargeExtensionView: View {
     var entry: IssuesEntry
     
     var body: some View {
-        VStack {
-            HStack {
-                VStack {
-                    Text("\(entry.issues.count)").font(.title).fontWeight(.bold)
-                    Text("Elest Adra")
+        ZStack {
+            Image("f1_square").resizable()
+            VStack {
+                HStack {
+                    VStack {
+                        Text("\(entry.issues.count)").font(.title).fontWeight(.bold)
+                        Text("Elest Adra")
+                    }
+                    Spacer()
+                    Image(systemName: "newspaper").resizable().frame(width: 33, height: 33)
                 }
+                .padding(.horizontal)
+                
+                Divider()
+                
+                IssuesList(issues: entry.issues)
                 Spacer()
-                Image(systemName: "newspaper").resizable().frame(width: 33, height: 33)
-            }.padding(.horizontal)
-            Divider()
-            
-            IssuesList(issues: entry.issues)
-            Spacer()
-        }.padding()
+            }.padding()
+        }
     }
 }
 
