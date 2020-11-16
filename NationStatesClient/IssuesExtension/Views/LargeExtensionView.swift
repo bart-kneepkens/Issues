@@ -13,7 +13,7 @@ struct LargeExtensionView: View {
     
     var body: some View {
         ZStack {
-            Image("f1_square").resizable()
+//            Image("f1_square").resizable()
             VStack {
                 HStack {
                     VStack {

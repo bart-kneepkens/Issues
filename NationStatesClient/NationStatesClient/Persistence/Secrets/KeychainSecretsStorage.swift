@@ -8,6 +8,8 @@
 import Foundation
 
 class KeychainSecretsStorage: SecureStorage {
+    let keychainGroup = "GY3SL5N58H.bart-kneepkens.issues"
+    
     func store(_ value: String?, key: String) {
         guard let value = value, !value.isEmpty else {
             self.remove(key: key)
@@ -21,9 +23,11 @@ class KeychainSecretsStorage: SecureStorage {
             kSecAttrSynchronizable as String: true,
             kSecAttrAccount as String: keyData,
             kSecValueData as String: valueData,
+            kSecAttrAccessGroup as String: keychainGroup,
         ]
         
-        let _: OSStatus = SecItemAdd(query as CFDictionary, nil)
+        let status: OSStatus = SecItemAdd(query as CFDictionary, nil)
+        print("Stored \(key) in keychain group with status \(status)")
     }
     
     func remove(key: String) {
@@ -31,9 +35,11 @@ class KeychainSecretsStorage: SecureStorage {
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrSynchronizable as String: true,
             kSecAttrAccount as String: key.data(using: .utf8)!,
+            kSecAttrAccessGroup as String: keychainGroup,
         ]
         
-        let _: OSStatus = SecItemDelete(query as CFDictionary)
+        let status: OSStatus = SecItemDelete(query as CFDictionary)
+        print("Removed \(key) from keychain group with status \(status)")
     }
     
     func retrieve(key: String) -> String? {
@@ -41,18 +47,21 @@ class KeychainSecretsStorage: SecureStorage {
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrSynchronizable as String: true,
             kSecAttrAccount as String: key.data(using: .utf8)!,
-            kSecReturnData as String: true
+            kSecReturnData as String: true,
+            kSecAttrAccessGroup as String: keychainGroup,
         ]
         
         var result: AnyObject?
-        let _: OSStatus = withUnsafeMutablePointer(to: &result) {
+        let status: OSStatus = withUnsafeMutablePointer(to: &result) {
             SecItemCopyMatching(query as CFDictionary, UnsafeMutablePointer($0))
         }
         
+        print("Retrieved \(key) from keychain group with status \(status)")
+        
+        // TODO: add some graceful error handling
         guard let data = result as? Data else { return nil }
         
         return String(data: data, encoding: .utf8)
     }
-    
     
 }

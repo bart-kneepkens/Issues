@@ -16,13 +16,15 @@ struct IssuesEntry: TimelineEntry {
 }
 
 class Provider: TimelineProvider {
-    @StateObject var container: AuthenticationContainer = AuthenticationContainer()
+    @StateObject var container: AuthenticationContainer
     
     let issuesProvider: IssueProvider
     private var cancellables: [Cancellable]? = []
     
     init() {
-        self.issuesProvider = MockedIssueProvider()
+        let container = AuthenticationContainer()
+        _container = StateObject(wrappedValue: container)
+        self.issuesProvider = APIIssueProvider(container: container)
     }
     
     var canAuthenticate: Bool {
@@ -62,19 +64,15 @@ struct IssuesExtensionContents: View {
     
     @ViewBuilder
     var body: some View {
-        if !provider.canAuthenticate {
-            Text("Please sign in to view issues")
-        } else {
-            switch family {
-            case .systemSmall:
-                SmallExtensionView(entry: entry)
-            case .systemMedium:
-                MediumExtensionView(entry: entry)
-            case .systemLarge:
-                LargeExtensionView(entry: entry)
-            @unknown default:
-                EmptyView()
-            }
+        switch family {
+        case .systemSmall:
+            SmallExtensionView(entry: entry)
+        case .systemMedium:
+            MediumExtensionView(entry: entry)
+        case .systemLarge:
+            LargeExtensionView(entry: entry)
+        @unknown default:
+            EmptyView()
         }
     }
 }
