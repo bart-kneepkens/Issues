@@ -12,18 +12,18 @@ import Combine
 
 struct IssuesEntry: TimelineEntry {
     let date: Date
-    let issues: [Issue]
+    let fetchIssuesResult: FetchIssuesResult
+    let nationName: String
 }
 
 class Provider: TimelineProvider {
-    @StateObject var container: AuthenticationContainer
+    var container: AuthenticationContainer
     
     let issuesProvider: IssueProvider
     private var cancellables: [Cancellable]? = []
     
     init() {
-        let container = AuthenticationContainer()
-        _container = StateObject(wrappedValue: container)
+        self.container = AuthenticationContainer()
         self.issuesProvider = APIIssueProvider(container: container)
     }
     
@@ -32,11 +32,11 @@ class Provider: TimelineProvider {
     }
 
     func placeholder(in context: Context) -> IssuesEntry {
-        .init(date: Date(), issues: [.filler()])
+        .init(date: Date(), fetchIssuesResult: .filler, nationName: self.container.nationName)
     }
     
     func getSnapshot(in context: Context, completion: @escaping (IssuesEntry) -> Void) {
-        completion(.init(date: Date(), issues: [.filler()]))
+        completion(.init(date: Date(), fetchIssuesResult: .filler, nationName: self.container.nationName))
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<IssuesEntry>) -> Void) {
@@ -45,11 +45,16 @@ class Provider: TimelineProvider {
         self.cancellables?.append(issuesProvider.fetchIssues().sink(receiveCompletion: { completion in
             // TODO
             print(completion)
+            
+            switch completion {
+            case .finished: break
+            case .failure(let error): break
+            }
         }, receiveValue: { fetchIssueResult in
             
             guard let result = fetchIssueResult else { return }
             
-            let timeline = Timeline(entries: [IssuesEntry(date: Date(), issues: result.issues)], policy: .after(result.nextIssueDate))
+            let timeline = Timeline(entries: [IssuesEntry(date: Date(), fetchIssuesResult: result, nationName: self.container.nationName)], policy: .after(Date().addingTimeInterval(30)))
             
             completion(timeline)
         }))

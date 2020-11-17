@@ -14,8 +14,11 @@ struct SmallExtensionView: View {
     var body: some View {
         VStack {
             ZStack {
-                Image("f1_square").resizable()
-                IssuesAmountView(amount: entry.issues.count)
+                Image("f1_square").resizable().overlay(Color("BackgroundOverlayColor"))
+                VStack {
+                    IssuesAmountView(amount: entry.fetchIssuesResult.issues.count)
+                    Text(entry.fetchIssuesResult.timeLeftForNextIssue.uppercased())
+                }
             }
         }
     }
@@ -23,6 +26,7 @@ struct SmallExtensionView: View {
 
 struct SmallExtensionView_Previews: PreviewProvider {
     static var previews: some View {
-        SmallExtensionView(entry: .init(date: Date(), issues: [.filler(1)])).previewContext(WidgetPreviewContext(family: .systemSmall))
+        SmallExtensionView(entry: .init(date: Date(), fetchIssuesResult: .filler, nationName: "Elest Adra")).previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
+    

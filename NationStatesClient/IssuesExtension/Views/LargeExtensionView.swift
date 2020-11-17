@@ -13,12 +13,12 @@ struct LargeExtensionView: View {
     
     var body: some View {
         ZStack {
-//            Image("f1_square").resizable()
+            Image("f1_square").resizable().overlay(Color("BackgroundOverlayColor"))
             VStack {
                 HStack {
                     VStack {
-                        Text("\(entry.issues.count)").font(.title).fontWeight(.bold)
-                        Text("Elest Adra")
+                        Text("\(entry.fetchIssuesResult .issues.count)").font(.title).fontWeight(.bold)
+                        Text(entry.nationName)
                     }
                     Spacer()
                     Image(systemName: "newspaper").resizable().frame(width: 33, height: 33)
@@ -27,7 +27,7 @@ struct LargeExtensionView: View {
                 
                 Divider()
                 
-                IssuesList(issues: entry.issues)
+                IssuesList(issues: entry.fetchIssuesResult.issues)
                 Spacer()
             }.padding()
         }
@@ -36,7 +36,7 @@ struct LargeExtensionView: View {
 
 struct LargeExtensionView_Previews: PreviewProvider {
     static var previews: some View {
-        LargeExtensionView(entry: .init(date: Date(), issues: [.filler(1), .filler(2), .filler(3), .filler(4), .filler(5)]))
+        LargeExtensionView(entry: .init(date: Date(), fetchIssuesResult: .filler, nationName: "Elest Adra"))
             .previewContext(WidgetPreviewContext(family: .systemLarge))
     }
 }
