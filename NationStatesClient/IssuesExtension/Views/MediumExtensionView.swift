@@ -14,22 +14,15 @@ struct MediumExtensionView: View {
     var body: some View {
         ZStack {
             Image("f1_landscape").resizable().overlay(Color("BackgroundOverlayColor"))
+            VStack {
             HStack {
                 IssuesAmountView(amount: entry.fetchIssuesResult.issues.count)
                     .padding(25)
                 
-                VStack(spacing: 0) {
-                    ForEach(entry.fetchIssuesResult.issues, id: \.id) { issue in
-                        HStack {
-                            Text("\(issue.title)").multilineTextAlignment(.leading).padding(.vertical, 4)
-                            Spacer()
-                        }
-                        if issue.id != entry.fetchIssuesResult.issues.last?.id {
-                            DashedLine()
-                        }
-                    }
-                }
+                IssuesList(issues: entry.fetchIssuesResult.issues)
             }.padding(.trailing)
+                NextIssueText(entry: self.entry)
+            }
         }
     }
 }

@@ -98,6 +98,9 @@ extension APIRequest {
             if httpResponse.statusCode == 404 {
                 throw APIError.notFound
             }
+            if httpResponse.statusCode == 429 {
+                throw APIError.rateExceeded
+            }
         }
     }
 }

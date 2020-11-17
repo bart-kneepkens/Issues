@@ -33,6 +33,7 @@ enum APIError: Error {
     case unauthorized // 403
     case conflict // 409
     case notFound // 404
+    case rateExceeded // 429
     case notConnected
     case unknown(error: Error)
 }

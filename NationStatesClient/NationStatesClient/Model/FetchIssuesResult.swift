@@ -11,6 +11,10 @@ struct FetchIssuesResult {
     let issues: [Issue]
     let timeLeftForNextIssue: String
     let nextIssueDate: Date
+    
+    var isAwaitingNextIssue: Bool {
+        issues.count < 5
+    }
 }
 
 struct FetchIssuesResultDTO {
