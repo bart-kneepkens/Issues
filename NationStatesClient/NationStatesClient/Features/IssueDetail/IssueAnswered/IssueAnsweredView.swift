@@ -60,9 +60,11 @@ struct IssueAnsweredSection: View {
                 }
             }
             
-            Section(header: Text("Rankings")) {
-                ForEach(result.rankings.sorted(by: { $0.percentualChange > $1.percentualChange }), id: \.self) { ranking in
-                    RankingView(ranking)
+            if !result.rankings.isEmpty {
+                Section(header: Text("Rankings")) {
+                    ForEach(result.rankings.sorted(by: { $0.percentualChange > $1.percentualChange }), id: \.self) { ranking in
+                        RankingView(ranking)
+                    }
                 }
             }
         }
