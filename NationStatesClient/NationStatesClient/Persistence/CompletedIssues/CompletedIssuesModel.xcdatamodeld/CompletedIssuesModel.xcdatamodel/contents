@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17511" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="AnsweredIssueResult" representedClassName="AnsweredIssueResultMO" syncable="YES" codeGenerationType="class">
         <attribute name="resultText" optional="YES" attributeType="String"/>
+        <relationship name="choice" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Option" inverseName="answeredIssueResult" inverseEntity="Option"/>
         <relationship name="completedIssue" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CompletedIssue" inverseName="result" inverseEntity="CompletedIssue"/>
         <relationship name="headlines" toMany="YES" deletionRule="Cascade" destinationEntity="Headline" inverseName="answerResult" inverseEntity="Headline"/>
         <relationship name="rankings" toMany="YES" deletionRule="Cascade" destinationEntity="Ranking" inverseName="answerResult" inverseEntity="Ranking"/>
@@ -26,6 +27,7 @@
     <entity name="Option" representedClassName="OptionMO" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="text" attributeType="String"/>
+        <relationship name="answeredIssueResult" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AnsweredIssueResult" inverseName="choice" inverseEntity="AnsweredIssueResult"/>
         <relationship name="issue" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Issue" inverseName="options" inverseEntity="Issue"/>
     </entity>
     <entity name="Ranking" representedClassName="RankingMO" syncable="YES" codeGenerationType="class">
@@ -42,11 +44,11 @@
         <relationship name="answerResult" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AnsweredIssueResult" inverseName="reclassifications" inverseEntity="AnsweredIssueResult"/>
     </entity>
     <elements>
-        <element name="AnsweredIssueResult" positionX="-127.94140625" positionY="-227.015625" width="128" height="118"/>
+        <element name="AnsweredIssueResult" positionX="-127.94140625" positionY="-227.015625" width="128" height="133"/>
         <element name="CompletedIssue" positionX="-409.43359375" positionY="-173.33203125" width="128" height="73"/>
         <element name="Headline" positionX="180.73046875" positionY="-229.16015625" width="128" height="73"/>
         <element name="Issue" positionX="-158.71875" positionY="-40.5390625" width="128" height="133"/>
-        <element name="Option" positionX="15.57421875" positionY="4.125" width="128" height="88"/>
+        <element name="Option" positionX="15.57421875" positionY="4.125" width="128" height="103"/>
         <element name="Ranking" positionX="181.33984375" positionY="-353.90625" width="128" height="118"/>
         <element name="Reclassify" positionX="182.8515625" positionY="-136.20703125" width="128" height="103"/>
     </elements>

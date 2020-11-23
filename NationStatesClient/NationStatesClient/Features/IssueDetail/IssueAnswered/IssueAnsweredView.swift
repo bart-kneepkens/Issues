@@ -39,16 +39,41 @@ struct RankingView: View {
 
 struct IssueAnsweredSection: View {
     let result: AnsweredIssueResult
+    @State private var showsLegislationSheet = false
+    
+    private var legislationView: some View {
+        Section {
+            if result.choice.id == Option.dismiss.id {
+                Text("Dismissed").foregroundColor(.red)
+            } else {
+                Button("Legislation Passed") {
+                    self.showsLegislationSheet.toggle()
+                }
+            }
+        }
+    }
     
     var body: some View {
         Group {
-            Section(header: Text("Legislation passed")) {
-                Text(result.resultText)
+            legislationView.sheet(isPresented: $showsLegislationSheet, content: {
+                List {
+                    Section(header: Text("Passed Legislation")) {
+                        Text(self.result.choice.text)
+                    }
+                }.listStyle(InsetGroupedListStyle())
+            })
+            
+            if !result.resultText.isEmpty {
+                Section(header: Text("Result")) {
+                    Text(result.resultText)
+                }
             }
             
-            Section(header: Text("Headlines")) {
-                ForEach(result.headlines, id: \.self) { headline in
-                    Text(headline)
+            if !result.headlines.isEmpty {
+                Section(header: Text("Headlines")) {
+                    ForEach(result.headlines, id: \.self) { headline in
+                        Text(headline)
+                    }
                 }
             }
             

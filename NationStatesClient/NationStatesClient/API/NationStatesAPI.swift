@@ -100,7 +100,8 @@ extension NationStatesAPI {
                 return AnsweredIssueResultDTO(resultText: parser.text,
                                               headlines: parser.headlines,
                                               reclassifications: parser.reclassifications,
-                                              rankings: parser.rankings)
+                                              rankings: parser.rankings,
+                                              choice: option)
             }
             .eraseToAnyPublisher()
     }

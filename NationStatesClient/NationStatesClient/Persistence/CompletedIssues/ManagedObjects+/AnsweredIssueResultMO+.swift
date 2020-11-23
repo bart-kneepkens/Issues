@@ -15,6 +15,7 @@ extension AnsweredIssueResultMO: ModelConfigurable {
         self.headlines = NSSet(array: model.headlines.map({ HeadlineMO(with: $0, context: context )}))
         self.reclassifications = NSSet(array: model.reclassifications.map({ ReclassifyMO(with: $0, context: context) }))
         self.rankings = NSSet(array: model.rankings.map({ RankingMO(with: $0, context: context) }))
+        self.choice = OptionMO(with: model.choice, context: context)
     }
     
     convenience init(with answeredIssueResult: AnsweredIssueResult, context: NSManagedObjectContext) {
@@ -39,6 +40,10 @@ extension AnsweredIssueResultMO: DTOConvertible {
         
         if let rankings = self.rankings as? Set<RankingMO> {
             d.rankings = rankings.map({ $0.dto })
+        }
+        
+        if let choice = self.choice {
+            d.choice = Option(from: choice.dto)
         }
         
         return d

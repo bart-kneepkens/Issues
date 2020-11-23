@@ -12,6 +12,7 @@ struct AnsweredIssueResultDTO {
     var headlines: [HeadlineDTO] = []
     var reclassifications: [ReclassifyDTO] = []
     var rankings: [RankingDTO] = []
+    var choice: Option?
 }
 
 struct AnsweredIssueResult {
@@ -19,6 +20,7 @@ struct AnsweredIssueResult {
     let headlines: [Headline]
     let reclassifications: [Reclassify]
     let rankings: [Ranking]
+    var choice: Option
 }
 
 extension AnsweredIssueResult: DTOInitializable {
@@ -26,10 +28,12 @@ extension AnsweredIssueResult: DTOInitializable {
     
     init?(from dto: AnsweredIssueResultDTO) {
         guard let resultText = dto.resultText else { return nil }
+        
         self.init(resultText: resultText,
                   headlines: dto.headlines.compactMap({ $0 }),
                   reclassifications: dto.reclassifications.compactMap({ Reclassify(from: $0 )}),
-                  rankings: dto.rankings.compactMap({ Ranking(from: $0)}))
+                  rankings: dto.rankings.compactMap({ Ranking(from: $0)}),
+                  choice: dto.choice ?? Option.dismiss)
     }
 }
 
@@ -37,6 +41,6 @@ extension AnsweredIssueResult: DTOInitializable {
 
 #if DEBUG
 extension AnsweredIssueResult {
-    static var filler: AnsweredIssueResult = AnsweredIssueResult(from: .init(resultText: "This is the result", headlines: ["Headlines", "Is a song by drake"], reclassifications: [], rankings: []))!
+    static var filler: AnsweredIssueResult = AnsweredIssueResult(from: .init(resultText: "This is the result", headlines: ["Headlines", "Is a song by drake"], reclassifications: [], rankings: [], choice: .init(id: 6, text: "sixth option")))!
 }
 #endif
