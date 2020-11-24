@@ -15,12 +15,12 @@ struct MediumExtensionView: View {
         ZStack {
             Image("f1_landscape").resizable().overlay(Color("BackgroundOverlayColor"))
             VStack {
-            HStack {
-                IssuesAmountView(amount: entry.fetchIssuesResult.issues.count)
-                    .padding(25)
-                
-                IssuesList(issues: entry.fetchIssuesResult.issues)
-            }.padding(.trailing)
+                HStack {
+                    IssuesAmountView(amount: entry.fetchIssuesResult.issues.count)
+                        .padding(25)
+                    
+                    IssuesList(issues: entry.fetchIssuesResult.issues)
+                }.padding(.trailing)
                 NextIssueText(entry: self.entry)
             }
         }
