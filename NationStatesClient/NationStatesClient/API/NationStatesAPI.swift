@@ -13,6 +13,15 @@ enum Shard: String {
     case issues
     case nextissue
     case nextissuetime
+    
+    case category
+    case motto
+    case type
+    case name
+    case fullname
+    case freedom
+    case flag
+    case census
 }
 
 enum AuthenticationMode {
@@ -129,5 +138,19 @@ extension NationStatesAPI {
             guard error == nil else { return }
             completionHandler(.success(data))
         }
+    }
+}
+
+extension NationStatesAPI {
+    // TODO: maybe remove dependency to auth container, since all of these are public shards
+    static func fetchNationDetails(authenticationContainer: AuthenticationContainer) -> AnyPublisher<NationDTO, APIError> {
+        guard let url = URLBuilder.nationDetailsUrl(for: authenticationContainer.nationName) else { fatalError() }
+
+        return request(using: url, authenticationContainer: authenticationContainer).map { result -> NationDTO in
+            let parser = NationDetailsResponseXMLParser(result.data)
+            parser.parse()
+            return parser.nationDTO
+        }
+        .eraseToAnyPublisher()
     }
 }

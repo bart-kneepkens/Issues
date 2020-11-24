@@ -9,26 +9,106 @@ import SwiftUI
 
 struct NationView: View {
     @Environment(\.presentationMode) var presentationMode
-    let viewModel: NationViewModel
+    @StateObject var viewModel: NationViewModel
+    
+    var nationNameView: some View {
+        Section(header: Text("Nation Name")) {
+            Text(self.viewModel.name)
+        }
+    }
+    
+    var accountSection: some View {
+        Section(header: Text("Account")) {
+            Button("Sign out \(self.viewModel.name)") {
+                self.viewModel.signOut()
+            }.foregroundColor(.red)
+        }
+    }
+    
+    @ViewBuilder func flagView(_ path: String) -> some View {
+        let url = URL(string: path)
+        RemoteImage(url: url)
+            .aspectRatio(contentMode: .fit)
+            .frame(height: 64)
+    }
+    
+    @ViewBuilder func nameView(fullName: String, name: String) -> some View {
+        let prefix = fullName.replacingOccurrences(of: name, with: "")
+        Group {
+            Text(prefix).fixedSize()
+            Text(name).font(.title).fontWeight(.bold)
+        }
+    }
+    
+    @ViewBuilder func categoryView(_ category: String) -> some View {
+        Text(category)
+            .tracking(10)
+            .fixedSize()
+            .opacity(0.8)
+    }
+    
+    @ViewBuilder func mottoView(_ motto: String) -> some View {
+        Text("\"\(motto)\"").italic().fixedSize()
+    }
+    
+    @ViewBuilder func freedomView(_ freedom: Freedom) -> some View {
+        Section {
+            HStack {
+                Text("Civil Rights")
+                Spacer()
+                Text(freedom.civilRights)
+            }
+            
+            HStack {
+                Text("Economy")
+                Spacer()
+                Text(freedom.economy)
+            }
+            
+            HStack {
+                Text("Political Freedom")
+                Spacer()
+                Text(freedom.politicalFreedom)
+            }
+        }
+    }
+    
+    var listContents: some View {
+        Group {
+            if let nation = self.viewModel.nation {
+                HStack {
+                    flagView(nation.flagURL)
+                    VStack(spacing: 10) {
+                        nameView(fullName: nation.fullName, name: nation.name)
+                        categoryView(nation.category)
+                        mottoView(nation.motto)
+                    }
+                }
+                
+                freedomView(nation.freedom)
+            } else {
+                nationNameView
+            }
+            
+            accountSection
+        }
+    }
     
     var body: some View {
         List {
-            Section(header: Text("Nation Name")) {
-                Text("Elest Adra")
-            }
-            Section(header: Text("Account")) {
-                Button("Sign out") {
-                    self.viewModel.signOut()
-                }.foregroundColor(.red)
-            }
-        }.listStyle(InsetGroupedListStyle())
+            self.listContents
+        }
+        .listStyle(InsetGroupedListStyle())
+        .onAppear {
+            self.viewModel.loadDetails()
+        }
     }
 }
 
 struct NationView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            NationView(viewModel: .init(authenticationContainer: .init()))
+            NationView(viewModel: .init(nation: .filler, name: "Le Nation "))
         }
     }
 }

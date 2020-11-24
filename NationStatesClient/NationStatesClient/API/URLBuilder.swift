@@ -36,6 +36,20 @@ struct URLBuilder {
         return components.url
     }
     
+    static func nationDetailsUrl(for nationName: String) -> URL? {
+        guard var components = URLComponents(url: baseUrl, resolvingAgainstBaseURL: true) else { return nil }
+        let shards: [Shard] = [.category, .flag, .motto, .type, .fullname, .name, .freedom, .census]
+        
+        components.queryItems = [
+            API_VERSION_QUERY_ITEM,
+            URLQueryItem(name: "nation", value: nationName),
+            URLQueryItem(name: "q", value: shards.map({ $0.rawValue }).joined(separator: "+")),
+            URLQueryItem(name: "scale", value: [0,1,2].map({ String($0) }).joined(separator: "+")), // Represent the 3 census in 'freedoms'
+        ]
+        
+        return components.url
+    }
+    
     static func answerIssueUrl(for nationName: String, issue: Issue, option: Option) -> URL? {
         guard var components = URLComponents(url: baseUrl, resolvingAgainstBaseURL: true) else { return nil }
         
