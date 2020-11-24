@@ -8,5 +8,6 @@
 import Combine
 
 protocol NationDetailsProvider {
-    func fetchDetails() -> AnyPublisher<Nation?, APIError>
+    var nationDetails: Nation? { get }
+    func fetchDetails()
 }

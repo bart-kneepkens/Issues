@@ -10,6 +10,7 @@ import Combine
 
 class SignInViewModel: ObservableObject {
     private var authenticationProvider: AuthenticationProvider
+    private let nationDetailsProvider: NationDetailsProvider
     private var authenticationContainer: AuthenticationContainer
     private var issueProvider: IssueProvider
     
@@ -17,6 +18,7 @@ class SignInViewModel: ObservableObject {
         self.issueProvider = issueProvider
         self.authenticationProvider = authenticationProvider
         self.authenticationContainer = authenticationContainer
+        self.nationDetailsProvider = APINationDetailsProvider(container: authenticationContainer)
     }
     
     @Published var isSigningIn = false
@@ -51,6 +53,7 @@ class SignInViewModel: ObservableObject {
                 if success {
                     self.authenticationSuccessful = true
                     self.objectWillChange.send()
+                    self.nationDetailsProvider.fetchDetails()
                 }
             })
     }
@@ -60,6 +63,6 @@ class SignInViewModel: ObservableObject {
     }
     
     func issuesViewModel() -> IssuesViewModel {
-        return .init(provider: self.issueProvider, authenticationContainer: self.authenticationContainer)
+        return .init(provider: self.issueProvider, nationDetailsProvider: self.nationDetailsProvider, authenticationContainer: self.authenticationContainer)
     }
 }

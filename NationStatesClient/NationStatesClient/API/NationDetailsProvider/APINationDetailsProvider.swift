@@ -9,16 +9,22 @@ import Foundation
 import Combine
 
 class APINationDetailsProvider: NationDetailsProvider {
-    let authenticationContainer: AuthenticationContainer
+    var nationDetails: Nation?
+    private let authenticationContainer: AuthenticationContainer
+    private var cancellable: Cancellable?
     
     init(container: AuthenticationContainer) {
         self.authenticationContainer = container
     }
     
-    func fetchDetails() -> AnyPublisher<Nation?, APIError> {
-        return NationStatesAPI
+    func fetchDetails() {
+        self.cancellable = NationStatesAPI
             .fetchNationDetails(authenticationContainer: self.authenticationContainer)
             .map({ Nation(from: $0) })
-            .eraseToAnyPublisher()
+            .catch({ error -> AnyPublisher<Nation?, Never> in
+                return Just(nil).eraseToAnyPublisher()
+            })
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.nationDetails, on: self)
     }
 }

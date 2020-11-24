@@ -33,14 +33,16 @@ class IssuesViewModel: ObservableObject {
     
     private let persistentContainer: CompletedIssueProvider
     private var provider: IssueProvider
+    private let nationDetailsProvider: NationDetailsProvider
     private var authenticationContainer: AuthenticationContainer
     private var cancellables: [Cancellable]? = []
     private var shouldFetchPublisher = PassthroughSubject<Bool, Never>()
     private let refreshIssuesTimer = Timer.publish(every: 20, tolerance: 5, on: .main, in: .common).autoconnect()
     
-    init(provider: IssueProvider, authenticationContainer: AuthenticationContainer) {
+    init(provider: IssueProvider, nationDetailsProvider: NationDetailsProvider, authenticationContainer: AuthenticationContainer) {
         self.provider = provider
         self.authenticationContainer = authenticationContainer
+        self.nationDetailsProvider = nationDetailsProvider
         self.persistentContainer = PersisentCompletedIssueProvider()
         self.cancellables?.append(
             self.shouldFetchPublisher
@@ -107,7 +109,7 @@ extension IssuesViewModel: IssueContainer {
 
 extension IssuesViewModel {
     var nationViewModel: NationViewModel {
-        return .init(authenticationContainer: self.authenticationContainer)
+        return .init(provider: self.nationDetailsProvider, authenticationContainer: self.authenticationContainer)
     }
     
     func issueDetailViewModel(issue: Issue) -> IssueDetailViewModel {

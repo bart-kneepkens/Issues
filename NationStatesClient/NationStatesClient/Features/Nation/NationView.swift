@@ -99,9 +99,7 @@ struct NationView: View {
             self.listContents
         }
         .listStyle(InsetGroupedListStyle())
-        .onAppear {
-            self.viewModel.loadDetails()
-        }
+        .navigationBarTitle("", displayMode: .inline)
     }
 }
 

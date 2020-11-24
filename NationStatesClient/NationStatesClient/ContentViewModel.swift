@@ -19,6 +19,7 @@ class ContentViewModel: ObservableObject {
     
     let issueProvider: IssueProvider
     let authenticationProvider: AuthenticationProvider
+    let nationDetailsProvider: NationDetailsProvider
     
     private let authenticationContainer: AuthenticationContainer
     private var cancellables: [Cancellable] = []
@@ -27,6 +28,7 @@ class ContentViewModel: ObservableObject {
         self.authenticationContainer = AuthenticationContainer()
         self.issueProvider = APIIssueProvider(container: self.authenticationContainer)
         self.authenticationProvider = APIAuthenticationProvider(authenticationContainer: self.authenticationContainer)
+        self.nationDetailsProvider = APINationDetailsProvider(container: self.authenticationContainer)
         
         self.cancellables.append(self.authenticationContainer.$hasSignedOut
                                     .receive(on: DispatchQueue.main)
@@ -55,15 +57,17 @@ class ContentViewModel: ObservableObject {
             }, receiveValue: { success in
                 if success {
                     self.state = .signedIn
+                    self.nationDetailsProvider.fetchDetails()
                 }
             })
         )
+        
     }
 }
 
 extension ContentViewModel {
     var issuesViewModel: IssuesViewModel {
-        return IssuesViewModel(provider: self.issueProvider, authenticationContainer: self.authenticationContainer)
+        return IssuesViewModel(provider: self.issueProvider, nationDetailsProvider: self.nationDetailsProvider, authenticationContainer: self.authenticationContainer)
     }
     
     var signInViewModel: SignInViewModel {

@@ -55,7 +55,6 @@ struct IssuesView: View {
             if self.viewModel.selectedIssuesList == .current {
                 ForEach(viewModel.issues, id: \.id) { issue in
                     NavigationLink(issue.title, destination: IssueDetailView(viewModel: self.viewModel.issueDetailViewModel(issue: issue)))
-                        .redacted(reason: self.viewModel.isFetchingIssues ? .placeholder : [])
                 }
             } else {
                 ForEach(viewModel.completedIssues, id: \.issue.id) { completed in
@@ -89,7 +88,7 @@ struct IssuesView: View {
 struct IssuesView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            IssuesView(viewModel: IssuesViewModel(provider: MockedIssueProvider(), authenticationContainer: .init()))
+            IssuesView(viewModel: IssuesViewModel(provider: MockedIssueProvider(), nationDetailsProvider: MockedNationDetailsProvider(), authenticationContainer: .init()))
         }
     }
 }
