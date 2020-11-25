@@ -27,15 +27,19 @@ struct NationView: View {
     
     @ViewBuilder func flagView(_ path: String) -> some View {
         let url = URL(string: path)
-        RemoteImage(url: url)
-            .aspectRatio(contentMode: .fit)
-            .frame(height: 64)
+        HStack {
+            Spacer()
+            CachedRemoteImage(url: url)
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 64)
+            Spacer()
+        }
     }
     
     @ViewBuilder func nameView(fullName: String, name: String) -> some View {
         let prefix = fullName.replacingOccurrences(of: name, with: "")
         Group {
-            Text(prefix).fixedSize()
+            Text(prefix)
             Text(name).font(.title).fontWeight(.bold)
         }
     }
@@ -43,12 +47,11 @@ struct NationView: View {
     @ViewBuilder func categoryView(_ category: String) -> some View {
         Text(category)
             .tracking(10)
-            .fixedSize()
             .opacity(0.8)
     }
     
     @ViewBuilder func mottoView(_ motto: String) -> some View {
-        Text("\"\(motto)\"").italic().fixedSize()
+        Text("\"\(motto)\"").italic()
     }
     
     @ViewBuilder func freedomView(_ freedom: Freedom) -> some View {
@@ -76,13 +79,11 @@ struct NationView: View {
     var listContents: some View {
         Group {
             if let nation = self.viewModel.nation {
-                HStack {
+                VStack(alignment: .center, spacing: 10) {
                     flagView(nation.flagURL)
-                    VStack(spacing: 10) {
-                        nameView(fullName: nation.fullName, name: nation.name)
-                        categoryView(nation.category)
-                        mottoView(nation.motto)
-                    }
+                    nameView(fullName: nation.fullName, name: nation.name)
+                    categoryView(nation.category)
+                    mottoView(nation.motto)
                 }
                 
                 freedomView(nation.freedom)

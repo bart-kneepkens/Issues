@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import WidgetKit
 
 class IssueDetailViewModel: ObservableObject {
     var issue: Issue
@@ -43,8 +44,13 @@ class IssueDetailViewModel: ObservableObject {
         self.cancellables.append(
             provider?.answerIssue(issue: self.issue, option: option)
                 .receive(on: DispatchQueue.main)
-                .handleEvents(receiveCompletion: { _ in
+                .handleEvents(receiveCompletion: { completion in
                     self.isAnsweringIssue = false
+                    
+                    switch completion {
+                    case .finished: WidgetCenter.shared.reloadAllTimelines()
+                    default: break
+                    }
                 })
                 .catch({ error -> AnyPublisher<AnsweredIssueResult?, Never> in
                     self.error = error
