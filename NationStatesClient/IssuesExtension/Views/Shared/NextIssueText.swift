@@ -20,6 +20,7 @@ struct NextIssueText: View {
     var body: some View {
         if entry.fetchIssuesResult.isAwaitingNextIssue {
             Text("Next issue at \(formatter.string(from: entry.fetchIssuesResult.nextIssueDate))")
+                .fontWeight(.medium)
         }
     }
 }

@@ -19,6 +19,13 @@ class AuthenticationContainer: ObservableObject {
         self.password = storage.retrieve(key: StorageKey.password) ?? ""
     }
     
+    func refresh() {
+        self.autologin = storage.retrieve(key: StorageKey.autoLogin)
+        self.pin = storage.retrieve(key: StorageKey.pin)
+        self.nationName = storage.retrieve(key: StorageKey.nationName) ?? ""
+        self.password = storage.retrieve(key: StorageKey.password) ?? ""
+    }
+    
     var canPerformSilentLogin: Bool {
         return !self.nationName.isEmpty && !self.password.isEmpty
     }
@@ -54,6 +61,12 @@ class AuthenticationContainer: ObservableObject {
         self.password = ""
         self.autologin = nil
         self.pin = nil
+        
+        self.storage.remove(StorageKey.nationName)
+        self.storage.remove(StorageKey.password)
+        self.storage.remove(StorageKey.pin)
+        self.storage.remove(StorageKey.autoLogin)
+        
         self.hasSignedOut = true
     }
 }

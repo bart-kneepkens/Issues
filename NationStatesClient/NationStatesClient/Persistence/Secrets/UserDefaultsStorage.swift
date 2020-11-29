@@ -13,7 +13,7 @@ class UserDefaultsStorage: SecureStorage {
         UserDefaults.standard.setValue(value, forKey: key)
     }
     
-    func remove(key: String) {
+    func remove(_ key: String) {
         UserDefaults.standard.removeObject(forKey: key)
     }
     

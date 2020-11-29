@@ -15,6 +15,11 @@ struct FetchIssuesResult {
     var isAwaitingNextIssue: Bool {
         issues.count < 5
     }
+    
+    var isOk: Bool {
+        guard issues.isEmpty else { return true }
+        return !timeLeftForNextIssue.isEmpty
+    }
 }
 
 struct FetchIssuesResultDTO {

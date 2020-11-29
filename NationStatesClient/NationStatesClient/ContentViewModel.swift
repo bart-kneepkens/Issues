@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import WidgetKit
 
 enum ContentViewModelState {
     case signingIn
@@ -50,7 +51,8 @@ class ContentViewModel: ObservableObject {
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { completion in
                 switch completion {
-                case .finished: break
+                case .finished:
+                    WidgetCenter.shared.reloadAllTimelines()    
                 case .failure(_):
                     self.state = .initial
                 }

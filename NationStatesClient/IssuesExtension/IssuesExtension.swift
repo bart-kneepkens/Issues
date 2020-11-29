@@ -40,24 +40,22 @@ class Provider: TimelineProvider {
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<IssuesEntry>) -> Void) {
+        self.container.refresh()
         
-        // fetch Issues
-        self.cancellables?.append(issuesProvider.fetchIssues().sink(receiveCompletion: { completion in
-            // TODO
-            print(completion)
-            
-            switch completion {
-            case .finished: break
-            case .failure(let error): break
-            }
-        }, receiveValue: { fetchIssueResult in
-            
-            guard let result = fetchIssueResult else { return }
-            
-            let timeline = Timeline(entries: [IssuesEntry(date: Date(), fetchIssuesResult: result, nationName: self.container.nationName)], policy: .after(Date().addingTimeInterval(30)))
-            
-            completion(timeline)
-        }))
+        guard let nextUpdateDate = Calendar.current.date(byAdding: .minute, value: 15, to: Date()) else { return }
+        
+        self.cancellables?
+            .append(issuesProvider.fetchIssues()
+                        .sink(receiveCompletion: { _ in  }, receiveValue: { fetchIssueResult in
+                            
+                            guard let result = fetchIssueResult, result.isOk else { return }
+                            
+                            let timeline = Timeline(entries: [
+                                IssuesEntry(date: Date(), fetchIssuesResult: .filler, nationName: self.container.nationName)
+                            ], policy: .after(nextUpdateDate))
+                            
+                            completion(timeline)
+                        }))
     }
 }
 
@@ -79,6 +77,12 @@ struct IssuesExtensionContents: View {
         @unknown default:
             EmptyView()
         }
+    }
+}
+
+struct SignInToUseWidgetView: View {
+    var body: some View {
+        Text("Please sign to find your issues here")
     }
 }
 

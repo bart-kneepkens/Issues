@@ -26,6 +26,7 @@ struct SmallExtensionView: View {
                     Spacer()
                     Text(entry.nationName).font(.headline)
                     Spacer()
+                    Divider()
                     NextIssueText(entry: self.entry)
                 }.padding()
             }

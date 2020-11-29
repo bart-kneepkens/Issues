@@ -20,9 +20,11 @@ struct MediumExtensionView: View {
                         .padding(25)
                     
                     IssuesList(issues: entry.fetchIssuesResult.issues)
-                }.padding(.trailing)
+                }
+                Spacer()
+                Divider()
                 NextIssueText(entry: self.entry)
-            }
+            }.padding()
         }
     }
 }

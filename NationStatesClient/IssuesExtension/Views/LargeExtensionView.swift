@@ -29,6 +29,7 @@ struct LargeExtensionView: View {
                 
                 IssuesList(issues: entry.fetchIssuesResult.issues)
                 Spacer()
+                Divider()
                 NextIssueText(entry: self.entry)
             }.padding()
         }
