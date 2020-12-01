@@ -9,28 +9,22 @@ import SwiftUI
 import WidgetKit
 
 struct LargeExtensionView: View {
-    var entry: IssuesEntry
+    let entry: Provider.Entry
     
     var body: some View {
         ZStack {
             Image("f1_square").resizable().overlay(Color("BackgroundOverlayColor"))
             VStack {
                 HStack {
-                    VStack {
-                        Text("\(entry.fetchIssuesResult .issues.count)").font(.title).fontWeight(.bold)
-                        Text(entry.nationName)
+                    NationIssuesView(entry: entry)
+                    if let name = entry.nationName {
+                        Spacer()
+                        Text(name).font(.headline)
                     }
-                    Spacer()
-                    Image(systemName: "newspaper").resizable().frame(width: 33, height: 33)
-                }
-                .padding(.horizontal)
-                
-                Divider()
-                
+                }.padding(.bottom)
                 IssuesList(issues: entry.fetchIssuesResult.issues)
                 Spacer()
-                Divider()
-                NextIssueText(entry: self.entry)
+                InformationText(entry: self.entry)
             }.padding()
         }
     }
@@ -38,7 +32,7 @@ struct LargeExtensionView: View {
 
 struct LargeExtensionView_Previews: PreviewProvider {
     static var previews: some View {
-        LargeExtensionView(entry: .init(date: Date(), fetchIssuesResult: .filler, nationName: "Elest Adra"))
+        LargeExtensionView(entry: .filler(nationName: "Elest Adra"))
             .previewContext(WidgetPreviewContext(family: .systemLarge))
     }
 }

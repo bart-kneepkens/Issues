@@ -29,6 +29,9 @@ class ContentViewModel: ObservableObject {
         self.authenticationContainer = AuthenticationContainer()
         self.issueProvider = APIIssueProvider(container: self.authenticationContainer)
         self.authenticationProvider = APIAuthenticationProvider(authenticationContainer: self.authenticationContainer)
+//        self.issueProvider = MockedIssueProvider()
+//        self.authenticationProvider = MockedAuthenticationProvider()
+        
         self.nationDetailsProvider = APINationDetailsProvider(container: self.authenticationContainer)
         
         self.cancellables.append(self.authenticationContainer.$hasSignedOut
@@ -36,6 +39,7 @@ class ContentViewModel: ObservableObject {
                                     .sink { signedOut in
                                         if signedOut {
                                             self.state = .initial
+                                            WidgetCenter.shared.reloadAllTimelines()
                                         }
                                     })
     }

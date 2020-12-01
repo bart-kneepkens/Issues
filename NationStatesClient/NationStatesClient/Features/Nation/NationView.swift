@@ -20,7 +20,10 @@ struct NationView: View {
     var accountSection: some View {
         Section(header: Text("Account")) {
             Button("Sign out \(self.viewModel.name)") {
-                self.viewModel.signOut()
+                self.presentationMode.wrappedValue.dismiss()
+                DispatchQueue.main.async {
+                    self.viewModel.signOut()
+                }
             }.foregroundColor(.red)
         }
     }

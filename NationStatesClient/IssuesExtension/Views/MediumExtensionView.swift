@@ -9,21 +9,21 @@ import WidgetKit
 import SwiftUI
 
 struct MediumExtensionView: View {
-    var entry: IssuesEntry
+    let entry: Provider.Entry
     
     var body: some View {
         ZStack {
             Image("f1_landscape").resizable().overlay(Color("BackgroundOverlayColor"))
             VStack {
                 HStack {
-                    IssuesAmountView(amount: entry.fetchIssuesResult.issues.count)
-                        .padding(25)
-                    
-                    IssuesList(issues: entry.fetchIssuesResult.issues)
+                    VStack {
+                        NationIssuesView(entry: entry)
+                        Spacer()
+                    }
+                    IssuesList(issues: entry.fetchIssuesResult.issues, maximumAmountIssuesToShow: 3)
                 }
                 Spacer()
-                Divider()
-                NextIssueText(entry: self.entry)
+                InformationText(entry: self.entry)
             }.padding()
         }
     }
@@ -31,7 +31,7 @@ struct MediumExtensionView: View {
 
 struct MediumExtensionView_Previews: PreviewProvider {
     static var previews: some View {
-        MediumExtensionView(entry: .init(date: Date(), fetchIssuesResult: .filler, nationName: "Elest Adra"))
+        MediumExtensionView(entry: .filler(nationName: "Elest Adra"))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
 }

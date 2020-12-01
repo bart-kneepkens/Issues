@@ -55,8 +55,9 @@ extension APIError {
         case .notConnected: return "There appears to be no internet connection. Are you connected?"
         case .conflict: return "conflict"
         case .unauthorized: return "unauthorized"
-        default:
-            return "Unknown Error"
+        case .unknown(let error): return "unknown error: \(error.localizedDescription)"
+        case .notFound: return "notFound"
+        case .rateExceeded: return "rateExceeded"
         }
     }
 }

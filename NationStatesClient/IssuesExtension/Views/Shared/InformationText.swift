@@ -1,5 +1,5 @@
 //
-//  NextIssueText.swift
+//  InformationText.swift
 //  IssuesExtensionExtension
 //
 //  Created by Bart Kneepkens on 17/11/2020.
@@ -8,7 +8,7 @@
 import SwiftUI
 import WidgetKit
 
-struct NextIssueText: View {
+struct InformationText: View {
     var entry: Provider.Entry
     
     var formatter: DateFormatter {
@@ -18,16 +18,21 @@ struct NextIssueText: View {
     }
     
     var body: some View {
-        if entry.fetchIssuesResult.isAwaitingNextIssue {
+        if entry.isSignedOut == true {
+            Divider()
+            Text("Please sign to find your issues here")
+                .fontWeight(.medium)
+        } else if entry.fetchIssuesResult.isAwaitingNextIssue {
+            Divider()
             Text("Next issue at \(formatter.string(from: entry.fetchIssuesResult.nextIssueDate))")
                 .fontWeight(.medium)
         }
     }
 }
 
-struct NextIssueText_Previews: PreviewProvider {
+struct InformationText_Previews: PreviewProvider {
     static var previews: some View {
-        NextIssueText(entry: .init(date: Date(), fetchIssuesResult: .filler, nationName: "Elest Adraaaaa"))
+        InformationText(entry: .filler(nationName: "Elest Adra"))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
 }

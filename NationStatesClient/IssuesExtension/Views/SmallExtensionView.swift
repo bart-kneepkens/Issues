@@ -9,7 +9,7 @@ import SwiftUI
 import WidgetKit
 
 struct SmallExtensionView: View {
-    var entry: Provider.Entry
+    let entry: Provider.Entry
 
     var body: some View {
         VStack {
@@ -17,17 +17,17 @@ struct SmallExtensionView: View {
                 Image("f1_square").resizable().overlay(Color("BackgroundOverlayColor"))
                 VStack {
                     HStack {
-                        Image(systemName: "newspaper").resizable().frame(width: 30, height: 30)
+                        NationIssuesView(entry: entry)
                         Spacer()
-                        Text("\(entry.fetchIssuesResult.issues.count)")
-                            .font(.title2)
-                            .fontWeight(.heavy)
                     }
+                    
+                    if let firstIssue = entry.fetchIssuesResult.issues.first {
+                        Spacer()
+                        Text(firstIssue.title).multilineTextAlignment(.leading)
+                    }
+                    
                     Spacer()
-                    Text(entry.nationName).font(.headline)
-                    Spacer()
-                    Divider()
-                    NextIssueText(entry: self.entry)
+                    InformationText(entry: self.entry).layoutPriority(1)
                 }.padding()
             }
         }
@@ -36,7 +36,7 @@ struct SmallExtensionView: View {
 
 struct SmallExtensionView_Previews: PreviewProvider {
     static var previews: some View {
-        SmallExtensionView(entry: .init(date: Date(), fetchIssuesResult: .filler, nationName: "Elest Adra")).previewContext(WidgetPreviewContext(family: .systemSmall))
+        SmallExtensionView(entry: .filler(nationName: "Elest Adra")).previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
 
