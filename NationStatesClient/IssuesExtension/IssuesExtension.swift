@@ -121,6 +121,6 @@ struct IssuesExtension: Widget {
             IssuesExtensionContents(provider: provider, entry: entry)
         }
         .configurationDisplayName("Issues Widget")
-        .description("TODO: fill out this text")
+        .description("Keep track of your pending issues")
     }
 }

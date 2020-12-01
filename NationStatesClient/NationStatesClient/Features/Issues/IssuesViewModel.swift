@@ -104,6 +104,7 @@ extension IssuesViewModel: IssueContainer {
         self.issues = self.issues.filter({ $0.id != completedIssue.issue.id }) // Remove from current issues
         self.completedIssues.append(completedIssue)
         self.persistentContainer.storeCompletedIssue(completedIssue)
+        self.objectWillChange.send()
     }
 }
 

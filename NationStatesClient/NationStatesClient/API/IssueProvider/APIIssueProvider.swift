@@ -19,7 +19,6 @@ class APIIssueProvider: IssueProvider {
         return NationStatesAPI
             .fetchIssues(authenticationContainer: authenticationContainer)
             .map({ FetchIssuesResult(from: $0) })
-            .throttle(for: .seconds(5), scheduler: DispatchQueue.main, latest: false)
             .eraseToAnyPublisher()
     }
     

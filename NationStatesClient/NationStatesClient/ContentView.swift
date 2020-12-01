@@ -15,7 +15,6 @@ struct ContentView: View {
             if viewModel.state == ContentViewModelState.signedIn {
                 IssuesView(viewModel: self.viewModel.issuesViewModel)
             } else if viewModel.state == ContentViewModelState.signingIn {
-//                ProgressView("Signing in..")
                 IssuesView(viewModel: self.viewModel.issuesViewModel)
                     .redacted(reason: .placeholder)
             } else {
