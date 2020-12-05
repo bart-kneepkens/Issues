@@ -89,6 +89,8 @@ class IssuesViewModel: ObservableObject {
     }
     
     private func fetchIssues(_ showProgress: Bool) {
+        guard !self.authenticationContainer.nationName.isEmpty else { return } // TODO: put this check at another level - so no outstanding requests can be done after sign out
+        
         if showProgress {
             self.isFetchingIssues = true
             self.objectWillChange.send()
