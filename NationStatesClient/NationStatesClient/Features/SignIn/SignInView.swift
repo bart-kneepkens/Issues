@@ -60,6 +60,9 @@ struct SignInView: View {
                     }
                 }
             }
+            // When signing out, the previous navigationBarItems stay in place
+            // Replace them explicitly with Empty views
+            .navigationBarItems(leading: EmptyView(), trailing: EmptyView())
             .alert(isPresented: shouldShowAlert, content: {
                 Alert(title: Text("Can't sign in"), message: Text("Please check your credentials and try again"), dismissButton: nil)
             })

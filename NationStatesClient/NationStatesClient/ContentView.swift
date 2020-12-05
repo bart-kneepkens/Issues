@@ -12,13 +12,11 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            if viewModel.state == ContentViewModelState.signedIn {
-                IssuesView(viewModel: self.viewModel.issuesViewModel)
-            } else if viewModel.state == ContentViewModelState.signingIn {
-                IssuesView(viewModel: self.viewModel.issuesViewModel)
-                    .redacted(reason: .placeholder)
-            } else {
+            if viewModel.state == ContentViewModelState.initial {
                 SignInView(viewModel: self.viewModel.signInViewModel)
+            } else {
+                IssuesView(viewModel: self.viewModel.issuesViewModel)
+                    .redacted(reason: self.viewModel.state == ContentViewModelState.signingIn ? .placeholder : [])
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())

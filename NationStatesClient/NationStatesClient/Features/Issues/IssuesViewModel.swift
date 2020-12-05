@@ -37,7 +37,7 @@ class IssuesViewModel: ObservableObject {
     private var authenticationContainer: AuthenticationContainer
     private var cancellables: [Cancellable]? = []
     private var shouldFetchPublisher = PassthroughSubject<Bool, Never>()
-    private let refreshIssuesTimer = Timer.publish(every: 20, tolerance: 5, on: .main, in: .common).autoconnect()
+    private var refreshIssuesTimerCancellable: Cancellable?
     
     init(provider: IssueProvider, nationDetailsProvider: NationDetailsProvider, authenticationContainer: AuthenticationContainer) {
         self.provider = provider
@@ -46,24 +46,42 @@ class IssuesViewModel: ObservableObject {
         self.persistentContainer = PersisentCompletedIssueProvider()
         self.cancellables?.append(
             self.shouldFetchPublisher
-                .throttle(for: .seconds(8), scheduler: DispatchQueue.main, latest: false)
-                .sink { shouldShowProgressIndicator in self.fetchIssues(shouldShowProgressIndicator)}
+                .throttle(for: .seconds(25), scheduler: DispatchQueue.main, latest: false)
+                .sink { [weak self] shouldShowProgressIndicator  in
+                    self?.fetchIssues(shouldShowProgressIndicator)
+                }
         )
         
-        self.cancellables?.append(refreshIssuesTimer.sink(receiveValue: { _ in self.shouldFetchPublisher.send(false) }))
-        
-        self.cancellables?.append(persistentContainer.fetchCompletedIssues().sink(receiveCompletion: { completion in
+        self.cancellables?.append(
+            persistentContainer.fetchCompletedIssues()
+                .sink(receiveCompletion: { _ in
             
-        }, receiveValue: { compIssues in
-            self.completedIssues = compIssues
+        }, receiveValue: { [weak self] compIssues in
+            guard let strongSelf = self else { return }
+            strongSelf.completedIssues = compIssues
         }))
         
-        // Disable the refresh timer when signed out
-        self.cancellables?.append(authenticationContainer.$hasSignedOut.sink(receiveValue: { signedOut in
-            if signedOut {
-                self.refreshIssuesTimer.upstream.connect().cancel()
-            }
-        }))
+        self.cancellables?.append(
+            authenticationContainer.$hasSignedOut.sink(receiveValue: { signedOut in
+                if signedOut {
+                    self.refreshIssuesTimerCancellable = nil
+                }
+            })
+        )
+        
+    }
+    
+    func startRefreshingTimer() {
+        if self.refreshIssuesTimerCancellable == nil {
+            // Timer to refresh issues periodically and quietly
+            self.refreshIssuesTimerCancellable = Timer.publish(every: 20, tolerance: 5, on: .main, in: .default)
+                .autoconnect()
+                .receive(on: DispatchQueue.main)
+                .sink(receiveValue: { [weak self] _ in
+                    print("timer")
+                    self?.shouldFetchPublisher.send(false)
+                })
+        }
     }
     
     func startFetchingIssues() {
@@ -79,20 +97,21 @@ class IssuesViewModel: ObservableObject {
         self.cancellables?.append(
             self.provider.fetchIssues()
                 .receive(on: DispatchQueue.main)
-                .catch({ error -> AnyPublisher<FetchIssuesResult?, Never> in
-                    self.error = error
+                .catch({ [weak self] error -> AnyPublisher<FetchIssuesResult?, Never> in
+                    self?.error = error
                     return Just(nil).eraseToAnyPublisher()
                 })
-                .handleEvents(receiveCompletion: { completion in
+                .handleEvents(receiveCompletion: { [weak self] completion in
+                    guard let strongSelf = self else { return }
                     switch completion {
                     case .finished:
-                        self.error = nil
+                        strongSelf.error = nil
                     }
                     
                     if showProgress {
-                        self.isFetchingIssues = false
+                        strongSelf.isFetchingIssues = false
                     }
-                    self.objectWillChange.send()
+                    strongSelf.objectWillChange.send()
                 })
                 .assign(to: \.fetchIssuesResult, on: self)
         )

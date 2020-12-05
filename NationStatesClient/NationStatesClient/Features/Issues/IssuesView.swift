@@ -81,6 +81,7 @@ struct IssuesView: View {
                                 }))
         .onAppear {
             self.viewModel.startFetchingIssues() // Throttled accordingly in VM
+            self.viewModel.startRefreshingTimer()
         }
     }
 }

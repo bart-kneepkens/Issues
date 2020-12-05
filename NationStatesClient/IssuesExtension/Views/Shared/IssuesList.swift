@@ -9,11 +9,15 @@ import SwiftUI
 
 struct IssuesList: View {
     let issues: [Issue]
-    let maximumAmountIssuesToShow: Int
     
     init(issues: [Issue], maximumAmountIssuesToShow: Int = 5) {
-        self.issues = issues
-        self.maximumAmountIssuesToShow = maximumAmountIssuesToShow
+        guard issues.count > maximumAmountIssuesToShow else {
+            self.issues = issues
+            return
+        }
+        
+        self.issues = Array(issues[0..<maximumAmountIssuesToShow])
+        
     }
     
     var body: some View {
