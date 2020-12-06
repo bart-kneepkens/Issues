@@ -14,9 +14,10 @@ struct ContentView: View {
         NavigationView {
             if viewModel.state == ContentViewModelState.initial {
                 SignInView(viewModel: self.viewModel.signInViewModel)
+            } else if viewModel.state == ContentViewModelState.signingIn {
+                ProgressView("Signing in..")
             } else {
                 IssuesView(viewModel: self.viewModel.issuesViewModel)
-                    .redacted(reason: self.viewModel.state == ContentViewModelState.signingIn ? .placeholder : [])
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())

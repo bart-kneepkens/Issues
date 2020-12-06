@@ -11,7 +11,7 @@ struct IssueDetailView: View {
     @StateObject var viewModel: IssueDetailViewModel
     @State var showingOptions = false
     
-    var contents: some View {
+    private var contents: some View {
         Group {
             if viewModel.isAnsweringIssue && viewModel.answeredIssueResult == nil {
                 ProgressView()
@@ -25,30 +25,40 @@ struct IssueDetailView: View {
         }
     }
     
+    private var shouldShowAlert: Binding<Bool> {
+        Binding(
+            get: { self.viewModel.error != nil },
+            set: { print($0) }
+        )
+    }
+    
     var body: some View {
-        List {
-            Section {
-                VStack {
-                    HStack {
-                        Text(viewModel.issue.title).font(.system(size: 24, weight: .bold))
-                        Spacer()
+            List {
+                Section {
+                    VStack {
+                        HStack {
+                            Text(viewModel.issue.title).font(.system(size: 24, weight: .bold))
+                            Spacer()
+                        }
+                        
+                        CachedRemoteImage(url: URLBuilder.imageUrl(for: viewModel.issue.imageName)).aspectRatio(contentMode: .fit)
+                        
+                        Text(viewModel.issue.text)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
-                    
-                    CachedRemoteImage(url: URLBuilder.imageUrl(for: viewModel.issue.imageName)).aspectRatio(contentMode: .fit)
-                    
-                    Text(viewModel.issue.text)
-                        .fixedSize(horizontal: false, vertical: true)
                 }
+                
+                contents
             }
-            
-            contents
-        }
-        .listStyle(InsetGroupedListStyle())
-        .navigationTitle("\(viewModel.nationName) Issue #\(viewModel.issue.id)")
-        .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $showingOptions, content: {
-            IssueDetailOptionsView(viewModel: self.viewModel)
-        })
+            .listStyle(InsetGroupedListStyle())
+            .navigationTitle("\(viewModel.nationName) Issue #\(viewModel.issue.id)")
+            .navigationBarTitleDisplayMode(.inline)
+            .sheet(isPresented: $showingOptions, content: {
+                IssueDetailOptionsView(viewModel: self.viewModel)
+            })
+            .alert(isPresented: self.shouldShowAlert, content: {
+                Alert(title: Text("Something went wrong"), message: Text("Please try again later"), dismissButton: nil)
+            })
     }
 }
 
