@@ -78,9 +78,11 @@ struct SignInView: View {
     }
 }
 
+#if DEBUG
 struct SignInView_Previews: PreviewProvider {
     static var viewModel = SignInViewModel(issueProvider: MockedIssueProvider(), authenticationProvider: MockedAuthenticationProvider(), authenticationContainer: .init())
     static var previews: some View {
         SignInView(viewModel: viewModel)
     }
 }
+#endif

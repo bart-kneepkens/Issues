@@ -96,6 +96,7 @@ struct IssueAnsweredSection: View {
     }
 }
 
+#if DEBUG
 struct IssueAnsweredSection_Previews: PreviewProvider {
     static var previews: some View {
         List {
@@ -103,3 +104,4 @@ struct IssueAnsweredSection_Previews: PreviewProvider {
         }.listStyle(InsetGroupedListStyle())
     }
 }
+#endif

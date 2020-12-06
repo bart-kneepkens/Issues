@@ -30,9 +30,11 @@ struct InformationText: View {
     }
 }
 
+#if DEBUG
 struct InformationText_Previews: PreviewProvider {
     static var previews: some View {
         InformationText(entry: .filler(nationName: "Elest Adra"))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
 }
+#endif

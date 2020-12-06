@@ -7,6 +7,7 @@
 
 import Foundation
 
+#if DEBUG
 class MockedNationDetailsProvider: NationDetailsProvider {
     var nationDetails: Nation?
     
@@ -14,3 +15,4 @@ class MockedNationDetailsProvider: NationDetailsProvider {
         self.nationDetails = .filler
     }
 }
+#endif

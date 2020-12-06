@@ -29,9 +29,11 @@ struct MediumExtensionView: View {
     }
 }
 
+#if DEBUG
 struct MediumExtensionView_Previews: PreviewProvider {
     static var previews: some View {
         MediumExtensionView(entry: .filler(nationName: "Elest Adra"))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
 }
+#endif

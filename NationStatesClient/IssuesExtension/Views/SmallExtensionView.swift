@@ -38,9 +38,10 @@ struct SmallExtensionView: View {
     }
 }
 
+#if DEBUG
 struct SmallExtensionView_Previews: PreviewProvider {
     static var previews: some View {
         SmallExtensionView(entry: .filler(nationName: "Elest Adra")).previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
-
+#endif

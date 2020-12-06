@@ -30,14 +30,18 @@ struct IssuesExtensionEntry: TimelineEntry {
         self.isSignedOut = isSignedOut
     }
     
-    static func filler(nationName: String) -> IssuesExtensionEntry {
-        .init(fetchIssuesResult: .filler, nationName: nationName)
-    }
-    
     static var signedOut: IssuesExtensionEntry {
         .init(isSignedOut: true)
     }
 }
+
+#if DEBUG
+extension IssuesExtensionEntry {
+    static func filler(nationName: String) -> IssuesExtensionEntry {
+        .init(fetchIssuesResult: .filler, nationName: nationName)
+    }
+}
+#endif
 
 class Provider: TimelineProvider {
     var container: AuthenticationContainer
@@ -55,11 +59,19 @@ class Provider: TimelineProvider {
     }
     
     func placeholder(in context: Context) -> IssuesExtensionEntry {
-        .filler(nationName: container.nationName)
+        .init(fetchIssuesResult: FetchIssuesResult(issues: [
+            Issue(id: 0, title: "A very pressing issue", text: "", options: [], imageName: ""),
+            Issue(id: 1, title: "Apocalypse looms in your nation", text: "", options: [], imageName: ""),
+            Issue(id: 2, title: "Unicorns have become endangered", text: "", options: [], imageName: "")
+        ], timeLeftForNextIssue: "2 hours", nextIssueDate: Date()), nationName: "Placeholder")
     }
     
     func getSnapshot(in context: Context, completion: @escaping (IssuesExtensionEntry) -> Void) {
-        completion(.filler(nationName: container.nationName))
+        completion(.init(fetchIssuesResult: FetchIssuesResult(issues: [
+            Issue(id: 0, title: "A very pressing issue", text: "", options: [], imageName: ""),
+            Issue(id: 1, title: "Apocalypse looms in your nation", text: "", options: [], imageName: ""),
+            Issue(id: 2, title: "Unicorns have become endangered", text: "", options: [], imageName: "")
+        ], timeLeftForNextIssue: "2 hours", nextIssueDate: Date()), nationName: "Placeholder"))
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<IssuesExtensionEntry>) -> Void) {
@@ -125,6 +137,7 @@ struct IssuesExtension: Widget {
     }
 }
 
+#if DEBUG
 struct IssuesExtensionContents_Previews: PreviewProvider {
     static var previews: some View {
         Group {
@@ -137,4 +150,4 @@ struct IssuesExtensionContents_Previews: PreviewProvider {
         }
     }
 }
-
+#endif

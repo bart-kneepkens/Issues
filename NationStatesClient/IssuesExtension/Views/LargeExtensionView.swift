@@ -30,9 +30,11 @@ struct LargeExtensionView: View {
     }
 }
 
+#if DEBUG
 struct LargeExtensionView_Previews: PreviewProvider {
     static var previews: some View {
         LargeExtensionView(entry: .filler(nationName: "Elest Adra"))
             .previewContext(WidgetPreviewContext(family: .systemLarge))
     }
 }
+#endif

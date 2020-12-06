@@ -20,8 +20,10 @@ struct NationIssuesView: View {
     }
 }
 
+#if DEBUG
 struct NationIssuesView_Previews: PreviewProvider {
     static var previews: some View {
         NationIssuesView(entry: .filler(nationName: "Elest Adra"))
     }
 }
+#endif
