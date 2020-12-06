@@ -28,9 +28,12 @@ struct IssuesView: View {
         Group {
             if self.viewModel.selectedIssuesList == .current {
                 if let error = self.viewModel.error {
-                    HStack {
-                        Image(systemName: "exclamationmark.triangle")
-                        Text(error.text)
+                    ErrorView(error: error) {
+                        switch error {
+                        case .unauthorized:
+                            self.viewModel.signOut()
+                        default: break
+                        }
                     }
                 } else if let result = self.viewModel.fetchIssuesResult, self.viewModel.issues.count != 5 {
                     HStack {

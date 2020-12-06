@@ -24,7 +24,7 @@ class IssueDetailViewModel: ObservableObject {
     
     private(set) var provider: IssueProvider?
     private(set) var issueContainer: IssueContainer?
-    private var cancellables: [Cancellable?] = []
+    private var cancellables: [Cancellable?]? = []
     
     init(_ issue: Issue, provider: IssueProvider, nationName: String, issueContainer: IssueContainer) {
         self.issue = issue
@@ -41,7 +41,7 @@ class IssueDetailViewModel: ObservableObject {
     
     func answer(with option: Option) {
         self.isAnsweringIssue = true
-        self.cancellables.append(
+        self.cancellables?.append(
             provider?.answerIssue(issue: self.issue, option: option)
                 .receive(on: DispatchQueue.main)
                 .handleEvents(receiveCompletion: { completion in

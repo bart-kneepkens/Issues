@@ -49,19 +49,6 @@ enum APIError: Error {
 
 typealias AuthenticationPair = (autologin: String?, pin: String?)
 
-extension APIError {
-    var text: String {
-        switch self {
-        case .notConnected: return "There appears to be no internet connection. Are you connected?"
-        case .conflict: return "conflict"
-        case .unauthorized: return "unauthorized"
-        case .unknown(let error): return "unknown error: \(error.localizedDescription)"
-        case .notFound: return "notFound"
-        case .rateExceeded: return "rateExceeded"
-        }
-    }
-}
-
 struct NationStatesAPI { private init() {}}
 
 typealias DataResponse = (data: Data, response: URLResponse)

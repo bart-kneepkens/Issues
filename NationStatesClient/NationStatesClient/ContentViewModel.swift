@@ -23,18 +23,16 @@ class ContentViewModel: ObservableObject {
     let nationDetailsProvider: NationDetailsProvider
     
     private let authenticationContainer: AuthenticationContainer
-    private var cancellables: [Cancellable] = []
+    private var cancellables: [Cancellable]? = []
     
     init() {
         self.authenticationContainer = AuthenticationContainer()
         self.issueProvider = APIIssueProvider(container: self.authenticationContainer)
         self.authenticationProvider = APIAuthenticationProvider(authenticationContainer: self.authenticationContainer)
-//        self.issueProvider = MockedIssueProvider()
-//        self.authenticationProvider = MockedAuthenticationProvider()
         
         self.nationDetailsProvider = APINationDetailsProvider(container: self.authenticationContainer)
         
-        self.cancellables.append(self.authenticationContainer.$hasSignedOut
+        self.cancellables?.append(self.authenticationContainer.$hasSignedOut
                                     .receive(on: DispatchQueue.main)
                                     .sink { signedOut in
                                         if signedOut {
@@ -50,7 +48,7 @@ class ContentViewModel: ObservableObject {
         self.state = .signingIn
         
         // Attempt a silent log in
-        self.cancellables.append(
+        self.cancellables?.append(
             self.authenticationProvider.authenticate(authenticationContainer: self.authenticationContainer)
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { completion in

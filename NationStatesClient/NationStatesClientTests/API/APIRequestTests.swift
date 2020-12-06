@@ -10,6 +10,10 @@ import Combine
 @testable import NationStatesClient
 
 fileprivate class MockedSecureStorage: SecureStorage {
+    func remove(_ key: String) {
+        
+    }
+    
     func store(_ value: String?, key: String) {
         
     }
