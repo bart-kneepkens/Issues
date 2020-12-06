@@ -10,6 +10,10 @@ import WidgetKit
 
 struct SmallExtensionView: View {
     let entry: Provider.Entry
+    
+    var issueWithShortestTitle: Issue? {
+        entry.fetchIssuesResult.issues.sorted(by: { $0.title < $1.title }).first
+    }
 
     var body: some View {
         VStack {
@@ -21,7 +25,7 @@ struct SmallExtensionView: View {
                         Spacer()
                     }
                     
-                    if let firstIssue = entry.fetchIssuesResult.issues.first {
+                    if let firstIssue = self.issueWithShortestTitle {
                         Spacer()
                         Text(firstIssue.title).multilineTextAlignment(.leading)
                     }
