@@ -42,6 +42,8 @@ extension FetchIssuesResult: DTOInitializable {
 
 #if DEBUG
 extension FetchIssuesResult {
-    static var filler: FetchIssuesResult = .init(issues: [.filler()], timeLeftForNextIssue: "2 hours", nextIssueDate: Date().addingTimeInterval(60 * 60 * 2))
+    static var filler: FetchIssuesResult = .init(issues: [.filler(1), .filler(2),.filler(3), .filler(4), .filler(5)],
+                                                 timeLeftForNextIssue: "2 hours",
+                                                 nextIssueDate: Date().addingTimeInterval(60 * 60 * 2))
 }
 #endif

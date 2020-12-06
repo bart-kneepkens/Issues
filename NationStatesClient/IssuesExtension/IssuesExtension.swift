@@ -124,3 +124,17 @@ struct IssuesExtension: Widget {
         .description("Keep track of your pending issues")
     }
 }
+
+struct IssuesExtensionContents_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+        IssuesExtensionContents(provider: Provider(), entry: .filler(nationName: "Elest Adra"))
+            .previewContext(WidgetPreviewContext(family: .systemSmall))
+            IssuesExtensionContents(provider: Provider(), entry: .filler(nationName: "Elest Adra"))
+                .previewContext(WidgetPreviewContext(family: .systemMedium))
+            IssuesExtensionContents(provider: Provider(), entry: .filler(nationName: "Elest Adra"))
+                .previewContext(WidgetPreviewContext(family: .systemLarge))
+        }
+    }
+}
+

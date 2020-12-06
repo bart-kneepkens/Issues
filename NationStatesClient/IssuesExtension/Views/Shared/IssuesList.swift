@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct IssuesList: View {
     let issues: [Issue]
@@ -26,7 +27,7 @@ struct IssuesList: View {
                 HStack {
                     Text("\(issue.title)")
                         .multilineTextAlignment(.leading)
-                        .padding(.vertical, 4)
+                        .frame(maxHeight: 44, alignment: .center)
                     Spacer()
                 }
                 if issue.id != self.issues.last?.id {
@@ -39,6 +40,13 @@ struct IssuesList: View {
 
 struct IssuesList_Previews: PreviewProvider {
     static var previews: some View {
-        IssuesList(issues: [.filler(1), .filler(2)])
+        Group {
+            IssuesList(issues: [.filler(1), .filler(2), .filler(3), .filler(4), .filler(5)]).previewContext(WidgetPreviewContext(family: .systemLarge))
+            
+            IssuesList(issues: [.filler(1), .filler(2), .filler(3), ]).previewContext(WidgetPreviewContext(family: .systemMedium))
+            
+            IssuesList(issues: [.filler(1), .filler(2), .filler(3), ]).previewContext(WidgetPreviewContext(family: .systemLarge))
+        }
+        
     }
 }
