@@ -46,8 +46,8 @@ struct IssuesView: View {
     
     var segmentedPicker: some View {
         Picker(selection: $viewModel.selectedIssuesList, label: EmptyView(), content:{
-            Text("Current").tag(IssuesListType.current)
-            Text("Past").tag(IssuesListType.past)
+            Text("Current").tag(IssuesListType.current).textCase(.none)
+            Text("Past").tag(IssuesListType.past).textCase(.none)
         })
         .pickerStyle(SegmentedPickerStyle())
         .padding(.bottom)
