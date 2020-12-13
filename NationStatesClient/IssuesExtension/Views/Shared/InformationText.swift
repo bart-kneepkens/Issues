@@ -20,7 +20,7 @@ struct InformationText: View {
     var body: some View {
         if entry.isSignedOut == true {
             Divider()
-            Text("Please sign to find your issues here")
+            Text("Please sign in to find your issues here")
                 .fontWeight(.medium)
         } else if entry.fetchIssuesResult.isAwaitingNextIssue {
             Divider()

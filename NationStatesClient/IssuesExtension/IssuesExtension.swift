@@ -109,7 +109,6 @@ struct IssuesExtensionContents: View {
     
     @ViewBuilder
     var body: some View {
-        
         switch family {
         case .systemSmall:
             SmallExtensionView(entry: entry)
