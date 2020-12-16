@@ -15,7 +15,7 @@ struct ContentView: View {
             if viewModel.state == ContentViewModelState.initial {
                 SignInView(viewModel: self.viewModel.signInViewModel)
             } else if viewModel.state == ContentViewModelState.signingIn {
-                ProgressView("Signing in..")
+                SignInProgressView(error: viewModel.error)
             } else {
                 IssuesView(viewModel: self.viewModel.issuesViewModel)
             }

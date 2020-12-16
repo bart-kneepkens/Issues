@@ -14,12 +14,13 @@ struct ErrorView: View {
     private var text: String {
         switch error {
         case .notConnected: return "There appears to be no internet connection. Are you connected?"
-        case .unauthorized: return "There appear to be an authentication problem. Tap here to sign in."
+        case .unauthorized: return "There appears to be an authentication problem. Tap here to sign in."
+        case .rateExceeded: fallthrough
+        case .timedOut: return "There appear to be some connection issues. Retrying.."
             
             #if DEBUG
             case .conflict: return "conflict"
             case .notFound: return "notFound"
-            case .rateExceeded: return "rateExceeded"
             case .unknown(let error): return "unknown \(error.localizedDescription)"
             #endif
         default: return "Unknown error"

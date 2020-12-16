@@ -68,6 +68,9 @@ class APIRequest {
                 if (error as NSError).code == NSURLErrorNotConnectedToInternet {
                     return APIError.notConnected
                 }
+                if (error as NSError).code == NSURLErrorTimedOut {
+                    return APIError.timedOut
+                }
                 return APIError.unknown(error: error)
             })
             .handleEvents(receiveOutput: { output in

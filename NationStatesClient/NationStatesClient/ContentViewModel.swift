@@ -17,10 +17,11 @@ enum ContentViewModelState {
 
 class ContentViewModel: ObservableObject {
     @Published var state: ContentViewModelState = .initial
+    @Published var error: APIError?
     
-    let issueProvider: IssueProvider
-    let authenticationProvider: AuthenticationProvider
-    let nationDetailsProvider: NationDetailsProvider
+    private let issueProvider: IssueProvider
+    private let authenticationProvider: AuthenticationProvider
+    private let nationDetailsProvider: NationDetailsProvider
     
     private let authenticationContainer: AuthenticationContainer
     private var cancellables: [Cancellable]? = []
@@ -55,8 +56,19 @@ class ContentViewModel: ObservableObject {
                 switch completion {
                 case .finished:
                     WidgetCenter.shared.reloadAllTimelines()    
-                case .failure(_):
-                    self.state = .initial
+                case .failure(let error):
+                    switch error {
+                    case .notConnected: fallthrough
+                    case .rateExceeded: fallthrough
+                    case .timedOut:
+                        self.error = error
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 10) {
+                            self.onAppear()
+                        }
+                        return
+                    default:
+                        self.state = .initial
+                    }
                 }
             }, receiveValue: { success in
                 if success {

@@ -44,6 +44,7 @@ enum APIError: Error {
     case notFound // 404
     case rateExceeded // 429
     case notConnected
+    case timedOut
     case unknown(error: Error)
 }
 
