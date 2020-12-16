@@ -11,40 +11,34 @@ import CoreData
 
 class PersisentCompletedIssueProvider: CompletedIssueProvider {
     
-    lazy var persistentContainer: NSPersistentContainer = {
-        /*
-         The persistent container for the application. This implementation
-         creates and returns a container, having loaded the store for the
-         application to it. This property is optional since there are legitimate
-         error conditions that could cause the creation of the store to fail.
-         */
-        let container = NSPersistentContainer(name: "CompletedIssuesModel")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+    var persistentContainer: NSPersistentContainer?
+    
+    func setup(for nationName: String) {
+        guard let modelURL = Bundle.main.url(forResource: "CompletedIssuesModel", withExtension: "momd"),
+              let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)
+        else { return }
+        
+        // By passing the container name and managedObjectModel seperately, we can use the default store location without the need for FileManager calls.
+        // This should also make sure every signed in nation gets their own datastore.
+        self.persistentContainer = NSPersistentContainer(name: "\(nationName.lowercased()).sqlite",
+                                              managedObjectModel: managedObjectModel)
+        
+        self.persistentContainer?.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                
-                /*
-                 Typical reasons for an error here include:
-                 * The parent directory does not exist, cannot be created, or disallows writing.
-                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                 * The device is out of space.
-                 * The store could not be migrated to the current model version.
-                 Check the error message to determine what the actual problem was.
-                 */
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+                print("Unresolved error \(error), \(error.userInfo)")
             }
         })
-        return container
-    }()
+    }
     
     func fetchCompletedIssues() -> AnyPublisher<[CompletedIssue], Error> {
+        guard let container = self.persistentContainer else { return Just([]).mapError { _ -> Error in }.eraseToAnyPublisher() }
+        
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CompletedIssue")
         
         do {
-            let result = try self.persistentContainer.viewContext.fetch(fetchRequest)
+            let result = try container.viewContext.fetch(fetchRequest)
             
-            let results = result.compactMap({ ($0 as! CompletedIssueMO).completedIssue })
+            let results = result.compactMap({ ($0 as? CompletedIssueMO)?.completedIssue })
             return Just(results).mapError { _ -> Error in }.eraseToAnyPublisher()
         } catch {
             return Fail(error: error).eraseToAnyPublisher()
@@ -52,7 +46,8 @@ class PersisentCompletedIssueProvider: CompletedIssueProvider {
     }
     
     func storeCompletedIssue(_ completed: CompletedIssue) {
-        self.persistentContainer.viewContext.insert(CompletedIssueMO(with: completed, context: self.persistentContainer.viewContext))
+        guard let container = self.persistentContainer else { return }
+        container.viewContext.insert(CompletedIssueMO(with: completed, context: container.viewContext))
         self.saveContext()
     }
 }
@@ -61,15 +56,15 @@ private extension PersisentCompletedIssueProvider {
     // MARK: - Core Data Saving support
     
     func saveContext () {
-        let context = persistentContainer.viewContext
+        guard let container = self.persistentContainer else { return }
+        
+        let context = container.viewContext
         if context.hasChanges {
             do {
                 try context.save()
             } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                print("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
     }
