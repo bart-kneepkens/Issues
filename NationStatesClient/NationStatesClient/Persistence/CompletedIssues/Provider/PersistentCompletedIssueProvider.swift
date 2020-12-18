@@ -13,6 +13,10 @@ class PersisentCompletedIssueProvider: CompletedIssueProvider {
     
     var persistentContainer: NSPersistentContainer?
     
+    init(nationName: String) {
+        self.setup(for: nationName)
+    }
+    
     func setup(for nationName: String) {
         guard let modelURL = Bundle.main.url(forResource: "CompletedIssuesModel", withExtension: "momd"),
               let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)

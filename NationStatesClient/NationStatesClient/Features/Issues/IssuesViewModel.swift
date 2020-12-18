@@ -43,7 +43,8 @@ class IssuesViewModel: ObservableObject {
         self.provider = provider
         self.authenticationContainer = authenticationContainer
         self.nationDetailsProvider = nationDetailsProvider
-        self.persistentContainer = PersisentCompletedIssueProvider()
+        self.persistentContainer = PersisentCompletedIssueProvider(nationName: authenticationContainer.nationName)
+        
         self.cancellables?.append(
             self.shouldFetchPublisher
                 .throttle(for: .seconds(25), scheduler: DispatchQueue.main, latest: false)
