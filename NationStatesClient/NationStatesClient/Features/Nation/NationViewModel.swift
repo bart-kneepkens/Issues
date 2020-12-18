@@ -16,7 +16,7 @@ class NationViewModel: ObservableObject {
     init(provider: NationDetailsProvider, authenticationContainer: AuthenticationContainer) {
         self.provider = provider
         self.authenticationContainer = authenticationContainer
-        self.name = provider.nationDetails?.name ?? authenticationContainer.nationName
+        self.name = authenticationContainer.nationName
         self.nation = provider.nationDetails
     }
     

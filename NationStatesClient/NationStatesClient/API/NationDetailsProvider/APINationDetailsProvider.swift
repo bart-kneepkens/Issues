@@ -9,7 +9,14 @@ import Foundation
 import Combine
 
 class APINationDetailsProvider: NationDetailsProvider {
-    var nationDetails: Nation?
+    var nationDetails: Nation? {
+        didSet {
+            if let details = nationDetails {
+                authenticationContainer.nationName = details.name
+            }
+        }
+    }
+    
     private let authenticationContainer: AuthenticationContainer
     private var cancellable: Cancellable?
     

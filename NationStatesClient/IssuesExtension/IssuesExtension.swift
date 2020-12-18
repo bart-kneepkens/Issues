@@ -63,7 +63,7 @@ class Provider: TimelineProvider {
             Issue(id: 0, title: "A very pressing issue", text: "", options: [], imageName: ""),
             Issue(id: 1, title: "Apocalypse looms in your nation", text: "", options: [], imageName: ""),
             Issue(id: 2, title: "Unicorns have become endangered", text: "", options: [], imageName: "")
-        ], timeLeftForNextIssue: "2 hours", nextIssueDate: Date()), nationName: "Placeholder")
+        ], timeLeftForNextIssue: "2 hours", nextIssueDate: Date()), nationName: "Nation")
     }
     
     func getSnapshot(in context: Context, completion: @escaping (IssuesExtensionEntry) -> Void) {
@@ -71,7 +71,7 @@ class Provider: TimelineProvider {
             Issue(id: 0, title: "A very pressing issue", text: "", options: [], imageName: ""),
             Issue(id: 1, title: "Apocalypse looms in your nation", text: "", options: [], imageName: ""),
             Issue(id: 2, title: "Unicorns have become endangered", text: "", options: [], imageName: "")
-        ], timeLeftForNextIssue: "2 hours", nextIssueDate: Date()), nationName: "Placeholder"))
+        ], timeLeftForNextIssue: "2 hours", nextIssueDate: Date()), nationName: "Nation"))
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<IssuesExtensionEntry>) -> Void) {

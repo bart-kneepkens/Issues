@@ -25,7 +25,7 @@ class KeychainSecretsStorage: SecureStorage {
         
         try? keychain.set(value, key: key)
         
-        print("Stored \(key) in keychain group")
+        print("Stored \(key) in keychain group: \(value)")
     }
     
     func remove(_ key: String) {

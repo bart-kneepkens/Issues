@@ -51,6 +51,8 @@
 		AE6B13D3254601B600606A6A /* IssuesResponseXMLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6B13D2254601B600606A6A /* IssuesResponseXMLParserTests.swift */; };
 		AE6D8347256473B500FA1CF7 /* InformationText.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6D8346256473B500FA1CF7 /* InformationText.swift */; };
 		AE6E69E7258AAE95009C81B5 /* SignInInProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6E69E6258AAE95009C81B5 /* SignInInProgressView.swift */; };
+		AE6E69F0258AB265009C81B5 /* NationDetailsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE790DD8256DA75A00051FD4 /* NationDetailsProvider.swift */; };
+		AE6E69F5258AB26B009C81B5 /* APINationDetailsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE790DDE256DA7B300051FD4 /* APINationDetailsProvider.swift */; };
 		AE790DD9256DA75A00051FD4 /* NationDetailsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE790DD8256DA75A00051FD4 /* NationDetailsProvider.swift */; };
 		AE790DDF256DA7B300051FD4 /* APINationDetailsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE790DDE256DA7B300051FD4 /* APINationDetailsProvider.swift */; };
 		AE790DE4256DA8DF00051FD4 /* Nation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0FEBE0256C786D000A4B57 /* Nation.swift */; };
@@ -911,8 +913,10 @@
 				AEF9216F256176A10048EAFC /* IssuesList.swift in Sources */,
 				AED8B66F255DF10E008F9769 /* IssuesExtension.intentdefinition in Sources */,
 				AED8B6CC255F4807008F9769 /* CensusScale.swift in Sources */,
+				AE6E69F5258AB26B009C81B5 /* APINationDetailsProvider.swift in Sources */,
 				AE790DE4256DA8DF00051FD4 /* Nation.swift in Sources */,
 				AED8B6D1255F480E008F9769 /* KeychainSecretsStorage.swift in Sources */,
+				AE6E69F0258AB265009C81B5 /* NationDetailsProvider.swift in Sources */,
 				AEF921642561728F0048EAFC /* LargeExtensionView.swift in Sources */,
 				AED8B6DB255F481F008F9769 /* URLRequest+Extras.swift in Sources */,
 				AE790DE9256DA8EA00051FD4 /* NationDetailsResponseXMLParser.swift in Sources */,
@@ -1089,6 +1093,7 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
@@ -1116,6 +1121,7 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
@@ -1226,6 +1232,7 @@
 				CODE_SIGN_ENTITLEMENTS = IssuesExtension/IssuesExtensionExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				INFOPLIST_FILE = IssuesExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1250,6 +1257,7 @@
 				CODE_SIGN_ENTITLEMENTS = IssuesExtension/IssuesExtensionExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				INFOPLIST_FILE = IssuesExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
