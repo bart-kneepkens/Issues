@@ -10,6 +10,7 @@ import SwiftUI
 struct SignInView: View {
     @ObservedObject var viewModel: SignInViewModel
     @State var shouldRevealPassword = false
+    @State var shouldShowSingupSheet = false
     
     var shouldShowAlert: Binding<Bool> {
         .init(get: { self.viewModel.signInError != nil }, set: {_ in})
@@ -54,7 +55,9 @@ struct SignInView: View {
                 }
                 
                 Section(header: Text("Don't have a nation yet?")) {
-                    Link("Create a nation", destination: URL(string: "http://google.com")!)
+                    Button("Create a nation") {
+                        self.shouldShowSingupSheet.toggle()
+                    }
                 }
                 
                 Section {
@@ -80,6 +83,11 @@ struct SignInView: View {
             .alert(isPresented: shouldShowAlert, content: {
                 Alert(title: Text("Can't sign in"), message: Text("Please check your credentials and try again"), dismissButton: nil)
             })
+            .sheet(isPresented: $shouldShowSingupSheet) {
+                if let url = URL(string: "https://www.nationstates.net/page=create_nation") {
+                    SafariView(url: url)
+                }
+            }
             
             
             NavigationLink(
