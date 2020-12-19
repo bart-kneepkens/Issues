@@ -4,7 +4,7 @@
 
 # Issues for NationStates
 
-This repository contains the source for Issues for Nationstates, an upcoming iOS app to keep track of ones NationStates issues on the go.
+This repository contains the source for Issues for NationStates, an upcoming iOS app to keep track of ones NationStates issues on the go.
 
 # Features 
 - 📰 Get an overview of your pending issues
