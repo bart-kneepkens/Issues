@@ -86,8 +86,6 @@
 		AED8B667255DF10C008F9769 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED8B666255DF10C008F9769 /* SwiftUI.framework */; };
 		AED8B66A255DF10C008F9769 /* IssuesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED8B669255DF10C008F9769 /* IssuesExtension.swift */; };
 		AED8B66D255DF10E008F9769 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AED8B66C255DF10E008F9769 /* Assets.xcassets */; };
-		AED8B66F255DF10E008F9769 /* IssuesExtension.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = AED8B66B255DF10C008F9769 /* IssuesExtension.intentdefinition */; };
-		AED8B670255DF10E008F9769 /* IssuesExtension.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = AED8B66B255DF10C008F9769 /* IssuesExtension.intentdefinition */; };
 		AED8B673255DF10E008F9769 /* IssuesExtensionExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AED8B662255DF10C008F9769 /* IssuesExtensionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AED8B680255DF3A7008F9769 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8764E6252FAA0C00EFE031 /* Issue.swift */; };
 		AED8B685255DF617008F9769 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEECD737254F465400D536AF /* Option.swift */; };
@@ -251,7 +249,6 @@
 		AED8B664255DF10C008F9769 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		AED8B666255DF10C008F9769 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		AED8B669255DF10C008F9769 /* IssuesExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssuesExtension.swift; sourceTree = "<group>"; };
-		AED8B66B255DF10C008F9769 /* IssuesExtension.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = IssuesExtension.intentdefinition; sourceTree = "<group>"; };
 		AED8B66C255DF10E008F9769 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AED8B66E255DF10E008F9769 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AEDED2CD253C6372007A376F /* AnsweredIssueSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnsweredIssueSection.swift; sourceTree = "<group>"; };
@@ -586,7 +583,6 @@
 				AED5F7E325631735009BDA01 /* IssuesExtensionExtension.entitlements */,
 				AEF9213025616A160048EAFC /* Views */,
 				AED8B669255DF10C008F9769 /* IssuesExtension.swift */,
-				AED8B66B255DF10C008F9769 /* IssuesExtension.intentdefinition */,
 				AED8B66C255DF10E008F9769 /* Assets.xcassets */,
 				AED8B66E255DF10E008F9769 /* Info.plist */,
 			);
@@ -846,7 +842,6 @@
 				AE4BACC72544E97600B391B4 /* CensusScalesLoader.swift in Sources */,
 				AEFF41CA2532776500206676 /* URLBuilder.swift in Sources */,
 				AE115FB12559F9C900EB1932 /* KeychainSecretsStorage.swift in Sources */,
-				AED8B670255DF10E008F9769 /* IssuesExtension.intentdefinition in Sources */,
 				AE5EF2102553342A0079389F /* APIRequest.swift in Sources */,
 				AEECD738254F465400D536AF /* Option.swift in Sources */,
 				AE95F129253B18E400860D25 /* IssueDetailOptionsView.swift in Sources */,
@@ -915,7 +910,6 @@
 				AED8B6F9255F4BA4008F9769 /* MockedIssueProvider.swift in Sources */,
 				AED8B6EF255F4839008F9769 /* IssuesResponseXMLParser.swift in Sources */,
 				AEF9216F256176A10048EAFC /* IssuesList.swift in Sources */,
-				AED8B66F255DF10E008F9769 /* IssuesExtension.intentdefinition in Sources */,
 				AED8B6CC255F4807008F9769 /* CensusScale.swift in Sources */,
 				AE6E69F5258AB26B009C81B5 /* APINationDetailsProvider.swift in Sources */,
 				AE790DE4256DA8DF00051FD4 /* Nation.swift in Sources */,
@@ -1097,7 +1091,7 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
@@ -1125,7 +1119,7 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
@@ -1236,7 +1230,7 @@
 				CODE_SIGN_ENTITLEMENTS = IssuesExtension/IssuesExtensionExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				INFOPLIST_FILE = IssuesExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1261,7 +1255,7 @@
 				CODE_SIGN_ENTITLEMENTS = IssuesExtension/IssuesExtensionExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				INFOPLIST_FILE = IssuesExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
