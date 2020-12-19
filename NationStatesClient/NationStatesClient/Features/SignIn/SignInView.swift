@@ -19,16 +19,20 @@ struct SignInView: View {
         ZStack {
             Form {
                 Section {
-                    Image("banner")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
+                    HStack {
+                        Spacer()
+                        VStack {
+                            Image("Icon").resizable().frame(width: 128, height: 128, alignment: .center)
+                                .cornerRadius(25)
+                            
+                            Text("Issues").font(.largeTitle).fontWeight(.bold)
+                            Text("for NationStates")
+                        }
+                        Spacer()
+                    }
                 }
                 
-                Section {
-                    Text("Welcome to Issues, an unofficial NationStates client for iOS!")
-                }
-                
-                Section {
+                Section(header: Text("Sign in to your nation")) {
                     TextField("Nation name", text: $viewModel.nationName)
                     HStack {
                         if self.shouldRevealPassword {
@@ -39,10 +43,18 @@ struct SignInView: View {
                         Button(action: {
                             self.shouldRevealPassword.toggle()
                         }, label: {
-                            Image(systemName: self.shouldRevealPassword ? "eye.slash" : "eye").resizable().aspectRatio(contentMode: .fit).frame(width: 30).foregroundColor(.secondary)
+                            Image(systemName: self.shouldRevealPassword ? "eye.slash" : "eye")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 30)
+                                .foregroundColor(.secondary)
                         })
                     }
                     
+                }
+                
+                Section(header: Text("Don't have a nation yet?")) {
+                    Link("Create a nation", destination: URL(string: "http://google.com")!)
                 }
                 
                 Section {
@@ -63,6 +75,8 @@ struct SignInView: View {
             // When signing out, the previous navigationBarItems stay in place
             // Replace them explicitly with Empty views
             .navigationBarItems(leading: EmptyView(), trailing: EmptyView())
+            .navigationBarHidden(true)
+            .navigationBarTitle("")
             .alert(isPresented: shouldShowAlert, content: {
                 Alert(title: Text("Can't sign in"), message: Text("Please check your credentials and try again"), dismissButton: nil)
             })
