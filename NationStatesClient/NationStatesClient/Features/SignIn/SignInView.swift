@@ -9,58 +9,54 @@ import SwiftUI
 
 struct SignInView: View {
     @ObservedObject var viewModel: SignInViewModel
-    @State var shouldRevealPassword = false
     @State var shouldShowSingupSheet = false
     
-    var shouldShowAlert: Binding<Bool> {
+    private var shouldShowAlert: Binding<Bool> {
         .init(get: { self.viewModel.signInError != nil }, set: {_ in})
+    }
+    
+    private var screenHeader: some View {
+        HStack {
+            Spacer()
+            VStack {
+                Image("Icon")
+                    .resizable()
+                    .frame(width: 128, height: 128, alignment: .center)
+                    .cornerRadius(25)
+                
+                Text("Issues")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                Text("for NationStates")
+            }
+            Spacer()
+        }
+    }
+    
+    private var createNationHeader: some View {
+        HStack {
+            Text("Don't have a nation yet?").textCase(.none)
+            Button(action: {
+                self.shouldShowSingupSheet.toggle()
+            }) {
+                Text("Create one").foregroundColor(.accentColor).textCase(.none)
+            }
+        }
     }
     
     var body: some View {
         ZStack {
             Form {
                 Section {
-                    HStack {
-                        Spacer()
-                        VStack {
-                            Image("Icon").resizable().frame(width: 128, height: 128, alignment: .center)
-                                .cornerRadius(25)
-                            
-                            Text("Issues").font(.largeTitle).fontWeight(.bold)
-                            Text("for NationStates")
-                        }
-                        Spacer()
-                    }
+                   screenHeader
                 }
                 
-                Section(header: Text("Sign in to your nation")) {
-                    TextField("Nation name", text: $viewModel.nationName)
-                    HStack {
-                        if self.shouldRevealPassword {
-                            TextField("Password", text: $viewModel.password)
-                        } else {
-                            SecureField("Password", text: $viewModel.password)
-                        }
-                        Button(action: {
-                            self.shouldRevealPassword.toggle()
-                        }, label: {
-                            Image(systemName: self.shouldRevealPassword ? "eye.slash" : "eye")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 30)
-                                .foregroundColor(.secondary)
-                        })
-                    }
-                    
+                Section(header: Text("Sign in to your nation").textCase(.none)) {
+                    TextField("Nation name", text: $viewModel.nationName).disableAutocorrection(true)
+                    ToggleablePasswordField(text: $viewModel.password)
                 }
                 
-                Section(header: Text("Don't have a nation yet?")) {
-                    Button("Create a nation") {
-                        self.shouldShowSingupSheet.toggle()
-                    }
-                }
-                
-                Section {
+                Section(header: createNationHeader) {
                     if viewModel.isSigningIn {
                         HStack {
                             Text("Signing In..")
@@ -74,6 +70,7 @@ struct SignInView: View {
                         .disabled(viewModel.signInButtonDisabled)
                     }
                 }
+                
             }
             // When signing out, the previous navigationBarItems stay in place
             // Replace them explicitly with Empty views

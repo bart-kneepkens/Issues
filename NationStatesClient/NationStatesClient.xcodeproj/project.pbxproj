@@ -20,7 +20,6 @@
 		AE127F9A254F2A96004445E5 /* NationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE127F99254F2A96004445E5 /* NationViewModel.swift */; };
 		AE1318F625573AFA00A5D693 /* CompletedIssueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1318F525573AFA00A5D693 /* CompletedIssueProvider.swift */; };
 		AE15A6C325310372004478C3 /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15A6C225310372004478C3 /* SecureStorage.swift */; };
-		AE15A6CB25310387004478C3 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15A6CA25310387004478C3 /* UserDefaultsStorage.swift */; };
 		AE15A6D925310852004478C3 /* NationStatesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15A6D825310852004478C3 /* NationStatesAPI.swift */; };
 		AE15A6E725321084004478C3 /* IssuesResponseXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15A6E625321084004478C3 /* IssuesResponseXMLParser.swift */; };
 		AE1C5A7025589DB9008811E6 /* OptionMO+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C5A6F25589DB9008811E6 /* OptionMO+.swift */; };
@@ -78,6 +77,7 @@
 		AE8981AF2530FD8D00D62766 /* AuthenticationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8981AE2530FD8D00D62766 /* AuthenticationContainer.swift */; };
 		AE8AA1A22552F92A0031D112 /* NationStatesAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8AA1A12552F92A0031D112 /* NationStatesAPITests.swift */; };
 		AE95AA96258EADCA00607C1B /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE95AA95258EADCA00607C1B /* SafariView.swift */; };
+		AE95AAA82590276000607C1B /* ToggleablePasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE95AAA72590276000607C1B /* ToggleablePasswordField.swift */; };
 		AE95F1212538E3BC00860D25 /* CachedRemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE95F1202538E3BC00860D25 /* CachedRemoteImage.swift */; };
 		AE95F129253B18E400860D25 /* IssueDetailOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE95F128253B18E400860D25 /* IssueDetailOptionsView.swift */; };
 		AE983A5C258D127900B112CB /* RankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE983A5B258D127900B112CB /* RankingView.swift */; };
@@ -181,7 +181,6 @@
 		AE127F99254F2A96004445E5 /* NationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationViewModel.swift; sourceTree = "<group>"; };
 		AE1318F525573AFA00A5D693 /* CompletedIssueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedIssueProvider.swift; sourceTree = "<group>"; };
 		AE15A6C225310372004478C3 /* SecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorage.swift; sourceTree = "<group>"; };
-		AE15A6CA25310387004478C3 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		AE15A6D825310852004478C3 /* NationStatesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationStatesAPI.swift; sourceTree = "<group>"; };
 		AE15A6E625321084004478C3 /* IssuesResponseXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssuesResponseXMLParser.swift; sourceTree = "<group>"; };
 		AE1C5A6F25589DB9008811E6 /* OptionMO+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OptionMO+.swift"; sourceTree = "<group>"; };
@@ -240,6 +239,7 @@
 		AE8981AE2530FD8D00D62766 /* AuthenticationContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationContainer.swift; sourceTree = "<group>"; };
 		AE8AA1A12552F92A0031D112 /* NationStatesAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationStatesAPITests.swift; sourceTree = "<group>"; };
 		AE95AA95258EADCA00607C1B /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
+		AE95AAA72590276000607C1B /* ToggleablePasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleablePasswordField.swift; sourceTree = "<group>"; };
 		AE95F1202538E3BC00860D25 /* CachedRemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedRemoteImage.swift; sourceTree = "<group>"; };
 		AE95F128253B18E400860D25 /* IssueDetailOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailOptionsView.swift; sourceTree = "<group>"; };
 		AE983A5B258D127900B112CB /* RankingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingView.swift; sourceTree = "<group>"; };
@@ -339,7 +339,6 @@
 			isa = PBXGroup;
 			children = (
 				AE15A6C225310372004478C3 /* SecureStorage.swift */,
-				AE15A6CA25310387004478C3 /* UserDefaultsStorage.swift */,
 				AE115FB02559F9C900EB1932 /* KeychainSecretsStorage.swift */,
 			);
 			path = Secrets;
@@ -468,12 +467,12 @@
 		AE8764A3252E6F2900EFE031 /* NationStatesClient */ = {
 			isa = PBXGroup;
 			children = (
-				AE95AA94258EADBA00607C1B /* UIKit */,
 				AED5F7E225631693009BDA01 /* NationStatesClient.entitlements */,
 				AEECD736254F45DC00D536AF /* Features */,
 				AE15A6CF253107AF004478C3 /* API */,
 				AE8981A52530F0ED00D62766 /* Persistence */,
 				AE8764ED252FADBC00EFE031 /* Model */,
+				AE95AA94258EADBA00607C1B /* UIKit */,
 				AE8764A4252E6F2900EFE031 /* NationStatesClientApp.swift */,
 				AE6B13CB2545D6AB00606A6A /* AppDelegate.swift */,
 				AE616F16254F0D5200C9107C /* ContentViewModel.swift */,
@@ -519,6 +518,7 @@
 				AE8764D2252FA4E500EFE031 /* SignInView.swift */,
 				AE8764D7252FA4F100EFE031 /* SignInViewModel.swift */,
 				AE6E69E6258AAE95009C81B5 /* SignInInProgressView.swift */,
+				AE95AAA72590276000607C1B /* ToggleablePasswordField.swift */,
 			);
 			path = SignIn;
 			sourceTree = "<group>";
@@ -834,6 +834,7 @@
 				AE6B13CC2545D6AB00606A6A /* AppDelegate.swift in Sources */,
 				AEFF41FD2536589A00206676 /* URLRequest+Extras.swift in Sources */,
 				AE2EDE842558212F00042668 /* CompletedIssuesModel.xcdatamodeld in Sources */,
+				AE95AAA82590276000607C1B /* ToggleablePasswordField.swift in Sources */,
 				AE127F9A254F2A96004445E5 /* NationViewModel.swift in Sources */,
 				AE790DF9256EDC9D00051FD4 /* BasicImageCache.swift in Sources */,
 				AEFCC53C2550BCC1002E754F /* FetchIssuesResult.swift in Sources */,
@@ -875,7 +876,6 @@
 				AE1C5A942558ACC0008811E6 /* HeadlineMO+.swift in Sources */,
 				AE8764F8252FADEF00EFE031 /* IssueDetailViewModel.swift in Sources */,
 				AEFF41E82535033600206676 /* PingResponseXMLParser.swift in Sources */,
-				AE15A6CB25310387004478C3 /* UserDefaultsStorage.swift in Sources */,
 				AE8764A7252E6F2900EFE031 /* ContentView.swift in Sources */,
 				AE1C5A8225589EBC008811E6 /* ReclassifyMO+.swift in Sources */,
 				AE210432254B7CA4005AC68C /* AuthenticationProvider.swift in Sources */,
@@ -1103,7 +1103,7 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
@@ -1131,7 +1131,7 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
@@ -1242,7 +1242,7 @@
 				CODE_SIGN_ENTITLEMENTS = IssuesExtension/IssuesExtensionExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				INFOPLIST_FILE = IssuesExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1267,7 +1267,7 @@
 				CODE_SIGN_ENTITLEMENTS = IssuesExtension/IssuesExtensionExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				INFOPLIST_FILE = IssuesExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

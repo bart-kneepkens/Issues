@@ -12,13 +12,13 @@ struct SmallExtensionView: View {
     let entry: Provider.Entry
     
     var issueWithShortestTitle: Issue? {
-        entry.fetchIssuesResult.issues.sorted(by: { $0.title < $1.title }).first
+        entry.fetchIssuesResult.issues.sorted(by: { $0.title.count < $1.title.count }).first
     }
 
     var body: some View {
         VStack {
             ZStack {
-                Image("f1_square").resizable().overlay(Color("BackgroundOverlayColor"))
+                Image("background_small").resizable().overlay(Color("BackgroundOverlayColor"))
                 VStack {
                     HStack {
                         NationIssuesView(entry: entry)

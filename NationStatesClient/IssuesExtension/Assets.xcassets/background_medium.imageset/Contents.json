@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "background_medium_1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "background_medium_2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "f1_landscape.jpg",
+      "filename" : "background_medium_3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

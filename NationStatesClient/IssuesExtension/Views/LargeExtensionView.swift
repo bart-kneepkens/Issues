@@ -13,7 +13,7 @@ struct LargeExtensionView: View {
     
     var body: some View {
         ZStack {
-            Image("f1_square").resizable().overlay(Color("BackgroundOverlayColor"))
+            Image("background_large").resizable().overlay(Color("BackgroundOverlayColor"))
             VStack {
                 HStack {
                     NationIssuesView(entry: entry)

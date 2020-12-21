@@ -13,7 +13,7 @@ struct MediumExtensionView: View {
     
     var body: some View {
         ZStack {
-            Image("f1_landscape").resizable().overlay(Color("BackgroundOverlayColor"))
+            Image("background_medium").resizable().overlay(Color("BackgroundOverlayColor"))
             VStack {
                 HStack {
                     VStack {

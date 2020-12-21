@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import WidgetKit
 
 class SignInViewModel: ObservableObject {
     private var authenticationProvider: AuthenticationProvider
@@ -54,6 +55,7 @@ class SignInViewModel: ObservableObject {
                     self.authenticationSuccessful = true
                     self.objectWillChange.send()
                     self.nationDetailsProvider.fetchDetails()
+                    WidgetCenter.shared.reloadAllTimelines()
                 }
             })
     }

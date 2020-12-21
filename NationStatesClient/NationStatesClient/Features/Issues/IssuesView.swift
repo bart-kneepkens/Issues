@@ -11,7 +11,7 @@ import Combine
 struct IssuesView: View {
     @StateObject var viewModel: IssuesViewModel
     
-    var fetchingIndicator: some View {
+    private var fetchingIndicator: some View {
         Group {
             if self.viewModel.selectedIssuesList == .current {
                 if self.viewModel.isFetchingIssues {
@@ -24,7 +24,7 @@ struct IssuesView: View {
         }
     }
     
-    var footerView: some View {
+    private var footerView: some View {
         Group {
             if self.viewModel.selectedIssuesList == .current {
                 if let error = self.viewModel.error {
@@ -36,15 +36,15 @@ struct IssuesView: View {
                         }
                     }
                 } else if let result = self.viewModel.fetchIssuesResult, self.viewModel.issues.count != 5 {
-                    HStack {
                         Text("Next issue \(result.timeLeftForNextIssue)")
-                    }
                 }
+            } else {
+                Text("Completed issues appear here as you pass legislations. Keep in mind that issues completed in other apps, or on the NationStates website, do not appear here.")
             }
         }
     }
     
-    var segmentedPicker: some View {
+    private var segmentedPicker: some View {
         Picker(selection: $viewModel.selectedIssuesList, label: EmptyView(), content:{
             Text("Current").tag(IssuesListType.current).textCase(.none)
             Text("Past").tag(IssuesListType.past).textCase(.none)
@@ -80,7 +80,7 @@ struct IssuesView: View {
         .navigationBarItems(trailing: NavigationLink(
                                 destination: NationView(viewModel: self.viewModel.nationViewModel),
                                 label: {
-                                    Image(systemName: "gear")
+                                    Image(systemName: "flag")
                                 }))
         .onAppear {
             self.viewModel.startFetchingIssues() // Throttled accordingly in VM
