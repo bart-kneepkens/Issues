@@ -9,20 +9,6 @@ import XCTest
 import Combine
 @testable import NationStatesClient
 
-fileprivate class MockedSecureStorage: SecureStorage {
-    func remove(_ key: String) {
-        
-    }
-    
-    func store(_ value: String?, key: String) {
-        
-    }
-    
-    func retrieve(key: String) -> String? {
-        return ""
-    }
-}
-
 private func authenticationContainerWith(nationName: String = "",
                                          password: String = "",
                                          pin: String? = nil,
@@ -162,12 +148,60 @@ class APIRequest_Publisher_HTTP_Errors_Tests: XCTestCase {
         
         self.waitForExpectations(timeout: 1, handler: nil)
     }
+    
+    func testHTTPError404() throws {
+        let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password")
+        let expectation = self.expectation(description: "throws APIError .notFound in case of HTTP error 404")
+        
+        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: MockedSession(statusCode: 404))
+            .publisher
+            .sink { completion in
+                switch completion {
+                case .failure(let apiError):
+                    switch apiError {
+                    case .notFound:
+                        expectation.fulfill()
+                    default: break
+                    }
+                default: break
+                }
+            } receiveValue: { _ in }
+        
+        self.waitForExpectations(timeout: 1, handler: nil)
+    }
+    
+    func testHTTPError429() throws {
+        let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password")
+        let expectation = self.expectation(description: "throws APIError .rateExceeded in case of HTTP error 429")
+        
+        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: MockedSession(statusCode: 429))
+            .publisher
+            .sink { completion in
+                switch completion {
+                case .failure(let apiError):
+                    switch apiError {
+                    case .rateExceeded:
+                        expectation.fulfill()
+                    default: break
+                    }
+                default: break
+                }
+            } receiveValue: { _ in }
+        
+        self.waitForExpectations(timeout: 1, handler: nil)
+    }
 }
 
 class APIRequest_Publisher_NSErrors_Tests: XCTestCase {
     class MockedSession: NetworkSession {
+        let urlErrorCode: URLError.Code
+        
+        init(_ urlErrorCode: URLError.Code) {
+            self.urlErrorCode = urlErrorCode
+        }
+        
         func publisher(for request: URLRequest) -> AnyPublisher<DataResponse, URLError> {
-            return Fail(error: URLError(URLError.notConnectedToInternet))
+            return Fail(error: URLError(urlErrorCode))
                 .eraseToAnyPublisher()
         }
     }
@@ -176,13 +210,34 @@ class APIRequest_Publisher_NSErrors_Tests: XCTestCase {
         let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password")
         let expectation = self.expectation(description: "throws APIError .notConnected in case of URL error NSURLErrorNotConnectedToInternet")
         
-        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: MockedSession())
+        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: MockedSession(URLError.notConnectedToInternet))
             .publisher
             .sink { completion in
                 switch completion {
                 case .failure(let apiError):
                     switch apiError {
                     case .notConnected:
+                        expectation.fulfill()
+                    default: break
+                    }
+                default: break
+                }
+            } receiveValue: { _ in }
+        
+        self.waitForExpectations(timeout: 1, handler: nil)
+    }
+    
+    func testTimedOut() throws {
+        let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password")
+        let expectation = self.expectation(description: "throws APIError .timedOut in case of URL error NSURLErrorTimedOut")
+        
+        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: MockedSession(URLError.timedOut))
+            .publisher
+            .sink { completion in
+                switch completion {
+                case .failure(let apiError):
+                    switch apiError {
+                    case .timedOut:
                         expectation.fulfill()
                     default: break
                     }

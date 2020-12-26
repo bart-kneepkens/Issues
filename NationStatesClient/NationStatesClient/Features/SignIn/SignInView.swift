@@ -33,7 +33,7 @@ struct SignInView: View {
         }
     }
     
-    private var createNationHeader: some View {
+    private var createNationFooter: some View {
         HStack {
             Text("Don't have a nation yet?").textCase(.none)
             Button(action: {
@@ -56,7 +56,7 @@ struct SignInView: View {
                     ToggleablePasswordField(text: $viewModel.password)
                 }
                 
-                Section(header: createNationHeader) {
+                Section(footer: createNationFooter) {
                     if viewModel.isSigningIn {
                         HStack {
                             Text("Signing In..")
@@ -81,12 +81,16 @@ struct SignInView: View {
                 Alert(title: Text("Can't sign in"), message: Text("Please check your credentials and try again"), dismissButton: nil)
             })
             .sheet(isPresented: $shouldShowSingupSheet) {
-                if let url = URL(string: "https://www.nationstates.net/page=create_nation") {
-                    SafariView(url: url)
+                CreateNationSheet() { result in
+                    self.shouldShowSingupSheet = false
+                    
+                    if let result = result {
+                        viewModel.nationName = result.nationName
+                        viewModel.password = result.password
+                    }
                 }
             }
-            
-            
+
             NavigationLink(
                 destination: IssuesView(viewModel: viewModel.issuesViewModel()).navigationBarBackButtonHidden(true),
                 isActive: $viewModel.authenticationSuccessful,
@@ -99,7 +103,7 @@ struct SignInView: View {
 
 #if DEBUG
 struct SignInView_Previews: PreviewProvider {
-    static var viewModel = SignInViewModel(issueProvider: MockedIssueProvider(), authenticationProvider: MockedAuthenticationProvider(), authenticationContainer: .init())
+    static var viewModel = SignInViewModel(issueProvider: MockedIssueProvider(), authenticationProvider: MockedAuthenticationProvider(success: true), authenticationContainer: .init())
     static var previews: some View {
         SignInView(viewModel: viewModel)
     }

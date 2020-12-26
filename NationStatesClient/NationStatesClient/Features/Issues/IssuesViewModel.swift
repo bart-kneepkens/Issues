@@ -79,7 +79,6 @@ class IssuesViewModel: ObservableObject {
                 .autoconnect()
                 .receive(on: DispatchQueue.main)
                 .sink(receiveValue: { [weak self] _ in
-                    print("timer")
                     self?.shouldFetchPublisher.send(false)
                 })
         }

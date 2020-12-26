@@ -10,12 +10,9 @@ import Combine
 
 #if DEBUG
 class MockedAuthenticationProvider: AuthenticationProvider {
-    private let pair: AuthenticationPair
     private let success: Bool
     
-    init(pair: AuthenticationPair = (autologin: "mocked-autologin", pin: "mocked-pin"),
-         success: Bool = true) {
-        self.pair = pair
+    init(success: Bool){
         self.success = success
     }
     

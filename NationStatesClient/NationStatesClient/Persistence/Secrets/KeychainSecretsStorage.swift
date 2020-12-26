@@ -15,7 +15,6 @@ class KeychainSecretsStorage: SecureStorage {
     init() {
         self.keychain = Keychain(service: "bart-kneepkens.issues", accessGroup: keychainGroup)
             .accessibility(.afterFirstUnlock)
-            .synchronizable(true)
     }
     
     func store(_ value: String?, key: String) {

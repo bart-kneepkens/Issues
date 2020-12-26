@@ -48,23 +48,11 @@ enum APIError: Error {
     case unknown(error: Error)
 }
 
-typealias AuthenticationPair = (autologin: String?, pin: String?)
-
-struct NationStatesAPI { private init() {}}
-
 typealias DataResponse = (data: Data, response: URLResponse)
 
-protocol NetworkSession {
-    func publisher(for request: URLRequest) -> AnyPublisher<DataResponse, URLError>
-}
-
-extension URLSession: NetworkSession {
-    func publisher(for request: URLRequest) -> AnyPublisher<DataResponse, URLError> {
-        return self.dataTaskPublisher(for: request).eraseToAnyPublisher()
-    }
-}
-
-extension NationStatesAPI {
+struct NationStatesAPI {
+    private init() {}
+    
     private static func request(using url: URL,
                                 authenticationContainer: AuthenticationContainer,
                                 session: NetworkSession = URLSession.shared
