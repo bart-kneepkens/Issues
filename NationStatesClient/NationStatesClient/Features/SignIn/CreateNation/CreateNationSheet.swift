@@ -47,10 +47,10 @@ struct CreateNationSheet: View {
             }
             
             if self.state == .initial {
-                Color.white
+                Color.primary.colorInvert()
                 ProgressView()
             } else if self.state == .final {
-                Color.white
+                Color.primary.colorInvert()
                 ProgressView("Finishing up..")
                     .onAppear {
                         // Wait here for a while, to allow the server to process the new nation

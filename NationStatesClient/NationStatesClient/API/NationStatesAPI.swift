@@ -61,7 +61,9 @@ struct NationStatesAPI {
     }
     
     static func ping(authenticationContainer: AuthenticationContainer, session: NetworkSession = URLSession.shared) -> AnyPublisher<Bool, APIError> {
-        guard let url = URLBuilder.url(for: authenticationContainer.nationName, with: .ping) else { fatalError() }
+        guard let url = URLBuilder.url(for: authenticationContainer.nationName, with: .ping) else {
+            return Just(false).mapError({ _ in APIError.notConnected }).eraseToAnyPublisher()
+        }
         
         return request(using: url,
                        authenticationContainer: authenticationContainer,
@@ -77,7 +79,9 @@ struct NationStatesAPI {
 
 extension NationStatesAPI {
     static func answerIssue(_ issue: Issue, option: Option, authenticationContainer: AuthenticationContainer) -> AnyPublisher<AnsweredIssueResultDTO, APIError> {
-        guard let url = URLBuilder.answerIssueUrl(for: authenticationContainer.nationName, issue: issue, option: option) else { fatalError() }
+        guard let url = URLBuilder.answerIssueUrl(for: authenticationContainer.nationName, issue: issue, option: option) else {
+            return Just(AnsweredIssueResultDTO()).mapError({ _ in APIError.notConnected }).eraseToAnyPublisher()
+        }
         
         return request(using: url, authenticationContainer: authenticationContainer)
             .map { result -> AnsweredIssueResultDTO in
@@ -95,7 +99,9 @@ extension NationStatesAPI {
 
 extension NationStatesAPI {
     static func fetchIssues(authenticationContainer: AuthenticationContainer) -> AnyPublisher<FetchIssuesResultDTO, APIError> {
-        guard let url = URLBuilder.url(for: authenticationContainer.nationName, with: [.issues, .nextissue, .nextissuetime]) else { fatalError() }
+        guard let url = URLBuilder.url(for: authenticationContainer.nationName, with: [.issues, .nextissue, .nextissuetime]) else {
+            return Just(FetchIssuesResultDTO()).mapError({ _ in APIError.notConnected }).eraseToAnyPublisher()
+        }
         
         return request(using: url, authenticationContainer: authenticationContainer)
             .map({ result -> FetchIssuesResultDTO in
@@ -121,7 +127,9 @@ extension NationStatesAPI {
 extension NationStatesAPI {
     // TODO: maybe remove dependency to auth container, since all of these are public shards
     static func fetchNationDetails(authenticationContainer: AuthenticationContainer) -> AnyPublisher<NationDTO, APIError> {
-        guard let url = URLBuilder.nationDetailsUrl(for: authenticationContainer.nationName) else { fatalError() }
+        guard let url = URLBuilder.nationDetailsUrl(for: authenticationContainer.nationName) else {
+            return Just(NationDTO()).mapError({ _ in APIError.notConnected }).eraseToAnyPublisher()
+        }
 
         return request(using: url, authenticationContainer: authenticationContainer).map { result -> NationDTO in
             let parser = NationDetailsResponseXMLParser(result.data)

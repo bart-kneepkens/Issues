@@ -43,14 +43,15 @@ struct NationView: View {
         let prefix = fullName.replacingOccurrences(of: name, with: "")
         Group {
             Text(prefix)
-            Text(name).font(.title).fontWeight(.bold)
+            Text(name).font(.title).bold()
         }
     }
     
     @ViewBuilder func categoryView(_ category: String) -> some View {
         Text(category)
-            .tracking(10)
+            .tracking(8)
             .opacity(0.8)
+            .multilineTextAlignment(.center)
     }
     
     @ViewBuilder func mottoView(_ motto: String) -> some View {
