@@ -22,6 +22,12 @@ enum Shard: String {
     case freedom
     case flag
     case census
+    
+    case region
+    case influence
+    case population
+    case currency
+    case animal
 }
 
 enum AuthenticationMode {

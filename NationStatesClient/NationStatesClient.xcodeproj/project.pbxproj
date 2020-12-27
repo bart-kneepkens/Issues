@@ -56,6 +56,16 @@
 		AE6E69E7258AAE95009C81B5 /* SignInInProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6E69E6258AAE95009C81B5 /* SignInInProgressView.swift */; };
 		AE6E69F0258AB265009C81B5 /* NationDetailsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE790DD8256DA75A00051FD4 /* NationDetailsProvider.swift */; };
 		AE6E69F5258AB26B009C81B5 /* APINationDetailsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE790DDE256DA7B300051FD4 /* APINationDetailsProvider.swift */; };
+		AE7207B325992C5400839D8D /* ColoredFreedomText.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7207B225992C5400839D8D /* ColoredFreedomText.swift */; };
+		AE7207BA25992DD700839D8D /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7207B925992DD700839D8D /* UIColor+.swift */; };
+		AE7207C925993C4700839D8D /* Freedom.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7207C825993C4700839D8D /* Freedom.swift */; };
+		AE7207CF25993C6800839D8D /* Freedoms.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7207CE25993C6800839D8D /* Freedoms.swift */; };
+		AE7207E125993DFF00839D8D /* AnsweredIssueResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6B13C32545C29800606A6A /* AnsweredIssueResult.swift */; };
+		AE7207E625993E0700839D8D /* Ranking.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE115F992559EC4700EB1932 /* Ranking.swift */; };
+		AE7207EB25993E0A00839D8D /* Headline.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE115F9E2559EC5200EB1932 /* Headline.swift */; };
+		AE7207F025993E0C00839D8D /* Reclassify.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE115FA32559EC5C00EB1932 /* Reclassify.swift */; };
+		AE7207FE25993E1C00839D8D /* Freedom.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7207C825993C4700839D8D /* Freedom.swift */; };
+		AE72080325993E1F00839D8D /* Freedoms.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7207CE25993C6800839D8D /* Freedoms.swift */; };
 		AE790DD9256DA75A00051FD4 /* NationDetailsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE790DD8256DA75A00051FD4 /* NationDetailsProvider.swift */; };
 		AE790DDF256DA7B300051FD4 /* APINationDetailsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE790DDE256DA7B300051FD4 /* APINationDetailsProvider.swift */; };
 		AE790DE4256DA8DF00051FD4 /* Nation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0FEBE0256C786D000A4B57 /* Nation.swift */; };
@@ -99,12 +109,8 @@
 		AED8B69A255F47C7008F9769 /* IssueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BDB9B2548BE0400F3954D /* IssueProvider.swift */; };
 		AED8B69F255F47CE008F9769 /* FetchIssuesResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFCC53B2550BCC1002E754F /* FetchIssuesResult.swift */; };
 		AED8B6A4255F47D6008F9769 /* NationStatesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15A6D825310852004478C3 /* NationStatesAPI.swift */; };
-		AED8B6A9255F47DD008F9769 /* AnsweredIssueResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6B13C32545C29800606A6A /* AnsweredIssueResult.swift */; };
-		AED8B6AE255F47E2008F9769 /* Headline.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE115F9E2559EC5200EB1932 /* Headline.swift */; };
 		AED8B6B3255F47E9008F9769 /* AuthenticationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8981AE2530FD8D00D62766 /* AuthenticationContainer.swift */; };
 		AED8B6B8255F47ED008F9769 /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15A6C225310372004478C3 /* SecureStorage.swift */; };
-		AED8B6BD255F47F4008F9769 /* Reclassify.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE115FA32559EC5C00EB1932 /* Reclassify.swift */; };
-		AED8B6C2255F47FA008F9769 /* Ranking.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE115F992559EC4700EB1932 /* Ranking.swift */; };
 		AED8B6C7255F4802008F9769 /* CensusScalesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4BACC62544E97600B391B4 /* CensusScalesLoader.swift */; };
 		AED8B6CC255F4807008F9769 /* CensusScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4BACCE2544E99900B391B4 /* CensusScale.swift */; };
 		AED8B6D1255F480E008F9769 /* KeychainSecretsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE115FB02559F9C900EB1932 /* KeychainSecretsStorage.swift */; };
@@ -217,6 +223,10 @@
 		AE6B13D2254601B600606A6A /* IssuesResponseXMLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssuesResponseXMLParserTests.swift; sourceTree = "<group>"; };
 		AE6D8346256473B500FA1CF7 /* InformationText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationText.swift; sourceTree = "<group>"; };
 		AE6E69E6258AAE95009C81B5 /* SignInInProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInInProgressView.swift; sourceTree = "<group>"; };
+		AE7207B225992C5400839D8D /* ColoredFreedomText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColoredFreedomText.swift; sourceTree = "<group>"; };
+		AE7207B925992DD700839D8D /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		AE7207C825993C4700839D8D /* Freedom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Freedom.swift; sourceTree = "<group>"; };
+		AE7207CE25993C6800839D8D /* Freedoms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Freedoms.swift; sourceTree = "<group>"; };
 		AE790DD8256DA75A00051FD4 /* NationDetailsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationDetailsProvider.swift; sourceTree = "<group>"; };
 		AE790DDE256DA7B300051FD4 /* APINationDetailsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APINationDetailsProvider.swift; sourceTree = "<group>"; };
 		AE790DF2256DC6E700051FD4 /* MockedNationDetailsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedNationDetailsProvider.swift; sourceTree = "<group>"; };
@@ -392,6 +402,7 @@
 			children = (
 				AE32F96F2544D5600037954D /* NationView.swift */,
 				AE127F99254F2A96004445E5 /* NationViewModel.swift */,
+				AE7207B225992C5400839D8D /* ColoredFreedomText.swift */,
 			);
 			path = Nation;
 			sourceTree = "<group>";
@@ -448,6 +459,35 @@
 			path = Parsers;
 			sourceTree = "<group>";
 		};
+		AE7207B825992DC000839D8D /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				AE7207B925992DD700839D8D /* UIColor+.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		AE7207C725993C3500839D8D /* Nation */ = {
+			isa = PBXGroup;
+			children = (
+				AE0FEBE0256C786D000A4B57 /* Nation.swift */,
+				AE7207C825993C4700839D8D /* Freedom.swift */,
+				AE7207CE25993C6800839D8D /* Freedoms.swift */,
+			);
+			path = Nation;
+			sourceTree = "<group>";
+		};
+		AE7207D425993D2300839D8D /* Completed Issue */ = {
+			isa = PBXGroup;
+			children = (
+				AE115F992559EC4700EB1932 /* Ranking.swift */,
+				AE115F9E2559EC5200EB1932 /* Headline.swift */,
+				AE115FA32559EC5C00EB1932 /* Reclassify.swift */,
+				AE115FA82559EC6B00EB1932 /* CompletedIssue.swift */,
+			);
+			path = "Completed Issue";
+			sourceTree = "<group>";
+		};
 		AE790DD7256DA74800051FD4 /* NationDetailsProvider */ = {
 			isa = PBXGroup;
 			children = (
@@ -489,6 +529,7 @@
 				AE15A6CF253107AF004478C3 /* API */,
 				AE8981A52530F0ED00D62766 /* Persistence */,
 				AE8764ED252FADBC00EFE031 /* Model */,
+				AE7207B825992DC000839D8D /* Utilities */,
 				AE8764A4252E6F2900EFE031 /* NationStatesClientApp.swift */,
 				AE6B13CB2545D6AB00606A6A /* AppDelegate.swift */,
 				AE616F16254F0D5200C9107C /* ContentViewModel.swift */,
@@ -553,16 +594,13 @@
 		AE8764ED252FADBC00EFE031 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AE7207D425993D2300839D8D /* Completed Issue */,
+				AE7207C725993C3500839D8D /* Nation */,
 				AE115F942559E90200EB1932 /* Models+Protocols.swift */,
 				AEECD737254F465400D536AF /* Option.swift */,
 				AE8764E6252FAA0C00EFE031 /* Issue.swift */,
 				AE6B13C32545C29800606A6A /* AnsweredIssueResult.swift */,
 				AEFCC53B2550BCC1002E754F /* FetchIssuesResult.swift */,
-				AE115F992559EC4700EB1932 /* Ranking.swift */,
-				AE115F9E2559EC5200EB1932 /* Headline.swift */,
-				AE115FA32559EC5C00EB1932 /* Reclassify.swift */,
-				AE115FA82559EC6B00EB1932 /* CompletedIssue.swift */,
-				AE0FEBE0256C786D000A4B57 /* Nation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -871,6 +909,7 @@
 				AE790DDF256DA7B300051FD4 /* APINationDetailsProvider.swift in Sources */,
 				AE95AA96258EADCA00607C1B /* CreateNationWebView.swift in Sources */,
 				AE6E69E7258AAE95009C81B5 /* SignInInProgressView.swift in Sources */,
+				AE7207C925993C4700839D8D /* Freedom.swift in Sources */,
 				AE8981AA2530FBA000D62766 /* MockedIssueProvider.swift in Sources */,
 				AE8764E2252FA92C00EFE031 /* IssuesViewModel.swift in Sources */,
 				AE62CAC525926E1D00DD8D46 /* NetworkSession.swift in Sources */,
@@ -878,6 +917,7 @@
 				AE1C5A7825589E87008811E6 /* IssueMO+.swift in Sources */,
 				AE1C5A7025589DB9008811E6 /* OptionMO+.swift in Sources */,
 				AE6B13C42545C29800606A6A /* AnsweredIssueResult.swift in Sources */,
+				AE7207CF25993C6800839D8D /* Freedoms.swift in Sources */,
 				AE616F17254F0D5200C9107C /* ContentViewModel.swift in Sources */,
 				AE983A5C258D127900B112CB /* RankingView.swift in Sources */,
 				AE2EDE7825573CF100042668 /* MockedCompletedIssueProvider.swift in Sources */,
@@ -901,6 +941,8 @@
 				AE210437254B7E0B005AC68C /* APIAuthenticationProvider.swift in Sources */,
 				AE1318F625573AFA00A5D693 /* CompletedIssueProvider.swift in Sources */,
 				AE115F9F2559EC5200EB1932 /* Headline.swift in Sources */,
+				AE7207B325992C5400839D8D /* ColoredFreedomText.swift in Sources */,
+				AE7207BA25992DD700839D8D /* UIColor+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -939,8 +981,11 @@
 				AE6E69F5258AB26B009C81B5 /* APINationDetailsProvider.swift in Sources */,
 				AE790DE4256DA8DF00051FD4 /* Nation.swift in Sources */,
 				AED8B6D1255F480E008F9769 /* KeychainSecretsStorage.swift in Sources */,
+				AE7207FE25993E1C00839D8D /* Freedom.swift in Sources */,
 				AE6E69F0258AB265009C81B5 /* NationDetailsProvider.swift in Sources */,
+				AE7207E125993DFF00839D8D /* AnsweredIssueResult.swift in Sources */,
 				AEF921642561728F0048EAFC /* LargeExtensionView.swift in Sources */,
+				AE7207F025993E0C00839D8D /* Reclassify.swift in Sources */,
 				AED8B6DB255F481F008F9769 /* URLRequest+Extras.swift in Sources */,
 				AE790DE9256DA8EA00051FD4 /* NationDetailsResponseXMLParser.swift in Sources */,
 				AE853F452576F82B0091503C /* NationIssuesView.swift in Sources */,
@@ -949,15 +994,15 @@
 				AED8B6D6255F4815008F9769 /* APIRequest.swift in Sources */,
 				AED8B6E0255F4825008F9769 /* URLBuilder.swift in Sources */,
 				AE62CAC625926E1D00DD8D46 /* NetworkSession.swift in Sources */,
-				AED8B6C2255F47FA008F9769 /* Ranking.swift in Sources */,
 				AED8B6B8255F47ED008F9769 /* SecureStorage.swift in Sources */,
 				AED8B6C7255F4802008F9769 /* CensusScalesLoader.swift in Sources */,
 				AED8B68A255DF61D008F9769 /* Models+Protocols.swift in Sources */,
-				AED8B6A9255F47DD008F9769 /* AnsweredIssueResult.swift in Sources */,
 				AED8B680255DF3A7008F9769 /* Issue.swift in Sources */,
+				AE7207EB25993E0A00839D8D /* Headline.swift in Sources */,
 				AED8B6EA255F4831008F9769 /* AnswerIssueResponseXMLParser.swift in Sources */,
+				AE7207E625993E0700839D8D /* Ranking.swift in Sources */,
+				AE72080325993E1F00839D8D /* Freedoms.swift in Sources */,
 				AE853F4B2576F8AB0091503C /* Icon.swift in Sources */,
-				AED8B6AE255F47E2008F9769 /* Headline.swift in Sources */,
 				AEF9215025616D280048EAFC /* SmallExtensionView.swift in Sources */,
 				AED8B69A255F47C7008F9769 /* IssueProvider.swift in Sources */,
 				AEF9214A25616C7D0048EAFC /* MediumExtensionView.swift in Sources */,
@@ -965,7 +1010,6 @@
 				AED8B695255F47C4008F9769 /* APIIssueProvider.swift in Sources */,
 				AED8B69F255F47CE008F9769 /* FetchIssuesResult.swift in Sources */,
 				AED8B6E5255F482C008F9769 /* PingResponseXMLParser.swift in Sources */,
-				AED8B6BD255F47F4008F9769 /* Reclassify.swift in Sources */,
 				AED8B6B3255F47E9008F9769 /* AuthenticationContainer.swift in Sources */,
 				AE6D8347256473B500FA1CF7 /* InformationText.swift in Sources */,
 			);
@@ -1117,7 +1161,7 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
@@ -1145,7 +1189,7 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
@@ -1256,7 +1300,7 @@
 				CODE_SIGN_ENTITLEMENTS = IssuesExtension/IssuesExtensionExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				INFOPLIST_FILE = IssuesExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1281,7 +1325,7 @@
 				CODE_SIGN_ENTITLEMENTS = IssuesExtension/IssuesExtensionExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				INFOPLIST_FILE = IssuesExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

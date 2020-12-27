@@ -47,6 +47,6 @@ class NationDetailsXMLParserTests: XCTestCase {
         let parser = NationDetailsResponseXMLParser(RESPONSE.data(using: .utf8)!)
         parser.parse()
         
-        XCTAssertEqual(parser.nationDTO, NationDTO(flagURL: "https://www.nationstates.net/images/flags/Djibouti.png", name: "Elest Adra", fullName: "The Democratic Republic of Elest Adra", motto: "Strength Through Freedom", category: "Capitalizt", type: "Democratic Republic", freedom: .init(civilRights: "Superb", economy: "Very Strong", politicalFreedom: "Very Good")))
+        XCTAssertEqual(parser.nationDTO, NationDTO(flagURL: "https://www.nationstates.net/images/flags/Djibouti.png", name: "Elest Adra", fullName: "The Democratic Republic of Elest Adra", motto: "Strength Through Freedom", category: "Capitalizt", type: "Democratic Republic", freedoms: FreedomsDTO(civilRights: .init(score: 74.77, rank: 40212, regionRank: 785, text: "Superb"), economy: .init(score: 75.33, rank: 77058, regionRank: 3541, text: "Very Strong"), politicalFreedom: .init(score: 67.43, rank: 86713, regionRank: 2416, text: "Very Good"))))
     }
 }

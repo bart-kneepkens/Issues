@@ -11,13 +11,13 @@ struct NationView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel: NationViewModel
     
-    var nationNameView: some View {
+    private var nationNameView: some View {
         Section(header: Text("Nation Name")) {
             Text(self.viewModel.name)
         }
     }
     
-    var accountSection: some View {
+    private var accountSection: some View {
         Section(header: Text("Account")) {
             Button("Sign out \(self.viewModel.name)") {
                 self.presentationMode.wrappedValue.dismiss()
@@ -28,7 +28,7 @@ struct NationView: View {
         }
     }
     
-    @ViewBuilder func flagView(_ path: String) -> some View {
+    @ViewBuilder private func flagView(_ path: String) -> some View {
         let url = URL(string: path)
         HStack {
             Spacer()
@@ -39,7 +39,7 @@ struct NationView: View {
         }
     }
     
-    @ViewBuilder func nameView(fullName: String, name: String) -> some View {
+    @ViewBuilder private func nameView(fullName: String, name: String) -> some View {
         let prefix = fullName.replacingOccurrences(of: name, with: "")
         Group {
             Text(prefix)
@@ -47,40 +47,77 @@ struct NationView: View {
         }
     }
     
-    @ViewBuilder func categoryView(_ category: String) -> some View {
+    @ViewBuilder private func categoryView(_ category: String) -> some View {
         Text(category)
             .tracking(8)
             .opacity(0.8)
             .multilineTextAlignment(.center)
     }
     
-    @ViewBuilder func mottoView(_ motto: String) -> some View {
+    @ViewBuilder private func mottoView(_ motto: String) -> some View {
         Text("\"\(motto)\"").italic()
     }
     
-    @ViewBuilder func freedomView(_ freedom: Freedom) -> some View {
+    @ViewBuilder private func generalStatisticsView(_ populationMillions: Int, currency: String, animal: String) -> some View {
+        let populationString = populationMillions >= 1000 ? String(format: "%.3f billion", Double(populationMillions)/Double(1000)) : "\(populationMillions) million"
+        
+            HStack {
+                Text("Population")
+                Spacer()
+                Text(populationString).fontWeight(.medium)
+            }
+            
+            HStack {
+                Text("Currency")
+                Spacer()
+                Text(currency).fontWeight(.medium)
+            }
+            
+            HStack {
+                Text("Animal")
+                Spacer()
+                Text(animal).fontWeight(.medium)
+            }
+    }
+    
+    @ViewBuilder private func freedomView(_ freedoms: Freedoms) -> some View {
         Section {
             HStack {
                 Text("Civil Rights")
                 Spacer()
-                Text(freedom.civilRights)
+                ColoredFreedomText(freedom: freedoms.civilRights)
             }
             
             HStack {
                 Text("Economy")
                 Spacer()
-                Text(freedom.economy)
+                ColoredFreedomText(freedom: freedoms.economy)
             }
             
             HStack {
                 Text("Political Freedom")
                 Spacer()
-                Text(freedom.politicalFreedom)
+                ColoredFreedomText(freedom: freedoms.politicalFreedom)
             }
         }
     }
     
-    var listContents: some View {
+    @ViewBuilder private func regionView(_ regionName: String, influence: String) -> some View {
+        Section {
+            HStack {
+                Text("Region")
+                Spacer()
+                Text(regionName).fontWeight(.medium)
+            }
+            HStack {
+                Text("Influence")
+                Spacer()
+                Text(influence).fontWeight(.medium)
+            }
+        }
+    }
+    
+    private var listContents: some View {
         Group {
             if let nation = self.viewModel.nation {
                 VStack(alignment: .center, spacing: 10) {
@@ -88,9 +125,13 @@ struct NationView: View {
                     nameView(fullName: nation.fullName, name: nation.name)
                     categoryView(nation.category)
                     mottoView(nation.motto)
-                }
+                }.padding(.bottom)
                 
-                freedomView(nation.freedom)
+                generalStatisticsView(nation.populationMillions, currency: nation.currency, animal:nation.animal)
+                
+                freedomView(nation.freedoms)
+                
+                regionView(nation.regionName, influence: nation.regionInfluence)
             } else {
                 nationNameView
             }

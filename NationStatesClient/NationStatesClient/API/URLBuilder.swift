@@ -38,7 +38,19 @@ struct URLBuilder {
     
     static func nationDetailsUrl(for nationName: String) -> URL? {
         guard var components = URLComponents(url: baseUrl, resolvingAgainstBaseURL: true) else { return nil }
-        let shards: [Shard] = [.category, .flag, .motto, .type, .fullname, .name, .freedom, .census]
+        let shards: [Shard] = [.category,
+                               .flag,
+                               .motto,
+                               .type,
+                               .fullname,
+                               .name,
+                               .freedom,
+                               .census,
+                               .population,
+                               .region,
+                               .influence,
+                               .currency,
+                               .animal]
         
         components.queryItems = [
             API_VERSION_QUERY_ITEM,

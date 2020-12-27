@@ -64,10 +64,11 @@ struct SignInView: View {
                             ProgressView()
                         }
                     } else {
-                        Button("Sign In") {
+                        Button(action: {
                             viewModel.attemptSignIn()
-                        }
-                        .disabled(viewModel.signInButtonDisabled)
+                        }) {
+                            Text("Sign in").fontWeight(.medium)
+                        }.disabled(viewModel.signInButtonDisabled)
                     }
                 }
                 

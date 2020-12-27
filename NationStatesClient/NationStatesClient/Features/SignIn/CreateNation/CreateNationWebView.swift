@@ -101,6 +101,7 @@ struct CreateNationWebView : UIViewRepresentable {
     
     func makeUIView(context: Context) -> WKWebView  {
         webView.allowsLinkPreview = false
+        webView.customUserAgent = "Issues for NationStates (iPhone)" // Make sure to get the mobile website
         return webView
     }
     
