@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import StoreKit
 
 enum IssuesListType {
     case current, past
@@ -32,12 +33,13 @@ class IssuesViewModel: ObservableObject {
     @Published var selectedIssuesList: IssuesListType = .current
     
     private let persistentContainer: CompletedIssueProvider
-    private var provider: IssueProvider
+    private let provider: IssueProvider
     private let nationDetailsProvider: NationDetailsProvider
-    private var authenticationContainer: AuthenticationContainer
+    private let authenticationContainer: AuthenticationContainer
     private var cancellables: [Cancellable]? = []
     private var shouldFetchPublisher = PassthroughSubject<Bool, Never>()
     private var refreshIssuesTimerCancellable: Cancellable?
+    private var didJustAnswerAnIssue = false
     
     init(provider: IssueProvider, nationDetailsProvider: NationDetailsProvider, authenticationContainer: AuthenticationContainer) {
         self.provider = provider
@@ -50,6 +52,7 @@ class IssuesViewModel: ObservableObject {
                 .throttle(for: .seconds(25), scheduler: DispatchQueue.main, latest: false)
                 .sink { [weak self] shouldShowProgressIndicator  in
                     self?.fetchIssues(shouldShowProgressIndicator)
+                    self?.requestAppStoreReviewIfNeeded()
                 }
         )
         
@@ -92,6 +95,17 @@ class IssuesViewModel: ObservableObject {
         self.authenticationContainer.signOut()
     }
     
+    func requestAppStoreReviewIfNeeded() {
+        // Ask for a rating no earlier than after answering 4 issues, but only after just answering an issue.
+        if didJustAnswerAnIssue && self.completedIssues.count.isMultiple(of: 4) { // Fancy modulo aye?
+            if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                // It's OK to call this multiple times - it will not be presented in case the user already gave a rating.
+                SKStoreReviewController.requestReview(in: scene)
+                didJustAnswerAnIssue = false
+            }
+        }
+    }
+    
     private func fetchIssues(_ showProgress: Bool) {
         guard !self.authenticationContainer.nationName.isEmpty else { return } // TODO: put this check at another level - so no outstanding requests can be done after sign out
         
@@ -126,9 +140,10 @@ class IssuesViewModel: ObservableObject {
 
 extension IssuesViewModel: IssueContainer {
     func didCompleteIssue(_ completedIssue: CompletedIssue) {
-        self.issues = self.issues.filter({ $0.id != completedIssue.issue.id }) // Remove from current issues
+        self.issues = self.issues.filter({ $0.id != completedIssue.issue.id }) // Remove from currently visible issues
         self.completedIssues.append(completedIssue)
         self.persistentContainer.storeCompletedIssue(completedIssue)
+        self.didJustAnswerAnIssue = true
         self.objectWillChange.send()
     }
 }

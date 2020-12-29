@@ -9,13 +9,13 @@ import Foundation
 import Combine
 import WidgetKit
 
-enum ContentViewModelState {
-    case signingIn
-    case signedIn
-    case initial
-}
-
 class ContentViewModel: ObservableObject {
+    enum ContentViewModelState {
+        case signingIn
+        case signedIn
+        case initial
+    }
+    
     @Published var state: ContentViewModelState = .initial
     @Published var error: APIError?
     

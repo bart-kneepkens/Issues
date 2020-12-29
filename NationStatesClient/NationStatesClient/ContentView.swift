@@ -12,9 +12,9 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            if viewModel.state == ContentViewModelState.initial {
+            if viewModel.state == ContentViewModel.ContentViewModelState.initial {
                 SignInView(viewModel: self.viewModel.signInViewModel)
-            } else if viewModel.state == ContentViewModelState.signingIn {
+            } else if viewModel.state == ContentViewModel.ContentViewModelState.signingIn {
                 SignInProgressView(error: viewModel.error)
             } else {
                 IssuesView(viewModel: self.viewModel.issuesViewModel)

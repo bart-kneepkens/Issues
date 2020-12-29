@@ -61,12 +61,3 @@ struct IssueDetailView: View {
             })
     }
 }
-
-//struct IssueDetailView_Previews: PreviewProvider {
-//    static var viewModel = IssueDetailViewModel(.filler, provider: MaterializedProvider())
-//    static var previews: some View {
-//        NavigationView {
-//            IssueDetailView(viewModel: viewModel)
-//        }
-//    }
-//}
