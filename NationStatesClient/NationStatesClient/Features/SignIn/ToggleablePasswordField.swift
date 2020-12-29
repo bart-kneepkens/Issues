@@ -15,6 +15,8 @@ struct ToggleablePasswordField: View {
         HStack {
             if shouldRevealPassword {
                 TextField("Password", text: $text)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
             } else {
                 SecureField("Password", text: $text)
             }

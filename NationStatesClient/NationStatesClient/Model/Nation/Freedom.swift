@@ -16,8 +16,8 @@ struct FreedomDTO: Equatable {
 
 struct Freedom {
     let score: Double
-    let rank: Int
-    let regionRank: Int
+    let rank: Int?
+    let regionRank: Int?
     let text: String
 }
 
@@ -25,7 +25,7 @@ extension Freedom: DTOInitializable {
     typealias DTOEquivalent = FreedomDTO
     
     init?(from dto: FreedomDTO) {
-        guard let score = dto.score, let rank = dto.rank, let regionRank = dto.regionRank, let text = dto.text else { return nil }
-        self.init(score: score, rank: rank, regionRank: regionRank, text: text)
+        guard let score = dto.score, let text = dto.text else { return nil }
+        self.init(score: score, rank: dto.rank, regionRank: dto.regionRank, text: text)
     }
 }

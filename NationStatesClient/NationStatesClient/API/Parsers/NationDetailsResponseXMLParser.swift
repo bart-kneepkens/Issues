@@ -41,7 +41,8 @@ extension NationDetailsResponseXMLParser: XMLParserDelegate {
         case "TYPE": self.nationDTO.type = foundCharacters
         case "NAME": self.nationDTO.name = foundCharacters
         case "FULLNAME": self.nationDTO.fullName = foundCharacters
-        case "MOTTO": self.nationDTO.motto = foundCharacters
+            // Motto can contain unicode code point values, so use a transform.
+        case "MOTTO": self.nationDTO.motto = foundCharacters.applyingTransform(.HexAny, reverse: false) ?? foundCharacters
         case "CATEGORY": self.nationDTO.category = foundCharacters
         case "FLAG": self.nationDTO.flagURL = foundCharacters
         case "POPULATION": self.nationDTO.populationMillions = Int(foundCharacters)

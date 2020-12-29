@@ -49,4 +49,17 @@ class NationDetailsXMLParserTests: XCTestCase {
         
         XCTAssertEqual(parser.nationDTO, NationDTO(flagURL: "https://www.nationstates.net/images/flags/Djibouti.png", name: "Elest Adra", fullName: "The Democratic Republic of Elest Adra", motto: "Strength Through Freedom", category: "Capitalizt", type: "Democratic Republic", freedoms: FreedomsDTO(civilRights: .init(score: 74.77, rank: 40212, regionRank: 785, text: "Superb"), economy: .init(score: 75.33, rank: 77058, regionRank: 3541, text: "Very Strong"), politicalFreedom: .init(score: 67.43, rank: 86713, regionRank: 2416, text: "Very Good"))))
     }
+    
+    let RESPONSE_UNICODE_MOTTO = """
+    <NATION id="elest_adra">
+    <MOTTO>eat the rich &#xB0;&#x26;#726;&#x26;#10023;&#x26;#9693;(&#x26;#8304;&#x26;#9663;&#x26;#8304;)&#x26;#9692;&#x26;#10023;&#x26;#726;&#xB0;</MOTTO>
+    </NATION>
+    """
+    
+    func testUnicodeMotto() {
+        let parser = NationDetailsResponseXMLParser(RESPONSE_UNICODE_MOTTO.data(using: .utf8)!)
+        parser.parse()
+        
+        XCTAssertEqual(parser.nationDTO.motto, "eat the rich °˖✧◝(⁰▿⁰)◜✧˖°")
+    }
 }

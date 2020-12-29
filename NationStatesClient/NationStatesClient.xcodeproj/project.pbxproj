@@ -72,6 +72,8 @@
 		AE790DE9256DA8EA00051FD4 /* NationDetailsResponseXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0FEBE6256D9648000A4B57 /* NationDetailsResponseXMLParser.swift */; };
 		AE790DF3256DC6E700051FD4 /* MockedNationDetailsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE790DF2256DC6E700051FD4 /* MockedNationDetailsProvider.swift */; };
 		AE790DF9256EDC9D00051FD4 /* BasicImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE790DF8256EDC9D00051FD4 /* BasicImageCache.swift */; };
+		AE79E351259B589800004D41 /* StringTransform+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE79E350259B589800004D41 /* StringTransform+.swift */; };
+		AE79E352259B589800004D41 /* StringTransform+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE79E350259B589800004D41 /* StringTransform+.swift */; };
 		AE853F452576F82B0091503C /* NationIssuesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE853F442576F82B0091503C /* NationIssuesView.swift */; };
 		AE853F4B2576F8AB0091503C /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE853F4A2576F8AB0091503C /* Icon.swift */; };
 		AE8764A5252E6F2900EFE031 /* NationStatesClientApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8764A4252E6F2900EFE031 /* NationStatesClientApp.swift */; };
@@ -231,6 +233,7 @@
 		AE790DDE256DA7B300051FD4 /* APINationDetailsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APINationDetailsProvider.swift; sourceTree = "<group>"; };
 		AE790DF2256DC6E700051FD4 /* MockedNationDetailsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedNationDetailsProvider.swift; sourceTree = "<group>"; };
 		AE790DF8256EDC9D00051FD4 /* BasicImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicImageCache.swift; sourceTree = "<group>"; };
+		AE79E350259B589800004D41 /* StringTransform+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringTransform+.swift"; sourceTree = "<group>"; };
 		AE853F442576F82B0091503C /* NationIssuesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationIssuesView.swift; sourceTree = "<group>"; };
 		AE853F4A2576F8AB0091503C /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		AE8764A1252E6F2900EFE031 /* NationStatesClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NationStatesClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -326,8 +329,6 @@
 		AE15A6CF253107AF004478C3 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				AE95F1202538E3BC00860D25 /* CachedRemoteImage.swift */,
-				AE8981AE2530FD8D00D62766 /* AuthenticationContainer.swift */,
 				AE790DD7256DA74800051FD4 /* NationDetailsProvider */,
 				AE21042D254A37E3005AC68C /* AuthenticationProvider */,
 				AE5BDB9A2548BDEE00F3954D /* IssueProvider */,
@@ -339,6 +340,8 @@
 				AE5EF20F2553342A0079389F /* APIRequest.swift */,
 				AE790DF8256EDC9D00051FD4 /* BasicImageCache.swift */,
 				AE62CAC425926E1D00DD8D46 /* NetworkSession.swift */,
+				AE95F1202538E3BC00860D25 /* CachedRemoteImage.swift */,
+				AE8981AE2530FD8D00D62766 /* AuthenticationContainer.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 				AEFF41E72535033600206676 /* PingResponseXMLParser.swift */,
 				AE15A6E625321084004478C3 /* IssuesResponseXMLParser.swift */,
 				AE0FEBE6256D9648000A4B57 /* NationDetailsResponseXMLParser.swift */,
+				AE79E350259B589800004D41 /* StringTransform+.swift */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -894,6 +898,7 @@
 				AE5BDB9C2548BE0400F3954D /* IssueProvider.swift in Sources */,
 				AE8764DD252FA92300EFE031 /* IssuesView.swift in Sources */,
 				AE115F902559DE1700EB1932 /* MO+Protocols.swift in Sources */,
+				AE79E351259B589800004D41 /* StringTransform+.swift in Sources */,
 				AE115F9A2559EC4700EB1932 /* Ranking.swift in Sources */,
 				AE32F9702544D5600037954D /* NationView.swift in Sources */,
 				AE790DD9256DA75A00051FD4 /* NationDetailsProvider.swift in Sources */,
@@ -980,6 +985,7 @@
 				AED8B6CC255F4807008F9769 /* CensusScale.swift in Sources */,
 				AE6E69F5258AB26B009C81B5 /* APINationDetailsProvider.swift in Sources */,
 				AE790DE4256DA8DF00051FD4 /* Nation.swift in Sources */,
+				AE79E352259B589800004D41 /* StringTransform+.swift in Sources */,
 				AED8B6D1255F480E008F9769 /* KeychainSecretsStorage.swift in Sources */,
 				AE7207FE25993E1C00839D8D /* Freedom.swift in Sources */,
 				AE6E69F0258AB265009C81B5 /* NationDetailsProvider.swift in Sources */,
@@ -1161,7 +1167,7 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
@@ -1189,7 +1195,7 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
@@ -1300,7 +1306,7 @@
 				CODE_SIGN_ENTITLEMENTS = IssuesExtension/IssuesExtensionExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				INFOPLIST_FILE = IssuesExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1325,7 +1331,7 @@
 				CODE_SIGN_ENTITLEMENTS = IssuesExtension/IssuesExtensionExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				INFOPLIST_FILE = IssuesExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
