@@ -78,6 +78,10 @@ extension NationDetailsResponseXMLParser: XMLParserDelegate {
             case 2: self.politicalFreedomDTO.regionRank = regionRankValue
             default: break
             }
+        case "GAVOTE":
+            self.nationDTO.generalAssemblyVote = VoteOption.fromAPIValue(foundCharacters)
+        case "SCVOTE":
+            self.nationDTO.securityCouncilVote = VoteOption.fromAPIValue(foundCharacters)
         default: break
         }
         

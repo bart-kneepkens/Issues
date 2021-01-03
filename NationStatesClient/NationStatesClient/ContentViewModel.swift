@@ -16,12 +16,21 @@ class ContentViewModel: ObservableObject {
         case initial
     }
     
-    @Published var state: ContentViewModelState = .initial
+    @Published var state: ContentViewModelState = .initial {
+        didSet {
+            if state == .signedIn {
+                WidgetCenter.shared.reloadAllTimelines()
+                self.nationDetailsProvider.fetchDetails()
+                self.resolutionProvider.fetchResolutions()
+            }
+        }
+    }
     @Published var error: APIError?
     
     private let issueProvider: IssueProvider
     private let authenticationProvider: AuthenticationProvider
     private let nationDetailsProvider: NationDetailsProvider
+    private let resolutionProvider: ResolutionProvider
     
     private let authenticationContainer: AuthenticationContainer
     private var cancellables: [Cancellable]? = []
@@ -30,8 +39,9 @@ class ContentViewModel: ObservableObject {
         self.authenticationContainer = AuthenticationContainer()
         self.issueProvider = APIIssueProvider(container: self.authenticationContainer)
         self.authenticationProvider = APIAuthenticationProvider(authenticationContainer: self.authenticationContainer)
-        
+
         self.nationDetailsProvider = APINationDetailsProvider(container: self.authenticationContainer)
+        self.resolutionProvider = APIResolutionProvider(authenticationContainer: self.authenticationContainer)
         
         self.cancellables?.append(self.authenticationContainer.$hasSignedOut
                                     .receive(on: DispatchQueue.main)
@@ -54,8 +64,6 @@ class ContentViewModel: ObservableObject {
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { completion in
                 switch completion {
-                case .finished:
-                    WidgetCenter.shared.reloadAllTimelines()    
                 case .failure(let error):
                     switch error {
                     case .notConnected: fallthrough
@@ -69,11 +77,11 @@ class ContentViewModel: ObservableObject {
                     default:
                         self.state = .initial
                     }
+                default: break
                 }
             }, receiveValue: { success in
                 if success {
                     self.state = .signedIn
-                    self.nationDetailsProvider.fetchDetails()
                 }
             })
         )
@@ -83,12 +91,21 @@ class ContentViewModel: ObservableObject {
 
 extension ContentViewModel {
     var issuesViewModel: IssuesViewModel {
-        return IssuesViewModel(provider: self.issueProvider, nationDetailsProvider: self.nationDetailsProvider, authenticationContainer: self.authenticationContainer)
+        return IssuesViewModel(provider: self.issueProvider,
+                               nationDetailsProvider: self.nationDetailsProvider,
+                               resolutionProvider: self.resolutionProvider,
+                               authenticationContainer: self.authenticationContainer)
     }
     
     var signInViewModel: SignInViewModel {
-        return SignInViewModel(issueProvider: self.issueProvider,
-                               authenticationProvider: self.authenticationProvider,
-                               authenticationContainer: self.authenticationContainer)
+        return SignInViewModel(authenticationProvider: self.authenticationProvider,
+                               authenticationContainer: self.authenticationContainer,
+                               contentViewModel: self)
+    }
+    
+    var worldAssemblyViewModel: WorldAssemblyViewModel {
+        return .init(authenticationContainer: self.authenticationContainer,
+                     resolutionProvider: self.resolutionProvider,
+                     nationDetailsProvider: self.nationDetailsProvider)
     }
 }

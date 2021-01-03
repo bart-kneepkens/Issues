@@ -50,7 +50,9 @@ struct URLBuilder {
                                .region,
                                .influence,
                                .currency,
-                               .animal]
+                               .animal,
+                               .gavote,
+                               .scvote]
         
         components.queryItems = [
             API_VERSION_QUERY_ITEM,
@@ -78,5 +80,29 @@ struct URLBuilder {
     
     static func imageUrl(for imageName: String) -> URL? {
         return URL(string: "https://www.nationstates.net/images/newspaper/\(imageName)-1.jpg")
+    }
+}
+
+extension URLBuilder {
+    // API URLs in form of { base }?wa={councilId}&q={shards}
+    static func worldAssemblyURL(for worldAssembly: WorldAssembly, with shards: [WorldAssemblyShard], resolution: Int? = nil) -> URL? {
+        guard var components = URLComponents(url: baseUrl, resolvingAgainstBaseURL: true) else { return nil }
+        
+        components.queryItems = [
+            API_VERSION_QUERY_ITEM,
+            URLQueryItem(name: "wa", value: worldAssembly.councilId),
+            URLQueryItem(name: "q", value: shards.map({ $0.rawValue }).joined(separator: "+")),
+        ]
+        
+        return components.url
+    }
+    
+    // Form URLs - the template significantly reduces response size
+    static var generalAssemblyFormURL: URL? {
+        URL(string: "https://www.nationstates.net/page=ga/template-overall=none")
+    }
+    
+    static var securityCouncilFormURL: URL? {
+        URL(string: "https://www.nationstates.net/page=sc/template-overall=none")
     }
 }

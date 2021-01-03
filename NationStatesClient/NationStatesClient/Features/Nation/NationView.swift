@@ -152,9 +152,7 @@ struct NationView: View {
 #if DEBUG
 struct NationView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            NationView(viewModel: .init(nation: .filler, name: "Le Nation "))
-        }
+        NationView(viewModel: .init(nation: .filler, name: "Le Nation "))
     }
 }
 #endif

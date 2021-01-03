@@ -20,6 +20,9 @@ struct NationDTO: Equatable {
     var regionName: String?
     var regionInfluence: String?
     var animal: String?
+    
+    var generalAssemblyVote: VoteOption?
+    var securityCouncilVote: VoteOption?
 }
 
 struct Nation {
@@ -35,6 +38,9 @@ struct Nation {
     let regionName: String
     let regionInfluence: String
     let animal: String
+    
+    let generalAssemblyVote: VoteOption?
+    let securityCouncilVote: VoteOption?
 }
 
 extension Nation: DTOInitializable {
@@ -55,7 +61,7 @@ extension Nation: DTOInitializable {
               let regionInfluence = dto.regionInfluence,
               let animal = dto.animal
               else { return nil }
-        self.init(flagURL: flagURL, name: name, fullName: fullName, motto: motto, category: category, type: type, freedoms: freedoms, populationMillions: populationMillions, currency: currency, regionName: regionName, regionInfluence: regionInfluence, animal: animal)
+        self.init(flagURL: flagURL, name: name, fullName: fullName, motto: motto, category: category, type: type, freedoms: freedoms, populationMillions: populationMillions, currency: currency, regionName: regionName, regionInfluence: regionInfluence, animal: animal, generalAssemblyVote: dto.generalAssemblyVote, securityCouncilVote: dto.securityCouncilVote )
     }
 }
 
@@ -74,7 +80,9 @@ extension Nation {
                                currency: "eurodollar",
                                regionName: "Greater Night City",
                                regionInfluence: "Nihil",
-                               animal: "Turtle")
+                               animal: "Turtle",
+                               generalAssemblyVote: nil,
+                               securityCouncilVote: nil)
 }
 #endif
 

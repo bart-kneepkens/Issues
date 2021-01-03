@@ -91,20 +91,13 @@ struct SignInView: View {
                     }
                 }
             }
-
-            NavigationLink(
-                destination: IssuesView(viewModel: viewModel.issuesViewModel()).navigationBarBackButtonHidden(true),
-                isActive: $viewModel.authenticationSuccessful,
-                label: {
-                    EmptyView()
-                })
         }
     }
 }
 
 #if DEBUG
 struct SignInView_Previews: PreviewProvider {
-    static var viewModel = SignInViewModel(issueProvider: MockedIssueProvider(), authenticationProvider: MockedAuthenticationProvider(success: true), authenticationContainer: .init())
+    static var viewModel = SignInViewModel(authenticationProvider: MockedAuthenticationProvider(success: true), authenticationContainer: .init(), contentViewModel: ContentViewModel())
     static var previews: some View {
         SignInView(viewModel: viewModel)
     }

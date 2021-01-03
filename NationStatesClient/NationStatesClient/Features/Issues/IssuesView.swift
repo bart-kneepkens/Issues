@@ -36,7 +36,7 @@ struct IssuesView: View {
                         }
                     }
                 } else if let result = self.viewModel.fetchIssuesResult, self.viewModel.issues.count != 5 {
-                        Text("Next issue \(result.timeLeftForNextIssue)")
+                    Text("Next issue \(result.timeLeftForNextIssue)")
                 }
             } else {
                 Text("Completed issues appear here as you pass legislations. Keep in mind that issues completed in other apps, or on the NationStates website, do not appear here.")
@@ -92,8 +92,8 @@ struct IssuesView: View {
 #if DEBUG
 struct IssuesView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            IssuesView(viewModel: IssuesViewModel(provider: MockedIssueProvider(), nationDetailsProvider: MockedNationDetailsProvider(), authenticationContainer: .init()))
+        TabView {
+            IssuesView(viewModel: IssuesViewModel(provider: MockedIssueProvider(), nationDetailsProvider: MockedNationDetailsProvider(), resolutionProvider: MockedResolutionProvider(), authenticationContainer: .init()))
         }
     }
 }

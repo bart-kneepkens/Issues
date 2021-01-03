@@ -10,17 +10,52 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var viewModel: ContentViewModel
     
-    var body: some View {
+    private enum TabBarItem {
+        case issues
+        case worldAssembly
+        
+        var text: String {
+            switch self {
+            case .issues: return "Issues"
+            case .worldAssembly: return "World Assembly"
+            }
+        }
+            
+        var iconName: String {
+            switch self {
+            case .issues: return "newspaper"
+            case .worldAssembly: return "camera.filters"
+            }
+        }
+    }
+    
+    private func tabBarNavigationView(for item: TabBarItem) -> some View {
         NavigationView {
+            switch item {
+                case .issues: IssuesView(viewModel: self.viewModel.issuesViewModel)
+                case .worldAssembly: WorldAssemblyView(viewModel: self.viewModel.worldAssemblyViewModel)
+            }
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .tabItem {
+            Text(item.text)
+            Image(systemName: item.iconName)
+        }
+    }
+    
+    var body: some View {
+        Group {
             if viewModel.state == ContentViewModel.ContentViewModelState.initial {
                 SignInView(viewModel: self.viewModel.signInViewModel)
             } else if viewModel.state == ContentViewModel.ContentViewModelState.signingIn {
                 SignInProgressView(error: viewModel.error)
             } else {
-                IssuesView(viewModel: self.viewModel.issuesViewModel)
+                TabView {
+                    tabBarNavigationView(for: .issues)
+                    tabBarNavigationView(for: .worldAssembly)
+                }
             }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
         .onAppear {
             self.viewModel.onAppear()
         }

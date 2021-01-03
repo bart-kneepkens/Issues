@@ -11,15 +11,13 @@ import WidgetKit
 
 class SignInViewModel: ObservableObject {
     private var authenticationProvider: AuthenticationProvider
-    private let nationDetailsProvider: NationDetailsProvider
     private var authenticationContainer: AuthenticationContainer
-    private var issueProvider: IssueProvider
+    private var contentViewModel: ContentViewModel
     
-    init(issueProvider: IssueProvider, authenticationProvider: AuthenticationProvider, authenticationContainer: AuthenticationContainer) {
-        self.issueProvider = issueProvider
+    init(authenticationProvider: AuthenticationProvider, authenticationContainer: AuthenticationContainer, contentViewModel: ContentViewModel) {
         self.authenticationProvider = authenticationProvider
         self.authenticationContainer = authenticationContainer
-        self.nationDetailsProvider = APINationDetailsProvider(container: authenticationContainer)
+        self.contentViewModel = contentViewModel
     }
     
     @Published var isSigningIn = false
@@ -52,19 +50,12 @@ class SignInViewModel: ObservableObject {
                 self.objectWillChange.send()
             }, receiveValue: { success in
                 if success {
-                    self.authenticationSuccessful = true
-                    self.objectWillChange.send()
-                    self.nationDetailsProvider.fetchDetails()
-                    WidgetCenter.shared.reloadAllTimelines()
+                    self.contentViewModel.state = .signedIn
                 }
             })
     }
     
     var signInButtonDisabled: Bool {
         nationName.isEmpty || password.count < 2 // Yes, this is really the only password requirement on NS
-    }
-    
-    func issuesViewModel() -> IssuesViewModel {
-        return .init(provider: self.issueProvider, nationDetailsProvider: self.nationDetailsProvider, authenticationContainer: self.authenticationContainer)
     }
 }

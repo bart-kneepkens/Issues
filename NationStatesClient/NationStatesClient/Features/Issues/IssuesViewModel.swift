@@ -35,16 +35,19 @@ class IssuesViewModel: ObservableObject {
     private let persistentContainer: CompletedIssueProvider
     private let provider: IssueProvider
     private let nationDetailsProvider: NationDetailsProvider
+    private let resolutionProvider: ResolutionProvider
     private let authenticationContainer: AuthenticationContainer
+    
     private var cancellables: [Cancellable]? = []
     private var shouldFetchPublisher = PassthroughSubject<Bool, Never>()
     private var refreshIssuesTimerCancellable: Cancellable?
     private var didJustAnswerAnIssue = false
     
-    init(provider: IssueProvider, nationDetailsProvider: NationDetailsProvider, authenticationContainer: AuthenticationContainer) {
+    init(provider: IssueProvider, nationDetailsProvider: NationDetailsProvider, resolutionProvider: ResolutionProvider, authenticationContainer: AuthenticationContainer) {
         self.provider = provider
         self.authenticationContainer = authenticationContainer
         self.nationDetailsProvider = nationDetailsProvider
+        self.resolutionProvider = resolutionProvider
         self.persistentContainer = PersisentCompletedIssueProvider(nationName: authenticationContainer.nationName)
         
         self.cancellables?.append(
