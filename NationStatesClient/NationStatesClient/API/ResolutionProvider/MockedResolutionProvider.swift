@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+#if DEBUG
 class MockedResolutionProvider: ResolutionProvider {
     var generalAssembly: Resolution? = .filler
     
@@ -23,3 +24,4 @@ class MockedResolutionProvider: ResolutionProvider {
             .eraseToAnyPublisher()
     }
 }
+#endif

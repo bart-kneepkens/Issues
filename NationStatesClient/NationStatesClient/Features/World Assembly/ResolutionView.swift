@@ -12,35 +12,36 @@ struct ResolutionView: View {
     let resolution: Resolution
     @State private var showingResolutionTextSheet = false
     
+    var timeLeftToVote: String? {
+        if let time = resolution.timeLeftToVote {
+            let formatter = DateComponentsFormatter()
+            formatter.allowedUnits = [.day, .hour, .minute]
+            formatter.unitsStyle = .full
+            formatter.maximumUnitCount = 1
+            
+            return formatter.string(from: time)
+        }
+        return nil
+    }
+    
     @ViewBuilder private var statisticsView: some View {
-        HStack {
-            Text("Category:")
-            Spacer()
-            Text(resolution.category).fontWeight(.medium)
-        }
-        if resolution.option != "0" {
-            HStack {
-                Text("Area of Effect:")
-                Spacer()
-                Text(resolution.option).fontWeight(.medium)
-            }
-        }
-        HStack {
-            Text("Proposed by:")
-            Spacer()
-            Text(resolution.proposedBy).fontWeight(.medium)
+        PlainListRow(name: "Category", value: resolution.category)
+        PlainListRow(name: "Proposed by", value: resolution.proposedBy)
+        
+        if let timeLeft = self.timeLeftToVote {
+            PlainListRow(name: "Voting ends in", value: timeLeft)
         }
     }
     
     var body: some View {
         Section {
-            Text(resolution.name)
-                .font(.system(size: 24, weight: .bold))
+            Text(resolution.name).font(.title).bold().padding(.vertical)
+            statisticsView
         }
         
         Section(header: VotesDistributionChart(votesFor: resolution.totalVotesFor, votesAgainst: resolution.totalVotesAgainst)
                     .frame(height: 72)) {
-            statisticsView
+            
         }
         
         Section {

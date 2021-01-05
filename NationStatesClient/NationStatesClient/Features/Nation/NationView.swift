@@ -61,59 +61,24 @@ struct NationView: View {
     @ViewBuilder private func generalStatisticsView(_ populationMillions: Int, currency: String, animal: String) -> some View {
         let populationString = populationMillions >= 1000 ? String(format: "%.3f billion", Double(populationMillions)/Double(1000)) : "\(populationMillions) million"
         
-            HStack {
-                Text("Population")
-                Spacer()
-                Text(populationString).fontWeight(.medium)
-            }
-            
-            HStack {
-                Text("Currency")
-                Spacer()
-                Text(currency).fontWeight(.medium)
-            }
-            
-            HStack {
-                Text("Animal")
-                Spacer()
-                Text(animal).fontWeight(.medium)
-            }
+        PlainListRow(name: "Population", value: populationString)
+        PlainListRow(name: "Currency", value: currency)
+        PlainListRow(name: "Animal", value: animal)
+        
     }
     
     @ViewBuilder private func freedomView(_ freedoms: Freedoms) -> some View {
         Section {
-            HStack {
-                Text("Civil Rights")
-                Spacer()
-                ColoredFreedomText(freedom: freedoms.civilRights)
-            }
-            
-            HStack {
-                Text("Economy")
-                Spacer()
-                ColoredFreedomText(freedom: freedoms.economy)
-            }
-            
-            HStack {
-                Text("Political Freedom")
-                Spacer()
-                ColoredFreedomText(freedom: freedoms.politicalFreedom)
-            }
+            PlainListRow(name: "Civil Rights", value: AnyView(ColoredFreedomText(freedom: freedoms.civilRights)))
+            PlainListRow(name: "Economy", value: AnyView(ColoredFreedomText(freedom: freedoms.economy)))
+            PlainListRow(name: "Political Freedom", value: AnyView(ColoredFreedomText(freedom: freedoms.politicalFreedom)))
         }
     }
     
     @ViewBuilder private func regionView(_ regionName: String, influence: String) -> some View {
         Section {
-            HStack {
-                Text("Region")
-                Spacer()
-                Text(regionName).fontWeight(.medium)
-            }
-            HStack {
-                Text("Influence")
-                Spacer()
-                Text(influence).fontWeight(.medium)
-            }
+            PlainListRow(name: "Region", value: regionName)
+            PlainListRow(name: "Influence", value: influence)
         }
     }
     

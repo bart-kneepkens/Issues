@@ -11,7 +11,7 @@ struct VotesDistributionChart: View {
     let votesFor: Int
     let votesAgainst: Int
     
-    private let minimumBarWidth = CGFloat(40)
+    private let minimumBarWidth = CGFloat(60)
     
     private var totalVotes: Int {
         votesFor + votesAgainst
@@ -65,7 +65,7 @@ struct VotesDistributionChart: View {
 
 struct VotesDistributionChart_Previews: PreviewProvider {
     static var previews: some View {
-        VotesDistributionChart(votesFor: 2, votesAgainst: 4)
+        VotesDistributionChart(votesFor: 1437000, votesAgainst: 11843)
             .frame(height: 100)
     }
 }

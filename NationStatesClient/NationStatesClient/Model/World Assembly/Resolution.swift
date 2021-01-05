@@ -24,10 +24,23 @@ struct Resolution {
     var information: ResolutionInformation?
 }
 
+extension Resolution {
+    var timeLeftToVote: TimeInterval? {
+        let voteEndsAt = self.promoted.addingTimeInterval(96 * 60 * 60) // Votes end in 4 days after being promoted
+        let differenceInTime = Date().distance(to: voteEndsAt)
+        
+        if differenceInTime > 0 {
+            return differenceInTime
+        }
+        
+        return nil
+    }
+}
+
 extension Resolution: DTOInitializable {
     typealias DTOEquivalent = ResolutionDTO
     init?(from dto: ResolutionDTO) {
-        guard let category = dto.category, let created = dto.created, let text = dto.text, let id = dto.id, let name = dto.name, let option = dto.option, let promoted = dto.promoted, let proposedBy = dto.proposedBy, let totalNationsAgainst = dto.totalNationsAgainst, let totalNationsFor = dto.totalNationsFor, let totalVotesAgainst = dto.totalVotesAgainst, let totalVotesFor = dto.totalNationsFor else { return nil }
+        guard let category = dto.category, let created = dto.created, let text = dto.text, let id = dto.id, let name = dto.name, let option = dto.option, let promoted = dto.promoted, let proposedBy = dto.proposedBy, let totalNationsAgainst = dto.totalNationsAgainst, let totalNationsFor = dto.totalNationsFor, let totalVotesAgainst = dto.totalVotesAgainst, let totalVotesFor = dto.totalVotesFor else { return nil }
         
         self.init(category: category, created: created, text: text, id: id, name: name, option: option, promoted: promoted, proposedBy: proposedBy, totalNationsAgainst: totalNationsAgainst, totalNationsFor: totalNationsFor, totalVotesAgainst: totalVotesAgainst, totalVotesFor: totalVotesFor, information: nil)
     }

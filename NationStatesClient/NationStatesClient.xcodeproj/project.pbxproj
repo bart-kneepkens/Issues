@@ -65,6 +65,7 @@
 		AE62CAA62592640A00DD8D46 /* MockedSecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE62CAA52592640A00DD8D46 /* MockedSecureStorage.swift */; };
 		AE62CAC525926E1D00DD8D46 /* NetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE62CAC425926E1D00DD8D46 /* NetworkSession.swift */; };
 		AE62CAC625926E1D00DD8D46 /* NetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE62CAC425926E1D00DD8D46 /* NetworkSession.swift */; };
+		AE669EFC25A528FD007725D0 /* PlainListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE669EFB25A528FD007725D0 /* PlainListRow.swift */; };
 		AE698AA725818637003C881D /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = AE698AA625818637003C881D /* KeychainAccess */; };
 		AE6B13C42545C29800606A6A /* AnsweredIssueResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6B13C32545C29800606A6A /* AnsweredIssueResult.swift */; };
 		AE6B13CC2545D6AB00606A6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6B13CB2545D6AB00606A6A /* AppDelegate.swift */; };
@@ -257,6 +258,7 @@
 		AE616F16254F0D5200C9107C /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		AE62CAA52592640A00DD8D46 /* MockedSecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedSecureStorage.swift; sourceTree = "<group>"; };
 		AE62CAC425926E1D00DD8D46 /* NetworkSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSession.swift; sourceTree = "<group>"; };
+		AE669EFB25A528FD007725D0 /* PlainListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainListRow.swift; sourceTree = "<group>"; };
 		AE6B13C32545C29800606A6A /* AnsweredIssueResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnsweredIssueResult.swift; sourceTree = "<group>"; };
 		AE6B13CB2545D6AB00606A6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AE6B13D2254601B600606A6A /* IssuesResponseXMLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssuesResponseXMLParserTests.swift; sourceTree = "<group>"; };
@@ -527,8 +529,9 @@
 		AE7207B825992DC000839D8D /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				AE7207B925992DD700839D8D /* UIColor+.swift */,
 				AEC23761259CA2DA006F2CA8 /* HTMLTextWebView.swift */,
+				AE7207B925992DD700839D8D /* UIColor+.swift */,
+				AE669EFB25A528FD007725D0 /* PlainListRow.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1002,6 +1005,7 @@
 				AEFF41FD2536589A00206676 /* URLRequest+Extras.swift in Sources */,
 				AE2EDE842558212F00042668 /* CompletedIssuesModel.xcdatamodeld in Sources */,
 				AE95AAA82590276000607C1B /* ToggleablePasswordField.swift in Sources */,
+				AE669EFC25A528FD007725D0 /* PlainListRow.swift in Sources */,
 				AE127F9A254F2A96004445E5 /* NationViewModel.swift in Sources */,
 				AE790DF9256EDC9D00051FD4 /* BasicImageCache.swift in Sources */,
 				AEFCC53C2550BCC1002E754F /* FetchIssuesResult.swift in Sources */,
@@ -1306,7 +1310,7 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
@@ -1316,7 +1320,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "bart-kneepkens.NationStatesClient";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1334,7 +1338,7 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
@@ -1344,7 +1348,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "bart-kneepkens.NationStatesClient";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1445,7 +1449,7 @@
 				CODE_SIGN_ENTITLEMENTS = IssuesExtension/IssuesExtensionExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				INFOPLIST_FILE = IssuesExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1453,6 +1457,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "bart-kneepkens.NationStatesClient.IssuesExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1470,7 +1475,7 @@
 				CODE_SIGN_ENTITLEMENTS = IssuesExtension/IssuesExtensionExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				INFOPLIST_FILE = IssuesExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1478,6 +1483,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "bart-kneepkens.NationStatesClient.IssuesExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
