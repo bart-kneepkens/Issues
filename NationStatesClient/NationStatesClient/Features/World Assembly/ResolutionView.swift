@@ -45,22 +45,23 @@ struct ResolutionView: View {
         }
         
         Section {
-            Button(action: {
-                self.showingResolutionTextSheet.toggle()
-            }) {
-                HStack {
-                    Image(systemName: "book")
-                    Text("Read Description")
-                }
-            }.sheet(isPresented: $showingResolutionTextSheet, content: {
-                if let information = resolution.information, let htmlText = information.textHTML {
+            if let information = resolution.information, let htmlText = information.textHTML {
+                Button(action: {
+                    self.showingResolutionTextSheet.toggle()
+                }) {
+                    HStack {
+                        Image(systemName: "book")
+                        Text("Read Resolution")
+                    }
+                }.sheet(isPresented: $showingResolutionTextSheet, content: {
                     WorldAssemblyResolutionTextSheet(htmlText: htmlText)
-                }
-            })
+                })
+            }
         }
     }
 }
 
+#if DEBUG
 struct ResolutionView_Previews: PreviewProvider {
     static var previews: some View {
         List {
@@ -68,3 +69,4 @@ struct ResolutionView_Previews: PreviewProvider {
         }.listStyle(InsetGroupedListStyle())
     }
 }
+#endif

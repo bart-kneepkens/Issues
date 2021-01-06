@@ -107,7 +107,9 @@ struct WorldAssemblyView: View {
 #if DEBUG
 struct WorldAssemblyView_Previews: PreviewProvider {
     static var previews: some View {
-        WorldAssemblyView(viewModel: .init(authenticationContainer: .init(), resolutionProvider: MockedResolutionProvider(), nationDetailsProvider: MockedNationDetailsProvider()))
+        NavigationView {
+            WorldAssemblyView(viewModel: .init(authenticationContainer: .init(), resolutionProvider: MockedResolutionProvider(), nationDetailsProvider: MockedNationDetailsProvider()))
+        }
     }
 }
 #endif

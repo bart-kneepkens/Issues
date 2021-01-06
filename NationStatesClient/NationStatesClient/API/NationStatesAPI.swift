@@ -215,8 +215,10 @@ extension NationStatesAPI {
             .eraseToAnyPublisher()
     }
     
-    static func vote(authenticationContainer: AuthenticationContainer, localId: String, option: VoteOption) -> AnyPublisher<VoteOption?, Never> {
-        guard let url = URLBuilder.generalAssemblyFormURL,
+    static func vote(authenticationContainer: AuthenticationContainer, worldAssembly: WorldAssembly, localId: String, option: VoteOption) -> AnyPublisher<VoteOption?, Never> {
+        let formUrl = worldAssembly == .general ? URLBuilder.generalAssemblyFormURL : URLBuilder.securityCouncilFormURL
+        
+        guard let url = formUrl,
               var request = self.cookieAuthenticatedWebRequest(using: url, authenticationContainer: authenticationContainer) else {
             return Just(nil).eraseToAnyPublisher()
         }

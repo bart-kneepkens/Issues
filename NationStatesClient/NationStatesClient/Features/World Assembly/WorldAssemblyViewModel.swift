@@ -9,16 +9,11 @@ import Foundation
 import Combine
 
 class WorldAssemblyViewModel: ObservableObject {
-    var generalAssemblyResolution: Resolution? {
-        resolutionProvider.generalAssembly
-    }
-    
-    var securityCouncilResolution: Resolution? {
-        resolutionProvider.securityCouncil
-    }
+    @Published var generalAssemblyResolution: Resolution?
+    @Published var securityCouncilResolution: Resolution?
     
     @Published var isVoting: Bool = false
-    @Published var localId: String?
+    
     @Published var castedGeneralAssemblyVote: VoteOption? {
         didSet {
             isVoting = false
@@ -41,19 +36,22 @@ class WorldAssemblyViewModel: ObservableObject {
         
         self.castedGeneralAssemblyVote = nationDetailsProvider.nationDetails?.generalAssemblyVote
         self.castedSecurityCouncilVote = nationDetailsProvider.nationDetails?.securityCouncilVote
+
+        self.cancellables?.append(resolutionProvider.generalAssembly.assign(to: \.generalAssemblyResolution, on: self))
+        self.cancellables?.append(resolutionProvider.securityCouncil.assign(to: \.securityCouncilResolution, on: self))
     }
     
     func vote(on resolution: Resolution, option: VoteOption, worldAssembly: WorldAssembly, localId: String) {
         self.isVoting = true
         self.cancellables?.append(
             self.resolutionProvider
-                .vote(for: resolution, option: option, localId: localId)
+                .vote(for: resolution, worldAssembly: worldAssembly, option: option, localId: localId)
+                .receive(on: DispatchQueue.main)
                 .sink(receiveValue: { receivedOption in
                     switch worldAssembly {
                     case .general: self.castedGeneralAssemblyVote = receivedOption
                     case .security: self.castedSecurityCouncilVote = receivedOption
                     }
-                    
                 })
         )
     }

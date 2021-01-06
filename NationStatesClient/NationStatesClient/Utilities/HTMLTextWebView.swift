@@ -15,32 +15,29 @@ struct HTMLTextWebView: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<Self>) -> WKWebView {
         let webView = WKWebView()
 
-        
         webView.isOpaque = false
         webView.scrollView.indicatorStyle = webView.traitCollection.userInterfaceStyle == .light ? UIScrollView.IndicatorStyle.black : .white
-        let textColor = webView.traitCollection.userInterfaceStyle == .light ? "black" : "white"
         
         // Used to make the text readable (in dark mode too), imitates the cells in a GroupedInsetList's cells when presented as a sheet (see IssueDetailOptionsView)
-        // Sets the proper viewport, line height, font weight, font size, and text color.
+        // Sets the proper viewport, font, and text color for links.
         let htmlHeader = """
                 <head>
                  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no'>
                 <style type="text/css">
-                   * {
-                       font: -apple-system-body;
-                        line-height: 125%;
-                        font-weight: 500; font-size: \(UIFont.preferredFont(forTextStyle: .body).pointSize - 1);
-                        color:\(textColor); a { color: #008000 };
+                    * {
+                        -webkit-touch-callout: none;
+                        -webkit-user-select: none;
+                        color-scheme: light dark;
+                        font: -apple-system-body;
                     }
 
                     a {
                         color: #008000;
-                   }
+                    }
                 </style>
             </head>
          """
-
-
+        
         webView.loadHTMLString(htmlHeader + self.html, baseURL: nil)
         return webView
     }

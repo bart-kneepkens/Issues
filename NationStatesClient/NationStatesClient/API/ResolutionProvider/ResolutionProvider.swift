@@ -9,10 +9,10 @@ import Foundation
 import Combine
 
 protocol ResolutionProvider {
-    var generalAssembly: Resolution? { get }
-    var securityCouncil: Resolution? { get }
+    var generalAssembly: CurrentValueSubject<Resolution?, Never> { get }
+    var securityCouncil: CurrentValueSubject<Resolution?, Never> { get }
     
     func fetchResolutions()
-    func vote(for resolution: Resolution, option: VoteOption, localId: String) -> AnyPublisher<VoteOption?, Never>
+    func vote(for resolution: Resolution, worldAssembly: WorldAssembly, option: VoteOption, localId: String) -> AnyPublisher<VoteOption?, Never>
 }
 

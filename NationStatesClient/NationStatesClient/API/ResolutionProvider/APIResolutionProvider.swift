@@ -9,8 +9,10 @@ import Foundation
 import Combine
 
 class APIResolutionProvider: ResolutionProvider {
-    var generalAssembly: Resolution?
-    var securityCouncil: Resolution?
+    let generalAssembly = CurrentValueSubject<Resolution?, Never>(nil)
+    let securityCouncil = CurrentValueSubject<Resolution?, Never>(nil)
+    
+    var res: PassthroughSubject<Resolution?, Never> = PassthroughSubject<Resolution?, Never>()
     
     init(authenticationContainer: AuthenticationContainer) {
         self.authenticationContainer = authenticationContainer
@@ -24,8 +26,8 @@ class APIResolutionProvider: ResolutionProvider {
         self.fetchResolution(for: .security)
     }
     
-    func vote(for resolution: Resolution, option: VoteOption, localId: String) -> AnyPublisher<VoteOption?, Never> {
-        NationStatesAPI.vote(authenticationContainer: self.authenticationContainer, localId: localId, option: option)
+    func vote(for resolution: Resolution, worldAssembly: WorldAssembly, option: VoteOption, localId: String) -> AnyPublisher<VoteOption?, Never> {
+        NationStatesAPI.vote(authenticationContainer: self.authenticationContainer, worldAssembly: worldAssembly, localId: localId, option: option)
     }
     
     private func fetchResolution(for worldAssembly: WorldAssembly) {
@@ -39,8 +41,8 @@ class APIResolutionProvider: ResolutionProvider {
                 .receive(on: DispatchQueue.main)
                 .sink(receiveValue: { resolution in
                     switch worldAssembly {
-                    case .general: self.generalAssembly = resolution
-                    case .security: self.securityCouncil = resolution
+                    case .general: self.generalAssembly.send(resolution)
+                    case .security: self.securityCouncil.send(resolution)
                     }
                     
                     if let resolution = resolution {
@@ -57,8 +59,8 @@ class APIResolutionProvider: ResolutionProvider {
                 .sink(receiveValue: { informationResponse in
                     if let response = informationResponse {
                         switch worldAssembly {
-                        case .general: self.generalAssembly?.information = response
-                        case .security: self.securityCouncil?.information = response
+                        case .general: self.generalAssembly.value?.information = response
+                        case .security: self.securityCouncil.value?.information = response
                         }
                     }
                 })
