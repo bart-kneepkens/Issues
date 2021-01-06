@@ -19,7 +19,7 @@ class ResolutionResponseXMLParser: NationStatesXMLParser {
 
 extension ResolutionResponseXMLParser: XMLParserDelegate {
     func parser(_ parser: XMLParser, foundCharacters string: String) {
-        foundCharacters += string.trimmingCharacters(in: .whitespacesAndNewlines)
+        foundCharacters += string.trimmingCharacters(in: .newlines)
     }
     
     func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) {

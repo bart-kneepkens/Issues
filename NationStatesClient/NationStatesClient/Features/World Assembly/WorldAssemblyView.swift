@@ -64,7 +64,10 @@ struct WorldAssemblyView: View {
         List {
             if let resolution = resolution {
                 ResolutionView(resolution: resolution)
-                voteView(resolution, worldAssembly: worldAssembly)
+                
+                if let localId = resolution.information?.localId, !localId.isEmpty {
+                    voteView(resolution, worldAssembly: worldAssembly)
+                }
             }
         }
         .listStyle(InsetGroupedListStyle())
