@@ -59,13 +59,20 @@ enum APIError: Error {
     case rateExceeded // 429
     case notConnected
     case timedOut
-    case unknown(error: Error)
+    case unknown(code: Int)
 }
 
 typealias DataResponse = (data: Data, response: URLResponse)
 
 struct NationStatesAPI {
     private init() {}
+    
+    private static func authenticatedRequest(using url: URL,
+                                authenticationContainer: AuthenticationContainer,
+                                session: NetworkSession = URLSession.shared
+    ) -> AnyPublisher<DataResponse, APIError> {
+        return AuthenticatedAPIRequest(url: url, authenticationContainer: authenticationContainer).publisher
+    }
     
     private static func request(using url: URL,
                                 authenticationContainer: AuthenticationContainer,
@@ -103,7 +110,7 @@ struct NationStatesAPI {
             return Just(false).mapError({ _ in APIError.notConnected }).eraseToAnyPublisher()
         }
         
-        return request(using: url,
+        return authenticatedRequest(using: url,
                        authenticationContainer: authenticationContainer,
                        session: session)
             .map { result -> Bool in
@@ -122,7 +129,7 @@ extension NationStatesAPI {
             return Just(AnsweredIssueResultDTO()).mapError({ _ in APIError.notConnected }).eraseToAnyPublisher()
         }
         
-        return request(using: url, authenticationContainer: authenticationContainer)
+        return authenticatedRequest(using: url, authenticationContainer: authenticationContainer)
             .map { result -> AnsweredIssueResultDTO in
                 let parser = AnswerIssueResponseXMLParser(result.data)
                 parser.parse()
@@ -140,7 +147,7 @@ extension NationStatesAPI {
             return Just(FetchIssuesResultDTO()).mapError({ _ in APIError.notConnected }).eraseToAnyPublisher()
         }
         
-        return request(using: url, authenticationContainer: authenticationContainer)
+        return authenticatedRequest(using: url, authenticationContainer: authenticationContainer)
             .map({ result -> FetchIssuesResultDTO in
                 let parser = IssuesResponseXMLParser(result.data)
                 parser.parse()
@@ -164,9 +171,8 @@ extension NationStatesAPI {
 
 // MARK: - Nation Details
 extension NationStatesAPI {
-    // TODO: maybe remove dependency to auth container, since all of these are public shards
-    static func fetchNationDetails(authenticationContainer: AuthenticationContainer) -> AnyPublisher<NationDTO, APIError> {
-        guard let url = URLBuilder.nationDetailsUrl(for: authenticationContainer.nationName) else {
+    static func fetchNationDetails(authenticationContainer: AuthenticationContainer, for nationName: String) -> AnyPublisher<NationDTO, APIError> {
+        guard let url = URLBuilder.nationDetailsUrl(for: nationName) else {
             return Just(NationDTO()).mapError({ _ in APIError.notConnected }).eraseToAnyPublisher()
         }
         
@@ -186,7 +192,7 @@ extension NationStatesAPI {
             return Just(ResolutionDTO()).mapError({ _ in APIError.notConnected }).eraseToAnyPublisher()
         }
         
-        return request(using: url, authenticationContainer: authenticationContainer).map { result -> ResolutionDTO in
+        return authenticatedRequest(using: url, authenticationContainer: authenticationContainer).map { result -> ResolutionDTO in
             let parser = ResolutionResponseXMLParser(result.data)
             parser.parse()
             return parser.resolution

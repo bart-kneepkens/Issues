@@ -21,7 +21,7 @@ struct ErrorView: View {
             #if DEBUG
             case .conflict: return "conflict"
             case .notFound: return "notFound"
-            case .unknown(let error): return "unknown \(error.localizedDescription)"
+            case .unknown(let errorCode): return "unknown error with response code: \(errorCode)"
             #endif
         default: return "Unknown error"
         }

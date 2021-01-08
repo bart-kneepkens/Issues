@@ -1,5 +1,5 @@
 //
-//  URLRequest+Extras.swift
+//  URLRequest+.swift
 //  NationStatesClient
 //
 //  Created by Bart Kneepkens on 13/10/2020.

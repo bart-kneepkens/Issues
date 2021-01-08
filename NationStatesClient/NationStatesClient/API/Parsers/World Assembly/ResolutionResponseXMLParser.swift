@@ -27,6 +27,10 @@ extension ResolutionResponseXMLParser: XMLParserDelegate {
     }
     
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        // It's important to trim whitespaces only after the string has been completed.
+        // Doing so in `parser(_ parser: XMLParser, foundCharacters string: String)` like the other parsers would not work with resolution names containing quotes or other characters.
+        foundCharacters = foundCharacters.trimmingCharacters(in: .whitespaces)
+        
         switch elementName {
         case "CATEGORY":
             resolution.category = foundCharacters
@@ -35,8 +39,7 @@ extension ResolutionResponseXMLParser: XMLParserDelegate {
                 resolution.created = Date(timeIntervalSince1970: unixStamp)
             }
             break
-        case "DESC":
-            break
+        case "DESC": break
         case "ID":
             resolution.id = foundCharacters
         case "NAME":

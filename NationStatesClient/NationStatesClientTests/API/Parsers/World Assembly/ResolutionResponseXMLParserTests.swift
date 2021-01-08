@@ -19,7 +19,7 @@ class ResolutionResponseXMLParserTests: XCTestCase {
      <![CDATA[A Very long and interesting description text]]>
      </DESC>
      <ID>merni_1608621807</ID>
-     <NAME>International Radio Standards Act</NAME>
+     <NAME>Repeal &quot;Commend The Western Isles&quot;</NAME>
      <OPTION>Safety</OPTION>
      <PROMOTED>1609261203</PROMOTED>
      <PROPOSED_BY>merni</PROPOSED_BY>
@@ -40,7 +40,7 @@ class ResolutionResponseXMLParserTests: XCTestCase {
                                                         created: Date(timeIntervalSince1970: TimeInterval(1608621807)),
                                                         text: "A Very long and interesting description text",
                                                         id: "merni_1608621807",
-                                                        name: "International Radio Standards Act",
+                                                        name: "Repeal \"Commend The Western Isles\"",
                                                         option: "Safety",
                                                         promoted: Date(timeIntervalSince1970: TimeInterval(1609261203)),
                                                         proposedBy: "merni",

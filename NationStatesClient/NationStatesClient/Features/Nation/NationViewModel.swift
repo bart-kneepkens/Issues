@@ -9,6 +9,8 @@ import Foundation
 import Combine
 
 class NationViewModel: ObservableObject {
+    @Published var nation: Nation?
+    
     private let authenticationContainer: AuthenticationContainer
     private let provider: NationDetailsProvider
     private var cancellables: [Cancellable]? = []
@@ -16,13 +18,12 @@ class NationViewModel: ObservableObject {
     init(provider: NationDetailsProvider, authenticationContainer: AuthenticationContainer) {
         self.provider = provider
         self.authenticationContainer = authenticationContainer
-        self.name = authenticationContainer.nationName
-        self.nation = provider.nationDetails
+        self.cancellables?.append(self.provider.nationDetails.assign(to: \.nation, on: self))
     }
     
-    var name: String
-    
-    @Published var nation: Nation?
+    var name: String {
+        authenticationContainer.nationName
+    }
     
     func signOut() {
         self.authenticationContainer.signOut()
@@ -34,8 +35,6 @@ class NationViewModel: ObservableObject {
 extension NationViewModel {
     convenience init(nation: Nation, name: String) {
         self.init(provider: MockedNationDetailsProvider(), authenticationContainer: .init())
-        
-        self.name = name
         self.nation = nation
     }
 }

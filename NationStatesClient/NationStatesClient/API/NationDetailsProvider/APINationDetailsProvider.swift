@@ -9,13 +9,7 @@ import Foundation
 import Combine
 
 class APINationDetailsProvider: NationDetailsProvider {
-    var nationDetails: Nation? {
-        didSet {
-            if let details = nationDetails {
-                authenticationContainer.nationName = details.name
-            }
-        }
-    }
+    var nationDetails = CurrentValueSubject<Nation?, Never>(nil)
     
     private let authenticationContainer: AuthenticationContainer
     private var cancellable: Cancellable?
@@ -24,14 +18,19 @@ class APINationDetailsProvider: NationDetailsProvider {
         self.authenticationContainer = container
     }
     
-    func fetchDetails() {
+    func fetchCurrentNationDetails() {
         self.cancellable = NationStatesAPI
-            .fetchNationDetails(authenticationContainer: self.authenticationContainer)
+            .fetchNationDetails(authenticationContainer: self.authenticationContainer, for: self.authenticationContainer.nationName)
             .map({ Nation(from: $0) })
             .catch({ error -> AnyPublisher<Nation?, Never> in
                 return Just(nil).eraseToAnyPublisher()
             })
             .receive(on: DispatchQueue.main)
-            .assign(to: \.nationDetails, on: self)
+            .sink(receiveValue: { details in
+                self.nationDetails.send(details)
+                if let details = details {
+                    self.authenticationContainer.nationName = details.name
+                }
+            })
     }
 }

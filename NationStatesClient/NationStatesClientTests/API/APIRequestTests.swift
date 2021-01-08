@@ -1,5 +1,5 @@
 //
-//  APIRequestTests.swift
+//  AuthenticatedAPIRequestTests.swift
 //  NationStatesClientTests
 //
 //  Created by Bart Kneepkens on 04/11/2020.
@@ -24,10 +24,10 @@ private func authenticationContainerWith(nationName: String = "",
 
 private let mockURL = URL(string: "test_url")!
 
-class APIRequest_AuthenticationHeaders_Tests: XCTestCase {
+class AuthenticatedAPIRequest_AuthenticationHeaders_Tests: XCTestCase {
     func testPasswordHeader() throws {
         let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password")
-        let request = APIRequest(url: mockURL, authenticationContainer: container).authenticated
+        let request = AuthenticatedAPIRequest(url: mockURL, authenticationContainer: container).authenticated
         
         XCTAssertEqual(getPasswordHeader(request), "test_password")
         XCTAssertNil(getAutologinHeader(request))
@@ -36,7 +36,7 @@ class APIRequest_AuthenticationHeaders_Tests: XCTestCase {
     
     func testPinHeader() {
         let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password", pin: "test_pin")
-        let request = APIRequest(url: mockURL, authenticationContainer: container).authenticated
+        let request = AuthenticatedAPIRequest(url: mockURL, authenticationContainer: container).authenticated
         
         XCTAssertEqual(getPinHeader(request), "test_pin")
         XCTAssertNil(getPasswordHeader(request))
@@ -45,7 +45,7 @@ class APIRequest_AuthenticationHeaders_Tests: XCTestCase {
     
     func testAutologinHeader() {
         let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password", autologin: "test_autologin")
-        let request = APIRequest(url: mockURL, authenticationContainer: container).authenticated
+        let request = AuthenticatedAPIRequest(url: mockURL, authenticationContainer: container).authenticated
         
         XCTAssertEqual(getAutologinHeader(request), "test_autologin")
         XCTAssertNil(getPinHeader(request))
@@ -54,7 +54,7 @@ class APIRequest_AuthenticationHeaders_Tests: XCTestCase {
     
     func testHeaderPriority() {
         let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password", pin: "test_pin", autologin: "test_autologin")
-        var request = APIRequest(url: mockURL, authenticationContainer: container).authenticated
+        var request = AuthenticatedAPIRequest(url: mockURL, authenticationContainer: container).authenticated
         
         // Should use pin if all values are available
         XCTAssertEqual(getPinHeader(request), "test_pin")
@@ -62,7 +62,7 @@ class APIRequest_AuthenticationHeaders_Tests: XCTestCase {
         XCTAssertNil(getPasswordHeader(request))
         
         container.pin = nil
-        request = APIRequest(url: mockURL, authenticationContainer: container).authenticated
+        request = AuthenticatedAPIRequest(url: mockURL, authenticationContainer: container).authenticated
         
         // Should use autologin if pin is not available
         XCTAssertEqual(getAutologinHeader(request), "test_autologin")
@@ -70,7 +70,7 @@ class APIRequest_AuthenticationHeaders_Tests: XCTestCase {
         XCTAssertNil(getPasswordHeader(request))
         
         container.autologin = nil
-        request = APIRequest(url: mockURL, authenticationContainer: container).authenticated
+        request = AuthenticatedAPIRequest(url: mockURL, authenticationContainer: container).authenticated
         
         // Should use password if neither pin and autologin is available
         XCTAssertEqual(getPasswordHeader(request), "test_password")
@@ -91,7 +91,7 @@ class APIRequest_AuthenticationHeaders_Tests: XCTestCase {
     }
 }
 
-class APIRequest_Publisher_HTTP_Errors_Tests: XCTestCase {
+class AuthenticatedAPIRequest_Publisher_HTTP_Errors_Tests: XCTestCase {
     class MockedSession: NetworkSession {
         var statusCode: Int
         
@@ -111,7 +111,7 @@ class APIRequest_Publisher_HTTP_Errors_Tests: XCTestCase {
         let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password")
         let expectation = self.expectation(description: "throws APIError .unauthorized in case of HTTP error 403")
         
-        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: MockedSession(statusCode: 403))
+        let _ = AuthenticatedAPIRequest(url: mockURL, authenticationContainer: container, session: MockedSession(statusCode: 403))
             .publisher
             .sink { completion in
                 switch completion {
@@ -132,7 +132,7 @@ class APIRequest_Publisher_HTTP_Errors_Tests: XCTestCase {
         let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password")
         let expectation = self.expectation(description: "throws APIError .conflict in case of HTTP error 409")
         
-        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: MockedSession(statusCode: 409))
+        let _ = AuthenticatedAPIRequest(url: mockURL, authenticationContainer: container, session: MockedSession(statusCode: 409))
             .publisher
             .sink { completion in
                 switch completion {
@@ -153,7 +153,7 @@ class APIRequest_Publisher_HTTP_Errors_Tests: XCTestCase {
         let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password")
         let expectation = self.expectation(description: "throws APIError .notFound in case of HTTP error 404")
         
-        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: MockedSession(statusCode: 404))
+        let _ = AuthenticatedAPIRequest(url: mockURL, authenticationContainer: container, session: MockedSession(statusCode: 404))
             .publisher
             .sink { completion in
                 switch completion {
@@ -174,7 +174,7 @@ class APIRequest_Publisher_HTTP_Errors_Tests: XCTestCase {
         let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password")
         let expectation = self.expectation(description: "throws APIError .rateExceeded in case of HTTP error 429")
         
-        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: MockedSession(statusCode: 429))
+        let _ = AuthenticatedAPIRequest(url: mockURL, authenticationContainer: container, session: MockedSession(statusCode: 429))
             .publisher
             .sink { completion in
                 switch completion {
@@ -192,7 +192,7 @@ class APIRequest_Publisher_HTTP_Errors_Tests: XCTestCase {
     }
 }
 
-class APIRequest_Publisher_NSErrors_Tests: XCTestCase {
+class AuthenticatedAPIRequest_Publisher_NSErrors_Tests: XCTestCase {
     class MockedSession: NetworkSession {
         let urlErrorCode: URLError.Code
         
@@ -210,7 +210,7 @@ class APIRequest_Publisher_NSErrors_Tests: XCTestCase {
         let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password")
         let expectation = self.expectation(description: "throws APIError .notConnected in case of URL error NSURLErrorNotConnectedToInternet")
         
-        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: MockedSession(URLError.notConnectedToInternet))
+        let _ = AuthenticatedAPIRequest(url: mockURL, authenticationContainer: container, session: MockedSession(URLError.notConnectedToInternet))
             .publisher
             .sink { completion in
                 switch completion {
@@ -231,7 +231,7 @@ class APIRequest_Publisher_NSErrors_Tests: XCTestCase {
         let container = authenticationContainerWith(nationName: "test_nationName", password: "test_password")
         let expectation = self.expectation(description: "throws APIError .timedOut in case of URL error NSURLErrorTimedOut")
         
-        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: MockedSession(URLError.timedOut))
+        let _ = AuthenticatedAPIRequest(url: mockURL, authenticationContainer: container, session: MockedSession(URLError.timedOut))
             .publisher
             .sink { completion in
                 switch completion {
@@ -249,7 +249,7 @@ class APIRequest_Publisher_NSErrors_Tests: XCTestCase {
     }
 }
 
-class APIRequest_Publisher_Retry_Mechanism_Tests: XCTestCase {
+class AuthenticatedAPIRequest_Publisher_Retry_Mechanism_Tests: XCTestCase {
     class MockedSession: NetworkSession {
         var statusCodes: [Int]
         var counter = 0
@@ -276,7 +276,7 @@ class APIRequest_Publisher_Retry_Mechanism_Tests: XCTestCase {
         let autologinHeaderExpectation = self.expectation(description: "Autologin header still available after first failure")
         let amountOfCallsExpectation = self.expectation(description: "Should be called exactly twice")
         
-        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: session)
+        let _ = AuthenticatedAPIRequest(url: mockURL, authenticationContainer: container, session: session)
             .publisher
             .sink { completion in
                 switch completion {
@@ -305,7 +305,7 @@ class APIRequest_Publisher_Retry_Mechanism_Tests: XCTestCase {
         let passwordHeaderExpectation = self.expectation(description: "Uses password header after first failure")
         let amountOfCallsExpectation = self.expectation(description: "Should be called exactly twice")
         
-        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: session)
+        let _ = AuthenticatedAPIRequest(url: mockURL, authenticationContainer: container, session: session)
             .publisher
             .sink { completion in
                 switch completion {
@@ -335,7 +335,7 @@ class APIRequest_Publisher_Retry_Mechanism_Tests: XCTestCase {
         
         let amountOfCallsExpectation = self.expectation(description: "Should be called exactly thrice")
         
-        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: session)
+        let _ = AuthenticatedAPIRequest(url: mockURL, authenticationContainer: container, session: session)
             .publisher
             .sink { completion in
                 switch completion {
@@ -357,7 +357,7 @@ class APIRequest_Publisher_Retry_Mechanism_Tests: XCTestCase {
     }
 }
 
-class APIRequest_Publisher_AuthenticationContainer_Tests: XCTestCase {
+class AuthenticatedAPIRequest_Publisher_AuthenticationContainer_Tests: XCTestCase {
     class MockedSession: NetworkSession {
         var statusCodes: [Int]
         var counter = 0
@@ -385,7 +385,7 @@ class APIRequest_Publisher_AuthenticationContainer_Tests: XCTestCase {
     
         let expectation = self.expectation(description: "Has set `pair` (pin and autologin) on the AuthenticationContainer")
 
-        let _ = APIRequest(url: mockURL, authenticationContainer: container, session: session)
+        let _ = AuthenticatedAPIRequest(url: mockURL, authenticationContainer: container, session: session)
             .publisher
             .sink { completion in
                 switch completion {

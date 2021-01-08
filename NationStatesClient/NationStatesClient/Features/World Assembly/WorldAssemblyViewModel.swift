@@ -34,8 +34,8 @@ class WorldAssemblyViewModel: ObservableObject {
         self.authenticationContainer = authenticationContainer
         self.resolutionProvider = resolutionProvider
         
-        self.castedGeneralAssemblyVote = nationDetailsProvider.nationDetails?.generalAssemblyVote
-        self.castedSecurityCouncilVote = nationDetailsProvider.nationDetails?.securityCouncilVote
+        self.castedGeneralAssemblyVote = nationDetailsProvider.nationDetails.value?.generalAssemblyVote
+        self.castedSecurityCouncilVote = nationDetailsProvider.nationDetails.value?.securityCouncilVote
 
         self.cancellables?.append(resolutionProvider.generalAssembly.assign(to: \.generalAssemblyResolution, on: self))
         self.cancellables?.append(resolutionProvider.securityCouncil.assign(to: \.securityCouncilResolution, on: self))

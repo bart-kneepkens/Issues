@@ -8,6 +8,6 @@
 import Combine
 
 protocol NationDetailsProvider {
-    var nationDetails: Nation? { get }
-    func fetchDetails()
+    var nationDetails: CurrentValueSubject<Nation?, Never> { get }
+    func fetchCurrentNationDetails()
 }

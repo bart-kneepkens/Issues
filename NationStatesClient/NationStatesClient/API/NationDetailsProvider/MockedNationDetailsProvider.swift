@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import Combine
 
 #if DEBUG
 class MockedNationDetailsProvider: NationDetailsProvider {
-    var nationDetails: Nation?
+    var nationDetails = CurrentValueSubject<Nation?,Never>(nil)
     
-    func fetchDetails() {
-        self.nationDetails = .filler
+    func fetchCurrentNationDetails() {
+        self.nationDetails.send(.filler)
     }
 }
 #endif

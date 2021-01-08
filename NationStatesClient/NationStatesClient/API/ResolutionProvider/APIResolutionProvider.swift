@@ -12,8 +12,6 @@ class APIResolutionProvider: ResolutionProvider {
     let generalAssembly = CurrentValueSubject<Resolution?, Never>(nil)
     let securityCouncil = CurrentValueSubject<Resolution?, Never>(nil)
     
-    var res: PassthroughSubject<Resolution?, Never> = PassthroughSubject<Resolution?, Never>()
-    
     init(authenticationContainer: AuthenticationContainer) {
         self.authenticationContainer = authenticationContainer
     }
@@ -46,6 +44,7 @@ class APIResolutionProvider: ResolutionProvider {
                     }
                     
                     if let resolution = resolution {
+                        // Fetch information, which include HTML text and localId
                         self.fetchResolutionInformation(for: worldAssembly, from: resolution)
                     }
                 })
