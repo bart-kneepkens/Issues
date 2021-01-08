@@ -11,14 +11,17 @@ struct WorldAssemblyResolutionTextSheet: View {
     let htmlText: String
     
     var body: some View {
-        VStack {
-            Color.clear.frame(height: 14) // This is used to replicate List as .sheet behavior, acts as a sort of 'handle' to swipe down.
-            Color(UIColor.secondarySystemGroupedBackground)
-                .cornerRadius(13)
-                .overlay(HTMLTextWebView(html: htmlText))
-                .padding()
+        ZStack {
+            Color(UIColor.systemGroupedBackground).ignoresSafeArea(.all, edges: .bottom)
+            VStack {
+                Color.clear.frame(height: 14) // This is used to replicate List as .sheet behavior, acts as a sort of 'handle' to swipe down.
+                Color(UIColor.secondarySystemGroupedBackground)
+                    .cornerRadius(13)
+                    .overlay(HTMLTextWebView(html: htmlText))
+                    .padding()
+            }
+            
         }
-        .background(Color(UIColor.systemGroupedBackground))
     }
 }
 

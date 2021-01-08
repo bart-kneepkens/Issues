@@ -67,6 +67,8 @@ struct WorldAssemblyView: View {
                 
                 if let localId = resolution.information?.localId, !localId.isEmpty {
                     voteView(resolution, worldAssembly: worldAssembly)
+                } else {
+                    Section(footer: Text("In order to vote, please apply to join the World Assembly on the NationStates website")) {}
                 }
             }
         }
