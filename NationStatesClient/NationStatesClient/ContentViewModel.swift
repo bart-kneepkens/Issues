@@ -91,21 +91,22 @@ class ContentViewModel: ObservableObject {
 
 extension ContentViewModel {
     var issuesViewModel: IssuesViewModel {
-        return IssuesViewModel(provider: self.issueProvider,
-                               nationDetailsProvider: self.nationDetailsProvider,
-                               resolutionProvider: self.resolutionProvider,
-                               authenticationContainer: self.authenticationContainer)
+        .init(provider: self.issueProvider, authenticationContainer: self.authenticationContainer)
     }
     
     var signInViewModel: SignInViewModel {
-        return SignInViewModel(authenticationProvider: self.authenticationProvider,
+        .init(authenticationProvider: self.authenticationProvider,
                                authenticationContainer: self.authenticationContainer,
                                contentViewModel: self)
     }
     
     var worldAssemblyViewModel: WorldAssemblyViewModel {
-        return .init(authenticationContainer: self.authenticationContainer,
+        .init(authenticationContainer: self.authenticationContainer,
                      resolutionProvider: self.resolutionProvider,
                      nationDetailsProvider: self.nationDetailsProvider)
+    }
+    
+    var nationViewModel: NationViewModel {
+        .init(provider: self.nationDetailsProvider, authenticationContainer: self.authenticationContainer)
     }
 }

@@ -77,11 +77,6 @@ struct IssuesView: View {
         }
         .listStyle(InsetGroupedListStyle())
         .navigationTitle("Issues")
-        .navigationBarItems(trailing: NavigationLink(
-                                destination: NationView(viewModel: self.viewModel.nationViewModel),
-                                label: {
-                                    Image(systemName: "flag")
-                                }))
         .onAppear {
             self.viewModel.startFetchingIssues() // Throttled accordingly in VM
             self.viewModel.startRefreshingTimer()
@@ -93,7 +88,7 @@ struct IssuesView: View {
 struct IssuesView_Previews: PreviewProvider {
     static var previews: some View {
         TabView {
-            IssuesView(viewModel: IssuesViewModel(provider: MockedIssueProvider(), nationDetailsProvider: MockedNationDetailsProvider(), resolutionProvider: MockedResolutionProvider(), authenticationContainer: .init()))
+            IssuesView(viewModel: IssuesViewModel(provider: MockedIssueProvider(), authenticationContainer: .init()))
         }
     }
 }

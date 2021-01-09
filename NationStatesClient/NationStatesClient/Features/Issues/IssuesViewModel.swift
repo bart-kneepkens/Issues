@@ -34,8 +34,6 @@ class IssuesViewModel: ObservableObject {
     
     private let persistentContainer: CompletedIssueProvider
     private let provider: IssueProvider
-    private let nationDetailsProvider: NationDetailsProvider
-    private let resolutionProvider: ResolutionProvider
     private let authenticationContainer: AuthenticationContainer
     
     private var cancellables: [Cancellable]? = []
@@ -43,11 +41,9 @@ class IssuesViewModel: ObservableObject {
     private var refreshIssuesTimerCancellable: Cancellable?
     private var didJustAnswerAnIssue = false
     
-    init(provider: IssueProvider, nationDetailsProvider: NationDetailsProvider, resolutionProvider: ResolutionProvider, authenticationContainer: AuthenticationContainer) {
+    init(provider: IssueProvider, authenticationContainer: AuthenticationContainer) {
         self.provider = provider
         self.authenticationContainer = authenticationContainer
-        self.nationDetailsProvider = nationDetailsProvider
-        self.resolutionProvider = resolutionProvider
         self.persistentContainer = PersisentCompletedIssueProvider(nationName: authenticationContainer.nationName)
         
         self.cancellables?.append(
@@ -152,10 +148,6 @@ extension IssuesViewModel: IssueContainer {
 }
 
 extension IssuesViewModel {
-    var nationViewModel: NationViewModel {
-        return .init(provider: self.nationDetailsProvider, authenticationContainer: self.authenticationContainer)
-    }
-    
     func issueDetailViewModel(issue: Issue) -> IssueDetailViewModel {
         return .init(issue, provider: self.provider, nationName: self.authenticationContainer.nationName, issueContainer: self)
     }

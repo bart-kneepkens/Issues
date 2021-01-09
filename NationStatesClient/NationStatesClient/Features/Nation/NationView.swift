@@ -110,7 +110,7 @@ struct NationView: View {
             self.listContents
         }
         .listStyle(InsetGroupedListStyle())
-        .navigationBarTitle("", displayMode: .inline)
+        .navigationTitle("Nation")
     }
 }
 

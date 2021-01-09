@@ -13,11 +13,13 @@ struct ContentView: View {
     private enum TabBarItem {
         case issues
         case worldAssembly
+        case nation
         
         var text: String {
             switch self {
             case .issues: return "Issues"
             case .worldAssembly: return "World Assembly"
+            case .nation: return "Nation"
             }
         }
             
@@ -25,6 +27,7 @@ struct ContentView: View {
             switch self {
             case .issues: return "newspaper"
             case .worldAssembly: return "camera.filters"
+            case .nation: return "flag"
             }
         }
     }
@@ -32,8 +35,9 @@ struct ContentView: View {
     private func tabBarNavigationView(for item: TabBarItem) -> some View {
         NavigationView {
             switch item {
-                case .issues: IssuesView(viewModel: self.viewModel.issuesViewModel)
-                case .worldAssembly: WorldAssemblyView(viewModel: self.viewModel.worldAssemblyViewModel)
+            case .issues: IssuesView(viewModel: self.viewModel.issuesViewModel)
+            case .worldAssembly: WorldAssemblyView(viewModel: self.viewModel.worldAssemblyViewModel)
+            case .nation: NationView(viewModel: viewModel.nationViewModel)
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
@@ -53,6 +57,7 @@ struct ContentView: View {
                 TabView {
                     tabBarNavigationView(for: .issues)
                     tabBarNavigationView(for: .worldAssembly)
+                    tabBarNavigationView(for: .nation)
                 }
             }
         }

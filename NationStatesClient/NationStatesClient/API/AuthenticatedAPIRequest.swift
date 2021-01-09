@@ -19,7 +19,7 @@ class AuthenticatedAPIRequest {
         self.session = session
     }
     
-    private var authenticated: URLRequest {
+    var authenticated: URLRequest {
         var request = URLRequest(url: url)
         request.setupUserAgentHeader(nationName: self.authenticationContainer.nationName)
         
