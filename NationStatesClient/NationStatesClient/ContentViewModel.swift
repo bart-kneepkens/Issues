@@ -27,7 +27,6 @@ class ContentViewModel: ObservableObject {
     }
     @Published var error: APIError?
     
-    private let issueProvider: IssueProvider
     private let authenticationProvider: AuthenticationProvider
     private let nationDetailsProvider: NationDetailsProvider
     private let resolutionProvider: ResolutionProvider
@@ -35,13 +34,12 @@ class ContentViewModel: ObservableObject {
     private let authenticationContainer: AuthenticationContainer
     private var cancellables: [Cancellable]? = []
     
-    init() {
-        self.authenticationContainer = AuthenticationContainer()
-        self.issueProvider = APIIssueProvider(container: self.authenticationContainer)
-        self.authenticationProvider = APIAuthenticationProvider(authenticationContainer: self.authenticationContainer)
+    init(authenticationContainer: AuthenticationContainer, authenticationProvider: AuthenticationProvider, nationDetailsProvider: NationDetailsProvider, resolutionProvider: ResolutionProvider) {
+        self.authenticationContainer = authenticationContainer
+        self.authenticationProvider = authenticationProvider
 
-        self.nationDetailsProvider = APINationDetailsProvider(container: self.authenticationContainer)
-        self.resolutionProvider = APIResolutionProvider(authenticationContainer: self.authenticationContainer)
+        self.nationDetailsProvider = nationDetailsProvider
+        self.resolutionProvider = resolutionProvider
         
         self.cancellables?.append(self.authenticationContainer.$hasSignedOut
                                     .receive(on: DispatchQueue.main)
@@ -86,27 +84,5 @@ class ContentViewModel: ObservableObject {
             })
         )
         
-    }
-}
-
-extension ContentViewModel {
-    var issuesViewModel: IssuesViewModel {
-        .init(provider: self.issueProvider, authenticationContainer: self.authenticationContainer)
-    }
-    
-    var signInViewModel: SignInViewModel {
-        .init(authenticationProvider: self.authenticationProvider,
-                               authenticationContainer: self.authenticationContainer,
-                               contentViewModel: self)
-    }
-    
-    var worldAssemblyViewModel: WorldAssemblyViewModel {
-        .init(authenticationContainer: self.authenticationContainer,
-                     resolutionProvider: self.resolutionProvider,
-                     nationDetailsProvider: self.nationDetailsProvider)
-    }
-    
-    var nationViewModel: NationViewModel {
-        .init(provider: self.nationDetailsProvider, authenticationContainer: self.authenticationContainer)
     }
 }

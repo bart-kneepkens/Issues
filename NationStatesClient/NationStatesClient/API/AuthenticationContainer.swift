@@ -8,8 +8,13 @@
 import Foundation
 import Combine
 
+
+/// A class that holds values related to authenticating the user to the NationStates API.
+/// Uses a specified storage to persist these values - by default it will use the keychain.
 class AuthenticationContainer: ObservableObject {
     private let storage: SecureStorage
+    
+    @Published var hasSignedOut: Bool = false
     
     init(storage: SecureStorage = KeychainSecretsStorage()) {
         self.storage = storage
@@ -53,8 +58,6 @@ class AuthenticationContainer: ObservableObject {
             self.storage.store(pin, key: StorageKey.pin)
         }
     }
-    
-    @Published var hasSignedOut: Bool = false
 
     func signOut() {
         self.nationName = ""

@@ -146,13 +146,3 @@ extension IssuesViewModel: IssueContainer {
         self.objectWillChange.send()
     }
 }
-
-extension IssuesViewModel {
-    func issueDetailViewModel(issue: Issue) -> IssueDetailViewModel {
-        return .init(issue, provider: self.provider, nationName: self.authenticationContainer.nationName, issueContainer: self)
-    }
-    
-    func issueDetailViewModel(completedIssue: CompletedIssue) -> IssueDetailViewModel {
-        .init(completedIssue: completedIssue, nationName: authenticationContainer.nationName)
-    }
-}

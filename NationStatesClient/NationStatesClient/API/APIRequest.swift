@@ -22,6 +22,7 @@ class APIRequest {
     private var request: URLRequest {
         var request = URLRequest(url: url)
         request.setupUserAgentHeader(nationName: self.authenticationContainer.nationName)
+        print("API Request with url \(url.absoluteString)")
         return request
     }
     

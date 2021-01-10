@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct WorldAssemblyView: View {
+    @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     @StateObject var viewModel: WorldAssemblyViewModel
     @State private var selectedVoteOption: VoteOption? = nil
     
@@ -63,7 +64,7 @@ struct WorldAssemblyView: View {
         
         List {
             if let resolution = resolution {
-                ResolutionView(resolution: resolution)
+                ResolutionView(viewModel: viewModelFactory.resolutionViewModel(resolution))
                 
                 if let localId = resolution.information?.localId, !localId.isEmpty {
                     voteView(resolution, worldAssembly: worldAssembly)

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CachedRemoteImage: View {
     private enum LoadState {
-        case empty, success, failure
+        case empty, loading, success, failure
     }
     
     private class Loader: ObservableObject {
@@ -24,6 +24,8 @@ struct CachedRemoteImage: View {
             }
             
             guard state == .empty else { return }
+            
+            self.state = .loading
             
             if let cachedImage = self.cache.get(for: parsedURL.absoluteString) {
                 self.image = cachedImage
@@ -55,7 +57,9 @@ struct CachedRemoteImage: View {
     @ObservedObject private var loader: Loader
     
     var body: some View {
-        if loader.state == .success, let image = loader.image {
+        if loader.state == .loading {
+            ProgressView()
+        } else if loader.state == .success, let image = loader.image {
             Image(uiImage: image).resizable()
         }
     }

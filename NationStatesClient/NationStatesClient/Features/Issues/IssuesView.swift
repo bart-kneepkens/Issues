@@ -10,6 +10,7 @@ import Combine
 
 struct IssuesView: View {
     @StateObject var viewModel: IssuesViewModel
+    @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     
     private var fetchingIndicator: some View {
         Group {
@@ -57,11 +58,11 @@ struct IssuesView: View {
         Group {
             if self.viewModel.selectedIssuesList == .current {
                 ForEach(viewModel.issues, id: \.id) { issue in
-                    NavigationLink(issue.title, destination: IssueDetailView(viewModel: self.viewModel.issueDetailViewModel(issue: issue)))
+                    NavigationLink(issue.title, destination: IssueDetailView(viewModel: viewModelFactory.issueDetailViewModel(for: issue, with: self.viewModel)) )
                 }
             } else {
                 ForEach(viewModel.completedIssues, id: \.issue.id) { completed in
-                    NavigationLink(completed.issue.title, destination: IssueDetailView(viewModel: self.viewModel.issueDetailViewModel(completedIssue: completed)))
+                    NavigationLink(completed.issue.title, destination: IssueDetailView(viewModel: viewModelFactory.issueDetailViewModel(for: completed)))
                 }
             }
         }

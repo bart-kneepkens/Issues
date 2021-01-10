@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct ResolutionView: View {
-    
-    let resolution: Resolution
+    @StateObject var viewModel: ResolutionViewModel
     @State private var showingResolutionTextSheet = false
     
-    var timeLeftToVote: String? {
+    private var resolution: Resolution {
+        self.viewModel.resolution
+    }
+    
+    private var timeLeftToVote: String? {
         if let time = resolution.timeLeftToVote {
             let formatter = DateComponentsFormatter()
             formatter.allowedUnits = [.day, .hour, .minute]
@@ -24,9 +27,25 @@ struct ResolutionView: View {
         return nil
     }
     
+    @ViewBuilder private var proposedByView: some View {
+        if let nation = self.viewModel.proposedByNation {
+            // Confusing structure but this is a button with an invisible NavigationLink to show the nation details.
+            Button(action: {}, label: {
+                Text(nation.name)
+            }).background(NavigationLink(destination:
+                                            List { NationDetailsView(nation: nation)}.listStyle(InsetGroupedListStyle()),
+                                         label: { EmptyView()}).opacity(0))
+        } else {
+            Text(self.resolution.proposedBy).fontWeight(.medium)
+        }
+    }
+    
     @ViewBuilder private var statisticsView: some View {
         PlainListRow(name: "Category", value: resolution.category)
-        PlainListRow(name: "Proposed by", value: resolution.proposedBy)
+        PlainListRow(name: "Proposed by", value: AnyView(proposedByView))
+            .onAppear {
+                self.viewModel.fetchProposedByNation()
+            }
         
         if let timeLeft = self.timeLeftToVote {
             PlainListRow(name: "Voting ends in", value: timeLeft)
@@ -40,9 +59,7 @@ struct ResolutionView: View {
         }
         
         Section(header: VotesDistributionChart(votesFor: resolution.totalVotesFor, votesAgainst: resolution.totalVotesAgainst)
-                    .frame(height: 72)) {
-            
-        }
+                    .frame(height: 72)) {}
         
         Section {
             if let information = resolution.information, let htmlText = information.textHTML {
@@ -64,9 +81,11 @@ struct ResolutionView: View {
 #if DEBUG
 struct ResolutionView_Previews: PreviewProvider {
     static var previews: some View {
-        List {
-            ResolutionView(resolution: .filler)
-        }.listStyle(InsetGroupedListStyle())
+        NavigationView {
+            List {
+                ResolutionView(viewModel: ResolutionViewModel(resolution: .filler, nationDetailsProvider: MockedNationDetailsProvider()))
+            }.listStyle(InsetGroupedListStyle())
+        }
     }
 }
 #endif

@@ -33,4 +33,11 @@ class APINationDetailsProvider: NationDetailsProvider {
                 }
             })
     }
+    
+    func fetchNationDetails(for nationName: String) -> AnyPublisher<Nation?, APIError> {
+        NationStatesAPI
+            .fetchNationDetails(authenticationContainer: self.authenticationContainer, for: nationName)
+            .map({ Nation(from: $0) })
+            .eraseToAnyPublisher()
+    }
 }

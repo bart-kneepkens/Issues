@@ -7,37 +7,8 @@
 
 import SwiftUI
 
-struct NationView: View {
-    @Environment(\.presentationMode) var presentationMode
-    @StateObject var viewModel: NationViewModel
-    
-    private var nationNameView: some View {
-        Section(header: Text("Nation Name")) {
-            Text(self.viewModel.name)
-        }
-    }
-    
-    private var accountSection: some View {
-        Section(header: Text("Account")) {
-            Button("Sign out \(self.viewModel.name)") {
-                self.presentationMode.wrappedValue.dismiss()
-                DispatchQueue.main.async {
-                    self.viewModel.signOut()
-                }
-            }.foregroundColor(.red)
-        }
-    }
-    
-    @ViewBuilder private func flagView(_ path: String) -> some View {
-        let url = URL(string: path)
-        HStack {
-            Spacer()
-            CachedRemoteImage(url: url)
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 64)
-            Spacer()
-        }
-    }
+struct NationDetailsView: View {
+    let nation: Nation
     
     @ViewBuilder private func nameView(fullName: String, name: String) -> some View {
         let prefix = fullName.replacingOccurrences(of: name, with: "")
@@ -56,6 +27,17 @@ struct NationView: View {
     
     @ViewBuilder private func mottoView(_ motto: String) -> some View {
         Text("\"\(motto)\"").italic()
+    }
+    
+    @ViewBuilder private func flagView(_ path: String) -> some View {
+        let url = URL(string: path)
+        HStack {
+            Spacer()
+            CachedRemoteImage(url: url)
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 64)
+            Spacer()
+        }
     }
     
     @ViewBuilder private func generalStatisticsView(_ populationMillions: Int, currency: String, animal: String) -> some View {
@@ -82,21 +64,47 @@ struct NationView: View {
         }
     }
     
+    var body: some View {
+        VStack(alignment: .center, spacing: 10) {
+            flagView(nation.flagURL)
+            nameView(fullName: nation.fullName, name: nation.name)
+            categoryView(nation.category)
+            mottoView(nation.motto)
+        }.padding(.bottom)
+        
+        generalStatisticsView(nation.populationMillions, currency: nation.currency, animal:nation.animal)
+        
+        freedomView(nation.freedoms)
+        
+        regionView(nation.regionName, influence: nation.regionInfluence)
+    }
+}
+
+struct NationView: View {
+    @Environment(\.presentationMode) var presentationMode
+    @StateObject var viewModel: NationViewModel
+    
+    private var nationNameView: some View {
+        Section(header: Text("Nation Name")) {
+            Text(self.viewModel.name)
+        }
+    }
+    
+    private var accountSection: some View {
+        Section(header: Text("Account")) {
+            Button("Sign out \(self.viewModel.name)") {
+                self.presentationMode.wrappedValue.dismiss()
+                DispatchQueue.main.async {
+                    self.viewModel.signOut()
+                }
+            }.foregroundColor(.red)
+        }
+    }
+    
     private var listContents: some View {
         Group {
             if let nation = self.viewModel.nation {
-                VStack(alignment: .center, spacing: 10) {
-                    flagView(nation.flagURL)
-                    nameView(fullName: nation.fullName, name: nation.name)
-                    categoryView(nation.category)
-                    mottoView(nation.motto)
-                }.padding(.bottom)
-                
-                generalStatisticsView(nation.populationMillions, currency: nation.currency, animal:nation.animal)
-                
-                freedomView(nation.freedoms)
-                
-                regionView(nation.regionName, influence: nation.regionInfluence)
+                NationDetailsView(nation: nation)
             } else {
                 nationNameView
             }
@@ -111,6 +119,12 @@ struct NationView: View {
         }
         .listStyle(InsetGroupedListStyle())
         .navigationTitle("Nation")
+        .navigationBarItems(trailing: NavigationLink(
+                                destination: Text("search"),
+                                label: {
+                                    Image(systemName: "magnifyingglass")
+                                }))
+
     }
 }
 

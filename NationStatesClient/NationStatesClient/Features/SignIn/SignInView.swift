@@ -97,7 +97,7 @@ struct SignInView: View {
 
 #if DEBUG
 struct SignInView_Previews: PreviewProvider {
-    static var viewModel = SignInViewModel(authenticationProvider: MockedAuthenticationProvider(success: true), authenticationContainer: .init(), contentViewModel: ContentViewModel())
+    static var viewModel = SignInViewModel(authenticationProvider: MockedAuthenticationProvider(success: true), authenticationContainer: .init(), contentViewModel: ContentViewModel(authenticationContainer: AuthenticationContainer(), authenticationProvider: MockedAuthenticationProvider(success: true), nationDetailsProvider: MockedNationDetailsProvider(), resolutionProvider: MockedResolutionProvider()))
     static var previews: some View {
         SignInView(viewModel: viewModel)
     }

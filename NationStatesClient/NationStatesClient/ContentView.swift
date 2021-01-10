@@ -7,8 +7,20 @@
 
 import SwiftUI
 
+private struct ViewModelFactoryEnvironmentKey: EnvironmentKey {
+    static var defaultValue: ViewModelFactory = ViewModelFactory()
+}
+
+extension EnvironmentValues {
+    var viewModelFactory: ViewModelFactory {
+        get { self[ViewModelFactoryEnvironmentKey.self] }
+        set { self[ViewModelFactoryEnvironmentKey.self] = newValue }
+    }
+}
+
 struct ContentView: View {
     @ObservedObject var viewModel: ContentViewModel
+    @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     
     private enum TabBarItem {
         case issues
@@ -35,9 +47,9 @@ struct ContentView: View {
     private func tabBarNavigationView(for item: TabBarItem) -> some View {
         NavigationView {
             switch item {
-            case .issues: IssuesView(viewModel: self.viewModel.issuesViewModel)
-            case .worldAssembly: WorldAssemblyView(viewModel: self.viewModel.worldAssemblyViewModel)
-            case .nation: NationView(viewModel: viewModel.nationViewModel)
+            case .issues: IssuesView(viewModel: viewModelFactory.issuesViewModel)
+            case .worldAssembly: WorldAssemblyView(viewModel: viewModelFactory.worldAssemblyViewModel)
+            case .nation: NationView(viewModel: viewModelFactory.nationViewModel)
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
@@ -50,7 +62,7 @@ struct ContentView: View {
     var body: some View {
         Group {
             if viewModel.state == ContentViewModel.ContentViewModelState.initial {
-                SignInView(viewModel: self.viewModel.signInViewModel)
+                SignInView(viewModel: viewModelFactory.signinViewModel)
             } else if viewModel.state == ContentViewModel.ContentViewModelState.signingIn {
                 SignInProgressView(error: viewModel.error)
             } else {
@@ -69,6 +81,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(viewModel: ContentViewModel())
+        ContentView(viewModel: ContentViewModel(authenticationContainer: .init(), authenticationProvider: MockedAuthenticationProvider(success: true), nationDetailsProvider: MockedNationDetailsProvider(), resolutionProvider: MockedResolutionProvider()))
     }
 }
