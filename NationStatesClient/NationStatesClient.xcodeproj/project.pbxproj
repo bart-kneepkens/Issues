@@ -126,6 +126,7 @@
 		AE8AA1A22552F92A0031D112 /* NationStatesAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8AA1A12552F92A0031D112 /* NationStatesAPITests.swift */; };
 		AE8FC6F425ABA8A600951B8D /* ResolutionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8FC6F325ABA8A500951B8D /* ResolutionViewModel.swift */; };
 		AE8FC6F525ABA8A600951B8D /* ResolutionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8FC6F325ABA8A500951B8D /* ResolutionViewModel.swift */; };
+		AE8FC6FF25AE4E8700951B8D /* FetchedNationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8FC6FE25AE4E8700951B8D /* FetchedNationView.swift */; };
 		AE95AA96258EADCA00607C1B /* CreateNationWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE95AA95258EADCA00607C1B /* CreateNationWebView.swift */; };
 		AE95AAA82590276000607C1B /* ToggleablePasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE95AAA72590276000607C1B /* ToggleablePasswordField.swift */; };
 		AE95F1212538E3BC00860D25 /* CachedRemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE95F1202538E3BC00860D25 /* CachedRemoteImage.swift */; };
@@ -315,6 +316,7 @@
 		AE8981AE2530FD8D00D62766 /* AuthenticationContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationContainer.swift; sourceTree = "<group>"; };
 		AE8AA1A12552F92A0031D112 /* NationStatesAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationStatesAPITests.swift; sourceTree = "<group>"; };
 		AE8FC6F325ABA8A500951B8D /* ResolutionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolutionViewModel.swift; sourceTree = "<group>"; };
+		AE8FC6FE25AE4E8700951B8D /* FetchedNationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedNationView.swift; sourceTree = "<group>"; };
 		AE95AA95258EADCA00607C1B /* CreateNationWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNationWebView.swift; sourceTree = "<group>"; };
 		AE95AAA72590276000607C1B /* ToggleablePasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleablePasswordField.swift; sourceTree = "<group>"; };
 		AE95F1202538E3BC00860D25 /* CachedRemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedRemoteImage.swift; sourceTree = "<group>"; };
@@ -470,6 +472,7 @@
 				AE32F96F2544D5600037954D /* NationView.swift */,
 				AE127F99254F2A96004445E5 /* NationViewModel.swift */,
 				AE7207B225992C5400839D8D /* ColoredFreedomText.swift */,
+				AE8FC6FE25AE4E8700951B8D /* FetchedNationView.swift */,
 			);
 			path = Nation;
 			sourceTree = "<group>";
@@ -1070,6 +1073,7 @@
 				AE115FB12559F9C900EB1932 /* KeychainSecretsStorage.swift in Sources */,
 				AE5EF2102553342A0079389F /* AuthenticatedAPIRequest.swift in Sources */,
 				AEECD738254F465400D536AF /* Option.swift in Sources */,
+				AE8FC6FF25AE4E8700951B8D /* FetchedNationView.swift in Sources */,
 				AE95F129253B18E400860D25 /* IssueDetailOptionsView.swift in Sources */,
 				AE795ABA25A926C2008D8EF4 /* URLResponse+.swift in Sources */,
 				AE06365D25AA6E750034B873 /* ViewModelFactory.swift in Sources */,

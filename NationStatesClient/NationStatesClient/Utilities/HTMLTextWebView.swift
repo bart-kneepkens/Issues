@@ -10,13 +10,39 @@ import SwiftUI
 import WebKit
     
 struct HTMLTextWebView: UIViewRepresentable {
+    
     let html: String
+    private var onLinkTapped: ((String) -> Void)? = nil
+    
+    init(html: String) {
+        self.html = html
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject, WKNavigationDelegate {
+        let parent: HTMLTextWebView
+        
+        init(_ parent: HTMLTextWebView) {
+            self.parent = parent
+        }
+        
+        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+            if navigationAction.navigationType == .linkActivated, let urlString = navigationAction.request.url?.absoluteString, let onLinkTapped = self.parent.onLinkTapped {
+                onLinkTapped(urlString)
+            }
+            decisionHandler(.allow)
+        }
+    }
 
     func makeUIView(context: UIViewRepresentableContext<Self>) -> WKWebView {
         let webView = WKWebView()
 
         webView.isOpaque = false
         webView.scrollView.indicatorStyle = webView.traitCollection.userInterfaceStyle == .light ? UIScrollView.IndicatorStyle.black : .white
+        webView.navigationDelegate = context.coordinator
         
         // Used to make the text readable (in dark mode too), imitates the cells in a GroupedInsetList's cells when presented as a sheet (see IssueDetailOptionsView)
         // Sets the proper viewport, font, and text color for links.
@@ -43,6 +69,14 @@ struct HTMLTextWebView: UIViewRepresentable {
     }
 
     func updateUIView(_ webView: WKWebView, context: Context) {}
+}
+
+extension HTMLTextWebView {
+    @inlinable public func onLinkTap(perform action: ((String) -> Void)? = nil) -> some View {
+        var copy = self
+        copy.onLinkTapped = action
+        return copy
+    }
 }
 
 

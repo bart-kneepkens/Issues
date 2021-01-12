@@ -56,4 +56,8 @@ class ViewModelFactory {
     func resolutionViewModel(_ resolution: Resolution) -> ResolutionViewModel {
         .init(resolution: resolution, nationDetailsProvider: nationDetailsProvider)
     }
+    
+    func fetchedNationViewModel(_ nationName: String) -> FetchedNationViewModel {
+        .init(nationName, nationDetailsProvider: nationDetailsProvider)
+    }
 }

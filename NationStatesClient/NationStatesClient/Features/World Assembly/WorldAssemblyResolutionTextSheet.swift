@@ -10,6 +10,27 @@ import SwiftUI
 struct WorldAssemblyResolutionTextSheet: View {
     let htmlText: String
     
+    init(htmlText: String) {
+        self.htmlText = htmlText
+    }
+    
+    private var onNationTapped: ((String) -> Void)? = nil
+    
+    private static func nationName(for url: String) -> String? {
+        guard url.contains("nation=") else { return nil }
+        return url.components(separatedBy: "=")[1]
+    }
+    
+    @ViewBuilder private var htmlView: some View {
+        HTMLTextWebView(html: htmlText)
+            .onLinkTap { url in
+                if let onNationTapped = self.onNationTapped, let nationName = WorldAssemblyResolutionTextSheet.nationName(for: url) {
+                    onNationTapped(nationName)
+                }
+                // TODO: resolution links
+            }
+    }
+    
     var body: some View {
         ZStack {
             Color(UIColor.systemGroupedBackground).ignoresSafeArea(.all, edges: .bottom)
@@ -17,11 +38,19 @@ struct WorldAssemblyResolutionTextSheet: View {
                 Color.clear.frame(height: 14) // This is used to replicate List as .sheet behavior, acts as a sort of 'handle' to swipe down.
                 Color(UIColor.secondarySystemGroupedBackground)
                     .cornerRadius(13)
-                    .overlay(HTMLTextWebView(html: htmlText))
+                    .overlay(htmlView)
                     .padding()
             }
             
         }
+    }
+}
+
+extension WorldAssemblyResolutionTextSheet {
+    @inlinable public func onNationTap(perform action: ((String) -> Void)? = nil) -> some View {
+        var copy = self
+        copy.onNationTapped = action
+        return copy
     }
 }
 
