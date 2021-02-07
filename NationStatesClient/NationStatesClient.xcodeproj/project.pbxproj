@@ -138,6 +138,7 @@
 		AEC2377A259D2239006F2CA8 /* WorldAssemblyHTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC23779259D2239006F2CA8 /* WorldAssemblyHTMLParser.swift */; };
 		AEC23780259D232E006F2CA8 /* WorldAssemblyHTMLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC2377F259D232E006F2CA8 /* WorldAssemblyHTMLParserTests.swift */; };
 		AEC6B43C2575AC71000CDD0E /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = AEC6B43B2575AC71000CDD0E /* launch.png */; };
+		AECBC6F225CC96EA00654D86 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECBC6F125CC96EA00654D86 /* SnapshotHelper.swift */; };
 		AED5604F25818A97006C348C /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = AED5604E25818A97006C348C /* KeychainAccess */; };
 		AED8B665255DF10C008F9769 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED8B664255DF10C008F9769 /* WidgetKit.framework */; };
 		AED8B667255DF10C008F9769 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED8B666255DF10C008F9769 /* SwiftUI.framework */; };
@@ -328,6 +329,7 @@
 		AEC23779259D2239006F2CA8 /* WorldAssemblyHTMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldAssemblyHTMLParser.swift; sourceTree = "<group>"; };
 		AEC2377F259D232E006F2CA8 /* WorldAssemblyHTMLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldAssemblyHTMLParserTests.swift; sourceTree = "<group>"; };
 		AEC6B43B2575AC71000CDD0E /* launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch.png; sourceTree = "<group>"; };
+		AECBC6F125CC96EA00654D86 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		AED5F7E225631693009BDA01 /* NationStatesClient.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NationStatesClient.entitlements; sourceTree = "<group>"; };
 		AED5F7E325631735009BDA01 /* IssuesExtensionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IssuesExtensionExtension.entitlements; sourceTree = "<group>"; };
 		AED5F80025631EC5009BDA01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -545,6 +547,7 @@
 		AE7207B825992DC000839D8D /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				AECBC6F125CC96EA00654D86 /* SnapshotHelper.swift */,
 				AEC23761259CA2DA006F2CA8 /* HTMLTextWebView.swift */,
 				AE7207B925992DD700839D8D /* UIColor+.swift */,
 				AE669EFB25A528FD007725D0 /* PlainListRow.swift */,
@@ -1148,6 +1151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE8764C2252E6F2A00EFE031 /* NationStatesClientUITests.swift in Sources */,
+				AECBC6F225CC96EA00654D86 /* SnapshotHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1358,7 +1362,7 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
@@ -1368,7 +1372,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "bart-kneepkens.NationStatesClient";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1386,7 +1390,7 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
@@ -1396,7 +1400,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "bart-kneepkens.NationStatesClient";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1497,7 +1501,7 @@
 				CODE_SIGN_ENTITLEMENTS = IssuesExtension/IssuesExtensionExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				INFOPLIST_FILE = IssuesExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1505,7 +1509,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "bart-kneepkens.NationStatesClient.IssuesExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1523,7 +1527,7 @@
 				CODE_SIGN_ENTITLEMENTS = IssuesExtension/IssuesExtensionExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				INFOPLIST_FILE = IssuesExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1531,7 +1535,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "bart-kneepkens.NationStatesClient.IssuesExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

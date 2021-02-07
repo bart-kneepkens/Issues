@@ -8,4 +8,12 @@
 import XCTest
 
 class NationStatesClientUITests: XCTestCase {
+    
+    func testRunForScreenshots() {
+        let app = XCUIApplication()
+        app.launch()
+        setupSnapshot(app)
+        snapshot("IssuesScreen")
+                        
+    }
 }
