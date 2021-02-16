@@ -9,31 +9,67 @@ import XCTest
 
 class NationStatesClientUITests: XCTestCase {
     
+    class Robot {
+        let app: XCUIApplication
+        
+        init(_ app: XCUIApplication) {
+            self.app = app
+            setupSnapshot(app)
+            app.launch()
+        }
+        
+        func takeScreenshot(name: String) {
+            snapshot(name)
+        }
+        
+        func tapFirstIssue() {
+            app.cells.firstMatch.tap()
+        }
+        
+        func tapRespondToThisIssue() {
+            app.buttons["Respond to this issue"].tap()
+        }
+        
+        func swipeAwayResponseSheet() {
+            let topCoordinate = app.cells.firstMatch.coordinate(withNormalizedOffset: .zero)
+            topCoordinate.press(forDuration: 0.2, thenDragTo: topCoordinate.withOffset(.init(dx: 0, dy: 500)), withVelocity: .fast, thenHoldForDuration: 0.5)
+        }
+        
+        func tapWorldAssemblyTabBarItem() {
+            app.buttons["World Assembly"].tap()
+        }
+        
+        func tapFirstWorldAssemblyResolution() {
+            app.cells.firstMatch.tap()
+        }
+        
+        func tapNationTabBarItem() {
+            app.buttons["Nation"].tap()
+        }
+    }
+    
     func testRunForScreenshots() {
         let app = XCUIApplication()
-        setupSnapshot(app)
-        app.launch()
-        // Initial screen
-        snapshot("IssuesScreen")
+        let robot = Robot(app)
+    
+        robot.takeScreenshot(name: "home screen")
         
-        // Tap Issue
-        app.cells.firstMatch.tap()
+        robot.tapFirstIssue()
         
-        snapshot("Issue Detail")
+        robot.takeScreenshot(name: "issue screen")
         
-        app.buttons["Respond to this issue"].tap()
+        robot.tapRespondToThisIssue()
         
-        snapshot("Issue Responses")
-        let topCoordinate = app.cells.firstMatch.coordinate(withNormalizedOffset: .zero)
-        topCoordinate.press(forDuration: 0.2, thenDragTo: topCoordinate.withOffset(.init(dx: 0, dy: 500)), withVelocity: .fast, thenHoldForDuration: 0.5)
+        robot.takeScreenshot(name: "issue responses")
         
-        app.buttons["World Assembly"].tap()
-        snapshot("World Assembly")
+        robot.swipeAwayResponseSheet()
         
-        app.cells.firstMatch.tap()
-        snapshot("World Assembly Detail")
+        robot.tapWorldAssemblyTabBarItem()
+        robot.tapFirstWorldAssemblyResolution()
+            
+        robot.takeScreenshot(name: "world assembly")
         
-        app.buttons["Nation"].tap()
-        snapshot("Nation View")
+        robot.tapNationTabBarItem()
+        robot.takeScreenshot(name: "nation")
     }
 }
