@@ -166,6 +166,7 @@
 		AED8B6F4255F4841008F9769 /* NationStatesXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41CE2533808F00206676 /* NationStatesXMLParser.swift */; };
 		AED8B6F9255F4BA4008F9769 /* MockedIssueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8981A92530FBA000D62766 /* MockedIssueProvider.swift */; };
 		AEDED2CE253C6372007A376F /* AnsweredIssueSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDED2CD253C6372007A376F /* AnsweredIssueSection.swift */; };
+		AEE5296C25DB07BE00BF58F9 /* UITestMockProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE5296B25DB07BE00BF58F9 /* UITestMockProviders.swift */; };
 		AEECD738254F465400D536AF /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEECD737254F465400D536AF /* Option.swift */; };
 		AEED15C5257D94B4007FF221 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEED15C4257D94B4007FF221 /* ErrorView.swift */; };
 		AEF9214A25616C7D0048EAFC /* MediumExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF9213125616A2C0048EAFC /* MediumExtensionView.swift */; };
@@ -340,6 +341,7 @@
 		AED8B66C255DF10E008F9769 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AED8B66E255DF10E008F9769 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AEDED2CD253C6372007A376F /* AnsweredIssueSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnsweredIssueSection.swift; sourceTree = "<group>"; };
+		AEE5296B25DB07BE00BF58F9 /* UITestMockProviders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestMockProviders.swift; sourceTree = "<group>"; };
 		AEECD737254F465400D536AF /* Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
 		AEED15C4257D94B4007FF221 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		AEF9213125616A2C0048EAFC /* MediumExtensionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumExtensionView.swift; sourceTree = "<group>"; };
@@ -551,6 +553,7 @@
 				AEC23761259CA2DA006F2CA8 /* HTMLTextWebView.swift */,
 				AE7207B925992DD700839D8D /* UIColor+.swift */,
 				AE669EFB25A528FD007725D0 /* PlainListRow.swift */,
+				AEE5296B25DB07BE00BF58F9 /* UITestMockProviders.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1112,6 +1115,7 @@
 				AE95F1212538E3BC00860D25 /* CachedRemoteImage.swift in Sources */,
 				AE115FA42559EC5C00EB1932 /* Reclassify.swift in Sources */,
 				AE8764A5252E6F2900EFE031 /* NationStatesClientApp.swift in Sources */,
+				AEE5296C25DB07BE00BF58F9 /* UITestMockProviders.swift in Sources */,
 				AE115F952559E90200EB1932 /* Models+Protocols.swift in Sources */,
 				AE4BACCF2544E99900B391B4 /* CensusScale.swift in Sources */,
 				AE8764F0252FADE400EFE031 /* IssueDetailView.swift in Sources */,

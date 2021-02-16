@@ -10,17 +10,22 @@ import Combine
 
 #if DEBUG
 class MockedResolutionProvider: ResolutionProvider {
-    var generalAssembly = CurrentValueSubject<Resolution?, Never>(.filler)
     
-    var securityCouncil = CurrentValueSubject<Resolution?, Never>(.filler)
+    var generalAssembly: CurrentValueSubject<Resolution?, Never>
+    var securityCouncil: CurrentValueSubject<Resolution?, Never>
+    let delay: Int
     
-    func fetchResolutions() {
-        
+    init(generalAssemblyResolution: Resolution = .filler, securityCouncilResolution: Resolution = .filler, delay: Int = 2) {
+        self.generalAssembly = CurrentValueSubject<Resolution?, Never>(generalAssemblyResolution)
+        self.securityCouncil = CurrentValueSubject<Resolution?, Never>(securityCouncilResolution)
+        self.delay = delay
     }
+    
+    func fetchResolutions() {}
     
     func vote(for resolution: Resolution, worldAssembly: WorldAssembly, option: VoteOption, localId: String) -> AnyPublisher<VoteOption?, Never> {
         return Just(option)
-            .delay(for: 3, scheduler: DispatchQueue.main)
+            .delay(for: .seconds(self.delay), scheduler: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
 }

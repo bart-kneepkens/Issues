@@ -19,6 +19,15 @@ class ViewModelFactory {
     
     init() {
         self.authenticationContainer = AuthenticationContainer()
+        
+        guard !ViewModelFactory.isRunningInUITest else {
+            self.issueProvider = UITestMockProviders.issueProvider
+            self.nationDetailsProvider = UITestMockProviders.nationDetailsProvider
+            self.resolutionProvider = UITestMockProviders.resolutionProvider
+            self.authenticationProvider = UITestMockProviders.authenticationProvider
+            return
+        }
+        
         self.issueProvider = APIIssueProvider(container: authenticationContainer)
         self.nationDetailsProvider = APINationDetailsProvider(container: authenticationContainer)
         self.resolutionProvider = APIResolutionProvider(authenticationContainer: authenticationContainer)
@@ -59,5 +68,11 @@ class ViewModelFactory {
     
     func fetchedNationViewModel(_ nationName: String) -> FetchedNationViewModel {
         .init(nationName, nationDetailsProvider: nationDetailsProvider)
+    }
+}
+
+extension ViewModelFactory {
+    static var isRunningInUITest: Bool {
+        ProcessInfo.processInfo.arguments.contains("-ui_testing")
     }
 }
