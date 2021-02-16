@@ -25,9 +25,9 @@ struct IssueDetailOptionsView: View {
                             Spacer()
                             Button(action: {
                                 self.selectedOption = option
-                            }, label: {
-                                Text("Accept")
-                            })
+                            }) {
+                                Text("Accept").fontWeight(.medium)
+                            }
                             Spacer()
                         }
                     }
@@ -57,8 +57,8 @@ struct IssueDetailOptionsView: View {
     }
 }
 
-//struct IssueDetailOptionsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        IssueDetailOptionsView(viewModel: .init(.filler, provider: MaterializedProvider()))
-//    }
-//}
+struct IssueDetailOptionsView_Previews: PreviewProvider {
+    static var previews: some View {
+        IssueDetailOptionsView(viewModel: IssueDetailViewModel(completedIssue: CompletedIssue(issue: .filler(), result: .filler), nationName: "elest_adra"))
+    }
+}

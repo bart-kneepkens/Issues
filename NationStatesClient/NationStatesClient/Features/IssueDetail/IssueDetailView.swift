@@ -18,8 +18,10 @@ struct IssueDetailView: View {
             } else if let result = viewModel.answeredIssueResult {
                 AnsweredIssueSection(result: result)
             } else {
-                Button("Respond to this issue") {
+                Button(action: {
                     showingOptions.toggle()
+                }) {
+                    Text("Respond to this issue").fontWeight(.medium)
                 }
             }
         }
@@ -33,31 +35,31 @@ struct IssueDetailView: View {
     }
     
     var body: some View {
-            List {
-                Section {
-                    VStack {
-                        HStack {
-                            Text(viewModel.issue.title).font(.system(size: 24, weight: .bold))
-                            Spacer()
-                        }
-                        
-                        CachedRemoteImage(url: URLBuilder.imageUrl(for: viewModel.issue.imageName)).aspectRatio(contentMode: .fit)
-                        
-                        Text(viewModel.issue.text)
-                            .fixedSize(horizontal: false, vertical: true)
+        List {
+            Section {
+                VStack {
+                    HStack {
+                        Text(viewModel.issue.title).font(.system(size: 24, weight: .bold))
+                        Spacer()
                     }
+                    
+                    CachedRemoteImage(url: URLBuilder.imageUrl(for: viewModel.issue.imageName)).aspectRatio(contentMode: .fit)
+                    
+                    Text(viewModel.issue.text)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-                
-                contents
             }
-            .listStyle(InsetGroupedListStyle())
-            .navigationTitle("\(viewModel.nationName) Issue #\(viewModel.issue.id)")
-            .navigationBarTitleDisplayMode(.inline)
-            .sheet(isPresented: $showingOptions, content: {
-                IssueDetailOptionsView(viewModel: self.viewModel)
-            })
-            .alert(isPresented: self.shouldShowAlert, content: {
-                Alert(title: Text("Something went wrong"), message: Text("Please try again later"), dismissButton: nil)
-            })
+            
+            contents
+        }
+        .listStyle(InsetGroupedListStyle())
+        .navigationTitle("\(viewModel.nationName) Issue #\(viewModel.issue.id)")
+        .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $showingOptions, content: {
+            IssueDetailOptionsView(viewModel: self.viewModel)
+        })
+        .alert(isPresented: self.shouldShowAlert, content: {
+            Alert(title: Text("Something went wrong"), message: Text("Please try again later"), dismissButton: nil)
+        })
     }
 }

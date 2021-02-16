@@ -24,7 +24,7 @@ class MockedIssueProvider: IssueProvider {
     }
     
     func fetchIssues() -> AnyPublisher<FetchIssuesResult?, APIError> {
-        return Just(FetchIssuesResult(issues: self.issues, timeLeftForNextIssue: "timeLeft", nextIssueDate: Date()))
+        return Just(FetchIssuesResult(issues: self.issues, timeLeftForNextIssue: "in 5 minutes", nextIssueDate: Date()))
             .delay(for: .seconds(delay), scheduler: DispatchQueue.main)
             .mapError({ _ in APIError.conflict })
             .eraseToAnyPublisher()

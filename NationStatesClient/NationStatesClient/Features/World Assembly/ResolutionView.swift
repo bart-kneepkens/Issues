@@ -104,7 +104,7 @@ struct ResolutionView: View {
                 }) {
                     HStack {
                         Image(systemName: "book")
-                        Text("Read Resolution")
+                        Text("Read Resolution").fontWeight(.medium)
                     }
                 }
                 .sheet(isPresented: $showingResolutionTextSheet, content: {
