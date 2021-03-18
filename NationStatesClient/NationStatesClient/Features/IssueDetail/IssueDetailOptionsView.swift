@@ -57,8 +57,10 @@ struct IssueDetailOptionsView: View {
     }
 }
 
+#if DEBUG
 struct IssueDetailOptionsView_Previews: PreviewProvider {
     static var previews: some View {
         IssueDetailOptionsView(viewModel: IssueDetailViewModel(completedIssue: CompletedIssue(issue: .filler(), result: .filler), nationName: "elest_adra"))
     }
 }
+#endif

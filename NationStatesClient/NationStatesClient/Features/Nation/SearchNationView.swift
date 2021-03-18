@@ -54,6 +54,7 @@ struct SearchNationView: View {
     }
 }
 
+#if DEBUG
 struct SearchNationView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
@@ -61,3 +62,4 @@ struct SearchNationView_Previews: PreviewProvider {
         }
     }
 }
+#endif

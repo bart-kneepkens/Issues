@@ -7,6 +7,8 @@
 
 import Foundation
 
+// TODO: remove DEBUG directive because it also needs to work for release test builds
+#if DEBUG
 struct UITestMockProviders {
     static var issueProvider: IssueProvider {
         MockedIssueProvider(issues: [
@@ -37,3 +39,4 @@ struct UITestMockProviders {
         MockedAuthenticationProvider(success: true, delay: 0)
     }
 }
+#endif
