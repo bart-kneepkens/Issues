@@ -60,6 +60,7 @@ enum APIError: Error {
     case notConnected
     case timedOut
     case unknown(code: Int)
+    case nationNotFound
 }
 
 typealias DataResponse = (data: Data, response: URLResponse)
@@ -181,6 +182,14 @@ extension NationStatesAPI {
             parser.parse()
             return parser.nationDTO
         }
+        .mapError({ apiError -> APIError in
+            switch apiError {
+            case .notFound:
+                return .nationNotFound
+            default:
+                return apiError
+            }
+        })
         .eraseToAnyPublisher()
     }
 }

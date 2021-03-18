@@ -47,6 +47,8 @@
 		AE2EDE842558212F00042668 /* CompletedIssuesModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AE2EDE822558212F00042668 /* CompletedIssuesModel.xcdatamodeld */; };
 		AE2EDE8C25584E3200042668 /* PersistentCompletedIssueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2EDE8B25584E3200042668 /* PersistentCompletedIssueProvider.swift */; };
 		AE32F9702544D5600037954D /* NationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32F96F2544D5600037954D /* NationView.swift */; };
+		AE4AE6D925DC79BA00498D2D /* SearchNationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4AE6D825DC79BA00498D2D /* SearchNationView.swift */; };
+		AE4AE6DF25DDC0DD00498D2D /* SearchNationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4AE6DE25DDC0DD00498D2D /* SearchNationViewModel.swift */; };
 		AE4BACC12544E6E500B391B4 /* CensusScales.plist in Resources */ = {isa = PBXBuildFile; fileRef = AE4BACC02544E6E500B391B4 /* CensusScales.plist */; };
 		AE4BACC72544E97600B391B4 /* CensusScalesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4BACC62544E97600B391B4 /* CensusScalesLoader.swift */; };
 		AE4BACCF2544E99900B391B4 /* CensusScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4BACCE2544E99900B391B4 /* CensusScale.swift */; };
@@ -169,6 +171,8 @@
 		AEE5296C25DB07BE00BF58F9 /* UITestMockProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE5296B25DB07BE00BF58F9 /* UITestMockProviders.swift */; };
 		AEECD738254F465400D536AF /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEECD737254F465400D536AF /* Option.swift */; };
 		AEED15C5257D94B4007FF221 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEED15C4257D94B4007FF221 /* ErrorView.swift */; };
+		AEF3FDC42603F7F4000233B8 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF3FDC32603F7F4000233B8 /* SearchBar.swift */; };
+		AEF3FDCA2603FEDF000233B8 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF3FDC92603FEDF000233B8 /* View+.swift */; };
 		AEF9214A25616C7D0048EAFC /* MediumExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF9213125616A2C0048EAFC /* MediumExtensionView.swift */; };
 		AEF9215025616D280048EAFC /* SmallExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF9214F25616D280048EAFC /* SmallExtensionView.swift */; };
 		AEF921642561728F0048EAFC /* LargeExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF921632561728F0048EAFC /* LargeExtensionView.swift */; };
@@ -257,6 +261,8 @@
 		AE2EDE832558212F00042668 /* CompletedIssuesModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CompletedIssuesModel.xcdatamodel; sourceTree = "<group>"; };
 		AE2EDE8B25584E3200042668 /* PersistentCompletedIssueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentCompletedIssueProvider.swift; sourceTree = "<group>"; };
 		AE32F96F2544D5600037954D /* NationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationView.swift; sourceTree = "<group>"; };
+		AE4AE6D825DC79BA00498D2D /* SearchNationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNationView.swift; sourceTree = "<group>"; };
+		AE4AE6DE25DDC0DD00498D2D /* SearchNationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNationViewModel.swift; sourceTree = "<group>"; };
 		AE4BACC02544E6E500B391B4 /* CensusScales.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CensusScales.plist; sourceTree = "<group>"; };
 		AE4BACC62544E97600B391B4 /* CensusScalesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CensusScalesLoader.swift; sourceTree = "<group>"; };
 		AE4BACCE2544E99900B391B4 /* CensusScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CensusScale.swift; sourceTree = "<group>"; };
@@ -344,6 +350,8 @@
 		AEE5296B25DB07BE00BF58F9 /* UITestMockProviders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestMockProviders.swift; sourceTree = "<group>"; };
 		AEECD737254F465400D536AF /* Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
 		AEED15C4257D94B4007FF221 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		AEF3FDC32603F7F4000233B8 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		AEF3FDC92603FEDF000233B8 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		AEF9213125616A2C0048EAFC /* MediumExtensionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumExtensionView.swift; sourceTree = "<group>"; };
 		AEF9214F25616D280048EAFC /* SmallExtensionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallExtensionView.swift; sourceTree = "<group>"; };
 		AEF921632561728F0048EAFC /* LargeExtensionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeExtensionView.swift; sourceTree = "<group>"; };
@@ -477,6 +485,9 @@
 				AE127F99254F2A96004445E5 /* NationViewModel.swift */,
 				AE7207B225992C5400839D8D /* ColoredFreedomText.swift */,
 				AE8FC6FE25AE4E8700951B8D /* FetchedNationView.swift */,
+				AE4AE6D825DC79BA00498D2D /* SearchNationView.swift */,
+				AE4AE6DE25DDC0DD00498D2D /* SearchNationViewModel.swift */,
+				AEF3FDC32603F7F4000233B8 /* SearchBar.swift */,
 			);
 			path = Nation;
 			sourceTree = "<group>";
@@ -549,6 +560,7 @@
 		AE7207B825992DC000839D8D /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				AEF3FDC92603FEDF000233B8 /* View+.swift */,
 				AECBC6F125CC96EA00654D86 /* SnapshotHelper.swift */,
 				AEC23761259CA2DA006F2CA8 /* HTMLTextWebView.swift */,
 				AE7207B925992DD700839D8D /* UIColor+.swift */,
@@ -1038,6 +1050,7 @@
 				AE2EDE8C25584E3200042668 /* PersistentCompletedIssueProvider.swift in Sources */,
 				AEC2377A259D2239006F2CA8 /* WorldAssemblyHTMLParser.swift in Sources */,
 				AE15A6E725321084004478C3 /* IssuesResponseXMLParser.swift in Sources */,
+				AE4AE6D925DC79BA00498D2D /* SearchNationView.swift in Sources */,
 				AE1C5A8C25589F9C008811E6 /* CompletedIssueMO+.swift in Sources */,
 				AEFF41DA2533834300206676 /* AnswerIssueResponseXMLParser.swift in Sources */,
 				AEFF41CF2533808F00206676 /* NationStatesXMLParser.swift in Sources */,
@@ -1061,6 +1074,7 @@
 				AE1B488F25A129A7005F328B /* WorldAssemblyResolutionTextSheet.swift in Sources */,
 				AE0E0E5025A22A970067A136 /* ResolutionInformation.swift in Sources */,
 				AE5BDB9C2548BE0400F3954D /* IssueProvider.swift in Sources */,
+				AEF3FDCA2603FEDF000233B8 /* View+.swift in Sources */,
 				AE8764DD252FA92300EFE031 /* IssuesView.swift in Sources */,
 				AE79E364259BECB800004D41 /* ResolutionResponseXMLParser.swift in Sources */,
 				AE115F902559DE1700EB1932 /* MO+Protocols.swift in Sources */,
@@ -1102,6 +1116,7 @@
 				AE0E0E4925A227F80067A136 /* VoteOption.swift in Sources */,
 				AE0FEBE1256C786D000A4B57 /* Nation.swift in Sources */,
 				AE15A6C325310372004478C3 /* SecureStorage.swift in Sources */,
+				AE4AE6DF25DDC0DD00498D2D /* SearchNationViewModel.swift in Sources */,
 				AEDED2CE253C6372007A376F /* AnsweredIssueSection.swift in Sources */,
 				AE8981AF2530FD8D00D62766 /* AuthenticationContainer.swift in Sources */,
 				AE1C5A942558ACC0008811E6 /* HeadlineMO+.swift in Sources */,
@@ -1118,6 +1133,7 @@
 				AEE5296C25DB07BE00BF58F9 /* UITestMockProviders.swift in Sources */,
 				AE115F952559E90200EB1932 /* Models+Protocols.swift in Sources */,
 				AE4BACCF2544E99900B391B4 /* CensusScale.swift in Sources */,
+				AEF3FDC42603F7F4000233B8 /* SearchBar.swift in Sources */,
 				AE8764F0252FADE400EFE031 /* IssueDetailView.swift in Sources */,
 				AE210437254B7E0B005AC68C /* APIAuthenticationProvider.swift in Sources */,
 				AE1318F625573AFA00A5D693 /* CompletedIssueProvider.swift in Sources */,

@@ -69,6 +69,10 @@ class ViewModelFactory {
     func fetchedNationViewModel(_ nationName: String) -> FetchedNationViewModel {
         .init(nationName, nationDetailsProvider: nationDetailsProvider)
     }
+    
+    var searchNationViewModel: SearchNationViewModel {
+        .init(nationDetailsProvider: nationDetailsProvider)
+    }
 }
 
 extension ViewModelFactory {

@@ -81,6 +81,7 @@ struct NationDetailsView: View {
 }
 
 struct NationView: View {
+    @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel: NationViewModel
     
@@ -120,7 +121,7 @@ struct NationView: View {
         .listStyle(InsetGroupedListStyle())
         .navigationTitle("Nation")
         .navigationBarItems(trailing: NavigationLink(
-                                destination: Text("search"),
+                                destination: SearchNationView(viewModel: viewModelFactory.searchNationViewModel),
                                 label: {
                                     Image(systemName: "magnifyingglass")
                                 }))

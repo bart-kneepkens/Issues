@@ -21,7 +21,7 @@ class FetchedNationViewModel: ObservableObject {
         }
         
         case initial
-        case loading
+        case loading(String)
         case loaded(Nation)
         case error(APIError)
     }
@@ -38,7 +38,7 @@ class FetchedNationViewModel: ObservableObject {
     
     func startFetch() {
         guard self.state == .initial else { return }
-        self.state = .loading
+        self.state = .loading(nationName)
         
         self.cancellable = self.nationDetailsProvider
             .fetchNationDetails(for: self.nationName)
@@ -46,7 +46,8 @@ class FetchedNationViewModel: ObservableObject {
             .catch({ apiError -> AnyPublisher<Nation?, Never> in
                 self.state = .error(apiError)
                 return Just(nil).eraseToAnyPublisher()
-            }).sink(receiveValue: { output in
+            })
+            .sink(receiveValue: { output in
                 if let nation = output {
                     self.state = .loaded(nation)
                 }
@@ -74,7 +75,7 @@ struct FetchedNationView: View {
         }
         .listStyle(InsetGroupedListStyle())
         .onAppear {
-            self.viewModel.startFetch()
+            viewModel.startFetch()
         }
     }
 }

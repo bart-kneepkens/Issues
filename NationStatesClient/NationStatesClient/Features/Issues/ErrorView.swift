@@ -17,6 +17,7 @@ struct ErrorView: View {
         case .unauthorized: return "There appears to be an authentication problem. Tap here to sign in."
         case .rateExceeded: fallthrough
         case .timedOut: return "There appear to be some connection issues. Retrying.."
+        case .nationNotFound: return "Nation not found"
             
             #if DEBUG
             case .conflict: return "conflict"
