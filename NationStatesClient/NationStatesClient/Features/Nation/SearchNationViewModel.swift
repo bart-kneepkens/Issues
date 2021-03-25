@@ -18,7 +18,8 @@ class SearchNationViewModel: ObservableObject {
     init(nationDetailsProvider: NationDetailsProvider) {
         self.nationDetailsProvider = nationDetailsProvider
         
-        searchTerm.debounce(for: .seconds(1), scheduler: RunLoop.main).sink(receiveValue: { searchQuery in
+        searchTerm.debounce(for: .seconds(1), scheduler: RunLoop.main).sink(receiveValue: { [weak self] searchQuery in
+            guard let self = self else { return }
             guard !searchQuery.isEmpty else {
                 if self.state != .initial {
                     self.state = .initial

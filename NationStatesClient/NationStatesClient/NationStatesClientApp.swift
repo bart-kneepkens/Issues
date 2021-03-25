@@ -10,12 +10,11 @@ import SwiftUI
 @main
 struct NationStatesClientApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    let factory = ViewModelFactory()
+    @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     
     var body: some Scene {
         WindowGroup {
-            ContentView(viewModel: factory.contentViewModel)
-                .environment(\.viewModelFactory, factory)
+            ContentView(viewModel: viewModelFactory.contentViewModel)
         }
     }
 }

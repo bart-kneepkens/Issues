@@ -53,6 +53,7 @@
 		AE4BACC72544E97600B391B4 /* CensusScalesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4BACC62544E97600B391B4 /* CensusScalesLoader.swift */; };
 		AE4BACCF2544E99900B391B4 /* CensusScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4BACCE2544E99900B391B4 /* CensusScale.swift */; };
 		AE4F468C2597CF9B00CFC42E /* CreateNationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4F468B2597CF9B00CFC42E /* CreateNationSheet.swift */; };
+		AE5B6DAE260D4A7F005D130B /* EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5B6DAD260D4A7F005D130B /* EnvironmentValues.swift */; };
 		AE5BDB9C2548BE0400F3954D /* IssueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BDB9B2548BE0400F3954D /* IssueProvider.swift */; };
 		AE5BDBA42548BE3800F3954D /* APIIssueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BDBA32548BE3800F3954D /* APIIssueProvider.swift */; };
 		AE5D02E0259D2D9C00492027 /* WorldAssemblyHTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC23779259D2239006F2CA8 /* WorldAssemblyHTMLParser.swift */; };
@@ -267,6 +268,7 @@
 		AE4BACC62544E97600B391B4 /* CensusScalesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CensusScalesLoader.swift; sourceTree = "<group>"; };
 		AE4BACCE2544E99900B391B4 /* CensusScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CensusScale.swift; sourceTree = "<group>"; };
 		AE4F468B2597CF9B00CFC42E /* CreateNationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNationSheet.swift; sourceTree = "<group>"; };
+		AE5B6DAD260D4A7F005D130B /* EnvironmentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentValues.swift; sourceTree = "<group>"; };
 		AE5BDB9B2548BE0400F3954D /* IssueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueProvider.swift; sourceTree = "<group>"; };
 		AE5BDBA32548BE3800F3954D /* APIIssueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIIssueProvider.swift; sourceTree = "<group>"; };
 		AE5D02EB259E4C6600492027 /* ResolutionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolutionProvider.swift; sourceTree = "<group>"; };
@@ -566,6 +568,7 @@
 				AE7207B925992DD700839D8D /* UIColor+.swift */,
 				AE669EFB25A528FD007725D0 /* PlainListRow.swift */,
 				AEE5296B25DB07BE00BF58F9 /* UITestMockProviders.swift */,
+				AE5B6DAD260D4A7F005D130B /* EnvironmentValues.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1100,6 +1103,7 @@
 				AE790DDF256DA7B300051FD4 /* APINationDetailsProvider.swift in Sources */,
 				AE95AA96258EADCA00607C1B /* CreateNationWebView.swift in Sources */,
 				AE6E69E7258AAE95009C81B5 /* SignInInProgressView.swift in Sources */,
+				AE5B6DAE260D4A7F005D130B /* EnvironmentValues.swift in Sources */,
 				AE7207C925993C4700839D8D /* Freedom.swift in Sources */,
 				AE8FC6F425ABA8A600951B8D /* ResolutionViewModel.swift in Sources */,
 				AE8981AA2530FBA000D62766 /* MockedIssueProvider.swift in Sources */,

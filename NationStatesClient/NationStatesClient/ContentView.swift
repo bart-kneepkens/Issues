@@ -7,17 +7,6 @@
 
 import SwiftUI
 
-private struct ViewModelFactoryEnvironmentKey: EnvironmentKey {
-    static var defaultValue: ViewModelFactory = ViewModelFactory()
-}
-
-extension EnvironmentValues {
-    var viewModelFactory: ViewModelFactory {
-        get { self[ViewModelFactoryEnvironmentKey.self] }
-        set { self[ViewModelFactoryEnvironmentKey.self] = newValue }
-    }
-}
-
 struct ContentView: View {
     @ObservedObject var viewModel: ContentViewModel
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
@@ -61,7 +50,7 @@ struct ContentView: View {
     
     @ViewBuilder private var contents: some View {
         if viewModel.state == ContentViewModel.ContentViewModelState.initial {
-            SignInView(viewModel: viewModelFactory.signinViewModel(viewModel))
+            SignInView(viewModel: viewModelFactory.signInViewModel)
         } else if viewModel.state == ContentViewModel.ContentViewModelState.signingIn {
             SignInProgressView(error: viewModel.error)
         } else {

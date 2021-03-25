@@ -17,6 +17,12 @@ class ViewModelFactory {
     private let resolutionProvider: ResolutionProvider
     private let authenticationProvider: AuthenticationProvider
     
+    let contentViewModel: ContentViewModel
+    let signInViewModel: SignInViewModel
+    let issuesViewModel: IssuesViewModel
+    let nationViewModel: NationViewModel
+    let worldAssemblyViewModel: WorldAssemblyViewModel
+    
     init() {
         self.authenticationContainer = AuthenticationContainer()
         
@@ -26,6 +32,11 @@ class ViewModelFactory {
             self.nationDetailsProvider = UITestMockProviders.nationDetailsProvider
             self.resolutionProvider = UITestMockProviders.resolutionProvider
             self.authenticationProvider = UITestMockProviders.authenticationProvider
+            self.contentViewModel = .init(authenticationContainer: authenticationContainer, authenticationProvider: authenticationProvider, nationDetailsProvider: nationDetailsProvider, resolutionProvider: resolutionProvider)
+            self.signInViewModel = .init(authenticationProvider: authenticationProvider, authenticationContainer: authenticationContainer, contentViewModel: self.contentViewModel)
+            self.issuesViewModel = .init(provider: issueProvider, authenticationContainer: authenticationContainer)
+            self.nationViewModel = .init(provider: nationDetailsProvider, authenticationContainer: authenticationContainer)
+            self.worldAssemblyViewModel = .init(authenticationContainer: authenticationContainer, resolutionProvider: resolutionProvider, nationDetailsProvider: nationDetailsProvider)
             return
         }
         #endif
@@ -34,14 +45,12 @@ class ViewModelFactory {
         self.nationDetailsProvider = APINationDetailsProvider(container: authenticationContainer)
         self.resolutionProvider = APIResolutionProvider(authenticationContainer: authenticationContainer)
         self.authenticationProvider = APIAuthenticationProvider(authenticationContainer: authenticationContainer)
-    }
-    
-    var contentViewModel: ContentViewModel {
-        .init(authenticationContainer: authenticationContainer, authenticationProvider: authenticationProvider, nationDetailsProvider: nationDetailsProvider, resolutionProvider: resolutionProvider)
-    }
-    
-    var issuesViewModel: IssuesViewModel {
-        .init(provider: issueProvider, authenticationContainer: authenticationContainer)
+        
+        self.contentViewModel = .init(authenticationContainer: authenticationContainer, authenticationProvider: authenticationProvider, nationDetailsProvider: nationDetailsProvider, resolutionProvider: resolutionProvider)
+        self.signInViewModel = .init(authenticationProvider: authenticationProvider, authenticationContainer: authenticationContainer, contentViewModel: self.contentViewModel)
+        self.issuesViewModel = .init(provider: issueProvider, authenticationContainer: authenticationContainer)
+        self.nationViewModel = .init(provider: nationDetailsProvider, authenticationContainer: authenticationContainer)
+        self.worldAssemblyViewModel = .init(authenticationContainer: authenticationContainer, resolutionProvider: resolutionProvider, nationDetailsProvider: nationDetailsProvider)
     }
     
     func issueDetailViewModel(for issue: Issue, with container: IssueContainer) -> IssueDetailViewModel {
@@ -50,18 +59,6 @@ class ViewModelFactory {
     
     func issueDetailViewModel(for completedIssue: CompletedIssue) -> IssueDetailViewModel {
         .init(completedIssue: completedIssue, nationName: authenticationContainer.nationName)
-    }
-    
-    var nationViewModel: NationViewModel {
-        .init(provider: nationDetailsProvider, authenticationContainer: authenticationContainer)
-    }
-    
-    var worldAssemblyViewModel: WorldAssemblyViewModel {
-        .init(authenticationContainer: authenticationContainer, resolutionProvider: resolutionProvider, nationDetailsProvider: nationDetailsProvider)
-    }
-    
-    func signinViewModel(_ content: ContentViewModel) -> SignInViewModel {
-        .init(authenticationProvider: authenticationProvider, authenticationContainer: authenticationContainer, contentViewModel: content)
     }
     
     func resolutionViewModel(_ resolution: Resolution) -> ResolutionViewModel {
