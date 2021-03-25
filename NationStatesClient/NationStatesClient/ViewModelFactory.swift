@@ -60,8 +60,8 @@ class ViewModelFactory {
         .init(authenticationContainer: authenticationContainer, resolutionProvider: resolutionProvider, nationDetailsProvider: nationDetailsProvider)
     }
     
-    var signinViewModel: SignInViewModel {
-        .init(authenticationProvider: authenticationProvider, authenticationContainer: authenticationContainer, contentViewModel: contentViewModel)
+    func signinViewModel(_ content: ContentViewModel) -> SignInViewModel {
+        .init(authenticationProvider: authenticationProvider, authenticationContainer: authenticationContainer, contentViewModel: content)
     }
     
     func resolutionViewModel(_ resolution: Resolution) -> ResolutionViewModel {

@@ -48,7 +48,6 @@ struct SearchNationView: View {
             }
         }
         .listStyle(InsetGroupedListStyle())
-        .background(Color(UIColor.systemGroupedBackground))
         .navigationTitle("Search")
         .navigationBarTitleDisplayMode(.inline)
     }

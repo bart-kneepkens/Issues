@@ -59,23 +59,25 @@ struct ContentView: View {
         }
     }
     
-    var body: some View {
-        Group {
-            if viewModel.state == ContentViewModel.ContentViewModelState.initial {
-                SignInView(viewModel: viewModelFactory.signinViewModel)
-            } else if viewModel.state == ContentViewModel.ContentViewModelState.signingIn {
-                SignInProgressView(error: viewModel.error)
-            } else {
-                TabView {
-                    tabBarNavigationView(for: .issues)
-                    tabBarNavigationView(for: .worldAssembly)
-                    tabBarNavigationView(for: .nation)
-                }
+    @ViewBuilder private var contents: some View {
+        if viewModel.state == ContentViewModel.ContentViewModelState.initial {
+            SignInView(viewModel: viewModelFactory.signinViewModel(viewModel))
+        } else if viewModel.state == ContentViewModel.ContentViewModelState.signingIn {
+            SignInProgressView(error: viewModel.error)
+        } else {
+            TabView {
+                tabBarNavigationView(for: .issues)
+                tabBarNavigationView(for: .worldAssembly)
+                tabBarNavigationView(for: .nation)
             }
         }
-        .onAppear {
-            self.viewModel.onAppear()
-        }
+    }
+    
+    var body: some View {
+        contents
+            .onAppear {
+                self.viewModel.onAppear()
+            }
     }
 }
 
