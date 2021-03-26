@@ -4,7 +4,7 @@
 
 # Issues for NationStates
 
-This repository contains the source for Issues for NationStates, an upcoming iOS app to keep track of ones NationStates issues on the go.
+This repository contains the source for Issues, an iOS client for [NationStates](https://www.nationstates.net).
 
 # ✨ Features 
 - 📰 Get an overview of your pending issues
@@ -12,7 +12,7 @@ This repository contains the source for Issues for NationStates, an upcoming iOS
 - 📖 Read up on issues
 - 📝 Respond appropriately by passing legislations 
 - 📈 Keep track of your nation and its characteristics 
-- 🌍 Vote on World Assembly resolutions
+- 🌍 Read and vote on World Assembly resolutions
 - 📦 Comes with a widget that displays issues on the home screen 
 
 # ⏰ Future releases
