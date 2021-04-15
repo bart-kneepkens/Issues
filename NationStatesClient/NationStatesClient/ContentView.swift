@@ -50,7 +50,7 @@ struct ContentView: View {
     
     @ViewBuilder private var contents: some View {
         if viewModel.state == ContentViewModel.ContentViewModelState.initial {
-            SignInView(viewModel: viewModelFactory.signInViewModel)
+            SignInView(viewModel: viewModelFactory.signinViewModel(contentViewModel: self.viewModel))
         } else if viewModel.state == ContentViewModel.ContentViewModelState.signingIn {
             SignInProgressView(error: viewModel.error)
         } else {
