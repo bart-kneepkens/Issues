@@ -29,11 +29,6 @@
 	</dict>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<key>UILaunchScreen</key>
-	<dict>
-		<key>UIImageName</key>
-		<string></string>
-	</dict>
 	<key>UILaunchStoryboardName</key>
 	<string>Launch Screen</string>
 	<key>UIRequiredDeviceCapabilities</key>
