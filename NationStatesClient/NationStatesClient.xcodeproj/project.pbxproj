@@ -137,6 +137,7 @@
 		AE95F129253B18E400860D25 /* IssueDetailOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE95F128253B18E400860D25 /* IssueDetailOptionsView.swift */; };
 		AE983A5C258D127900B112CB /* RankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE983A5B258D127900B112CB /* RankingView.swift */; };
 		AEA43FD6259C9BA000ECC389 /* WorldAssemblyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA43FD5259C9BA000ECC389 /* WorldAssemblyViewModel.swift */; };
+		AEAB981F2628DD2000C505BD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AEAB981E2628DD2000C505BD /* Settings.bundle */; };
 		AEC23762259CA2DA006F2CA8 /* HTMLTextWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC23761259CA2DA006F2CA8 /* HTMLTextWebView.swift */; };
 		AEC23774259CCB04006F2CA8 /* VotesDistributionChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC23773259CCB04006F2CA8 /* VotesDistributionChart.swift */; };
 		AEC2377A259D2239006F2CA8 /* WorldAssemblyHTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC23779259D2239006F2CA8 /* WorldAssemblyHTMLParser.swift */; };
@@ -334,6 +335,7 @@
 		AE95F128253B18E400860D25 /* IssueDetailOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailOptionsView.swift; sourceTree = "<group>"; };
 		AE983A5B258D127900B112CB /* RankingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingView.swift; sourceTree = "<group>"; };
 		AEA43FD5259C9BA000ECC389 /* WorldAssemblyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldAssemblyViewModel.swift; sourceTree = "<group>"; };
+		AEAB981E2628DD2000C505BD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		AEC23761259CA2DA006F2CA8 /* HTMLTextWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLTextWebView.swift; sourceTree = "<group>"; };
 		AEC23773259CCB04006F2CA8 /* VotesDistributionChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotesDistributionChart.swift; sourceTree = "<group>"; };
 		AEC23779259D2239006F2CA8 /* WorldAssemblyHTMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldAssemblyHTMLParser.swift; sourceTree = "<group>"; };
@@ -706,6 +708,7 @@
 				AE75FFA12619EC2100C407EE /* Launch Screen.storyboard */,
 				AE8764A8252E6F2A00EFE031 /* Assets.xcassets */,
 				AE8764AD252E6F2A00EFE031 /* Info.plist */,
+				AEAB981E2628DD2000C505BD /* Settings.bundle */,
 				AE8764AA252E6F2A00EFE031 /* Preview Content */,
 			);
 			path = NationStatesClient;
@@ -1015,6 +1018,7 @@
 			files = (
 				AE4BACC12544E6E500B391B4 /* CensusScales.plist in Resources */,
 				AE8764AC252E6F2A00EFE031 /* Preview Assets.xcassets in Resources */,
+				AEAB981F2628DD2000C505BD /* Settings.bundle in Resources */,
 				AE75FFA22619EC2100C407EE /* Launch Screen.storyboard in Resources */,
 				AE8764A9252E6F2A00EFE031 /* Assets.xcassets in Resources */,
 			);
