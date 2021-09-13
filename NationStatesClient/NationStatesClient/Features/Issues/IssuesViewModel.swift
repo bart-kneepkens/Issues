@@ -41,10 +41,10 @@ class IssuesViewModel: ObservableObject {
     private var refreshIssuesTimerCancellable: Cancellable?
     private var didJustAnswerAnIssue = false
     
-    init(provider: IssueProvider, authenticationContainer: AuthenticationContainer) {
+    init(provider: IssueProvider, completedIssueProvider: CompletedIssueProvider, authenticationContainer: AuthenticationContainer) {
         self.provider = provider
         self.authenticationContainer = authenticationContainer
-        self.persistentContainer = PersisentCompletedIssueProvider(nationName: authenticationContainer.nationName)
+        self.persistentContainer = completedIssueProvider
         
         self.cancellables?.append(
             self.shouldFetchPublisher
@@ -57,12 +57,11 @@ class IssuesViewModel: ObservableObject {
         
         self.cancellables?.append(
             persistentContainer.fetchCompletedIssues()
-                .sink(receiveCompletion: { _ in
-            
-        }, receiveValue: { [weak self] compIssues in
-            guard let strongSelf = self else { return }
-            strongSelf.completedIssues = compIssues
-        }))
+                .sink(receiveCompletion: { _ in },
+                      receiveValue: { [weak self] completedIssues in
+                        guard let strongSelf = self else { return }
+                        strongSelf.completedIssues = completedIssues
+                      }))
         
         self.cancellables?.append(
             authenticationContainer.$hasSignedOut.sink(receiveValue: { signedOut in

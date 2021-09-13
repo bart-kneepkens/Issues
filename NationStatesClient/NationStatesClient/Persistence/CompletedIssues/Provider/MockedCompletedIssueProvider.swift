@@ -10,9 +10,7 @@ import Combine
 
 #if DEBUG
 class MockedCompletedIssueProvider: CompletedIssueProvider {
-    var completedIssues: [CompletedIssue] = [
-        CompletedIssue(issue: Issue.filler(), result: .filler)
-    ]
+    var completedIssues: [CompletedIssue] = Array(0..<15).map({ CompletedIssue(issue: Issue.filler($0), result: .filler) })
     
     func fetchCompletedIssues() -> AnyPublisher<[CompletedIssue], Error> {
         Just(self.completedIssues)

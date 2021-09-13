@@ -23,6 +23,10 @@ struct UITestMockProviders {
         ], answerResult: .filler, delay: 0)
     }
     
+    static var completedIssueProvider: CompletedIssueProvider {
+        MockedCompletedIssueProvider()
+    }
+    
     static var nationDetailsProvider: NationDetailsProvider {
         MockedNationDetailsProvider()
     }

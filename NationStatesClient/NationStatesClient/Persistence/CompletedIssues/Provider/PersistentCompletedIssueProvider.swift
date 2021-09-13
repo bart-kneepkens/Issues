@@ -13,8 +13,8 @@ class PersisentCompletedIssueProvider: CompletedIssueProvider {
     
     var persistentContainer: NSPersistentContainer?
     
-    init(nationName: String) {
-        self.setup(for: nationName)
+    init(container: AuthenticationContainer) {
+        self.setup(for: container.nationName)
     }
     
     func setup(for nationName: String) {

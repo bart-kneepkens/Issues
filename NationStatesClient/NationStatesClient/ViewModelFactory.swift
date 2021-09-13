@@ -13,6 +13,7 @@ class ViewModelFactory {
     private let authenticationContainer: AuthenticationContainer
     
     private let issueProvider: IssueProvider
+    private let completedIssueProvider: CompletedIssueProvider
     private let nationDetailsProvider: NationDetailsProvider
     private let resolutionProvider: ResolutionProvider
     private let authenticationProvider: AuthenticationProvider
@@ -23,6 +24,7 @@ class ViewModelFactory {
         #if DEBUG
         guard !ViewModelFactory.isRunningInUITest else {
             self.issueProvider = UITestMockProviders.issueProvider
+            self.completedIssueProvider = UITestMockProviders.completedIssueProvider
             self.nationDetailsProvider = UITestMockProviders.nationDetailsProvider
             self.resolutionProvider = UITestMockProviders.resolutionProvider
             self.authenticationProvider = UITestMockProviders.authenticationProvider
@@ -31,6 +33,7 @@ class ViewModelFactory {
         #endif
         
         self.issueProvider = APIIssueProvider(container: authenticationContainer)
+        self.completedIssueProvider = PersisentCompletedIssueProvider(container: authenticationContainer)
         self.nationDetailsProvider = APINationDetailsProvider(container: authenticationContainer)
         self.resolutionProvider = APIResolutionProvider(authenticationContainer: authenticationContainer)
         self.authenticationProvider = APIAuthenticationProvider(authenticationContainer: authenticationContainer)
@@ -41,7 +44,7 @@ class ViewModelFactory {
     }
     
     var issuesViewModel: IssuesViewModel {
-        .init(provider: issueProvider, authenticationContainer: authenticationContainer)
+        .init(provider: issueProvider, completedIssueProvider: completedIssueProvider, authenticationContainer: authenticationContainer)
     }
     
     func issueDetailViewModel(for issue: Issue, with container: IssueContainer) -> IssueDetailViewModel {

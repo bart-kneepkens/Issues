@@ -89,7 +89,7 @@ struct IssuesView: View {
 struct IssuesView_Previews: PreviewProvider {
     static var previews: some View {
         TabView {
-            IssuesView(viewModel: IssuesViewModel(provider: MockedIssueProvider(), authenticationContainer: .init()))
+            IssuesView(viewModel: IssuesViewModel(provider: MockedIssueProvider(), completedIssueProvider: MockedCompletedIssueProvider(), authenticationContainer: .init()))
         }
     }
 }
