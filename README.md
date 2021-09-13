@@ -15,5 +15,9 @@ This repository contains the source for Issues, an iOS client for [NationStates]
 - 🌍 Read and vote on World Assembly resolutions
 - 📦 Comes with a widget that displays issues on the home screen 
 
-# ⏰ Future releases
-The initial release will only be focused on answering your nation's issues. NationStates has a lot more game mechanics than that, this project will keep adding features. The idea is to iterate quickly and utilize user feedback, either from within the application or from the NationStates forums.
+# ⚡️ Technology
+Issues is mostly written using SwiftUI in conjunction with MVVM.
+- Uses the official [NationStates API](https://www.nationstates.net/pages/api.html)
+- Uses web scraping (SwiftSoup) in cases where the API doesn't offer certain features
+- Core Data for persistence
+- Most logic is built using Combine
