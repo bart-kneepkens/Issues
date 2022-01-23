@@ -61,7 +61,7 @@ extension Nation: DTOInitializable {
               let regionInfluence = dto.regionInfluence,
               let animal = dto.animal
               else { return nil }
-        self.init(flagURL: flagURL, name: name, fullName: fullName, motto: motto, category: category, type: type, freedoms: freedoms, populationMillions: populationMillions, currency: currency, regionName: regionName, regionInfluence: regionInfluence, animal: animal, generalAssemblyVote: dto.generalAssemblyVote, securityCouncilVote: dto.securityCouncilVote )
+        self.init(flagURL: flagURL, name: name, fullName: fullName, motto: motto, category: category, type: type, freedoms: freedoms, populationMillions: populationMillions, currency: currency, regionName: regionName, regionInfluence: regionInfluence, animal: animal, generalAssemblyVote: dto.generalAssemblyVote, securityCouncilVote: dto.securityCouncilVote)
     }
 }
 

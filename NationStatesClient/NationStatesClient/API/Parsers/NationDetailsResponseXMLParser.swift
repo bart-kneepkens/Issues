@@ -44,7 +44,7 @@ extension NationDetailsResponseXMLParser: XMLParserDelegate {
             // Motto can contain unicode code point values, so use a transform.
         case "MOTTO": self.nationDTO.motto = foundCharacters.applyingTransform(.HexAny, reverse: false) ?? foundCharacters
         case "CATEGORY": self.nationDTO.category = foundCharacters
-        case "FLAG": self.nationDTO.flagURL = foundCharacters
+        case "FLAG": self.nationDTO.flagURL = foundCharacters.transformSVGExtensionToPNGIfNeeded()
         case "POPULATION": self.nationDTO.populationMillions = Int(foundCharacters)
         case "INFLUENCE": self.nationDTO.regionInfluence = foundCharacters
         case "REGION": self.nationDTO.regionName = foundCharacters
@@ -90,5 +90,15 @@ extension NationDetailsResponseXMLParser: XMLParserDelegate {
     
     func parserDidEndDocument(_ parser: XMLParser) {
         nationDTO.freedoms = FreedomsDTO(civilRights: civilRightsDTO, economy: economyDTO, politicalFreedom: politicalFreedomDTO)
+    }
+}
+
+private extension String {
+    /// Sometimes the API returns PNG. Other times, when it feels fancy, it returns SVG.
+    /// SVG isn't natively supported in SwiftUI (yet) - so it has to be replaced by PNG for now.
+    /// This method assumes that a PNG file can always be found at the same URL as the SVG.
+    func transformSVGExtensionToPNGIfNeeded() -> String {
+        guard let extensionRange = self.range(of: ".svg", options: .backwards) else { return self }
+        return self.replacingCharacters(in: extensionRange, with: ".png")
     }
 }

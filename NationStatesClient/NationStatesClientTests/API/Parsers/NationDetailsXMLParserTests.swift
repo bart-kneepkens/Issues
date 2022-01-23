@@ -62,4 +62,17 @@ class NationDetailsXMLParserTests: XCTestCase {
         
         XCTAssertEqual(parser.nationDTO.motto, "eat the rich °˖✧◝(⁰▿⁰)◜✧˖°")
     }
+    
+    let RESPONSE_WITH_SVG_FLAG = """
+    <NATION id="elest_adra">
+    <FLAG>https://www.nationstates.net/images/flags/Djibouti.svg</FLAG>
+    </NATION>
+    """
+    
+    func testSVGFlagURL() {
+        let parser = NationDetailsResponseXMLParser(RESPONSE_WITH_SVG_FLAG.data(using: .utf8)!)
+        parser.parse()
+        
+        XCTAssertEqual(parser.nationDTO.flagURL, "https://www.nationstates.net/images/flags/Djibouti.png")
+    }
 }
