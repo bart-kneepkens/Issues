@@ -41,6 +41,12 @@ struct IssueDTO: Decodable {
 
 extension IssueDTO: Equatable {}
 
+extension Issue {
+    var deeplinkURL: URL? {
+        URL(string: "widget://\(id)")
+    }
+}
+
 #if DEBUG
 extension Issue {
     static func filler(_ id: Int = 1337) -> Issue {

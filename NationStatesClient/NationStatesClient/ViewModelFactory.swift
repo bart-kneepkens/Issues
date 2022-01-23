@@ -43,9 +43,9 @@ class ViewModelFactory {
         .init(authenticationContainer: authenticationContainer, authenticationProvider: authenticationProvider, nationDetailsProvider: nationDetailsProvider, resolutionProvider: resolutionProvider)
     }
     
-    var issuesViewModel: IssuesViewModel {
+    lazy var issuesViewModel: IssuesViewModel = {
         .init(provider: issueProvider, completedIssueProvider: completedIssueProvider, authenticationContainer: authenticationContainer)
-    }
+    }()
     
     func issueDetailViewModel(for issue: Issue, with container: IssueContainer) -> IssueDetailViewModel {
         .init(issue, provider: issueProvider, nationName: authenticationContainer.nationName, issueContainer: container)

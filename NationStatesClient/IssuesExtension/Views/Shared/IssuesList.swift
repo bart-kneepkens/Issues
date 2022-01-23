@@ -21,15 +21,26 @@ struct IssuesList: View {
         
     }
     
+    @ViewBuilder private func issueView(_ issue: Issue) -> some View {
+        HStack {
+            Text("\(issue.title)")
+                .multilineTextAlignment(.leading)
+                .frame(maxHeight: 44, alignment: .center)
+            Spacer()
+        }
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             ForEach(self.issues, id: \.id) { issue in
-                HStack {
-                    Text("\(issue.title)")
-                        .multilineTextAlignment(.leading)
-                        .frame(maxHeight: 44, alignment: .center)
-                    Spacer()
+                if let url = issue.deeplinkURL {
+                    Link(destination: url) {
+                        issueView(issue)
+                    }
+                } else {
+                    issueView(issue)
                 }
+                
                 if issue.id != self.issues.last?.id {
                     Divider()
                 }

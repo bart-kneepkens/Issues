@@ -15,6 +15,7 @@ enum IssuesListType {
 
 protocol IssueContainer {
     func didCompleteIssue(_ completedIssue: CompletedIssue)
+    func clearDeeplinkedIssueIfNeeded()
 }
 
 class IssuesViewModel: ObservableObject {
@@ -31,6 +32,7 @@ class IssuesViewModel: ObservableObject {
     var completedIssues: [CompletedIssue] = []
     
     @Published var selectedIssuesList: IssuesListType = .current
+    @Published var deeplinkedIssue: Issue?
     
     private let persistentContainer: CompletedIssueProvider
     private let provider: IssueProvider
@@ -70,7 +72,6 @@ class IssuesViewModel: ObservableObject {
                 }
             })
         )
-        
     }
     
     func startRefreshingTimer() {
@@ -104,6 +105,11 @@ class IssuesViewModel: ObservableObject {
         }
     }
     
+    func didReceiveDeeplink(with issueId: Int) {
+        guard let issue = issues.first(where: { $0.id == issueId }) else { return }
+        self.deeplinkedIssue = issue
+    }
+    
     private func fetchIssues(_ showProgress: Bool) {
         guard !self.authenticationContainer.nationName.isEmpty else { return } // TODO: put this check at another level - so no outstanding requests can be done after sign out
         
@@ -129,6 +135,7 @@ class IssuesViewModel: ObservableObject {
                     if showProgress {
                         strongSelf.isFetchingIssues = false
                     }
+                    
                     strongSelf.objectWillChange.send()
                 })
                 .assign(to: \.fetchIssuesResult, on: self)
@@ -142,6 +149,14 @@ extension IssuesViewModel: IssueContainer {
         self.completedIssues.append(completedIssue)
         self.persistentContainer.storeCompletedIssue(completedIssue)
         self.didJustAnswerAnIssue = true
+        self.clearDeeplinkedIssueIfNeeded()
         self.objectWillChange.send()
+    }
+    
+    func clearDeeplinkedIssueIfNeeded() {
+        print("clearDeeplinkedIssueIfNeeded")
+        if self.deeplinkedIssue != nil {
+            self.deeplinkedIssue = nil
+        }
     }
 }

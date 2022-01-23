@@ -21,7 +21,6 @@ struct IssuesView: View {
                     }
                 }
             }
-            
         }
     }
     
@@ -58,7 +57,7 @@ struct IssuesView: View {
         Group {
             if self.viewModel.selectedIssuesList == .current {
                 ForEach(viewModel.issues, id: \.id) { issue in
-                    NavigationLink(issue.title, destination: IssueDetailView(viewModel: viewModelFactory.issueDetailViewModel(for: issue, with: self.viewModel)) )
+                    NavigationLink(issue.title, destination: IssueDetailView(viewModel: viewModelFactory.issueDetailViewModel(for: issue, with: self.viewModel)))
                 }
             } else {
                 ForEach(viewModel.completedIssues, id: \.issue.id) { completed in
@@ -68,19 +67,47 @@ struct IssuesView: View {
         }
     }
     
-    var body: some View {
-        List {
-            Section(header: segmentedPicker, footer: footerView) {
-                listContents
-            }
-            
-            fetchingIndicator
+    @ViewBuilder private var deeplinkedIssueLinkContents: some View {
+        if let issue = self.viewModel.deeplinkedIssue {
+            IssueDetailView(viewModel: viewModelFactory.issueDetailViewModel(for: issue, with: self.viewModel))
         }
-        .listStyle(InsetGroupedListStyle())
-        .navigationTitle("Issues")
-        .onAppear {
-            self.viewModel.startFetchingIssues() // Throttled accordingly in VM
-            self.viewModel.startRefreshingTimer()
+    }
+    
+    private var deeplinkedIssueLink: some View {
+        NavigationLink(
+            destination: deeplinkedIssueLinkContents, isActive: self.shouldNavigateToDeeplinkedIssue) {
+            deeplinkedIssueLinkContents
+        }
+    }
+    
+    private var shouldNavigateToDeeplinkedIssue: Binding<Bool> {
+        .init {
+            self.viewModel.deeplinkedIssue != nil
+        } set: { shouldNavigate in
+            if !shouldNavigate && self.viewModel.deeplinkedIssue != nil {
+                print("cleared deeplinkedIssue")
+                self.viewModel.deeplinkedIssue = nil
+            }
+        }
+    }
+    
+    var body: some View {
+        ZStack {
+            deeplinkedIssueLink
+            List {
+                Section(header: segmentedPicker, footer: footerView) {
+                    listContents
+                }
+                
+                fetchingIndicator
+            }
+            .listStyle(InsetGroupedListStyle())
+            .navigationTitle("Issues")
+            .navigationBarTitleDisplayMode(.large)
+            .onAppear {
+                self.viewModel.startFetchingIssues() // Throttled accordingly in VM
+                self.viewModel.startRefreshingTimer()
+            }
         }
     }
 }
