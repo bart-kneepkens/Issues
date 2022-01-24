@@ -15,7 +15,6 @@ enum IssuesListType {
 
 protocol IssueContainer {
     func didCompleteIssue(_ completedIssue: CompletedIssue)
-    func clearDeeplinkedIssueIfNeeded()
 }
 
 class IssuesViewModel: ObservableObject {
@@ -23,6 +22,12 @@ class IssuesViewModel: ObservableObject {
         didSet {
             if let result = self.fetchIssuesResult {
                 self.issues = result.issues
+                
+                // TODO: Put this deeplink synchronization somewhere else, it really doesn't belong in this setter.
+                if let deeplinkId = self.deeplinkedIssueId, let issue = result.issues.first(where: { $0.id == deeplinkId }) {
+                    self.deeplinkedIssue = issue
+                    self.deeplinkedIssueId = nil
+                }
             }
         }
     }
@@ -42,6 +47,7 @@ class IssuesViewModel: ObservableObject {
     private var shouldFetchPublisher = PassthroughSubject<Bool, Never>()
     private var refreshIssuesTimerCancellable: Cancellable?
     private var didJustAnswerAnIssue = false
+    private var deeplinkedIssueId: Int?
     
     init(provider: IssueProvider, completedIssueProvider: CompletedIssueProvider, authenticationContainer: AuthenticationContainer) {
         self.provider = provider
@@ -51,7 +57,7 @@ class IssuesViewModel: ObservableObject {
         self.cancellables?.append(
             self.shouldFetchPublisher
                 .throttle(for: .seconds(25), scheduler: DispatchQueue.main, latest: false)
-                .sink { [weak self] shouldShowProgressIndicator  in
+                .sink { [weak self] shouldShowProgressIndicator in
                     self?.fetchIssues(shouldShowProgressIndicator)
                     self?.requestAppStoreReviewIfNeeded()
                 }
@@ -106,8 +112,11 @@ class IssuesViewModel: ObservableObject {
     }
     
     func didReceiveDeeplink(with issueId: Int) {
-        guard let issue = issues.first(where: { $0.id == issueId }) else { return }
-        self.deeplinkedIssue = issue
+        if let issue = issues.first(where: { $0.id == issueId }) {
+            self.deeplinkedIssue = issue
+        } else {
+            self.deeplinkedIssueId = issueId
+        }
     }
     
     private func fetchIssues(_ showProgress: Bool) {
@@ -149,14 +158,6 @@ extension IssuesViewModel: IssueContainer {
         self.completedIssues.append(completedIssue)
         self.persistentContainer.storeCompletedIssue(completedIssue)
         self.didJustAnswerAnIssue = true
-        self.clearDeeplinkedIssueIfNeeded()
         self.objectWillChange.send()
-    }
-    
-    func clearDeeplinkedIssueIfNeeded() {
-        print("clearDeeplinkedIssueIfNeeded")
-        if self.deeplinkedIssue != nil {
-            self.deeplinkedIssue = nil
-        }
     }
 }
