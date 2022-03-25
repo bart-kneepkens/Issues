@@ -6,6 +6,8 @@
 
 This repository contains the source for Issues, an iOS client for [NationStates](https://www.nationstates.net).
 
+[<img src="https://github.com/bart-kneepkens/NationStates-iOS/blob/main/docs/assets/Download_on_the_App_Store_Badge_US-UK.svg">](https://apps.apple.com/us/app/issues-for-nationstates/id1543636795)
+
 # ✨ Features 
 - 📰 Get an overview of your pending issues
 - 🕰 Know when the next issue arrives
