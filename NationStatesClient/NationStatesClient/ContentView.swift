@@ -15,12 +15,14 @@ struct ContentView: View {
         case issues
         case worldAssembly
         case nation
+        case more
         
         var text: String {
             switch self {
             case .issues: return "Issues"
             case .worldAssembly: return "World Assembly"
             case .nation: return "Nation"
+            case .more: return "More"
             }
         }
             
@@ -29,6 +31,7 @@ struct ContentView: View {
             case .issues: return "newspaper"
             case .worldAssembly: return "camera.filters"
             case .nation: return "flag"
+            case .more: return "ellipsis"
             }
         }
     }
@@ -39,6 +42,7 @@ struct ContentView: View {
             case .issues: IssuesView(viewModel: viewModelFactory.issuesViewModel)
             case .worldAssembly: WorldAssemblyView(viewModel: viewModelFactory.worldAssemblyViewModel)
             case .nation: NationView(viewModel: viewModelFactory.nationViewModel)
+            case .more: MoreView(viewModel: viewModelFactory.moreViewModel)
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
@@ -58,6 +62,7 @@ struct ContentView: View {
                 tabBarNavigationView(for: .issues)
                 tabBarNavigationView(for: .worldAssembly)
                 tabBarNavigationView(for: .nation)
+                tabBarNavigationView(for: .more)
             }
         }
     }
@@ -73,7 +78,8 @@ struct ContentView: View {
 #if DEBUG
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(viewModel: ContentViewModel(authenticationContainer: .init(), authenticationProvider: MockedAuthenticationProvider(success: true), nationDetailsProvider: MockedNationDetailsProvider(), resolutionProvider: MockedResolutionProvider()))
+        ContentView(viewModel:
+                        ContentViewModel(authenticationContainer: .init(), authenticationProvider: MockedAuthenticationProvider(success: true), nationDetailsProvider: MockedNationDetailsProvider(), resolutionProvider: MockedResolutionProvider()))
     }
 }
 #endif

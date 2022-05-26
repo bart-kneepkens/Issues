@@ -78,6 +78,10 @@ class ViewModelFactory {
     var searchNationViewModel: SearchNationViewModel {
         .init(nationDetailsProvider: nationDetailsProvider)
     }
+    
+    var moreViewModel: MoreViewModel {
+        .init(authenticationContainer: self.authenticationContainer)
+    }
 }
 
 extension ViewModelFactory {

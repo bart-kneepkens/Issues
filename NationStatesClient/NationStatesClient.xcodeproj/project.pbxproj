@@ -187,6 +187,9 @@
 		AEFF41E82535033600206676 /* PingResponseXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41E72535033600206676 /* PingResponseXMLParser.swift */; };
 		AEFF41ED253503B600206676 /* PingResponseXMLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41EC253503B600206676 /* PingResponseXMLParserTests.swift */; };
 		AEFF41FD2536589A00206676 /* URLRequest+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41FC2536589A00206676 /* URLRequest+.swift */; };
+		CC9BB06C283FF7FF00FF22FE /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9BB06B283FF7FF00FF22FE /* MoreView.swift */; };
+		CC9BB06E284001B600FF22FE /* MoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9BB06D284001B600FF22FE /* MoreViewModel.swift */; };
+		CC9BB07628401D3000FF22FE /* FeedbackIntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9BB07528401D3000FF22FE /* FeedbackIntroductionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -368,6 +371,9 @@
 		AEFF41E72535033600206676 /* PingResponseXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingResponseXMLParser.swift; sourceTree = "<group>"; };
 		AEFF41EC253503B600206676 /* PingResponseXMLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingResponseXMLParserTests.swift; sourceTree = "<group>"; };
 		AEFF41FC2536589A00206676 /* URLRequest+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+.swift"; sourceTree = "<group>"; };
+		CC9BB06B283FF7FF00FF22FE /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
+		CC9BB06D284001B600FF22FE /* MoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewModel.swift; sourceTree = "<group>"; };
+		CC9BB07528401D3000FF22FE /* FeedbackIntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackIntroductionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -837,6 +843,7 @@
 				AE8764EB252FAD9200EFE031 /* SignIn */,
 				AE8764EE252FADC800EFE031 /* IssueDetail */,
 				AE32F96E2544D5480037954D /* Nation */,
+				CC9BB06A283FF73D00FF22FE /* More */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -872,6 +879,24 @@
 				AE62CAA52592640A00DD8D46 /* MockedSecureStorage.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		CC9BB06A283FF73D00FF22FE /* More */ = {
+			isa = PBXGroup;
+			children = (
+				CC9BB07428401D1700FF22FE /* Feedback */,
+				CC9BB06B283FF7FF00FF22FE /* MoreView.swift */,
+				CC9BB06D284001B600FF22FE /* MoreViewModel.swift */,
+			);
+			path = More;
+			sourceTree = "<group>";
+		};
+		CC9BB07428401D1700FF22FE /* Feedback */ = {
+			isa = PBXGroup;
+			children = (
+				CC9BB07528401D3000FF22FE /* FeedbackIntroductionView.swift */,
+			);
+			path = Feedback;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1063,6 +1088,7 @@
 				AEFF41CF2533808F00206676 /* NationStatesXMLParser.swift in Sources */,
 				AE15A6D925310852004478C3 /* NationStatesAPI.swift in Sources */,
 				AE1C5A8725589EC5008811E6 /* RankingMO+.swift in Sources */,
+				CC9BB06E284001B600FF22FE /* MoreViewModel.swift in Sources */,
 				AE4F468C2597CF9B00CFC42E /* CreateNationSheet.swift in Sources */,
 				AE6B13CC2545D6AB00606A6A /* AppDelegate.swift in Sources */,
 				AEC23774259CCB04006F2CA8 /* VotesDistributionChart.swift in Sources */,
@@ -1072,6 +1098,7 @@
 				AE669EFC25A528FD007725D0 /* PlainListRow.swift in Sources */,
 				AE127F9A254F2A96004445E5 /* NationViewModel.swift in Sources */,
 				AE790DF9256EDC9D00051FD4 /* BasicImageCache.swift in Sources */,
+				CC9BB06C283FF7FF00FF22FE /* MoreView.swift in Sources */,
 				AEFCC53C2550BCC1002E754F /* FetchIssuesResult.swift in Sources */,
 				AE8764D8252FA4F100EFE031 /* SignInViewModel.swift in Sources */,
 				AE79E384259C01F000004D41 /* WorldAssemblyView.swift in Sources */,
@@ -1110,6 +1137,7 @@
 				AE5B6DAE260D4A7F005D130B /* EnvironmentValues.swift in Sources */,
 				AE7207C925993C4700839D8D /* Freedom.swift in Sources */,
 				AE8FC6F425ABA8A600951B8D /* ResolutionViewModel.swift in Sources */,
+				CC9BB07628401D3000FF22FE /* FeedbackIntroductionView.swift in Sources */,
 				AE8981AA2530FBA000D62766 /* MockedIssueProvider.swift in Sources */,
 				AE8764E2252FA92C00EFE031 /* IssuesViewModel.swift in Sources */,
 				AE62CAC525926E1D00DD8D46 /* NetworkSession.swift in Sources */,

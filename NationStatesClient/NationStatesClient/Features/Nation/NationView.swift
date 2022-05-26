@@ -109,8 +109,6 @@ struct NationView: View {
             } else {
                 nationNameView
             }
-            
-            accountSection
         }
     }
     
@@ -120,19 +118,22 @@ struct NationView: View {
         }
         .listStyle(InsetGroupedListStyle())
         .navigationTitle("Nation")
-        .navigationBarItems(trailing: NavigationLink(
-                                destination: SearchNationView(viewModel: viewModelFactory.searchNationViewModel),
-                                label: {
-                                    Image(systemName: "magnifyingglass")
-                                }))
-
+        .toolbar {
+            NavigationLink(
+                destination: SearchNationView(viewModel: viewModelFactory.searchNationViewModel),
+                label: {
+                    Image(systemName: "magnifyingglass")
+                })
+        }
     }
 }
 
 #if DEBUG
 struct NationView_Previews: PreviewProvider {
     static var previews: some View {
-        NationView(viewModel: .init(nation: .filler, name: "Le Nation "))
+        NavigationView {
+            NationView(viewModel: .init(nation: .filler, name: "Le Nation "))
+        }
     }
 }
 #endif
