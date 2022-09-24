@@ -29,19 +29,18 @@ struct FeedbackIntroductionView: View {
                     Label("Email", systemImage: "envelope")
                 }
                 .sheet(isPresented: $showingComposeEmailView) {
-                    ComposeEmailView()
+                    ComposeEmailView(subject: "Some feedback for Issues For NationStates (\(Configuration.appVersion ?? ""))", recipients: [Configuration.emailRecipient])
                 }
             }
             
             Button {
-                showingURL = IdentifiableURL(string: "http://www.google.com")
+                showingURL = IdentifiableURL(string: Configuration.githubRepositoryURL)
             } label: {
                 Label("Github Repository", systemImage: "network")
             }
             
-            
             Button {
-                showingURL = IdentifiableURL(string: "http://www.apple.com")
+                showingURL = IdentifiableURL(string: Configuration.forumThreadURL)
             } label: {
                 Label("NationStates Forum Thread", systemImage: "note.text")
             }
