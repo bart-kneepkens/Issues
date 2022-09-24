@@ -11,17 +11,12 @@ struct MoreView: View {
     
     @StateObject var viewModel: MoreViewModel
     
-    @State var showingFeedbackSheet = false
-    
     private var contactSection: some View {
         Section {
-            Button {
-                showingFeedbackSheet.toggle()
+            NavigationLink {
+                FeedbackIntroductionView()
             } label: {
-                HStack {
-                    Image(systemName: "envelope")
-                    Text("Share feedback")
-                }
+                Label("Share Feedback", systemImage: "envelope")
             }
         } header: {
             Text("Feedback")
@@ -43,12 +38,7 @@ struct MoreView: View {
             contactSection
             accountSection
         }
-        .sheet(isPresented: $showingFeedbackSheet) {
-            
-        } content: {
-            FeedbackIntroductionView()
-        }
-
+        .navigationTitle("More")
     }
 }
 
