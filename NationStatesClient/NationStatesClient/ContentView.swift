@@ -45,7 +45,7 @@ struct ContentView: View {
             case .more: MoreView(viewModel: viewModelFactory.moreViewModel)
             }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+        .navigationViewStyle(.stack)
         .tabItem {
             Text(item.text)
             Image(systemName: item.iconName)

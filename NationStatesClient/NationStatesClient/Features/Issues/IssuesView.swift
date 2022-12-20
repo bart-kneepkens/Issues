@@ -60,7 +60,7 @@ struct IssuesView: View {
                     NavigationLink(issue.title, destination: IssueDetailView(viewModel: viewModelFactory.issueDetailViewModel(for: issue, with: self.viewModel)))
                 }
             } else {
-                ForEach(viewModel.completedIssues, id: \.issue.id) { completed in
+                ForEach(viewModel.completedIssues.reversed(), id: \.issue.id) { completed in
                     NavigationLink(completed.issue.title, destination: IssueDetailView(viewModel: viewModelFactory.issueDetailViewModel(for: completed)))
                 }
             }
