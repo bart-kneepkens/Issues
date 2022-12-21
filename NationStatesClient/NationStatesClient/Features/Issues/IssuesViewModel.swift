@@ -48,6 +48,7 @@ class IssuesViewModel: ObservableObject {
     private var refreshIssuesTimerCancellable: Cancellable?
     private var didJustAnswerAnIssue = false
     private var deeplinkedIssueId: Int?
+    private var justAnsweredIssueId: Int?
     
     init(provider: IssueProvider, completedIssueProvider: CompletedIssueProvider, authenticationContainer: AuthenticationContainer) {
         self.provider = provider
@@ -92,7 +93,12 @@ class IssuesViewModel: ObservableObject {
         }
     }
     
-    func startFetchingIssues() {
+    func updateIssues() {
+        if let justAnsweredIssueId {
+            self.issues = self.issues.filter({ $0.id != justAnsweredIssueId }) // Remove from currently visible issues
+            self.justAnsweredIssueId = nil
+            self.objectWillChange.send()
+        }
         self.shouldFetchPublisher.send(true)
     }
     
@@ -154,10 +160,9 @@ class IssuesViewModel: ObservableObject {
 
 extension IssuesViewModel: IssueContainer {
     func didCompleteIssue(_ completedIssue: CompletedIssue) {
-        self.issues = self.issues.filter({ $0.id != completedIssue.issue.id }) // Remove from currently visible issues
         self.completedIssues.append(completedIssue)
         self.persistentContainer.storeCompletedIssue(completedIssue)
         self.didJustAnswerAnIssue = true
-        self.objectWillChange.send()
+        self.justAnsweredIssueId = completedIssue.issue.id
     }
 }

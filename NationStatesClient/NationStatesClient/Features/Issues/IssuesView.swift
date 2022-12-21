@@ -105,7 +105,7 @@ struct IssuesView: View {
             .navigationTitle("Issues")
             .navigationBarTitleDisplayMode(.large)
             .onAppear {
-                self.viewModel.startFetchingIssues() // Throttled accordingly in VM
+                self.viewModel.updateIssues() // Throttled accordingly in VM
                 self.viewModel.startRefreshingTimer()
             }
         }
