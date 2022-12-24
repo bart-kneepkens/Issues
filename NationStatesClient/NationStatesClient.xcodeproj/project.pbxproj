@@ -1434,7 +1434,7 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
@@ -1444,7 +1444,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "bart-kneepkens.NationStatesClient";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1462,7 +1462,7 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
@@ -1472,7 +1472,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "bart-kneepkens.NationStatesClient";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1573,7 +1573,7 @@
 				CODE_SIGN_ENTITLEMENTS = IssuesExtension/IssuesExtensionExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				INFOPLIST_FILE = IssuesExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1581,7 +1581,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "bart-kneepkens.NationStatesClient.IssuesExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1599,7 +1599,7 @@
 				CODE_SIGN_ENTITLEMENTS = IssuesExtension/IssuesExtensionExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				INFOPLIST_FILE = IssuesExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1607,7 +1607,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "bart-kneepkens.NationStatesClient.IssuesExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
