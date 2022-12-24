@@ -39,7 +39,7 @@ class AuthenticatedAPIRequest {
     var publisher: AnyPublisher<DataResponse, APIError> {
         self.session.publisher(for: self.authenticated)
             .tryMap({ output -> DataResponse in
-                try output.response.throwHTTPErrors()
+                try output.response.throwHTTPErrors(data: output.data)
                 return output
             })
             .tryCatch({ error -> AnyPublisher<DataResponse, APIError> in

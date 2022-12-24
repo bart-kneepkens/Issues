@@ -11,8 +11,18 @@ struct SignInView: View {
     @ObservedObject var viewModel: SignInViewModel
     @State var shouldShowSingupSheet = false
     
-    private var shouldShowAlert: Binding<Bool> {
-        .init(get: { self.viewModel.signInError != nil }, set: {_ in})
+    private var shouldShowInvalidCredentialsAlert: Binding<Bool> {
+        .init(get: { self.viewModel.signInError != nil && !shouldShowOutageAlert.wrappedValue }, set: {_ in})
+    }
+    
+    private var shouldShowOutageAlert: Binding<Bool> {
+        .init {
+            guard let signInError = self.viewModel.signInError else { return false }
+            if case APIError.nationStatesOutage = signInError.asAPIError {
+                return true
+            }
+            return false
+        } set: { _ in }
     }
     
     private var screenHeader: some View {
@@ -78,8 +88,11 @@ struct SignInView: View {
             .navigationBarItems(leading: EmptyView(), trailing: EmptyView())
             .navigationBarHidden(true)
             .navigationBarTitle("")
-            .alert(isPresented: shouldShowAlert, content: {
+            .alert(isPresented: shouldShowInvalidCredentialsAlert, content: {
                 Alert(title: Text("Can't sign in"), message: Text("Please check your credentials and try again"), dismissButton: nil)
+            })
+            .alert(isPresented: shouldShowOutageAlert, content: {
+                Alert(title: Text("Server outage"), message: Text("NationStates servers are currently experiencing outage. Please hold tight while it's being resolved, and check the website for details."), dismissButton: nil)
             })
             .sheet(isPresented: $shouldShowSingupSheet) {
                 CreateNationSheet() { result in

@@ -29,7 +29,7 @@ class APIRequest {
     var publisher: AnyPublisher<DataResponse, APIError> {
         session.publisher(for: self.request)
             .tryMap { (output) -> DataResponse in
-                try output.response.throwHTTPErrors()
+                try output.response.throwHTTPErrors(data: output.data)
                 return output
             }
             .mapError({ error -> APIError in
