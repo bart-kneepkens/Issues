@@ -38,7 +38,7 @@ struct ColoredFreedomText: View {
     }
     
     var body: some View {
-        Text(freedom.text)
+        Text("\(freedom.text) (\(Int(freedom.score)))")
             .foregroundColor(self.color)
             .fontWeight(.medium)
     }
