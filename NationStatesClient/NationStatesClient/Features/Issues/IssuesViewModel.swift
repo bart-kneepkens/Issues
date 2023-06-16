@@ -141,17 +141,16 @@ class IssuesViewModel: ObservableObject {
                     return Just(nil).eraseToAnyPublisher()
                 })
                 .handleEvents(receiveCompletion: { [weak self] completion in
-                    guard let strongSelf = self else { return }
+                    guard let self else { return }
                     switch completion {
                     case .finished:
-                        strongSelf.error = nil
+                        self.error = nil
                     }
                     
                     if showProgress {
-                        strongSelf.isFetchingIssues = false
+                        self.isFetchingIssues = false
+                        self.objectWillChange.send()
                     }
-                    
-                    strongSelf.objectWillChange.send()
                 })
                 .assign(to: \.fetchIssuesResult, on: self)
         )
