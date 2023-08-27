@@ -192,6 +192,7 @@
 		CC9BB06C283FF7FF00FF22FE /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9BB06B283FF7FF00FF22FE /* MoreView.swift */; };
 		CC9BB06E284001B600FF22FE /* MoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9BB06D284001B600FF22FE /* MoreViewModel.swift */; };
 		CC9BB07628401D3000FF22FE /* FeedbackIntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9BB07528401D3000FF22FE /* FeedbackIntroductionView.swift */; };
+		CCA6653B2A9BDE20001E860B /* PastIssuesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA6653A2A9BDE20001E860B /* PastIssuesView.swift */; };
 		CCB8E31228DFB0B500F88087 /* IdentifiableURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB8E31128DFB0B500F88087 /* IdentifiableURL.swift */; };
 		CCB8E31828DFBBA400F88087 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB8E31728DFBBA400F88087 /* Configuration.swift */; };
 /* End PBXBuildFile section */
@@ -380,6 +381,7 @@
 		CC9BB06B283FF7FF00FF22FE /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 		CC9BB06D284001B600FF22FE /* MoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewModel.swift; sourceTree = "<group>"; };
 		CC9BB07528401D3000FF22FE /* FeedbackIntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackIntroductionView.swift; sourceTree = "<group>"; };
+		CCA6653A2A9BDE20001E860B /* PastIssuesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastIssuesView.swift; sourceTree = "<group>"; };
 		CCB8E31128DFB0B500F88087 /* IdentifiableURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableURL.swift; sourceTree = "<group>"; };
 		CCB8E31728DFBBA400F88087 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -774,6 +776,7 @@
 		AE8764EC252FAD9E00EFE031 /* Issues */ = {
 			isa = PBXGroup;
 			children = (
+				CCA665392A9BDE12001E860B /* Past Issues */,
 				AE8764DC252FA92300EFE031 /* IssuesView.swift */,
 				AE8764E1252FA92C00EFE031 /* IssuesViewModel.swift */,
 				AEED15C4257D94B4007FF221 /* ErrorView.swift */,
@@ -909,6 +912,14 @@
 				CC9BB07528401D3000FF22FE /* FeedbackIntroductionView.swift */,
 			);
 			path = Feedback;
+			sourceTree = "<group>";
+		};
+		CCA665392A9BDE12001E860B /* Past Issues */ = {
+			isa = PBXGroup;
+			children = (
+				CCA6653A2A9BDE20001E860B /* PastIssuesView.swift */,
+			);
+			path = "Past Issues";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1093,6 +1104,7 @@
 				AE21043C254B8C3C005AC68C /* MockedAuthenticationProvider.swift in Sources */,
 				AE2EDE8C25584E3200042668 /* PersistentCompletedIssueProvider.swift in Sources */,
 				AEC2377A259D2239006F2CA8 /* WorldAssemblyHTMLParser.swift in Sources */,
+				CCA6653B2A9BDE20001E860B /* PastIssuesView.swift in Sources */,
 				AE15A6E725321084004478C3 /* IssuesResponseXMLParser.swift in Sources */,
 				AE4AE6D925DC79BA00498D2D /* SearchNationView.swift in Sources */,
 				CCB8E31228DFB0B500F88087 /* IdentifiableURL.swift in Sources */,
@@ -1360,7 +1372,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1415,7 +1427,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1439,7 +1451,7 @@
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = NationStatesClient/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1467,7 +1479,7 @@
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = NationStatesClient/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

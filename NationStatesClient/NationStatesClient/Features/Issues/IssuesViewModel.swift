@@ -9,10 +9,6 @@ import Foundation
 import Combine
 import StoreKit
 
-enum IssuesListType {
-    case current, past
-}
-
 protocol IssueContainer {
     func didCompleteIssue(_ completedIssue: CompletedIssue)
 }
@@ -36,7 +32,6 @@ class IssuesViewModel: ObservableObject {
     var issues: [Issue] = []
     var completedIssues: [CompletedIssue] = []
     
-    @Published var selectedIssuesList: IssuesListType = .current
     @Published var deeplinkedIssue: Issue?
     
     private let persistentContainer: CompletedIssueProvider
