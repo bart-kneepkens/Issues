@@ -70,7 +70,8 @@ struct NationDetailsView: View {
             nameView(fullName: nation.fullName, name: nation.name)
             categoryView(nation.category)
             mottoView(nation.motto)
-        }.padding(.bottom)
+        }
+        .padding(.bottom)
         
         generalStatisticsView(nation.populationMillions, currency: nation.currency, animal:nation.animal)
         
@@ -98,7 +99,7 @@ struct NationView: View {
                 DispatchQueue.main.async {
                     self.viewModel.signOut()
                 }
-            }.foregroundColor(.red)
+            }
         }
     }
     
@@ -116,7 +117,10 @@ struct NationView: View {
         List {
             self.listContents
         }
-        .listStyle(InsetGroupedListStyle())
+        .listStyle(.insetGrouped)
+        .refreshable {
+            viewModel.refresh()
+        }
         .navigationTitle("Nation")
         .toolbar {
             NavigationLink(

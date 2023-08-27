@@ -28,6 +28,10 @@ class NationViewModel: ObservableObject {
     func signOut() {
         self.authenticationContainer.signOut()
     }
+    
+    func refresh() {
+        provider.fetchCurrentNationDetails()
+    }
 }
 
 
