@@ -38,7 +38,7 @@ class IssuesViewModel: ObservableObject {
     private let provider: IssueProvider
     private let authenticationContainer: AuthenticationContainer
     
-    private var cancellables: [Cancellable]? = []
+    private var cancellables = Set<AnyCancellable>()
     private var shouldFetchPublisher = PassthroughSubject<Bool, Never>()
     private var refreshIssuesTimerCancellable: Cancellable?
     private var didJustAnswerAnIssue = false
@@ -50,30 +50,32 @@ class IssuesViewModel: ObservableObject {
         self.authenticationContainer = authenticationContainer
         self.persistentContainer = completedIssueProvider
         
-        self.cancellables?.append(
-            self.shouldFetchPublisher
-                .throttle(for: .seconds(25), scheduler: DispatchQueue.main, latest: false)
-                .sink { [weak self] shouldShowProgressIndicator in
-                    self?.fetchIssues(shouldShowProgressIndicator)
-                    self?.requestAppStoreReviewIfNeeded()
-                }
-        )
+        self.shouldFetchPublisher
+            .throttle(for: .seconds(25), scheduler: DispatchQueue.main, latest: false)
+            .sink { [weak self] shouldShowProgressIndicator in
+                self?.fetchIssues(shouldShowProgressIndicator)
+                self?.requestAppStoreReviewIfNeeded()
+            }
+            .store(in: &cancellables)
         
-        self.cancellables?.append(
-            persistentContainer.fetchCompletedIssues()
-                .sink(receiveCompletion: { _ in },
-                      receiveValue: { [weak self] completedIssues in
-                        guard let strongSelf = self else { return }
-                        strongSelf.completedIssues = completedIssues
-                      }))
         
-        self.cancellables?.append(
-            authenticationContainer.$hasSignedOut.sink(receiveValue: { signedOut in
-                if signedOut {
-                    self.refreshIssuesTimerCancellable = nil
+        persistentContainer.fetchCompletedIssues()
+            .sink(
+                receiveCompletion: { _ in },
+                receiveValue: { [weak self] completedIssues in
+                    self?.completedIssues = completedIssues
                 }
+            )
+            .store(in: &cancellables)
+        
+        
+        authenticationContainer
+            .$hasSignedOut
+            .filter({ $0 })
+            .sink(receiveValue: { [weak self] _ in
+                self?.refreshIssuesTimerCancellable = nil
             })
-        )
+            .store(in: &cancellables)
     }
     
     func startRefreshingTimer() {
@@ -95,6 +97,10 @@ class IssuesViewModel: ObservableObject {
             self.objectWillChange.send()
         }
         self.shouldFetchPublisher.send(true)
+    }
+    
+    func refreshIssuesManually() {
+        self.fetchIssues(false)
     }
     
     func signOut() {
@@ -128,14 +134,14 @@ class IssuesViewModel: ObservableObject {
             self.objectWillChange.send()
         }
         
-        self.cancellables?.append(
-            self.provider.fetchIssues()
-                .receive(on: DispatchQueue.main)
-                .catch({ [weak self] error -> AnyPublisher<FetchIssuesResult?, Never> in
-                    self?.error = error
-                    return Just(nil).eraseToAnyPublisher()
-                })
-                .handleEvents(receiveCompletion: { [weak self] completion in
+        
+        self.provider.fetchIssues()
+            .receive(on: DispatchQueue.main)
+            .catch({ [weak self] error -> AnyPublisher<FetchIssuesResult?, Never> in
+                self?.error = error
+                return Just(nil).eraseToAnyPublisher()
+            })
+            .handleEvents(receiveCompletion: { [weak self] completion in
                     guard let self else { return }
                     switch completion {
                     case .finished:
@@ -146,9 +152,9 @@ class IssuesViewModel: ObservableObject {
                         self.isFetchingIssues = false
                         self.objectWillChange.send()
                     }
-                })
-                .assign(to: \.fetchIssuesResult, on: self)
-        )
+            })
+            .assign(to: \.fetchIssuesResult, onWeak: self)
+            .store(in: &cancellables)
     }
 }
 

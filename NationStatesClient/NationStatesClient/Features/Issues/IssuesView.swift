@@ -74,7 +74,7 @@ struct IssuesView: View {
             }
             .listStyle(.insetGrouped)
             .refreshable {
-                viewModel.updateIssues()
+                viewModel.refreshIssuesManually()
             }
             .navigationTitle("Issues")
             .navigationBarTitleDisplayMode(.large)
