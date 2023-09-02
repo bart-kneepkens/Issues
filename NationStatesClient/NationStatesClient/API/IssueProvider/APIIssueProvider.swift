@@ -9,6 +9,7 @@ import Foundation
 import Combine
 
 class APIIssueProvider: IssueProvider {
+    
     let authenticationContainer: AuthenticationContainer
     
     init(container: AuthenticationContainer) {
@@ -26,5 +27,12 @@ class APIIssueProvider: IssueProvider {
         return NationStatesAPI.answerIssue(issue, option: option, authenticationContainer: authenticationContainer)
             .map({ AnsweredIssueResult(from: $0 )})
             .eraseToAnyPublisher()
+    }
+    
+    func fetchIssuesAsync() async throws -> FetchIssuesResult? {
+        let dto = try await NationStatesAPI
+            .fetchIssuesAsync(authenticationContainer: authenticationContainer)
+        return FetchIssuesResult(from: dto)
+        
     }
 }

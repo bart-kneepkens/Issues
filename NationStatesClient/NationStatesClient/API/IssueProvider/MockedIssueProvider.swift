@@ -39,5 +39,9 @@ class MockedIssueProvider: IssueProvider {
             })
             .eraseToAnyPublisher()
     }
+    
+    func fetchIssuesAsync() async throws -> FetchIssuesResult? {
+        nil
+    }
 }
 #endif

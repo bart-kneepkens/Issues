@@ -99,8 +99,8 @@ class IssuesViewModel: ObservableObject {
         self.shouldFetchPublisher.send(true)
     }
     
-    func refreshIssuesManually() {
-        self.fetchIssues(false)
+    func refreshIssuesManually() async throws {
+        try await provider.fetchIssuesAsync()
     }
     
     func signOut() {

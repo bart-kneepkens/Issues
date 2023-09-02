@@ -76,6 +76,13 @@ struct NationStatesAPI {
         return AuthenticatedAPIRequest(url: url, authenticationContainer: authenticationContainer).publisher
     }
     
+    private static func authenticatedRequestAsync(using url: URL,
+                                                  authenticationContainer: AuthenticationContainer,
+                                                  session: NetworkSession = URLSession.shared) async throws -> DataResponse {
+        try await AuthenticatedAPIRequest(url: url, authenticationContainer: authenticationContainer).response
+        
+    }
+    
     private static func request(using url: URL,
                                 authenticationContainer: AuthenticationContainer,
                                 session: NetworkSession = URLSession.shared
@@ -156,6 +163,18 @@ extension NationStatesAPI {
                 return FetchIssuesResultDTO(issues: parser.issues, timeLeftForNextIssue: parser.timeLeftForNextIssue, nextIssueDate: parser.nextIssueDate)
             })
             .eraseToAnyPublisher()
+    }
+    
+    static func fetchIssuesAsync(authenticationContainer: AuthenticationContainer) async throws -> FetchIssuesResultDTO {
+        guard let url = URLBuilder.url(for: authenticationContainer.nationName, with: [.issues, .nextissue, .nextissuetime]) else {
+            throw APIError.notConnected
+        }
+        
+        let dataResponse = try await authenticatedRequestAsync(using: url, authenticationContainer: authenticationContainer)
+        let parser = IssuesResponseXMLParser(dataResponse.data)
+        parser.parse()
+        return FetchIssuesResultDTO(issues: parser.issues, timeLeftForNextIssue: parser.timeLeftForNextIssue, nextIssueDate: parser.nextIssueDate)
+        
     }
 }
 

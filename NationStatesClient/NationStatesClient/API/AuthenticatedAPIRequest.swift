@@ -36,6 +36,26 @@ class AuthenticatedAPIRequest {
         return request
     }
     
+    var response: DataResponse {
+        get async throws {
+            let dataResponse = try await session.asyncData(for: self.authenticated)
+            try dataResponse.response.throwHTTPErrors(data: dataResponse.data)
+            
+            if let httpResponse = dataResponse.response as? HTTPURLResponse {
+                if let autoLogin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.autologin.header) {
+                    self.authenticationContainer.autologin = autoLogin
+                    print("Set auth AUTOLOGIN")
+                }
+                if let pin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.pin.header) {
+                    self.authenticationContainer.pin = pin
+                    print("Set auth PIN")
+                }
+            }
+            
+            return dataResponse
+        }
+    }
+    
     var publisher: AnyPublisher<DataResponse, APIError> {
         self.session.publisher(for: self.authenticated)
             .tryMap({ output -> DataResponse in
