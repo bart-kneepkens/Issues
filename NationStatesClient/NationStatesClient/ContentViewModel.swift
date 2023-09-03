@@ -21,7 +21,7 @@ class ContentViewModel: ObservableObject {
             if state == .signedIn {
                 WidgetCenter.shared.reloadAllTimelines()
                 Task {
-                    try? await self.nationDetailsProvider.fetchCurrentNationDetails()
+                    await self.nationDetailsProvider.fetchCurrentNationDetails()
                 }
                 self.resolutionProvider.fetchResolutions()
             }

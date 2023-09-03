@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -148,7 +148,7 @@
 		AED8B667255DF10C008F9769 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED8B666255DF10C008F9769 /* SwiftUI.framework */; };
 		AED8B66A255DF10C008F9769 /* IssuesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED8B669255DF10C008F9769 /* IssuesExtension.swift */; };
 		AED8B66D255DF10E008F9769 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AED8B66C255DF10E008F9769 /* Assets.xcassets */; };
-		AED8B673255DF10E008F9769 /* IssuesExtensionExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AED8B662255DF10C008F9769 /* IssuesExtensionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AED8B673255DF10E008F9769 /* IssuesExtensionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AED8B662255DF10C008F9769 /* IssuesExtensionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AED8B680255DF3A7008F9769 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8764E6252FAA0C00EFE031 /* Issue.swift */; };
 		AED8B685255DF617008F9769 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEECD737254F465400D536AF /* Option.swift */; };
 		AED8B68A255DF61D008F9769 /* Models+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE115F942559E90200EB1932 /* Models+Protocols.swift */; };
@@ -223,15 +223,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		AED8B674255DF10E008F9769 /* Embed App Extensions */ = {
+		AED8B674255DF10E008F9769 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				AED8B673255DF10E008F9769 /* IssuesExtensionExtension.appex in Embed App Extensions */,
+				AED8B673255DF10E008F9769 /* IssuesExtensionExtension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -935,7 +935,7 @@
 				AE87649D252E6F2900EFE031 /* Sources */,
 				AE87649E252E6F2900EFE031 /* Frameworks */,
 				AE87649F252E6F2900EFE031 /* Resources */,
-				AED8B674255DF10E008F9769 /* Embed App Extensions */,
+				AED8B674255DF10E008F9769 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -1018,8 +1018,9 @@
 		AE876499252E6F2900EFE031 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					AE8764A0252E6F2900EFE031 = {
 						CreatedOnToolsVersion = 12.0;
