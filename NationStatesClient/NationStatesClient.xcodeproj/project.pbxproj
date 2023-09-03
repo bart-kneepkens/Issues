@@ -192,6 +192,7 @@
 		CC9BB06C283FF7FF00FF22FE /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9BB06B283FF7FF00FF22FE /* MoreView.swift */; };
 		CC9BB06E284001B600FF22FE /* MoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9BB06D284001B600FF22FE /* MoreViewModel.swift */; };
 		CC9BB07628401D3000FF22FE /* FeedbackIntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9BB07528401D3000FF22FE /* FeedbackIntroductionView.swift */; };
+		CC9CE64A2AA3FA2B00641990 /* APIRequestTests+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9CE6492AA3FA2B00641990 /* APIRequestTests+Async.swift */; };
 		CCA6653B2A9BDE20001E860B /* PastIssuesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA6653A2A9BDE20001E860B /* PastIssuesView.swift */; };
 		CCA6653D2AA14563001E860B /* Combine+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA6653C2AA14563001E860B /* Combine+.swift */; };
 		CCB8E31228DFB0B500F88087 /* IdentifiableURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB8E31128DFB0B500F88087 /* IdentifiableURL.swift */; };
@@ -382,6 +383,7 @@
 		CC9BB06B283FF7FF00FF22FE /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 		CC9BB06D284001B600FF22FE /* MoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewModel.swift; sourceTree = "<group>"; };
 		CC9BB07528401D3000FF22FE /* FeedbackIntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackIntroductionView.swift; sourceTree = "<group>"; };
+		CC9CE6492AA3FA2B00641990 /* APIRequestTests+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIRequestTests+Async.swift"; sourceTree = "<group>"; };
 		CCA6653A2A9BDE20001E860B /* PastIssuesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastIssuesView.swift; sourceTree = "<group>"; };
 		CCA6653C2AA14563001E860B /* Combine+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+.swift"; sourceTree = "<group>"; };
 		CCB8E31128DFB0B500F88087 /* IdentifiableURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableURL.swift; sourceTree = "<group>"; };
@@ -894,6 +896,7 @@
 				AE6B13D12546014B00606A6A /* Parsers */,
 				AE8AA1A12552F92A0031D112 /* NationStatesAPITests.swift */,
 				AE5EF217255343100079389F /* APIRequestTests.swift */,
+				CC9CE6492AA3FA2B00641990 /* APIRequestTests+Async.swift */,
 				AE62CAA52592640A00DD8D46 /* MockedSecureStorage.swift */,
 			);
 			path = API;
@@ -1228,6 +1231,7 @@
 				AE62CAA62592640A00DD8D46 /* MockedSecureStorage.swift in Sources */,
 				AEC23780259D232E006F2CA8 /* WorldAssemblyHTMLParserTests.swift in Sources */,
 				AEFF41ED253503B600206676 /* PingResponseXMLParserTests.swift in Sources */,
+				CC9CE64A2AA3FA2B00641990 /* APIRequestTests+Async.swift in Sources */,
 				AE5EF218255343100079389F /* APIRequestTests.swift in Sources */,
 				AEFF41E02533849D00206676 /* AnswerIssueResponseXMLParserTests.swift in Sources */,
 				AE0FEBED256D9738000A4B57 /* NationDetailsXMLParserTests.swift in Sources */,
@@ -1505,7 +1509,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				INFOPLIST_FILE = NationStatesClientTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1527,7 +1531,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				INFOPLIST_FILE = NationStatesClientTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -39,7 +39,26 @@ class AuthenticatedAPIRequest {
     var response: DataResponse {
         get async throws {
             let dataResponse = try await session.asyncData(for: self.authenticated)
-            try dataResponse.response.throwHTTPErrors(data: dataResponse.data)
+            do {
+                try dataResponse.response.throwHTTPErrors(data: dataResponse.data)
+            } catch {
+                guard let apiError = error as? APIError, self.authenticationContainer.pin != nil || self.authenticationContainer.autologin != nil else {
+                    throw error
+                }
+                
+                switch apiError {
+                case .conflict:
+                    print("HTTP call failed with 409, retrying without PIN header")
+                    self.authenticationContainer.pin = nil
+                    return try await AuthenticatedAPIRequest(url: self.url, authenticationContainer: self.authenticationContainer, session: self.session).response
+                case .unauthorized:
+                    print("HTTP call failed with 403, retrying without PIN header and autologin")
+                    self.authenticationContainer.pin = nil
+                    self.authenticationContainer.autologin = nil
+                    return try await AuthenticatedAPIRequest(url: self.url, authenticationContainer: self.authenticationContainer, session: self.session).response
+                default: throw apiError
+                }
+            }
             
             if let httpResponse = dataResponse.response as? HTTPURLResponse {
                 if let autoLogin = httpResponse.value(forHTTPHeaderField: AuthenticationMode.autologin.header) {

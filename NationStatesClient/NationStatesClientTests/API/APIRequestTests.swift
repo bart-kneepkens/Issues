@@ -105,6 +105,11 @@ class AuthenticatedAPIRequest_Publisher_HTTP_Errors_Tests: XCTestCase {
                 .mapError({ failure -> URLError in })
                 .eraseToAnyPublisher()
         }
+        
+        func asyncData(for request: URLRequest) async throws -> NationStatesClient.DataResponse {
+            let httpResponse = HTTPURLResponse(url: mockURL, statusCode: self.statusCode, httpVersion: nil, headerFields: nil)!
+            return (Data(), httpResponse)
+        }
     }
     
     func testHTTPError403() throws {
@@ -204,6 +209,10 @@ class AuthenticatedAPIRequest_Publisher_NSErrors_Tests: XCTestCase {
             return Fail(error: URLError(urlErrorCode))
                 .eraseToAnyPublisher()
         }
+        
+        func asyncData(for request: URLRequest) async throws -> NationStatesClient.DataResponse {
+            throw URLError(urlErrorCode)
+        }
     }
     
     func testNotConnected() throws {
@@ -265,6 +274,11 @@ class AuthenticatedAPIRequest_Publisher_Retry_Mechanism_Tests: XCTestCase {
             return Just((data: Data(), response: httpResponse))
                 .mapError({ failure -> URLError in })
                 .eraseToAnyPublisher()
+        }
+        
+        func asyncData(for request: URLRequest) async throws -> NationStatesClient.DataResponse {
+            let httpResponse = HTTPURLResponse(url: mockURL, statusCode: self.statusCodes[counter], httpVersion: nil, headerFields: nil)!
+            return (Data(), httpResponse)
         }
     }
     
@@ -373,6 +387,11 @@ class AuthenticatedAPIRequest_Publisher_AuthenticationContainer_Tests: XCTestCas
             return Just((data: Data(), response: httpResponse))
                 .mapError({ failure -> URLError in })
                 .eraseToAnyPublisher()
+        }
+        
+        func asyncData(for request: URLRequest) async throws -> NationStatesClient.DataResponse {
+            let httpResponse = HTTPURLResponse(url: mockURL, statusCode: self.statusCodes[counter], httpVersion: nil, headerFields: ["X-pin" : "test_pin", "X-autologin": "test_autologin"])!
+            return (Data(), httpResponse)
         }
     }
     
