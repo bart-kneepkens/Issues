@@ -19,17 +19,13 @@ class ResolutionViewModel: ObservableObject {
         self.nationDetailsProvider = nationDetailsProvider
     }
     
-    func fetchProposedByNation() {
-        if self.cancellable == nil && self.proposedByNation == nil {
-            self.cancellable = nationDetailsProvider
-                .fetchNationDetails(for: resolution.proposedBy)
-                .catch({ _ in Just(nil).eraseToAnyPublisher() })
-                .receive(on: DispatchQueue.main)
-                .sink(receiveValue: { result in
-                    if let nation = result {
-                        self.proposedByNation = nation
-                    }
-                })
+    func fetchProposedByNation() async {
+        if self.proposedByNation == nil {
+            if let nation = try? await nationDetailsProvider.fetchNationDetails(for: resolution.proposedBy) {
+                await MainActor.run {
+                    self.proposedByNation = nation
+                }
+            }
         }
     }
 }

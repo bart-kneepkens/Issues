@@ -36,22 +36,17 @@ class FetchedNationViewModel: ObservableObject {
         self.nationDetailsProvider = nationDetailsProvider
     }
     
-    func startFetch() {
+    func startFetch() async {
         guard self.state == .initial else { return }
         self.state = .loading(nationName)
         
-        self.cancellable = self.nationDetailsProvider
-            .fetchNationDetails(for: self.nationName)
-            .receive(on: DispatchQueue.main)
-            .catch({ apiError -> AnyPublisher<Nation?, Never> in
-                self.state = .error(apiError)
-                return Just(nil).eraseToAnyPublisher()
-            })
-            .sink(receiveValue: { output in
-                if let nation = output {
-                    self.state = .loaded(nation)
-                }
-            })
+        do {
+            if let nation = try await nationDetailsProvider.fetchNationDetails(for: nationName) {
+                self.state = .loaded(nation)
+            }
+        } catch {
+            self.state = .error(error.asAPIError)
+        }
     }
 }
 
@@ -73,9 +68,11 @@ struct FetchedNationView: View {
         List {
             contents
         }
-        .listStyle(InsetGroupedListStyle())
+        .listStyle(.insetGrouped)
         .onAppear {
-            viewModel.startFetch()
+            Task {
+                await viewModel.startFetch()
+            }
         }
     }
 }

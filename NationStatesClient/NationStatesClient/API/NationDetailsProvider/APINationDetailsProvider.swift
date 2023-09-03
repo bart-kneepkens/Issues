@@ -18,26 +18,17 @@ class APINationDetailsProvider: NationDetailsProvider {
         self.authenticationContainer = container
     }
     
-    func fetchCurrentNationDetails() {
-        self.cancellable = NationStatesAPI
-            .fetchNationDetails(authenticationContainer: self.authenticationContainer, for: self.authenticationContainer.nationName)
-            .map({ Nation(from: $0) })
-            .catch({ error -> AnyPublisher<Nation?, Never> in
-                return Just(nil).eraseToAnyPublisher()
-            })
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { details in
-                self.nationDetails.send(details)
-                if let details = details {
-                    self.authenticationContainer.nationName = details.name
-                }
-            })
+    func fetchCurrentNationDetails() async {
+        do {
+            let dto = try await NationStatesAPI.fetchNationDetails(authenticationContainer: authenticationContainer, for: authenticationContainer.nationName)
+            self.nationDetails.send(Nation(from: dto))
+        } catch {
+            self.nationDetails.send(nil)
+        }
     }
     
-    func fetchNationDetails(for nationName: String) -> AnyPublisher<Nation?, APIError> {
-        NationStatesAPI
-            .fetchNationDetails(authenticationContainer: self.authenticationContainer, for: nationName)
-            .map({ Nation(from: $0) })
-            .eraseToAnyPublisher()
+    func fetchNationDetails(for nationName: String) async throws -> Nation? {
+        let dto = try await NationStatesAPI.fetchNationDetails(authenticationContainer: authenticationContainer, for: nationName)
+        return Nation(from: dto)
     }
 }

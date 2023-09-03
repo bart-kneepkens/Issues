@@ -10,14 +10,15 @@ import Combine
 
 #if DEBUG
 class MockedNationDetailsProvider: NationDetailsProvider {
-    func fetchNationDetails(for nationName: String) -> AnyPublisher<Nation?, APIError> {
-        Just(.filler).mapError({ _ in APIError.unauthorized }).eraseToAnyPublisher()
-    }
+    var nationDetails: CurrentValueSubject<Nation?, Never> = .init(nil)
     
-    var nationDetails = CurrentValueSubject<Nation?,Never>(nil)
-    
-    func fetchCurrentNationDetails() {
+    func fetchCurrentNationDetails() async {
         self.nationDetails.send(.filler)
     }
+    
+    func fetchNationDetails(for nationName: String) async throws -> Nation? {
+        .filler
+    }
+    
 }
 #endif

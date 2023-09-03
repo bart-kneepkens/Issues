@@ -13,12 +13,12 @@ class NationViewModel: ObservableObject {
     
     private let authenticationContainer: AuthenticationContainer
     private let provider: NationDetailsProvider
-    private var cancellables: [Cancellable]? = []
+    private var currentNationLinkCancellable: AnyCancellable?
     
     init(provider: NationDetailsProvider, authenticationContainer: AuthenticationContainer) {
         self.provider = provider
         self.authenticationContainer = authenticationContainer
-        self.cancellables?.append(self.provider.nationDetails.assign(to: \.nation, on: self))
+        currentNationLinkCancellable = provider.nationDetails.assign(to: \.nation, onWeak: self)
     }
     
     var name: String {
@@ -29,8 +29,8 @@ class NationViewModel: ObservableObject {
         self.authenticationContainer.signOut()
     }
     
-    func refresh() {
-        provider.fetchCurrentNationDetails()
+    func refresh() async  {
+        await provider.fetchCurrentNationDetails()
     }
 }
 

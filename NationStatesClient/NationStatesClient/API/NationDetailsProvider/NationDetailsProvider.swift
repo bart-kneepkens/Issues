@@ -9,6 +9,6 @@ import Combine
 
 protocol NationDetailsProvider {
     var nationDetails: CurrentValueSubject<Nation?, Never> { get }
-    func fetchCurrentNationDetails()
-    func fetchNationDetails(for nationName: String) -> AnyPublisher<Nation?, APIError>
+    func fetchCurrentNationDetails() async
+    func fetchNationDetails(for nationName: String) async throws -> Nation?
 }

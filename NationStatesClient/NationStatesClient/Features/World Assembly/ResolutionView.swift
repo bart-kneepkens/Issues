@@ -52,7 +52,9 @@ struct ResolutionView: View {
         PlainListRow(name: "Category", value: resolution.category)
         PlainListRow(name: "Proposed by", value: AnyView(proposedByView))
             .onAppear {
-                self.viewModel.fetchProposedByNation()
+                Task {
+                    await self.viewModel.fetchProposedByNation()
+                }
             }
         
         if let timeLeft = self.timeLeftToVote {

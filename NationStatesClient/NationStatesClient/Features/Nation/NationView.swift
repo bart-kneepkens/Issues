@@ -119,7 +119,7 @@ struct NationView: View {
         }
         .listStyle(.insetGrouped)
         .refreshable {
-            viewModel.refresh()
+            await viewModel.refresh()
         }
         .navigationTitle("Nation")
         .toolbar {

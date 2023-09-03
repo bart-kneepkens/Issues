@@ -13,18 +13,6 @@ struct SearchNationView: View {
     
     @StateObject var viewModel: SearchNationViewModel
     
-    private var searchTermBinding: Binding<String> {
-        .init { () -> String in
-            viewModel.searchTerm.value
-        } set: { newValue in
-            viewModel.searchTerm.send(newValue)
-        }
-    }
-    
-    private var input: some View {
-        SearchBar(searchTerm: searchTermBinding)
-    }
-    
     @ViewBuilder private var contents: some View {
         switch viewModel.state {
         case .initial:
@@ -40,16 +28,16 @@ struct SearchNationView: View {
     
     var body: some View {
         List {
-            Section(header: input) {
-                contents
-                    .onTapGesture {
-                        self.hideKeyboard()
-                    }
-            }
+            contents
+                .onTapGesture {
+                    self.hideKeyboard()
+                }
         }
-        .listStyle(InsetGroupedListStyle())
+        .listStyle(.insetGrouped)
         .navigationTitle("Search")
         .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $viewModel.searchTerm)
+        .disableAutocorrection(true)
     }
 }
 

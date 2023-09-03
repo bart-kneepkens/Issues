@@ -192,25 +192,23 @@ extension NationStatesAPI {
 
 // MARK: - Nation Details
 extension NationStatesAPI {
-    static func fetchNationDetails(authenticationContainer: AuthenticationContainer, for nationName: String) -> AnyPublisher<NationDTO, APIError> {
+    static func fetchNationDetails(authenticationContainer: AuthenticationContainer, for nationName: String) async throws -> NationDTO {
         guard let url = URLBuilder.nationDetailsUrl(for: nationName) else {
-            return Just(NationDTO()).mapError({ _ in APIError.notConnected }).eraseToAnyPublisher()
+            throw APIError.notConnected
         }
         
-        return request(using: url, authenticationContainer: authenticationContainer).map { result -> NationDTO in
-            let parser = NationDetailsResponseXMLParser(result.data)
+        do {
+            let response = try await authenticatedRequestAsync(using: url, authenticationContainer: authenticationContainer)
+            let parser = NationDetailsResponseXMLParser(response.data)
             parser.parse()
             return parser.nationDTO
-        }
-        .mapError({ apiError -> APIError in
-            switch apiError {
+        } catch {
+            switch error.asAPIError {
             case .notFound:
-                return .nationNotFound
-            default:
-                return apiError
+                throw APIError.nationNotFound
+            default: throw error
             }
-        })
-        .eraseToAnyPublisher()
+        }
     }
 }
 

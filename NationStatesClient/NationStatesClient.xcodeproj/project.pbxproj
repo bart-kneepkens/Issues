@@ -173,7 +173,6 @@
 		AEE5296C25DB07BE00BF58F9 /* UITestMockProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE5296B25DB07BE00BF58F9 /* UITestMockProviders.swift */; };
 		AEECD738254F465400D536AF /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEECD737254F465400D536AF /* Option.swift */; };
 		AEED15C5257D94B4007FF221 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEED15C4257D94B4007FF221 /* ErrorView.swift */; };
-		AEF3FDC42603F7F4000233B8 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF3FDC32603F7F4000233B8 /* SearchBar.swift */; };
 		AEF3FDCA2603FEDF000233B8 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF3FDC92603FEDF000233B8 /* View+.swift */; };
 		AEF9214A25616C7D0048EAFC /* MediumExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF9213125616A2C0048EAFC /* MediumExtensionView.swift */; };
 		AEF9215025616D280048EAFC /* SmallExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF9214F25616D280048EAFC /* SmallExtensionView.swift */; };
@@ -364,7 +363,6 @@
 		AEE5296B25DB07BE00BF58F9 /* UITestMockProviders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestMockProviders.swift; sourceTree = "<group>"; };
 		AEECD737254F465400D536AF /* Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
 		AEED15C4257D94B4007FF221 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
-		AEF3FDC32603F7F4000233B8 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		AEF3FDC92603FEDF000233B8 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		AEF9213125616A2C0048EAFC /* MediumExtensionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumExtensionView.swift; sourceTree = "<group>"; };
 		AEF9214F25616D280048EAFC /* SmallExtensionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallExtensionView.swift; sourceTree = "<group>"; };
@@ -511,7 +509,6 @@
 				AE8FC6FE25AE4E8700951B8D /* FetchedNationView.swift */,
 				AE4AE6D825DC79BA00498D2D /* SearchNationView.swift */,
 				AE4AE6DE25DDC0DD00498D2D /* SearchNationViewModel.swift */,
-				AEF3FDC32603F7F4000233B8 /* SearchBar.swift */,
 			);
 			path = Nation;
 			sourceTree = "<group>";
@@ -1203,7 +1200,6 @@
 				AEE5296C25DB07BE00BF58F9 /* UITestMockProviders.swift in Sources */,
 				AE115F952559E90200EB1932 /* Models+Protocols.swift in Sources */,
 				AE4BACCF2544E99900B391B4 /* CensusScale.swift in Sources */,
-				AEF3FDC42603F7F4000233B8 /* SearchBar.swift in Sources */,
 				AE8764F0252FADE400EFE031 /* IssueDetailView.swift in Sources */,
 				AE210437254B7E0B005AC68C /* APIAuthenticationProvider.swift in Sources */,
 				AE1318F625573AFA00A5D693 /* CompletedIssueProvider.swift in Sources */,
