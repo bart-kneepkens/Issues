@@ -32,7 +32,7 @@ class NationStatesClientUITests: XCTestCase {
         
         func swipeAwayResponseSheet() {
             let topCoordinate = app.cells.firstMatch.coordinate(withNormalizedOffset: .zero)
-            topCoordinate.press(forDuration: 0.2, thenDragTo: topCoordinate.withOffset(.init(dx: 0, dy: 500)), withVelocity: .fast, thenHoldForDuration: 0.5)
+            topCoordinate.press(forDuration: 0.2, thenDragTo: topCoordinate.withOffset(.init(dx: 0, dy: 1500)), withVelocity: .fast, thenHoldForDuration: 0.5)
         }
         
         func tapWorldAssemblyTabBarItem() {
