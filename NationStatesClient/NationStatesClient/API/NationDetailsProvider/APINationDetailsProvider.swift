@@ -21,14 +21,20 @@ class APINationDetailsProvider: NationDetailsProvider {
     func fetchCurrentNationDetails() async {
         do {
             let dto = try await NationStatesAPI.fetchNationDetails(authenticationContainer: authenticationContainer, for: authenticationContainer.nationName)
-            self.nationDetails.send(Nation(from: dto))
+            let nation = Nation(from: dto)
+            await updateNationDetails(with: nation)
         } catch {
-            self.nationDetails.send(nil)
+            await updateNationDetails(with: nil)
         }
     }
     
     func fetchNationDetails(for nationName: String) async throws -> Nation? {
         let dto = try await NationStatesAPI.fetchNationDetails(authenticationContainer: authenticationContainer, for: nationName)
         return Nation(from: dto)
+    }
+    
+    @MainActor
+    private func updateNationDetails(with nation: Nation?) {
+        nationDetails.value = nation
     }
 }
