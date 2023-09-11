@@ -57,7 +57,7 @@ class IssuesViewModel: ObservableObject {
         self.persistentContainer = completedIssueProvider
         
         self.shouldFetchPublisher
-            .throttle(for: .seconds(25), scheduler: DispatchQueue.main, latest: false)
+            .throttle(for: .seconds(10), scheduler: DispatchQueue.main, latest: false)
             .sink { [weak self] shouldShowProgressIndicator in
                 self?.fetchIssues(shouldShowProgressIndicator)
                 self?.requestAppStoreReviewIfNeeded()
