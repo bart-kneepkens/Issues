@@ -19,7 +19,7 @@ class MockedAuthenticationProvider: AuthenticationProvider {
     }
     
     func authenticate(authenticationContainer: AuthenticationContainer) -> AnyPublisher<Bool, APIError> {
-        return Just(self.success)
+        Just(self.success)
             .delay(for: .seconds(self.delay), scheduler: DispatchQueue.main)
             .mapError({ _ in APIError.conflict })
             .eraseToAnyPublisher()

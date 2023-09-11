@@ -42,5 +42,9 @@ struct UITestMockProviders {
     static var authenticationProvider: AuthenticationProvider {
         MockedAuthenticationProvider(success: true, delay: 0)
     }
+    
+    static var authenticationContainer: AuthenticationContainer {
+        MockedAuthenticationContainer()
+    }
 }
 #endif

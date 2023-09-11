@@ -19,10 +19,9 @@ class ViewModelFactory {
     private let authenticationProvider: AuthenticationProvider
     
     init() {
-        self.authenticationContainer = AuthenticationContainer()
-        
         #if DEBUG
         guard !ViewModelFactory.isRunningInUITest else {
+            self.authenticationContainer = UITestMockProviders.authenticationContainer
             self.issueProvider = UITestMockProviders.issueProvider
             self.completedIssueProvider = UITestMockProviders.completedIssueProvider
             self.nationDetailsProvider = UITestMockProviders.nationDetailsProvider
@@ -32,6 +31,7 @@ class ViewModelFactory {
         }
         #endif
         
+        self.authenticationContainer = AuthenticationContainer()
         self.issueProvider = APIIssueProvider(container: authenticationContainer)
         self.completedIssueProvider = PersisentCompletedIssueProvider(container: authenticationContainer)
         self.nationDetailsProvider = APINationDetailsProvider(container: authenticationContainer)
