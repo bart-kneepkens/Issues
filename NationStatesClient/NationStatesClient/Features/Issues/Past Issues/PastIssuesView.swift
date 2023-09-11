@@ -33,8 +33,10 @@ struct PastIssuesView: View {
     }
 }
 
+#if DEBUG
 struct PastIssuesView_Previews: PreviewProvider {
     static var previews: some View {
         PastIssuesView(viewModelFactory: .init(), completedIssues: [.init(issue: .filler(), result: .filler)])
     }
 }
+#endif

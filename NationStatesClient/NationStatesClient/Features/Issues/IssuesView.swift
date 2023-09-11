@@ -81,7 +81,6 @@ struct IssuesView: View {
             .navigationBarItems(trailing: pastIssuesButton)
             .onAppear {
                 self.viewModel.updateIssues() // Throttled accordingly in VM
-                self.viewModel.startRefreshingTimer()
             }
         }
     }

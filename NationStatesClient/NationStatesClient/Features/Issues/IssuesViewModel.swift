@@ -24,6 +24,12 @@ class IssuesViewModel: ObservableObject {
                     self.deeplinkedIssue = issue
                     self.deeplinkedIssueId = nil
                 }
+                
+                DispatchQueue.main.async {
+                    self.objectWillChange.send()
+                }
+                
+                setRefetchTimer(at: result.nextIssueDate)
             }
         }
     }
@@ -40,7 +46,7 @@ class IssuesViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     private var shouldFetchPublisher = PassthroughSubject<Bool, Never>()
-    private var refreshIssuesTimerCancellable: Cancellable?
+    private var refetchTimer: Timer?
     private var didJustAnswerAnIssue = false
     private var deeplinkedIssueId: Int?
     private var justAnsweredIssueId: Int?
@@ -73,24 +79,14 @@ class IssuesViewModel: ObservableObject {
             .$hasSignedOut
             .filter({ $0 })
             .sink(receiveValue: { [weak self] _ in
-                self?.refreshIssuesTimerCancellable = nil
+                self?.refetchTimer?.invalidate()
+                self?.refetchTimer = nil
             })
             .store(in: &cancellables)
     }
     
-    func startRefreshingTimer() {
-        if self.refreshIssuesTimerCancellable == nil {
-            // Timer to refresh issues periodically and quietly
-            self.refreshIssuesTimerCancellable = Timer.publish(every: 20, tolerance: 5, on: .main, in: .default)
-                .autoconnect()
-                .receive(on: DispatchQueue.main)
-                .sink(receiveValue: { [weak self] _ in
-                    self?.shouldFetchPublisher.send(false)
-                })
-        }
-    }
-    
-    func updateIssues() {
+   
+    @objc func updateIssues() {
         if let justAnsweredIssueId {
             self.issues = self.issues.filter({ $0.id != justAnsweredIssueId }) // Remove from currently visible issues
             self.justAnsweredIssueId = nil
@@ -100,7 +96,8 @@ class IssuesViewModel: ObservableObject {
     }
     
     func refreshIssuesManually() async throws {
-        try await provider.fetchIssuesAsync()
+        let fetchResult = try await provider.fetchIssuesAsync()
+        self.fetchIssuesResult = fetchResult
     }
     
     func signOut() {
@@ -134,7 +131,6 @@ class IssuesViewModel: ObservableObject {
             self.objectWillChange.send()
         }
         
-        
         self.provider.fetchIssues()
             .receive(on: DispatchQueue.main)
             .catch({ [weak self] error -> AnyPublisher<FetchIssuesResult?, Never> in
@@ -155,6 +151,16 @@ class IssuesViewModel: ObservableObject {
             })
             .assign(to: \.fetchIssuesResult, onWeak: self)
             .store(in: &cancellables)
+    }
+    
+    private func setRefetchTimer(at date: Date) {
+        self.refetchTimer?.invalidate()
+        
+        let timer = Timer(fireAt: date.advanced(by: 5), interval: 0, target: self, selector: #selector(updateIssues), userInfo: nil, repeats: false)
+        
+        RunLoop.main.add(timer, forMode: .default)
+        
+        self.refetchTimer = timer
     }
 }
 
