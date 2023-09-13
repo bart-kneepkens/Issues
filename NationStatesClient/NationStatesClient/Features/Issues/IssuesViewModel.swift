@@ -29,7 +29,10 @@ class IssuesViewModel: ObservableObject {
                     self.objectWillChange.send()
                 }
                 
-                setRefetchTimer(at: result.nextIssueDate)
+                // `nextIssueDate` can't be trusted if all issues are awaiting response
+                if result.issues.count < 5 {
+                    setRefetchTimer(at: result.nextIssueDate)
+                }
             }
         }
     }
