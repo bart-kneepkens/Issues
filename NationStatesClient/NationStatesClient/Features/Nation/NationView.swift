@@ -10,6 +10,22 @@ import SwiftUI
 struct NationDetailsView: View {
     let nation: Nation
     
+    var body: some View {
+        VStack(alignment: .center, spacing: 10) {
+            flagView(nation.flagURL)
+            nameView(fullName: nation.fullName, name: nation.name)
+            categoryView(nation.category)
+            mottoView(nation.motto)
+        }
+        .padding(.bottom)
+        
+        generalStatisticsView(nation.populationMillions, currency: nation.currency, animal:nation.animal)
+        
+        freedomView(nation.freedoms)
+        
+        regionView(nation.regionName, influence: nation.regionInfluence)
+    }
+    
     @ViewBuilder private func nameView(fullName: String, name: String) -> some View {
         let prefix = fullName.replacingOccurrences(of: name, with: "")
         Group {
@@ -63,55 +79,11 @@ struct NationDetailsView: View {
             PlainListRow(name: "Influence", value: influence)
         }
     }
-    
-    var body: some View {
-        VStack(alignment: .center, spacing: 10) {
-            flagView(nation.flagURL)
-            nameView(fullName: nation.fullName, name: nation.name)
-            categoryView(nation.category)
-            mottoView(nation.motto)
-        }
-        .padding(.bottom)
-        
-        generalStatisticsView(nation.populationMillions, currency: nation.currency, animal:nation.animal)
-        
-        freedomView(nation.freedoms)
-        
-        regionView(nation.regionName, influence: nation.regionInfluence)
-    }
 }
 
 struct NationView: View {
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
-    @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel: NationViewModel
-    
-    private var nationNameView: some View {
-        Section(header: Text("Nation Name")) {
-            Text(self.viewModel.name)
-        }
-    }
-    
-    private var accountSection: some View {
-        Section(header: Text("Account")) {
-            Button("Sign out \(self.viewModel.name)") {
-                self.presentationMode.wrappedValue.dismiss()
-                DispatchQueue.main.async {
-                    self.viewModel.signOut()
-                }
-            }
-        }
-    }
-    
-    private var listContents: some View {
-        Group {
-            if let nation = self.viewModel.nation {
-                NationDetailsView(nation: nation)
-            } else {
-                nationNameView
-            }
-        }
-    }
     
     var body: some View {
         List {
@@ -128,6 +100,21 @@ struct NationView: View {
                 label: {
                     Image(systemName: "magnifyingglass")
                 })
+        }
+    }
+    
+    private var nationNameView: some View {
+        Section(header: Text("Nation Name")) {
+            Text(self.viewModel.name)
+        }
+    }
+    
+    @ViewBuilder
+    private var listContents: some View {
+        if let nation = self.viewModel.nation {
+            NationDetailsView(nation: nation)
+        } else {
+            nationNameView
         }
     }
 }
