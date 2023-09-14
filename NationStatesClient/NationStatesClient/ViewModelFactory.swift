@@ -15,6 +15,7 @@ class ViewModelFactory {
     private let issueProvider: IssueProvider
     private let completedIssueProvider: CompletedIssueProvider
     private let nationDetailsProvider: NationDetailsProvider
+    private let regionDetailsProvider: RegionDetailsProvider
     private let resolutionProvider: ResolutionProvider
     private let authenticationProvider: AuthenticationProvider
     
@@ -25,6 +26,7 @@ class ViewModelFactory {
             self.issueProvider = UITestMockProviders.issueProvider
             self.completedIssueProvider = UITestMockProviders.completedIssueProvider
             self.nationDetailsProvider = UITestMockProviders.nationDetailsProvider
+            self.regionDetailsProvider = UITestMockProviders.regionDetailsProvider
             self.resolutionProvider = UITestMockProviders.resolutionProvider
             self.authenticationProvider = UITestMockProviders.authenticationProvider
             return
@@ -35,6 +37,7 @@ class ViewModelFactory {
         self.issueProvider = APIIssueProvider(container: authenticationContainer)
         self.completedIssueProvider = PersisentCompletedIssueProvider(container: authenticationContainer)
         self.nationDetailsProvider = APINationDetailsProvider(container: authenticationContainer)
+        self.regionDetailsProvider = APIRegionDetailsProvider(container: authenticationContainer)
         self.resolutionProvider = APIResolutionProvider(authenticationContainer: authenticationContainer)
         self.authenticationProvider = APIAuthenticationProvider(authenticationContainer: authenticationContainer)
     }
@@ -57,6 +60,10 @@ class ViewModelFactory {
     
     var nationViewModel: NationViewModel {
         .init(provider: nationDetailsProvider, authenticationContainer: authenticationContainer)
+    }
+    
+    var currentRegionViewModel: RegionView.RegionViewModel {
+        .init(nationDetailsProvider: nationDetailsProvider, regionDetailsProvider: regionDetailsProvider)
     }
     
     var worldAssemblyViewModel: WorldAssemblyViewModel {

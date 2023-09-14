@@ -64,6 +64,19 @@ struct URLBuilder {
         return components.url
     }
     
+    static func regionDetailsUrl(for regionName: String) -> URL? {
+        guard var components = URLComponents(url: baseUrl, resolvingAgainstBaseURL: true) else { return nil }
+        let shards: [RegionShard] = RegionShard.allCases
+        
+        components.queryItems = [
+            API_VERSION_QUERY_ITEM,
+            URLQueryItem(name: "region", value: regionName),
+            URLQueryItem(name: "q", value: shards.map({ $0.rawValue }).joined(separator: "+")),
+        ]
+        
+        return components.url
+    }
+    
     static func answerIssueUrl(for nationName: String, issue: Issue, option: Option) -> URL? {
         guard var components = URLComponents(url: baseUrl, resolvingAgainstBaseURL: true) else { return nil }
         

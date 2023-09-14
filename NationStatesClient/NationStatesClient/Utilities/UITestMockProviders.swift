@@ -46,5 +46,9 @@ struct UITestMockProviders {
     static var authenticationContainer: AuthenticationContainer {
         MockedAuthenticationContainer()
     }
+    
+    static var regionDetailsProvider: RegionDetailsProvider {
+        MockedRegionDetailsProvider()
+    }
 }
 #endif

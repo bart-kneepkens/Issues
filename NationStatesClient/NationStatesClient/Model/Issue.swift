@@ -28,7 +28,7 @@ extension Issue: DTOInitializable {
     }
 }
 
-struct IssueDTO: Decodable {
+struct IssueDTO {
     var id: Int?
     var title: String?
     var author: String?

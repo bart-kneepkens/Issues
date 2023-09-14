@@ -19,7 +19,7 @@ struct OptionDTO {
     var text: String?
 }
 
-extension OptionDTO: Decodable, Equatable {}
+extension OptionDTO: Equatable {}
 
 extension Option: DTOInitializable {
     typealias DTOEquivalent = OptionDTO

@@ -38,6 +38,15 @@ enum WorldAssemblyShard: String {
     case lastResolution
 }
 
+enum RegionShard: String, CaseIterable {
+    case name
+    case numnations
+    case delegate
+    case power
+    case bannerurl
+    case flag
+}
+
 enum AuthenticationMode {
     case pin
     case autologin
@@ -202,6 +211,28 @@ extension NationStatesAPI {
             let parser = NationDetailsResponseXMLParser(response.data)
             parser.parse()
             return parser.nationDTO
+        } catch {
+            switch error.asAPIError {
+            case .notFound:
+                throw APIError.nationNotFound
+            default: throw error
+            }
+        }
+    }
+}
+
+// MARK: - Region Details
+extension NationStatesAPI {
+    static func fetchRegionDetails(authenticationContainer: AuthenticationContainer, for regionName: String) async throws -> RegionDTO {
+        guard let url = URLBuilder.regionDetailsUrl(for: regionName) else {
+            throw APIError.notConnected
+        }
+        
+        do {
+            let response = try await authenticatedRequestAsync(using: url, authenticationContainer: authenticationContainer)
+            let parser = RegionDetailsResponseXMLParser(response.data)
+            parser.parse()
+            return parser.regionDTO
         } catch {
             switch error.asAPIError {
             case .notFound:

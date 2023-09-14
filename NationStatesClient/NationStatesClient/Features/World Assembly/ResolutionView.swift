@@ -72,7 +72,8 @@ struct ResolutionView: View {
         if let nation = self.viewModel.proposedByNation {
             List {
                 NationDetailsView(nation: nation)
-            }.listStyle(InsetGroupedListStyle())
+            }
+            .listStyle(InsetGroupedListStyle())
         }
     }
     

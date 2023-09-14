@@ -15,6 +15,7 @@ struct ContentView: View {
         case issues
         case worldAssembly
         case nation
+        case region
         case more
         
         var text: String {
@@ -22,6 +23,7 @@ struct ContentView: View {
             case .issues: return "Issues"
             case .worldAssembly: return "World Assembly"
             case .nation: return "Nation"
+            case .region: return "Region"
             case .more: return "More"
             }
         }
@@ -31,6 +33,7 @@ struct ContentView: View {
             case .issues: return "newspaper"
             case .worldAssembly: return "camera.filters"
             case .nation: return "flag"
+            case .region: return "globe"
             case .more: return "ellipsis"
             }
         }
@@ -42,6 +45,7 @@ struct ContentView: View {
             case .issues: IssuesView(viewModel: viewModelFactory.issuesViewModel)
             case .worldAssembly: WorldAssemblyView(viewModel: viewModelFactory.worldAssemblyViewModel)
             case .nation: NationView(viewModel: viewModelFactory.nationViewModel)
+            case .region: RegionView(viewModel: viewModelFactory.currentRegionViewModel)
             case .more: MoreView(viewModel: viewModelFactory.moreViewModel)
             }
         }
@@ -62,6 +66,7 @@ struct ContentView: View {
                 tabBarNavigationView(for: .issues)
                 tabBarNavigationView(for: .worldAssembly)
                 tabBarNavigationView(for: .nation)
+                tabBarNavigationView(for: .region)
                 tabBarNavigationView(for: .more)
             }
         }
