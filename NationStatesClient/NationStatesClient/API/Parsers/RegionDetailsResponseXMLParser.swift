@@ -23,6 +23,11 @@ extension RegionDetailsResponseXMLParser: XMLParserDelegate {
         foundCharacters += string.trimmingCharacters(in: .newlines)
     }
     
+    func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) {
+        if let bbCode = String(data: CDATABlock, encoding: .utf8) {
+            regionDTO.factbookHTML = BBCodeConverter(bbCodeRawText: bbCode).htmlText
+        }
+    }
 
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         switch elementName {
@@ -38,6 +43,15 @@ extension RegionDetailsResponseXMLParser: XMLParserDelegate {
             regionDTO.flagURL = foundCharacters
         case "BANNERURL":
             regionDTO.bannerURL = "https://www.nationstates.net\(foundCharacters)"
+        case "FOUNDER":
+            if foundCharacters != "0" {
+                regionDTO.founderName = foundCharacters
+            }
+        case "FOUNDEDTIME":
+            if let unixStamp = TimeInterval(foundCharacters) {
+                regionDTO.foundedTime = Date(timeIntervalSince1970: unixStamp)
+            }
+            break
         default:
             break
         }

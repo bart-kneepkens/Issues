@@ -186,6 +186,9 @@
 		AEFF41E82535033600206676 /* PingResponseXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41E72535033600206676 /* PingResponseXMLParser.swift */; };
 		AEFF41ED253503B600206676 /* PingResponseXMLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41EC253503B600206676 /* PingResponseXMLParserTests.swift */; };
 		AEFF41FD2536589A00206676 /* URLRequest+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41FC2536589A00206676 /* URLRequest+.swift */; };
+		CC04D28A2AB73A7600C7F239 /* BBCodeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04D2892AB73A7600C7F239 /* BBCodeConverter.swift */; };
+		CC04D28B2AB769E600C7F239 /* BBCodeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04D2892AB73A7600C7F239 /* BBCodeConverter.swift */; };
+		CC04D28D2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04D28C2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift */; };
 		CC10E36A28DE692100870DD3 /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10E36928DE692100870DD3 /* SafariView.swift */; };
 		CC10E36C28DE6EAC00870DD3 /* ComposeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10E36B28DE6EAC00870DD3 /* ComposeEmailView.swift */; };
 		CC435BAA2AB250560024AFB7 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC435BA92AB250560024AFB7 /* Region.swift */; };
@@ -385,6 +388,8 @@
 		AEFF41E72535033600206676 /* PingResponseXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingResponseXMLParser.swift; sourceTree = "<group>"; };
 		AEFF41EC253503B600206676 /* PingResponseXMLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingResponseXMLParserTests.swift; sourceTree = "<group>"; };
 		AEFF41FC2536589A00206676 /* URLRequest+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+.swift"; sourceTree = "<group>"; };
+		CC04D2892AB73A7600C7F239 /* BBCodeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBCodeConverter.swift; sourceTree = "<group>"; };
+		CC04D28C2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineHTMLTextWebView.swift; sourceTree = "<group>"; };
 		CC10E36928DE692100870DD3 /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
 		CC10E36B28DE6EAC00870DD3 /* ComposeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeEmailView.swift; sourceTree = "<group>"; };
 		CC435BA92AB250560024AFB7 /* Region.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
@@ -581,6 +586,7 @@
 				AE0FEBE6256D9648000A4B57 /* NationDetailsResponseXMLParser.swift */,
 				AE79E350259B589800004D41 /* StringTransform+.swift */,
 				CC435BB22AB259AC0024AFB7 /* RegionDetailsResponseXMLParser.swift */,
+				CC04D2892AB73A7600C7F239 /* BBCodeConverter.swift */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -612,6 +618,7 @@
 				CCB8E31128DFB0B500F88087 /* IdentifiableURL.swift */,
 				CCB8E31728DFBBA400F88087 /* Configuration.swift */,
 				CCA6653C2AA14563001E860B /* Combine+.swift */,
+				CC04D28C2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1154,6 +1161,7 @@
 				AE4AE6D925DC79BA00498D2D /* SearchNationView.swift in Sources */,
 				CCB8E31228DFB0B500F88087 /* IdentifiableURL.swift in Sources */,
 				AE1C5A8C25589F9C008811E6 /* CompletedIssueMO+.swift in Sources */,
+				CC04D28A2AB73A7600C7F239 /* BBCodeConverter.swift in Sources */,
 				AEFF41DA2533834300206676 /* AnswerIssueResponseXMLParser.swift in Sources */,
 				CC435BAC2AB253530024AFB7 /* RegionView.swift in Sources */,
 				AEFF41CF2533808F00206676 /* NationStatesXMLParser.swift in Sources */,
@@ -1211,6 +1219,7 @@
 				AE5B6DAE260D4A7F005D130B /* EnvironmentValues.swift in Sources */,
 				AE7207C925993C4700839D8D /* Freedom.swift in Sources */,
 				AE8FC6F425ABA8A600951B8D /* ResolutionViewModel.swift in Sources */,
+				CC04D28D2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift in Sources */,
 				CC9BB07628401D3000FF22FE /* FeedbackIntroductionView.swift in Sources */,
 				AE8981AA2530FBA000D62766 /* MockedIssueProvider.swift in Sources */,
 				AE8764E2252FA92C00EFE031 /* IssuesViewModel.swift in Sources */,
@@ -1337,6 +1346,7 @@
 				AE72080325993E1F00839D8D /* Freedoms.swift in Sources */,
 				AE853F4B2576F8AB0091503C /* Icon.swift in Sources */,
 				AEF9215025616D280048EAFC /* SmallExtensionView.swift in Sources */,
+				CC04D28B2AB769E600C7F239 /* BBCodeConverter.swift in Sources */,
 				AED8B69A255F47C7008F9769 /* IssueProvider.swift in Sources */,
 				AE5D02ED259E4C6600492027 /* ResolutionProvider.swift in Sources */,
 				AEF9214A25616C7D0048EAFC /* MediumExtensionView.swift in Sources */,

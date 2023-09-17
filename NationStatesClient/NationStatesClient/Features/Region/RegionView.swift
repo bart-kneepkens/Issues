@@ -8,10 +8,26 @@
 import SwiftUI
 import Combine
 
+
+fileprivate extension Region {
+    static var formatter: DateFormatter = {
+        let format = DateFormatter()
+        format.timeStyle = .none
+        format.dateStyle = .medium
+        return format
+    }()
+    
+    var foundedDateString: String {
+        Self.formatter.string(from: foundedTime)
+    }
+}
+
 struct RegionView: View {
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     
     @ObservedObject var viewModel: RegionViewModel
+    
+    @State var factbookHeight: CGFloat = .zero
     
     var body: some View {
         List {
@@ -27,13 +43,33 @@ struct RegionView: View {
     @ViewBuilder
     private var listContents: some View {
         if let region = viewModel.region {
-            Section {        
-                PlainListRow(name: "Delegate", value: region.delegateNationName)
-                PlainListRow(name: "Number of Nations", value: "\(region.numberOfNations)")
-                PlainListRow(name: "Power", value: region.power)
-            } header: {
-                header
+            
+            Section {
+                
+                HStack {
+                    Spacer()
+                    VStack(spacing: 10) {
+                        flagView(region: region)
+                        Text("\(region.numberOfNations) Nations")
+                    }
+                    Spacer()
+                }
+                
+                PlainListRow(name: "WA Delegate", value: region.delegateNationName)
+                PlainListRow(name: "Regional power", value: region.power)
+                PlainListRow(name: "Founder", value: region.founderName ?? "None")
+                PlainListRow(name: "Founded", value: region.foundedDateString)
             }
+
+            Section("Factbook") {
+                InlineHTMLTextWebView(html: region.factbookHTML, dynamicHeight: $factbookHeight)
+                    .onLinkTap { link in
+                        print(link) // TODO: Something useful
+                    }
+                    .frame(height: factbookHeight)
+                    .listRowInsets(.init(top: 8, leading: 8, bottom:8, trailing: 8))
+            }
+            
         } else {
             Section {
                 ProgressView()
@@ -41,19 +77,14 @@ struct RegionView: View {
         }
     }
     
-    @ViewBuilder
-    private var header: some View {
-        if let region = viewModel.region {
-            ZStack {
-                CachedRemoteImage(url: URL(string: region.bannerURL))
-                    .aspectRatio(contentMode: .fill)
-                    .frame(height: 80)
-                
-                CachedRemoteImage(url: URL(string: region.flagURL))
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 64)
-            }
-            .padding(.bottom)
+    private func flagView(region: Region) -> some View {
+        AsyncImage(url: URL(string: region.flagURL)) { image in
+            image
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 64)
+        } placeholder: {
+            ProgressView()
         }
     }
 }

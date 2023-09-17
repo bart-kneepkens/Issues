@@ -45,6 +45,9 @@ enum RegionShard: String, CaseIterable {
     case power
     case bannerurl
     case flag
+    case factbook
+    case founder
+    case foundedTime
 }
 
 enum AuthenticationMode {

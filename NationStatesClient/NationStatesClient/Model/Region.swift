@@ -14,6 +14,9 @@ struct RegionDTO: Equatable {
     var power: String?
     var bannerURL: String?
     var flagURL: String?
+    var factbookHTML: String?
+    var founderName: String?
+    var foundedTime: Date?
 }
 
 struct Region {
@@ -23,6 +26,9 @@ struct Region {
     let power: String
     let bannerURL: String
     let flagURL: String
+    var factbookHTML: String
+    var founderName: String?
+    var foundedTime: Date
 }
 
 extension Region {
@@ -34,9 +40,21 @@ extension Region {
               let delegateNationName = dto.delegateNationName,
               let power = dto.power,
               let bannerURL = dto.bannerURL,
-              let flagURL = dto.flagURL
+              let flagURL = dto.flagURL,
+              let factbookHTML = dto.factbookHTML,
+              let foundedTime = dto.foundedTime
         else { return nil }
-        self.init(name: name, numberOfNations: numberOfNations, delegateNationName: delegateNationName, power: power, bannerURL: bannerURL, flagURL: flagURL)
+        self.init(
+            name: name,
+            numberOfNations: numberOfNations,
+            delegateNationName: delegateNationName,
+            power: power,
+            bannerURL: bannerURL,
+            flagURL: flagURL,
+            factbookHTML: factbookHTML,
+            founderName: dto.founderName,
+            foundedTime: foundedTime
+        )
     }
 }
 
@@ -48,7 +66,10 @@ extension Region {
         delegateNationName: "Elest Adra",
         power: "High",
         bannerURL: "https://www.nationstates.net/images/rbanners/uploads/magna_aurea__576205.jpg",
-        flagURL: "https://www.nationstates.net/images/flags/Djibouti.png"
+        flagURL: "https://www.nationstates.net/images/flags/Djibouti.png",
+        factbookHTML: "<b>Cool</b>",
+        founderName: "0",
+        foundedTime: Date()
     )
 }
 #endif
