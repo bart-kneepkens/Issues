@@ -15,19 +15,31 @@ struct WorldAssemblyResolutionTextSheet: View {
     }
     
     private var onNationTapped: ((String) -> Void)? = nil
+    private var onRegionTapped: ((String) -> Void)? = nil
+    private var onLinkTapped: ((LinkType?) -> Void)? = nil
     
-    private static func nationName(for url: String) -> String? {
-        guard url.contains("nation=") else { return nil }
-        return url.components(separatedBy: "=")[1]
+    enum LinkType {
+        case nation(name: String)
+        case region(name: String)
+    }
+    
+    private static func linkType(from url: String) -> LinkType? {
+        if url.contains("nation=") {
+            let name = url.components(separatedBy: "=")[1]
+            return .nation(name: name)
+        } else if url.contains("region=") {
+            let name = url.components(separatedBy: "=")[1]
+            return .region(name: name)
+        }
+        return nil
     }
     
     @ViewBuilder private var htmlView: some View {
         HTMLTextWebView(html: htmlText)
             .onLinkTap { url in
-                if let onNationTapped = self.onNationTapped, let nationName = WorldAssemblyResolutionTextSheet.nationName(for: url) {
-                    onNationTapped(nationName)
+                if let onLinkTapped {
+                    onLinkTapped(Self.linkType(from: url))
                 }
-                // TODO: resolution links
             }
     }
     
@@ -47,9 +59,10 @@ struct WorldAssemblyResolutionTextSheet: View {
 }
 
 extension WorldAssemblyResolutionTextSheet {
-    @inlinable public func onNationTap(perform action: ((String) -> Void)? = nil) -> some View {
+    
+    @inlinable public func onLinkTap(perform action: ((LinkType?) -> Void)? = nil) -> WorldAssemblyResolutionTextSheet {
         var copy = self
-        copy.onNationTapped = action
+        copy.onLinkTapped = action
         return copy
     }
 }

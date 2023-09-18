@@ -11,7 +11,8 @@ struct ResolutionView: View {
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     @StateObject var viewModel: ResolutionViewModel
     @State private var showingResolutionTextSheet = false
-    @State private var selectedNationName: String? = nil
+    
+    @State private var selectedLinkType: WorldAssemblyResolutionTextSheet.LinkType?
     
     private var resolution: Resolution {
         self.viewModel.resolution
@@ -29,10 +30,10 @@ struct ResolutionView: View {
         return nil
     }
     
-    private var shouldNavigateToSelectedNation: Binding<Bool> {
-        .init(get: { self.selectedNationName != nil }, set: { _ in
+    private var shouldNavigateToLink: Binding<Bool> {
+        .init(get: { self.selectedLinkType != nil }, set: { _ in
             // Dismissed
-            self.selectedNationName = nil
+            self.selectedLinkType = nil
         })
     }
     
@@ -62,9 +63,11 @@ struct ResolutionView: View {
         }
     }
     
-    @ViewBuilder private var selectedNationDestination: some View {
-        if let selectedNationName = self.selectedNationName {
-            FetchedNationView(viewModel: viewModelFactory.fetchedNationViewModel(selectedNationName))
+    @ViewBuilder private var selectedLinkDestination: some View {
+        if case let .nation(nationName) = selectedLinkType {
+            FetchedNationView(viewModel: viewModelFactory.fetchedNationViewModel(nationName))
+        } else if case let .region(regionName) = selectedLinkType {
+            RegionView(viewModel: viewModelFactory.regionViewModel(regionName))
         }
     }
     
@@ -77,8 +80,8 @@ struct ResolutionView: View {
         }
     }
     
-    private var selectedNationLink: some View {
-        NavigationLink(destination: selectedNationDestination, isActive: shouldNavigateToSelectedNation) {
+    private var selectedLink: some View {
+        NavigationLink(destination: selectedLinkDestination, isActive: shouldNavigateToLink) {
             EmptyView()
         }
         .opacity(0.0)
@@ -98,7 +101,9 @@ struct ResolutionView: View {
         }
         
         Section(header: VotesDistributionChart(votesFor: resolution.totalVotesFor, votesAgainst: resolution.totalVotesAgainst)
-                    .frame(height: 72)) {}.background(selectedNationLink)
+                    .frame(height: 72)) {}
+            .background(selectedLink)
+            
         
         Section {
             if let information = resolution.information, let htmlText = information.textHTML {
@@ -110,15 +115,19 @@ struct ResolutionView: View {
                         Text("Read Resolution").fontWeight(.medium)
                     }
                 }
-                .sheet(isPresented: $showingResolutionTextSheet, content: {
-                    WorldAssemblyResolutionTextSheet(htmlText: htmlText)
-                        .onNationTap { nationName in
-                            self.showingResolutionTextSheet = false
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                self.selectedNationName = nationName
+                .sheet(
+                    isPresented: $showingResolutionTextSheet,
+                    onDismiss: {
+                        self.selectedLinkType = viewModel.preparedLinkType
+                    },
+                    content: {
+                        WorldAssemblyResolutionTextSheet(htmlText: htmlText)
+                            .onLinkTap { link in
+                                viewModel.preparedLinkType = link
+                                self.showingResolutionTextSheet = false
                             }
-                        }
-                })
+                    }
+                )
             }
         }
     }
@@ -130,7 +139,8 @@ struct ResolutionView_Previews: PreviewProvider {
         NavigationView {
             List {
                 ResolutionView(viewModel: ResolutionViewModel(resolution: .filler, nationDetailsProvider: MockedNationDetailsProvider()))
-            }.listStyle(InsetGroupedListStyle())
+            }
+            .listStyle(InsetGroupedListStyle())
         }
     }
 }

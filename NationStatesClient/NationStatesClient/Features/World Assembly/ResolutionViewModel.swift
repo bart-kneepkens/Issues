@@ -11,6 +11,9 @@ import Combine
 class ResolutionViewModel: ObservableObject {
     let resolution: Resolution
     @Published var proposedByNation: Nation?
+    
+    var preparedLinkType: WorldAssemblyResolutionTextSheet.LinkType?
+    
     private let nationDetailsProvider: NationDetailsProvider
     private var cancellable: Cancellable? = nil
     

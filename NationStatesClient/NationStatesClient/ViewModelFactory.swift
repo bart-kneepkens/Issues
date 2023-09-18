@@ -66,6 +66,10 @@ class ViewModelFactory {
         .init(nationDetailsProvider: nationDetailsProvider, regionDetailsProvider: regionDetailsProvider)
     }
     
+    func regionViewModel(_ name: String) -> RegionView.RegionViewModel {
+        .init(regionName: name, regionDetailsProvider: regionDetailsProvider)
+    }
+    
     var worldAssemblyViewModel: WorldAssemblyViewModel {
         .init(authenticationContainer: authenticationContainer, resolutionProvider: resolutionProvider, nationDetailsProvider: nationDetailsProvider)
     }

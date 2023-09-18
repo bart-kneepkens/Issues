@@ -129,7 +129,6 @@
 		AE8981AF2530FD8D00D62766 /* AuthenticationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8981AE2530FD8D00D62766 /* AuthenticationContainer.swift */; };
 		AE8AA1A22552F92A0031D112 /* NationStatesAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8AA1A12552F92A0031D112 /* NationStatesAPITests.swift */; };
 		AE8FC6F425ABA8A600951B8D /* ResolutionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8FC6F325ABA8A500951B8D /* ResolutionViewModel.swift */; };
-		AE8FC6F525ABA8A600951B8D /* ResolutionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8FC6F325ABA8A500951B8D /* ResolutionViewModel.swift */; };
 		AE8FC6FF25AE4E8700951B8D /* FetchedNationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8FC6FE25AE4E8700951B8D /* FetchedNationView.swift */; };
 		AE95AA96258EADCA00607C1B /* CreateNationWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE95AA95258EADCA00607C1B /* CreateNationWebView.swift */; };
 		AE95AAA82590276000607C1B /* ToggleablePasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE95AAA72590276000607C1B /* ToggleablePasswordField.swift */; };
@@ -1307,7 +1306,6 @@
 				AE79E37D259BF35700004D41 /* ResolutionResponseXMLParser.swift in Sources */,
 				AED8B6F9255F4BA4008F9769 /* MockedIssueProvider.swift in Sources */,
 				AED8B6EF255F4839008F9769 /* IssuesResponseXMLParser.swift in Sources */,
-				AE8FC6F525ABA8A600951B8D /* ResolutionViewModel.swift in Sources */,
 				AEF9216F256176A10048EAFC /* IssuesList.swift in Sources */,
 				CC435BB52AB25C110024AFB7 /* RegionDetailsResponseXMLParser.swift in Sources */,
 				AE5D02E0259D2D9C00492027 /* WorldAssemblyHTMLParser.swift in Sources */,
