@@ -25,7 +25,7 @@ struct Region {
     let delegateNationName: String
     let power: String
     let bannerURL: String
-    let flagURL: String
+    let flagURL: String?
     var factbookHTML: String
     var founderName: String?
     var foundedTime: Date
@@ -40,7 +40,6 @@ extension Region {
               let delegateNationName = dto.delegateNationName,
               let power = dto.power,
               let bannerURL = dto.bannerURL,
-              let flagURL = dto.flagURL,
               let factbookHTML = dto.factbookHTML,
               let foundedTime = dto.foundedTime
         else { return nil }
@@ -50,7 +49,7 @@ extension Region {
             delegateNationName: delegateNationName,
             power: power,
             bannerURL: bannerURL,
-            flagURL: flagURL,
+            flagURL: dto.flagURL,
             factbookHTML: factbookHTML,
             founderName: dto.founderName,
             foundedTime: foundedTime

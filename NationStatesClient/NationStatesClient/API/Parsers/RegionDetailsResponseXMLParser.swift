@@ -40,7 +40,9 @@ extension RegionDetailsResponseXMLParser: XMLParserDelegate {
         case "POWER":
             regionDTO.power = foundCharacters
         case "FLAG":
-            regionDTO.flagURL = foundCharacters
+            if !foundCharacters.isEmpty {
+                regionDTO.flagURL = foundCharacters
+            }
         case "BANNERURL":
             regionDTO.bannerURL = "https://www.nationstates.net\(foundCharacters)"
         case "FOUNDER":

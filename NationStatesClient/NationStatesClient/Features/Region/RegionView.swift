@@ -77,14 +77,19 @@ struct RegionView: View {
         }
     }
     
+    @ViewBuilder
     private func flagView(region: Region) -> some View {
-        AsyncImage(url: URL(string: region.flagURL)) { image in
-            image
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 64)
-        } placeholder: {
-            ProgressView()
+        if let flagURL = region.flagURL {
+            AsyncImage(url: URL(string: flagURL)) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 64)
+            } placeholder: {
+                ProgressView()
+            }
+        } else {
+            MissingFlagView()
         }
     }
 }
