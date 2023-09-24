@@ -24,6 +24,9 @@ extension BBCodeConverter {
     
     func convertBBCodeToHTML(_ input: String) -> String {
         var output = input
+        
+        // Replace [hr] with <hr>
+        output = output.replacingOccurrences(of: "\\[hr\\]", with: "<hr>", options: .regularExpression)
 
         // Replace [b]...[/b] with <strong>...</strong>
         output = output.replacingOccurrences(of: "\\[b\\](.*?)\\[/b\\]", with: "<strong>$1</strong>", options: .regularExpression)
@@ -37,9 +40,11 @@ extension BBCodeConverter {
         // Replace [I]...[/I] with <em>...</em>
         output = output.replacingOccurrences(of: "\\[I\\](.*?)\\[/I\\]", with: "<em>$1</em>", options: .regularExpression)
 
+        // Replace [quote=...]...[/quote] with <p><em>"<em>$2</em>"</em></p><p style="text-align: right;">- $1</p>
+        output = output.replacingOccurrences(of: "\\[quote=([A-Za-z_]+);[0-9]+\\](.*?)\\[/quote\\]", with: "<p><em>\"<em>$2</em>\"</em></p><p style=\"text-align: center;\">- $1</p>", options: .regularExpression)
+
         // Replace special character codes like &amp;#127987; with their corresponding HTML entities
-        
-        let regex = try! NSRegularExpression(pattern: "&amp;#([0-9]+);") // try! should be fine here since the input does not change, an error should indicate programmer error.
+        let regex = try! NSRegularExpression(pattern: "&amp;#([0-9]+);")
         let matches = regex.matches(in: output, range: NSRange(output.startIndex..., in: output))
 
         for match in matches.reversed() {
@@ -56,8 +61,9 @@ extension BBCodeConverter {
 
         // Replace full nation links with relative ones
         output = output.replacingOccurrences(of: "https://www.nationstates.net/nation=", with: "/nation=")
-        
-        // TODO: Replace region links with relative ones?
+
+        // Replace full region links with relative ones
+        output = output.replacingOccurrences(of: "https://www.nationstates.net/region=", with: "/region=")
 
         // Replace line breaks with <br> tags
         output = output.replacingOccurrences(of: "\\n", with: "<br>", options: .regularExpression)

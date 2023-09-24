@@ -54,7 +54,7 @@ struct HTMLTextWebView: UIViewRepresentable {
                         -webkit-touch-callout: none;
                         -webkit-user-select: none;
                         color-scheme: light dark;
-                        font: -apple-system-body;
+                        font-family: -apple-system;
                     }
 
                     a {
