@@ -122,7 +122,8 @@ extension RegionView {
         
         init(regionName: String, regionDetailsProvider: RegionDetailsProvider) {
             self.regionDetailsProvider = regionDetailsProvider
-            self.regionName = regionName
+            // This nifty hack makes sure `didSet` is called
+            defer { self.regionName = regionName }
         }
         
         func refreshRegion() async {
