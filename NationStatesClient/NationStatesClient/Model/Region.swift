@@ -22,7 +22,7 @@ struct RegionDTO: Equatable {
 struct Region {
     let name: String
     let numberOfNations: Int
-    let delegateNationName: String
+    let delegateNationName: String?
     let power: String
     let bannerURL: String
     let flagURL: String?
@@ -37,7 +37,6 @@ extension Region {
     init?(from dto: RegionDTO) {
         guard let name = dto.name,
               let numberOfNations = dto.numberOfNations,
-              let delegateNationName = dto.delegateNationName,
               let power = dto.power,
               let bannerURL = dto.bannerURL,
               let factbookHTML = dto.factbookHTML
@@ -45,7 +44,7 @@ extension Region {
         self.init(
             name: name,
             numberOfNations: numberOfNations,
-            delegateNationName: delegateNationName,
+            delegateNationName: dto.delegateNationName,
             power: power,
             bannerURL: bannerURL,
             flagURL: dto.flagURL,

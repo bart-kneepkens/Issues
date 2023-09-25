@@ -94,7 +94,6 @@ extension InlineHTMLTextWebView {
     }
 }
 
-
 struct InlineHTMLTextWebView_Previews: PreviewProvider {
     static var CDATA_string = """
 [b][color=#cf0007]This region has been [i]conquered[/i] by [/color] [u][url=https://www.nationstates.net/region=the_eternal_order][color=#EEBC1D]The Eternal Order[/color][/url][/u] [color=#cf0007]- The bringers of peace and war[/color][/b]

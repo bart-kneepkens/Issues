@@ -41,8 +41,8 @@ struct RegionView: View {
                     Spacer()
                 }
                 
-                PlainListRow(name: "WA Delegate", value: region.delegateNationName)
                 PlainListRow(name: "Regional power", value: region.power)
+                WADelegateViewRow(delegateNationName: region.delegateNationName)
                 founderViewRow(founderNationName: region.founderName)
                 foundedViewRow(foundedTime: region.foundedTime)
             }
@@ -76,6 +76,20 @@ struct RegionView: View {
             }
         } else {
             MissingFlagView()
+        }
+    }
+    
+    @ViewBuilder
+    private func WADelegateViewRow(delegateNationName: String?) -> some View {
+        let title = "WA Delegate"
+        
+        if let delegateNationName {
+            PlainListRow(
+                name: title,
+                value: AnyView(NationLinkView(viewModel: viewModelFactory.nationLinkViewModel(delegateNationName)))
+            )
+        } else {
+            PlainListRow(name: title, value: "None")
         }
     }
     

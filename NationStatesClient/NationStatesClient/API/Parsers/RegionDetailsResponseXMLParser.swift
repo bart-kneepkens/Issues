@@ -36,7 +36,9 @@ extension RegionDetailsResponseXMLParser: XMLParserDelegate {
         case "NUMNATIONS":
             regionDTO.numberOfNations = Int(foundCharacters)
         case "DELEGATE":
-            regionDTO.delegateNationName = foundCharacters
+            if foundCharacters != "0" {
+                regionDTO.delegateNationName = foundCharacters
+            }
         case "POWER":
             regionDTO.power = foundCharacters
         case "FLAG":
