@@ -50,7 +50,7 @@ extension RegionDetailsResponseXMLParser: XMLParserDelegate {
                 regionDTO.founderName = foundCharacters
             }
         case "FOUNDEDTIME":
-            if let unixStamp = TimeInterval(foundCharacters) {
+            if let unixStamp = TimeInterval(foundCharacters), unixStamp > 0 {
                 regionDTO.foundedTime = Date(timeIntervalSince1970: unixStamp)
             }
             break

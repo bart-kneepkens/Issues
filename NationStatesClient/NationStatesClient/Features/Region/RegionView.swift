@@ -8,20 +8,6 @@
 import SwiftUI
 import Combine
 
-
-fileprivate extension Region {
-    static var formatter: DateFormatter = {
-        let format = DateFormatter()
-        format.timeStyle = .none
-        format.dateStyle = .medium
-        return format
-    }()
-    
-    var foundedDateString: String {
-        Self.formatter.string(from: foundedTime)
-    }
-}
-
 struct RegionView: View {
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     
@@ -57,8 +43,8 @@ struct RegionView: View {
                 
                 PlainListRow(name: "WA Delegate", value: region.delegateNationName)
                 PlainListRow(name: "Regional power", value: region.power)
-                PlainListRow(name: "Founder", value: region.founderName ?? "None")
-                PlainListRow(name: "Founded", value: region.foundedDateString)
+                founderViewRow(founderNationName: region.founderName)
+                foundedViewRow(foundedTime: region.foundedTime)
             }
 
             Section("Factbook") {
@@ -90,6 +76,30 @@ struct RegionView: View {
             }
         } else {
             MissingFlagView()
+        }
+    }
+    
+    @ViewBuilder
+    private func founderViewRow(founderNationName: String?) -> some View {
+        let title = "Founder"
+        
+        if let founderNationName {
+            PlainListRow(
+                name: title,
+                value: AnyView(NationLinkView(viewModel: viewModelFactory.nationLinkViewModel(founderNationName)))
+            )
+        } else {
+            PlainListRow(
+                name: title,
+                value: "None"
+            )
+        }
+    }
+    
+    @ViewBuilder
+    private func foundedViewRow(foundedTime: Date?) -> some View {
+        if let foundedTime {
+            PlainListRow(name: "Founded", value: RegionViewModel.dateFormatter.string(from: foundedTime))
         }
     }
 }
@@ -141,6 +151,13 @@ extension RegionView {
         private func updateRegion(with region: Region?) {
             self.region = region
         }
+        
+        static var dateFormatter: DateFormatter = {
+            let format = DateFormatter()
+            format.timeStyle = .none
+            format.dateStyle = .medium
+            return format
+        }()
     }
 }
 
