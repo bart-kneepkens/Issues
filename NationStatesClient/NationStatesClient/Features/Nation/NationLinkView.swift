@@ -66,7 +66,6 @@ extension NationLinkView {
                 if let nation = try? await nationDetailsProvider.fetchNationDetails(for: nationName) {
                     await updateNation(nation: nation)
                 }
-                
             }
         }
         
