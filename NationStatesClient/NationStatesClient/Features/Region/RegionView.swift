@@ -13,8 +13,6 @@ struct RegionView: View {
     
     @ObservedObject var viewModel: RegionViewModel
     
-    @State var factbookHeight: CGFloat = .zero
-    
     var body: some View {
         List {
             listContents
@@ -48,12 +46,7 @@ struct RegionView: View {
             }
 
             Section("Factbook") {
-                InlineHTMLTextWebView(html: region.factbookHTML, dynamicHeight: $factbookHeight)
-                    .onLinkTap { link in
-                        print(link) // TODO: Something useful
-                    }
-                    .frame(height: factbookHeight)
-                    .listRowInsets(.init(top: 8, leading: 8, bottom:8, trailing: 8))
+                FactbookView(viewModel: .init(html: region.factbookHTML))
             }
             
         } else {

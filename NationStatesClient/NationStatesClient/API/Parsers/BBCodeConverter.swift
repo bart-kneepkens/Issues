@@ -82,31 +82,32 @@ extension BBCodeConverter {
         }
         
         // Replace [nation]...[/nation] or [nation=...]...[/nation] with <a href="/nation=...">...</a>
-            let nationRegex = try! NSRegularExpression(pattern: "\\[nation(?:=[A-Za-z_]+)?\\](.*?)\\[/nation\\]")
-            let nationMatches = nationRegex.matches(in: output, range: NSRange(output.startIndex..., in: output))
+        let nationRegex = try! NSRegularExpression(pattern: "\\[nation(?:=[A-Za-z_ ]+)?\\](.*?)\\[/nation\\]")
+        let nationMatches = nationRegex.matches(in: output, range: NSRange(output.startIndex..., in: output))
 
-            for match in nationMatches.reversed() {
-                let linkText = String(output[Range(match.range(at: 1), in: output)!])
-                let htmlLink = "<a href=\"/nation=\(linkText)\">\(linkText)</a>"
+        for match in nationMatches.reversed() {
+            let linkText = String(output[Range(match.range(at: 1), in: output)!])
+            let nationName = linkText.replacingOccurrences(of: " ", with: "_") // Replace spaces with underscores
+            let htmlLink = "<a href=\"/nation=\(nationName)\">\(linkText)</a>"
 
-                if let rangeToReplace = Range(match.range, in: output) {
-                    output = output.replacingCharacters(in: rangeToReplace, with: htmlLink)
-                }
+            if let rangeToReplace = Range(match.range, in: output) {
+                output = output.replacingCharacters(in: rangeToReplace, with: htmlLink)
             }
+        }
 
-            // Replace [region]...[/region] with <a href="/region=...">...</a>
-            let regionRegex = try! NSRegularExpression(pattern: "\\[region(?:=[A-Za-z_]+)?\\](.*?)\\[/region\\]")
-            let regionMatches = regionRegex.matches(in: output, range: NSRange(output.startIndex..., in: output))
-
-            for match in regionMatches.reversed() {
-                let linkText = String(output[Range(match.range(at: 1), in: output)!])
-                let htmlLink = "<a href=\"/region=\(linkText)\">\(linkText)</a>"
-
-                if let rangeToReplace = Range(match.range, in: output) {
-                    output = output.replacingCharacters(in: rangeToReplace, with: htmlLink)
-                }
+        // Replace [region]...[/region] with <a href="/region=...">...</a>
+        let regionRegex = try! NSRegularExpression(pattern: "\\[region(?:=[A-Za-z_]+)?\\](.*?)\\[/region\\]")
+        let regionMatches = regionRegex.matches(in: output, range: NSRange(output.startIndex..., in: output))
+        
+        for match in regionMatches.reversed() {
+            let linkText = String(output[Range(match.range(at: 1), in: output)!])
+            let regionName = linkText.replacingOccurrences(of: " ", with: "_")
+            let htmlLink = "<a href=\"/region=\(linkText)\">\(linkText)</a>"
+            
+            if let rangeToReplace = Range(match.range, in: output) {
+                output = output.replacingCharacters(in: rangeToReplace, with: htmlLink)
             }
-
+        }
         
         // Replace line breaks with <br> tags
         output = output.replacingOccurrences(of: "\\n", with: "<br>", options: .regularExpression)
