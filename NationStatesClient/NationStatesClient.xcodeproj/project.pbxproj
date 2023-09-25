@@ -188,6 +188,7 @@
 		CC04D28A2AB73A7600C7F239 /* BBCodeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04D2892AB73A7600C7F239 /* BBCodeConverter.swift */; };
 		CC04D28B2AB769E600C7F239 /* BBCodeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04D2892AB73A7600C7F239 /* BBCodeConverter.swift */; };
 		CC04D28D2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04D28C2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift */; };
+		CC096C512AC0E24400F75CBE /* NationLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC096C502AC0E24400F75CBE /* NationLinkView.swift */; };
 		CC0DDFCC2AC0706200D26B11 /* MissingFlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0DDFCB2AC0706200D26B11 /* MissingFlagView.swift */; };
 		CC10E36A28DE692100870DD3 /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10E36928DE692100870DD3 /* SafariView.swift */; };
 		CC10E36C28DE6EAC00870DD3 /* ComposeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10E36B28DE6EAC00870DD3 /* ComposeEmailView.swift */; };
@@ -390,6 +391,7 @@
 		AEFF41FC2536589A00206676 /* URLRequest+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+.swift"; sourceTree = "<group>"; };
 		CC04D2892AB73A7600C7F239 /* BBCodeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBCodeConverter.swift; sourceTree = "<group>"; };
 		CC04D28C2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineHTMLTextWebView.swift; sourceTree = "<group>"; };
+		CC096C502AC0E24400F75CBE /* NationLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationLinkView.swift; sourceTree = "<group>"; };
 		CC0DDFCB2AC0706200D26B11 /* MissingFlagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissingFlagView.swift; sourceTree = "<group>"; };
 		CC10E36928DE692100870DD3 /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
 		CC10E36B28DE6EAC00870DD3 /* ComposeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeEmailView.swift; sourceTree = "<group>"; };
@@ -533,6 +535,7 @@
 				AE8FC6FE25AE4E8700951B8D /* FetchedNationView.swift */,
 				AE4AE6D825DC79BA00498D2D /* SearchNationView.swift */,
 				AE4AE6DE25DDC0DD00498D2D /* SearchNationViewModel.swift */,
+				CC096C502AC0E24400F75CBE /* NationLinkView.swift */,
 			);
 			path = Nation;
 			sourceTree = "<group>";
@@ -1170,6 +1173,7 @@
 				AEFF41CF2533808F00206676 /* NationStatesXMLParser.swift in Sources */,
 				AE15A6D925310852004478C3 /* NationStatesAPI.swift in Sources */,
 				AE1C5A8725589EC5008811E6 /* RankingMO+.swift in Sources */,
+				CC096C512AC0E24400F75CBE /* NationLinkView.swift in Sources */,
 				CC9BB06E284001B600FF22FE /* MoreViewModel.swift in Sources */,
 				AE4F468C2597CF9B00CFC42E /* CreateNationSheet.swift in Sources */,
 				AE6B13CC2545D6AB00606A6A /* AppDelegate.swift in Sources */,

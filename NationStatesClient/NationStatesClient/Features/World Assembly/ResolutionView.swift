@@ -38,15 +38,9 @@ struct ResolutionView: View {
     }
     
     @ViewBuilder private var proposedByView: some View {
-         if let nation = self.viewModel.proposedByNation {
-            // Confusing structure but this is a button with an invisible NavigationLink to show the nation details.
-            Text(nation.name)
-                .fontWeight(.medium)
-                .foregroundColor(.accentColor)
-                .background(proposedByNationLink)
-        } else {
-            Text(self.resolution.proposedBy).fontWeight(.medium)
-        }
+        NationLinkView(
+            viewModel: viewModelFactory.nationLinkViewModel(self.resolution.proposedBy)
+        )
     }
     
     @ViewBuilder private var statisticsView: some View {
@@ -71,28 +65,12 @@ struct ResolutionView: View {
         }
     }
     
-    @ViewBuilder private var proposedByNationDestination: some View {
-        if let nation = self.viewModel.proposedByNation {
-            List {
-                NationDetailsView(nation: nation)
-            }
-            .listStyle(InsetGroupedListStyle())
-        }
-    }
-    
     private var selectedLink: some View {
         NavigationLink(destination: selectedLinkDestination, isActive: shouldNavigateToLink) {
             EmptyView()
         }
         .opacity(0.0)
     }
-    
-    private var proposedByNationLink: some View {
-        NavigationLink(destination: proposedByNationDestination) {
-            EmptyView()
-        }.opacity(0.0)
-    }
-    
     
     var body: some View {
         Section {

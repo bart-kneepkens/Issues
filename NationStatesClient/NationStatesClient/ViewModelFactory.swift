@@ -93,6 +93,13 @@ class ViewModelFactory {
     var moreViewModel: MoreViewModel {
         .init(authenticationContainer: self.authenticationContainer)
     }
+    
+    func nationLinkViewModel(_ nationName: String) -> NationLinkView.ViewModel {
+        .init(
+            nationName: nationName,
+            nationDetailsProvider: nationDetailsProvider
+        )
+    }
 }
 
 extension ViewModelFactory {
