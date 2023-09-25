@@ -10,7 +10,7 @@ import Combine
 
 struct NationLinkView: View {
     
-    @ObservedObject
+    @StateObject
     var viewModel: ViewModel
     
     var body: some View {

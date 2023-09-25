@@ -59,11 +59,27 @@ extension BBCodeConverter {
             }
         }
 
-        // Replace full nation links with relative ones
-        output = output.replacingOccurrences(of: "https://www.nationstates.net/nation=", with: "/nation=")
-
-        // Replace full region links with relative ones
-        output = output.replacingOccurrences(of: "https://www.nationstates.net/region=", with: "/region=")
+        // Replace NationStates links with relative ones
+        let nsLinkRegex = try! NSRegularExpression(pattern: "https://www.nationstates.net(/[^\\s]+)")
+        let nsLinkMatches = nsLinkRegex.matches(in: output, range: NSRange(output.startIndex..., in: output))
+        
+        for match in nsLinkMatches.reversed() {
+            if let range = Range(match.range(at: 1), in: output) {
+                let relativeLink = String(output[range])
+                output = output.replacingCharacters(in: Range(match.range, in: output)!, with: relativeLink)
+            }
+        }
+        
+        // Prepend "external://" to non-NationStates links
+        let externalLinkRegex = try! NSRegularExpression(pattern: "https?://(?!www\\.nationstates\\.net)([^\\s]+)")
+        let externalLinkMatches = externalLinkRegex.matches(in: output, range: NSRange(output.startIndex..., in: output))
+        
+        for match in externalLinkMatches.reversed() {
+            if let range = Range(match.range, in: output) {
+                let externalLink = String(output[range])
+                output = output.replacingCharacters(in: Range(match.range, in: output)!, with: "external://" + externalLink)
+            }
+        }
 
         // Replace line breaks with <br> tags
         output = output.replacingOccurrences(of: "\\n", with: "<br>", options: .regularExpression)
