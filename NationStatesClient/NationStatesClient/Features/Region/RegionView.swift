@@ -29,7 +29,6 @@ struct RegionView: View {
         if let region = viewModel.region {
             
             Section {
-                
                 HStack {
                     Spacer()
                     VStack(spacing: 10) {
@@ -45,8 +44,10 @@ struct RegionView: View {
                 foundedViewRow(foundedTime: region.foundedTime)
             }
 
-            Section("Factbook") {
-                FactbookView(viewModel: .init(html: region.factbookHTML))
+            if let factbookHTML = region.factbookHTML {
+                Section("Factbook") {
+                    FactbookView(viewModel: .init(html: factbookHTML))
+                }
             }
             
         } else {

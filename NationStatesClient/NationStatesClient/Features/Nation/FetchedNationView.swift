@@ -36,6 +36,7 @@ class FetchedNationViewModel: ObservableObject {
         self.nationDetailsProvider = nationDetailsProvider
     }
     
+    @MainActor
     func startFetch() async {
         guard self.state == .initial else { return }
         self.state = .loading(nationName)

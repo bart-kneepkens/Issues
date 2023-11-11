@@ -105,7 +105,7 @@ the slow decay of time itself.[/i][hr][b]| [color=#cf0007]Eternal Knights[/color
     static var converted = BBCodeConverter(bbCodeRawText: CDATA_string).htmlText
     
     static var previews: some View {
-        InlineHTMLTextWebView(html: converted, dynamicHeight: .constant(400))
+        InlineHTMLTextWebView(html: converted!, dynamicHeight: .constant(400))
     }
 }
 
