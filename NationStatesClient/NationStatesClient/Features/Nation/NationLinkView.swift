@@ -38,7 +38,6 @@ struct NationLinkView: View {
                 EmptyView()
             }
             .opacity(0)
-            
         }
     }
 }

@@ -38,7 +38,6 @@ class ResolutionResponseXMLParserTests: XCTestCase {
         
         XCTAssertEqual(parser.resolution, ResolutionDTO(category: "Regulation",
                                                         created: Date(timeIntervalSince1970: TimeInterval(1608621807)),
-                                                        text: "A Very long and interesting description text",
                                                         id: "merni_1608621807",
                                                         name: "Repeal \"Commend The Western Isles\"",
                                                         option: "Safety",
