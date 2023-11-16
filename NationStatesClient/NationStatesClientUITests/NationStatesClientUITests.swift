@@ -46,6 +46,10 @@ class NationStatesClientUITests: XCTestCase {
         func tapNationTabBarItem() {
             app.buttons["Nation"].tap()
         }
+        
+        func tapRegionTabBarItem() {
+            app.buttons["Region"].tap()
+        }
     }
     
     func testRunForScreenshots() {
@@ -71,5 +75,9 @@ class NationStatesClientUITests: XCTestCase {
         
         robot.tapNationTabBarItem()
         robot.takeScreenshot(name: "nation")
+        
+        robot.tapRegionTabBarItem()
+        
+        robot.takeScreenshot(name: "region")
     }
 }
