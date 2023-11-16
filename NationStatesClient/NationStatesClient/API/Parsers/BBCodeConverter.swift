@@ -60,13 +60,13 @@ extension BBCodeConverter {
         }
 
         // Replace NationStates links with relative ones
-        let nsLinkRegex = try NSRegularExpression(pattern: "https://www.nationstates.net(/[^\\s]+)")
+        let nsLinkRegex = try NSRegularExpression(pattern: "https://www.nationstates.net/([^\\s]+)")
         let nsLinkMatches = nsLinkRegex.matches(in: output, range: NSRange(output.startIndex..., in: output))
         
         for match in nsLinkMatches.reversed() {
             if let range = Range(match.range(at: 1), in: output) {
                 let relativeLink = String(output[range])
-                output = output.replacingCharacters(in: Range(match.range, in: output)!, with: relativeLink)
+                output = output.replacingCharacters(in: Range(match.range, in: output)!, with: "nationstates:" + relativeLink)
             }
         }
         
@@ -77,7 +77,7 @@ extension BBCodeConverter {
         for match in externalLinkMatches.reversed() {
             if let range = Range(match.range, in: output) {
                 let externalLink = String(output[range])
-                output = output.replacingCharacters(in: Range(match.range, in: output)!, with: "external://" + externalLink)
+                output = output.replacingCharacters(in: Range(match.range, in: output)!, with: "external:" + externalLink)
             }
         }
         

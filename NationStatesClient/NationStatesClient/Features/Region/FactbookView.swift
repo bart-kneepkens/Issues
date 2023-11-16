@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import UIKit
 
 struct FactbookView: View {
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
@@ -20,7 +21,7 @@ struct FactbookView: View {
             }
             .frame(height: viewModel.contentHeight)
             .listRowInsets(.init(top: 8, leading: 8, bottom: 8, trailing: 8))
-            .sheet(item: $viewModel.selectedLink) { linkType in
+            .sheet(item: $viewModel.selectedInternalLink) { linkType in
                 NavigationView {
                     switch linkType {
                     case .nation(name: let nationName):
@@ -29,6 +30,9 @@ struct FactbookView: View {
                         RegionView(viewModel: viewModelFactory.regionViewModel(regionName))
                     }
                 }
+            }
+            .sheet(item: $viewModel.selectedExternalLink) { externalLink in
+                SafariView(url: externalLink.url)
             }
     }
     
@@ -49,12 +53,34 @@ struct FactbookView: View {
             return nil
         }
     }
+    
+    struct ExternalLink: Identifiable {
+        let url: URL
+        
+        var id: String { url.absoluteString }
+        
+        init?(link: String) {
+            if link.hasPrefix("nationstates:"),
+                let suffix = link.components(separatedBy: "nationstates:").last,
+               let externalURL = URL(string: "https://www.nationstates.net/\(suffix)"){
+                self.url = externalURL
+            } else if link.hasPrefix("external:"),
+                      let contents = link.components(separatedBy: "external:").last,
+                      let externalURL = URL(string: contents) {
+                self.url = externalURL
+            } else {
+                return nil
+            }
+        }
+    }
 }
 
 extension FactbookView {
+    
     class FactbookViewModel: ObservableObject {
         @Published var contentHeight: CGFloat = .zero
-        @Published var selectedLink: LinkType?
+        @Published var selectedInternalLink: LinkType?
+        @Published var selectedExternalLink: ExternalLink?
         
         let html: String
         
@@ -63,7 +89,11 @@ extension FactbookView {
         }
         
         func didTapLink(with url: String) {
-            selectedLink = LinkType.type(from: url)
+            if let selectedLink = LinkType.type(from: url) {
+                self.selectedInternalLink = selectedLink
+            } else if let externalLink = ExternalLink(link: url) {
+                self.selectedExternalLink = externalLink
+            }
         }
     }
 }
