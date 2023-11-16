@@ -131,6 +131,7 @@ struct IssuesExtension: Widget {
         StaticConfiguration(kind: kind, provider: provider) { entry in
             IssuesExtensionContents(provider: provider, entry: entry)
         }
+        .contentMarginsDisabled()
         .configurationDisplayName("Issues Widget")
         .description("Keep track of your pending issues")
     }
