@@ -25,8 +25,6 @@ struct FactbookView: View {
                     switch linkType {
                     case .nation(name: let nationName):
                         FetchedNationView(viewModel: viewModelFactory.fetchedNationViewModel(nationName))
-                            .navigationBarTitleDisplayMode(.inline)
-                            .navigationTitle(nationName)
                     case .region(name: let regionName):
                         RegionView(viewModel: viewModelFactory.regionViewModel(regionName))
                     }

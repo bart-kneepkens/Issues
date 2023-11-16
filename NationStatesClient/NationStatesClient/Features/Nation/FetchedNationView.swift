@@ -27,6 +27,12 @@ class FetchedNationViewModel: ObservableObject {
     }
     
     @Published var state: State = .initial
+    var navigationBarTitle: String {
+        if case .loaded(let nation) = state {
+            return nation.name
+        }
+        return ""
+    }
     private let nationName: String
     private let nationDetailsProvider: NationDetailsProvider
     private var cancellable: Cancellable?
@@ -75,6 +81,8 @@ struct FetchedNationView: View {
                 await viewModel.startFetch()
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(viewModel.navigationBarTitle)
     }
 }
 
