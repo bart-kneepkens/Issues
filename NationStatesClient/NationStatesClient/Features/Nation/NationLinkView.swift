@@ -42,11 +42,13 @@ struct NationLinkView: View {
     }
 }
 
+#if DEBUG
 struct NationLinkView_Previews: PreviewProvider {
     static var previews: some View {
         NationLinkView(viewModel: .init(nationName: "Elest Adra", nationDetailsProvider: MockedNationDetailsProvider()))
     }
 }
+#endif
 
 extension NationLinkView {
     final class ViewModel: ObservableObject {
