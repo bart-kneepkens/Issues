@@ -12,21 +12,20 @@ struct LargeExtensionView: View {
     let entry: Provider.Entry
     
     var body: some View {
-        ZStack {
-            Image("background_large").resizable().overlay(Color("BackgroundOverlayColor"))
-            VStack {
-                HStack {
-                    NationIssuesView(entry: entry)
-                    if let name = entry.nationName {
-                        Spacer()
-                        Text(name).font(.headline)
-                    }
-                }.padding(.bottom)
-                IssuesList(issues: entry.fetchIssuesResult.issues)
-                Spacer()
-                InformationText(entry: self.entry)
-            }.padding()
+        VStack {
+            HStack {
+                NationIssuesView(entry: entry)
+                if let name = entry.nationName {
+                    Spacer()
+                    Text(name).font(.headline)
+                }
+            }.padding(.bottom)
+            IssuesList(issues: entry.fetchIssuesResult.issues)
+            Spacer()
+            InformationText(entry: self.entry)
         }
+        .padding()
+        .widgetBackground(Image("background_large").resizable().overlay(Color("BackgroundOverlayColor")))
     }
 }
 

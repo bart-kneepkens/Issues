@@ -17,24 +17,21 @@ struct SmallExtensionView: View {
 
     var body: some View {
         VStack {
-            ZStack {
-                Image("background_small").resizable().overlay(Color("BackgroundOverlayColor"))
-                VStack {
-                    HStack {
-                        NationIssuesView(entry: entry)
-                        Spacer()
-                    }
-                    
-                    if let firstIssue = self.issueWithShortestTitle {
-                        Spacer()
-                        Text(firstIssue.title).multilineTextAlignment(.leading)
-                    }
-                    
-                    Spacer()
-                    InformationText(entry: self.entry).layoutPriority(1)
-                }.padding()
+            HStack {
+                NationIssuesView(entry: entry)
+                Spacer()
             }
+            
+            if let firstIssue = self.issueWithShortestTitle {
+                Spacer()
+                Text(firstIssue.title).multilineTextAlignment(.leading)
+            }
+            
+            Spacer()
+            InformationText(entry: self.entry).layoutPriority(1)
         }
+        .padding()
+        .widgetBackground(Image("background_small").resizable().overlay(Color("BackgroundOverlayColor")))
     }
 }
 

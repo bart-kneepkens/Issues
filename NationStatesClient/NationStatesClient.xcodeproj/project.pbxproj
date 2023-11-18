@@ -210,6 +210,7 @@
 		CCA6653D2AA14563001E860B /* Combine+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA6653C2AA14563001E860B /* Combine+.swift */; };
 		CCB8E31228DFB0B500F88087 /* IdentifiableURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB8E31128DFB0B500F88087 /* IdentifiableURL.swift */; };
 		CCB8E31828DFBBA400F88087 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB8E31728DFBBA400F88087 /* Configuration.swift */; };
+		CCEADE372B09591600DEE2F7 /* View+WidgetBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEADE362B09591600DEE2F7 /* View+WidgetBackground.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -412,6 +413,7 @@
 		CCA6653C2AA14563001E860B /* Combine+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+.swift"; sourceTree = "<group>"; };
 		CCB8E31128DFB0B500F88087 /* IdentifiableURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableURL.swift; sourceTree = "<group>"; };
 		CCB8E31728DFBBA400F88087 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		CCEADE362B09591600DEE2F7 /* View+WidgetBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+WidgetBackground.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -917,6 +919,7 @@
 				AE6D8346256473B500FA1CF7 /* InformationText.swift */,
 				AE853F442576F82B0091503C /* NationIssuesView.swift */,
 				AE853F4A2576F8AB0091503C /* Icon.swift */,
+				CCEADE362B09591600DEE2F7 /* View+WidgetBackground.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1318,6 +1321,7 @@
 				AE79E37D259BF35700004D41 /* ResolutionResponseXMLParser.swift in Sources */,
 				AED8B6F9255F4BA4008F9769 /* MockedIssueProvider.swift in Sources */,
 				AED8B6EF255F4839008F9769 /* IssuesResponseXMLParser.swift in Sources */,
+				CCEADE372B09591600DEE2F7 /* View+WidgetBackground.swift in Sources */,
 				AEF9216F256176A10048EAFC /* IssuesList.swift in Sources */,
 				CC435BB52AB25C110024AFB7 /* RegionDetailsResponseXMLParser.swift in Sources */,
 				AE5D02E0259D2D9C00492027 /* WorldAssemblyHTMLParser.swift in Sources */,

@@ -12,20 +12,19 @@ struct MediumExtensionView: View {
     let entry: Provider.Entry
     
     var body: some View {
-        ZStack {
-            Image("background_medium").resizable().overlay(Color("BackgroundOverlayColor"))
-            VStack {
-                HStack {
-                    VStack {
-                        NationIssuesView(entry: entry)
-                        Spacer()
-                    }
-                    IssuesList(issues: entry.fetchIssuesResult.issues, maximumAmountIssuesToShow: 3)
+        VStack {
+            HStack {
+                VStack {
+                    NationIssuesView(entry: entry)
+                    Spacer()
                 }
-                Spacer()
-                InformationText(entry: self.entry)
-            }.padding()
+                IssuesList(issues: entry.fetchIssuesResult.issues, maximumAmountIssuesToShow: 3)
+            }
+            Spacer()
+            InformationText(entry: self.entry)
         }
+        .padding()
+        .widgetBackground(Image("background_medium").resizable().overlay(Color("BackgroundOverlayColor")))
     }
 }
 
