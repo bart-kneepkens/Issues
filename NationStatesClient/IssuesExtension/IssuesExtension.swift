@@ -19,7 +19,7 @@ struct IssuesExtensionEntry: TimelineEntry {
     init(fetchIssuesResult: FetchIssuesResult, nationName: String) {
         self.date = Date()
         self.fetchIssuesResult = fetchIssuesResult
-        self.nationName = nationName
+        self.nationName = nationName.capitalized
         self.isSignedOut = false
     }
     
