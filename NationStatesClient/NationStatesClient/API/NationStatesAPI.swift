@@ -73,6 +73,7 @@ enum APIError: Error {
     case timedOut
     case unknown(code: Int)
     case nationNotFound
+    case regionNotFound
     case nationStatesOutage
 }
 

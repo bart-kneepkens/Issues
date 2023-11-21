@@ -211,6 +211,8 @@
 		CCB8E31228DFB0B500F88087 /* IdentifiableURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB8E31128DFB0B500F88087 /* IdentifiableURL.swift */; };
 		CCB8E31828DFBBA400F88087 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB8E31728DFBBA400F88087 /* Configuration.swift */; };
 		CCEADE372B09591600DEE2F7 /* View+WidgetBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEADE362B09591600DEE2F7 /* View+WidgetBackground.swift */; };
+		CCEADE392B0D4F0400DEE2F7 /* SearchRegionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEADE382B0D4F0400DEE2F7 /* SearchRegionView.swift */; };
+		CCEADE3B2B0D59C400DEE2F7 /* RegionDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEADE3A2B0D59C400DEE2F7 /* RegionDetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -414,6 +416,8 @@
 		CCB8E31128DFB0B500F88087 /* IdentifiableURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableURL.swift; sourceTree = "<group>"; };
 		CCB8E31728DFBBA400F88087 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		CCEADE362B09591600DEE2F7 /* View+WidgetBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+WidgetBackground.swift"; sourceTree = "<group>"; };
+		CCEADE382B0D4F0400DEE2F7 /* SearchRegionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRegionView.swift; sourceTree = "<group>"; };
+		CCEADE3A2B0D59C400DEE2F7 /* RegionDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -942,6 +946,8 @@
 				CC435BAB2AB253530024AFB7 /* RegionView.swift */,
 				CC0DDFCB2AC0706200D26B11 /* MissingFlagView.swift */,
 				CC096C522AC22BD300F75CBE /* FactbookView.swift */,
+				CCEADE382B0D4F0400DEE2F7 /* SearchRegionView.swift */,
+				CCEADE3A2B0D59C400DEE2F7 /* RegionDetailsView.swift */,
 			);
 			path = Region;
 			sourceTree = "<group>";
@@ -1171,6 +1177,7 @@
 				CCA6653B2A9BDE20001E860B /* PastIssuesView.swift in Sources */,
 				AE15A6E725321084004478C3 /* IssuesResponseXMLParser.swift in Sources */,
 				AE4AE6D925DC79BA00498D2D /* SearchNationView.swift in Sources */,
+				CCEADE3B2B0D59C400DEE2F7 /* RegionDetailsView.swift in Sources */,
 				CCB8E31228DFB0B500F88087 /* IdentifiableURL.swift in Sources */,
 				AE1C5A8C25589F9C008811E6 /* CompletedIssueMO+.swift in Sources */,
 				CC04D28A2AB73A7600C7F239 /* BBCodeConverter.swift in Sources */,
@@ -1229,6 +1236,7 @@
 				AE06365D25AA6E750034B873 /* ViewModelFactory.swift in Sources */,
 				AE790DDF256DA7B300051FD4 /* APINationDetailsProvider.swift in Sources */,
 				AE95AA96258EADCA00607C1B /* CreateNationWebView.swift in Sources */,
+				CCEADE392B0D4F0400DEE2F7 /* SearchRegionView.swift in Sources */,
 				AE6E69E7258AAE95009C81B5 /* SignInInProgressView.swift in Sources */,
 				AE5B6DAE260D4A7F005D130B /* EnvironmentValues.swift in Sources */,
 				AE7207C925993C4700839D8D /* Freedom.swift in Sources */,

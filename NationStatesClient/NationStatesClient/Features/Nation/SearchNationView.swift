@@ -9,7 +9,6 @@ import SwiftUI
 import UIKit
 
 struct SearchNationView: View {
-    @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     
     @StateObject var viewModel: SearchNationViewModel
     

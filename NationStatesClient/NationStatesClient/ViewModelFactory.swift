@@ -102,6 +102,14 @@ class ViewModelFactory {
     }
 }
 
+// MARK: - MV 🎉
+
+extension ViewModelFactory {
+    var searchRegionView: SearchRegionView {
+        SearchRegionView(provider: regionDetailsProvider)
+    }
+}
+
 extension ViewModelFactory {
     static var isRunningInUITest: Bool {
         ProcessInfo.processInfo.arguments.contains("-ui_testing")

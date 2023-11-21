@@ -18,6 +18,7 @@ struct ErrorView: View {
         case .rateExceeded: fallthrough
         case .timedOut: return "There appear to be some connection issues. Retrying.."
         case .nationNotFound: return "Nation not found"
+        case .regionNotFound: return "Region not found"
             
             #if DEBUG
             case .conflict: return "conflict"
@@ -29,14 +30,13 @@ struct ErrorView: View {
     }
     
     var body: some View {
-        Button(action: {
-            self.onPress?()
-        }, label: {
+        Button(action: { self.onPress?() }, label: {
             HStack {
                 Image(systemName: "exclamationmark.triangle")
                 Text(text)
             }
-        }).buttonStyle(PlainButtonStyle())
+        })
+        .buttonStyle(.plain)
     }
 }
 
