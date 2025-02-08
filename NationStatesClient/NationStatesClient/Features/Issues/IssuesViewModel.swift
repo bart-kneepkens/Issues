@@ -19,12 +19,6 @@ class IssuesViewModel: ObservableObject {
             if let result = self.fetchIssuesResult {
                 self.issues = result.issues
                 
-                // TODO: Put this deeplink synchronization somewhere else, it really doesn't belong in this setter.
-                if let deeplinkId = self.deeplinkedIssueId, let issue = result.issues.first(where: { $0.id == deeplinkId }) {
-                    self.deeplinkedIssue = issue
-                    self.deeplinkedIssueId = nil
-                }
-                
                 DispatchQueue.main.async {
                     self.objectWillChange.send()
                 }
@@ -41,8 +35,6 @@ class IssuesViewModel: ObservableObject {
     var issues: [Issue] = []
     var completedIssues: [CompletedIssue] = []
     
-    @Published var deeplinkedIssue: Issue?
-    
     private let persistentContainer: CompletedIssueProvider
     private let provider: IssueProvider
     private let authenticationContainer: AuthenticationContainer
@@ -51,7 +43,6 @@ class IssuesViewModel: ObservableObject {
     private var shouldFetchPublisher = PassthroughSubject<Bool, Never>()
     private var refetchTimer: Timer?
     private var didJustAnswerAnIssue = false
-    private var deeplinkedIssueId: Int?
     private var justAnsweredIssueId: Int?
     
     init(provider: IssueProvider, completedIssueProvider: CompletedIssueProvider, authenticationContainer: AuthenticationContainer) {
@@ -115,14 +106,6 @@ class IssuesViewModel: ObservableObject {
                 SKStoreReviewController.requestReview(in: scene)
                 didJustAnswerAnIssue = false
             }
-        }
-    }
-    
-    func didReceiveDeeplink(with issueId: Int) {
-        if let issue = issues.first(where: { $0.id == issueId }) {
-            self.deeplinkedIssue = issue
-        } else {
-            self.deeplinkedIssueId = issueId
         }
     }
     

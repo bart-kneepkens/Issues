@@ -15,11 +15,6 @@ struct NationStatesClientApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView(viewModel: viewModelFactory.contentViewModel)
-                .onOpenURL { url in
-                    if let host = url.host, let issueId = Int(host) {
-                        viewModelFactory.issuesViewModel.didReceiveDeeplink(with: issueId)
-                    }
-                }
         }
     }
 }

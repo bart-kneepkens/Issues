@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Option: Identifiable {
+struct Option: Identifiable, Hashable {
     let id: Int
     let text: String
     

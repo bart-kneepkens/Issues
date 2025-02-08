@@ -10,6 +10,7 @@ import Combine
 
 struct IssuesView: View {
     @StateObject var viewModel: IssuesViewModel
+    @State private var path = NavigationPath()
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     
     @ViewBuilder private var fetchingIndicator: some View {
@@ -34,33 +35,8 @@ struct IssuesView: View {
             }
     }
     
-    @ViewBuilder private var deeplinkedIssueLinkContents: some View {
-        if let issue = self.viewModel.deeplinkedIssue {
-            IssueDetailView(viewModel: viewModelFactory.issueDetailViewModel(for: issue, with: self.viewModel))
-        }
-    }
-    
-    private var deeplinkedIssueLink: some View {
-        NavigationLink(
-            destination: deeplinkedIssueLinkContents, isActive: self.shouldNavigateToDeeplinkedIssue) {
-            deeplinkedIssueLinkContents
-        }
-    }
-    
-    private var shouldNavigateToDeeplinkedIssue: Binding<Bool> {
-        .init {
-            self.viewModel.deeplinkedIssue != nil
-        } set: { shouldNavigate in
-            if !shouldNavigate && self.viewModel.deeplinkedIssue != nil {
-                print("cleared deeplinkedIssue")
-                self.viewModel.deeplinkedIssue = nil
-            }
-        }
-    }
-    
     var body: some View {
-        ZStack {
-            deeplinkedIssueLink
+        NavigationStack(path: $path) {
             List {
                 Section(footer: footerView) {
                     ForEach(viewModel.issues, id: \.id) { issue in
@@ -81,6 +57,15 @@ struct IssuesView: View {
             .navigationBarItems(trailing: pastIssuesButton)
             .onAppear {
                 self.viewModel.updateIssues() // Throttled accordingly in VM
+            }
+            .navigationDestination(for: Issue.self) { issue in
+                IssueDetailView(
+                    viewModel: viewModelFactory.issueDetailViewModel(for: issue, with: viewModel)
+                )
+            }
+            .onOpenURL { url in
+                guard let host = url.host(percentEncoded: false), let issueId = Int(host), let linkedIssue = viewModel.issues.first(where: { $0.id == issueId}) else { return }
+                path.append(linkedIssue)
             }
         }
     }

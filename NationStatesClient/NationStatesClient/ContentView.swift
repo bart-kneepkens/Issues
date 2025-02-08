@@ -11,7 +11,67 @@ struct ContentView: View {
     @ObservedObject var viewModel: ContentViewModel
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     
-    private enum TabBarItem {
+    @ViewBuilder private var contents: some View {
+        if viewModel.state == ContentViewModel.ContentViewModelState.initial {
+            SignInView(viewModel: viewModelFactory.signinViewModel(contentViewModel: viewModel))
+        } else if viewModel.state == ContentViewModel.ContentViewModelState.signingIn {
+            SignInProgressView(error: viewModel.error)
+        } else {
+            TabView {
+                IssuesView(viewModel: viewModelFactory.issuesViewModel)
+                    .tabItemStyled(with: .issues)
+                WorldAssemblyView(viewModel: viewModelFactory.worldAssemblyViewModel)
+                    .wrappedInDefaultNavigation()
+                    .tabItemStyled(with: .worldAssembly)
+                NationView(viewModel: viewModelFactory.nationViewModel)
+                    .wrappedInDefaultNavigation()
+                    .tabItemStyled(with: .nation)
+                RegionView(viewModel: viewModelFactory.currentRegionViewModel)
+                    .wrappedInDefaultNavigation()
+                    .tabItemStyled(with: .region)
+                MoreView(viewModel: viewModelFactory.moreViewModel)
+                    .wrappedInDefaultNavigation()
+                    .tabItemStyled(with: .more)
+            }
+        }
+    }
+    
+    var body: some View {
+        contents
+            .onAppear {
+                self.viewModel.onAppear()
+            }
+    }
+}
+
+#if DEBUG
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView(viewModel:
+                        ContentViewModel(authenticationContainer: .init(), authenticationProvider: MockedAuthenticationProvider(success: true), nationDetailsProvider: MockedNationDetailsProvider(), resolutionProvider: MockedResolutionProvider()))
+    }
+}
+#endif
+
+// MARK: View Modifiers
+
+private struct WrappedInNavigationModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        NavigationStack {
+            content
+        }
+    }
+}
+
+extension View {
+    /// Wraps the view in a default NavigationStack without a bound path
+    func wrappedInDefaultNavigation() -> some View {
+        modifier(WrappedInNavigationModifier())
+    }
+}
+
+private struct TabItemStyled: ViewModifier {
+    enum TabBarItem {
         case issues
         case worldAssembly
         case nation
@@ -39,52 +99,20 @@ struct ContentView: View {
         }
     }
     
-    private func tabBarNavigationView(for item: TabBarItem) -> some View {
-        NavigationView {
-            switch item {
-            case .issues: IssuesView(viewModel: viewModelFactory.issuesViewModel)
-            case .worldAssembly: WorldAssemblyView(viewModel: viewModelFactory.worldAssemblyViewModel)
-            case .nation: NationView(viewModel: viewModelFactory.nationViewModel)
-            case .region: RegionView(viewModel: viewModelFactory.currentRegionViewModel)
-            case .more: MoreView(viewModel: viewModelFactory.moreViewModel)
-            }
-        }
-        .navigationViewStyle(.stack)
-        .tabItem {
-            Text(item.text)
-            Image(systemName: item.iconName)
-        }
-    }
+    let item: TabBarItem
     
-    @ViewBuilder private var contents: some View {
-        if viewModel.state == ContentViewModel.ContentViewModelState.initial {
-            SignInView(viewModel: viewModelFactory.signinViewModel(contentViewModel: self.viewModel))
-        } else if viewModel.state == ContentViewModel.ContentViewModelState.signingIn {
-            SignInProgressView(error: viewModel.error)
-        } else {
-            TabView {
-                tabBarNavigationView(for: .issues)
-                tabBarNavigationView(for: .worldAssembly)
-                tabBarNavigationView(for: .nation)
-                tabBarNavigationView(for: .region)
-                tabBarNavigationView(for: .more)
-            }
-        }
-    }
-    
-    var body: some View {
-        contents
-            .onAppear {
-                self.viewModel.onAppear()
+    func body(content: Content) -> some View {
+        content
+            .tabItem {
+                Text(item.text)
+                Image(systemName: item.iconName)
             }
     }
 }
 
-#if DEBUG
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView(viewModel:
-                        ContentViewModel(authenticationContainer: .init(), authenticationProvider: MockedAuthenticationProvider(success: true), nationDetailsProvider: MockedNationDetailsProvider(), resolutionProvider: MockedResolutionProvider()))
+private extension View {
+    /// Styles the view's tab item according to the provided TabBarItem case.
+    func tabItemStyled(with item: TabItemStyled.TabBarItem) -> some View {
+        modifier(TabItemStyled(item: item))
     }
 }
-#endif
