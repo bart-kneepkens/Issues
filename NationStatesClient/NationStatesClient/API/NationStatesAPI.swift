@@ -261,6 +261,17 @@ extension NationStatesAPI {
         }
         .eraseToAnyPublisher()
     }
+    
+    static func fetchResolutionById(authenticationContainer: AuthenticationContainer, id: Int, worldAssembly: WorldAssembly) async throws -> ResolutionDTO? {
+        guard let url = URLBuilder.resolutionURL(with: id, worldAssembly: worldAssembly) else {
+            throw APIError.notConnected
+        }
+        
+        let response = try await authenticatedRequestAsync(using: url, authenticationContainer: authenticationContainer)
+        let parser = ResolutionResponseXMLParser(response.data)
+        parser.parse()
+        return parser.resolution
+    }
 }
 
 extension NationStatesAPI {
@@ -305,5 +316,18 @@ extension NationStatesAPI {
             }
             .catch({ _ in Just(nil).eraseToAnyPublisher() })
             .eraseToAnyPublisher()
+    }
+    
+    static func fetchPastResolutionInformation(id: Int, worldAssembly: WorldAssembly, authenticationContainer: AuthenticationContainer) async throws -> ResolutionInformation {
+        
+        guard let url = URLBuilder.pastResolutionURL(id: id, worldAssembly: worldAssembly),
+              let request = self.cookieAuthenticatedWebRequest(using: url, authenticationContainer: authenticationContainer) else {
+            throw APIError.notConnected
+        }
+
+        guard let responseData = try? await URLSession.shared.data(for: request).0 else { throw APIError.unknown(code: -1) }
+        guard let responseString = String(data: responseData, encoding: .windowsCP1252) else { throw APIError.unauthorized }
+        let parser = WorldAssemblyHTMLParser(responseString)
+        return ResolutionInformation(localId: parser.localId, textHTML: parser.htmlText)
     }
 }

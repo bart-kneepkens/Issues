@@ -10,7 +10,6 @@ import Combine
 
 #if DEBUG
 class MockedResolutionProvider: ResolutionProvider {
-    
     var generalAssembly: CurrentValueSubject<Resolution?, Never>
     var securityCouncil: CurrentValueSubject<Resolution?, Never>
     let delay: Int
@@ -27,6 +26,10 @@ class MockedResolutionProvider: ResolutionProvider {
         return Just(option)
             .delay(for: .seconds(self.delay), scheduler: DispatchQueue.main)
             .eraseToAnyPublisher()
+    }
+    
+    func fetchPastResolution(id: Int, worldAssembly: WorldAssembly) async -> Resolution? {
+        nil
     }
 }
 #endif

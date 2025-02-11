@@ -7,9 +7,9 @@
 
 import Foundation
 
-enum WorldAssembly {
-    case general
-    case security
+enum WorldAssembly: Int {
+    case general = 1
+    case security = 2
 }
 
 extension WorldAssembly {

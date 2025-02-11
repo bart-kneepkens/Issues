@@ -13,6 +13,7 @@ protocol ResolutionProvider {
     var securityCouncil: CurrentValueSubject<Resolution?, Never> { get }
     
     func fetchResolutions()
+    func fetchPastResolution(id: Int, worldAssembly: WorldAssembly) async -> Resolution?
     func vote(for resolution: Resolution, worldAssembly: WorldAssembly, option: VoteOption, localId: String) -> AnyPublisher<VoteOption?, Never>
 }
 

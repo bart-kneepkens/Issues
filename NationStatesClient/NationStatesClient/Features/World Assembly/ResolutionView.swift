@@ -14,6 +14,8 @@ struct ResolutionView: View {
     
     @State private var selectedLinkType: WorldAssemblyResolutionTextSheet.LinkType?
     
+    @Binding var navigationPath: NavigationPath
+    
     private var resolution: Resolution {
         self.viewModel.resolution
     }
@@ -28,13 +30,6 @@ struct ResolutionView: View {
             return formatter.string(from: time)
         }
         return nil
-    }
-    
-    private var shouldNavigateToLink: Binding<Bool> {
-        .init(get: { self.selectedLinkType != nil }, set: { _ in
-            // Dismissed
-            self.selectedLinkType = nil
-        })
     }
     
     @ViewBuilder private var proposedByView: some View {
@@ -64,14 +59,7 @@ struct ResolutionView: View {
             RegionView(viewModel: viewModelFactory.regionViewModel(regionName))
         }
     }
-    
-    private var selectedLink: some View {
-        NavigationLink(destination: selectedLinkDestination, isActive: shouldNavigateToLink) {
-            EmptyView()
-        }
-        .opacity(0.0)
-    }
-    
+
     var body: some View {
         Section {
             Text(resolution.name).font(.title).bold().padding(.vertical)
@@ -80,8 +68,6 @@ struct ResolutionView: View {
         
         Section(header: VotesDistributionChart(votesFor: resolution.totalVotesFor, votesAgainst: resolution.totalVotesAgainst)
                     .frame(height: 72)) {}
-            .background(selectedLink)
-            
         
         Section {
             if let information = resolution.information, let htmlText = information.textHTML {
@@ -96,7 +82,9 @@ struct ResolutionView: View {
                 .sheet(
                     isPresented: $showingResolutionTextSheet,
                     onDismiss: {
-                        self.selectedLinkType = viewModel.preparedLinkType
+                        if let preparedLinkType = viewModel.preparedLinkType {
+                            navigationPath.append(WorldAssemblyNavigationDestination.link(preparedLinkType))
+                        }
                     },
                     content: {
                         WorldAssemblyResolutionTextSheet(htmlText: htmlText)
@@ -116,7 +104,7 @@ struct ResolutionView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             List {
-                ResolutionView(viewModel: ResolutionViewModel(resolution: .filler, nationDetailsProvider: MockedNationDetailsProvider()))
+                ResolutionView(viewModel: ResolutionViewModel(resolution: .filler, nationDetailsProvider: MockedNationDetailsProvider()), navigationPath: .constant(.init()))
             }
             .listStyle(InsetGroupedListStyle())
         }

@@ -18,9 +18,10 @@ struct WorldAssemblyResolutionTextSheet: View {
     private var onRegionTapped: ((String) -> Void)? = nil
     private var onLinkTapped: ((LinkType?) -> Void)? = nil
     
-    enum LinkType {
+    enum LinkType: Hashable {
         case nation(name: String)
         case region(name: String)
+        case otherResolution(id: Int, worldAssembly: WorldAssembly)
     }
     
     private static func linkType(from url: String) -> LinkType? {
@@ -30,6 +31,11 @@ struct WorldAssemblyResolutionTextSheet: View {
         } else if url.contains("region=") {
             let name = url.components(separatedBy: "=")[1]
             return .region(name: name)
+        } else if url.contains("WA_past_resolution"),
+                  let resolutionId = Int(url.components(separatedBy: "=")[2].filter(\.isNumber)),
+                  let councilId = Int(url.components(separatedBy: "=")[3]),
+                  let worldAssembly = WorldAssembly(rawValue: councilId) {
+            return .otherResolution(id: resolutionId, worldAssembly: worldAssembly)
         }
         return nil
     }

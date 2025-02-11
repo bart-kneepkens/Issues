@@ -7,10 +7,43 @@
 
 import SwiftUI
 
+enum WorldAssemblyNavigationDestination: Hashable {
+    case link(WorldAssemblyResolutionTextSheet.LinkType)
+    case worldAssembly(WorldAssembly)
+}
+
 struct WorldAssemblyView: View {
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     @StateObject var viewModel: WorldAssemblyViewModel
     @State private var selectedVoteOption: VoteOption? = nil
+    @State private var navigationPath = NavigationPath()
+    
+    var body: some View {
+        NavigationStack(path: $navigationPath) {
+            List {
+                assemblyViewLink(worldAssembly: .general)
+                assemblyViewLink(worldAssembly: .security)
+            }
+            .listStyle(.insetGrouped)
+            .navigationTitle("World Assembly")
+            .navigationDestination(for: WorldAssemblyNavigationDestination.self) { destination in
+                switch destination {
+                case let .link(linkType):
+                    switch linkType {
+                    case let .nation(name: nationName):
+                        NationLinkView(viewModel: viewModelFactory.nationLinkViewModel(nationName))
+                    case let .region(name: regionName):
+                        RegionView(viewModel: viewModelFactory.regionViewModel(regionName))
+                    case let .otherResolution(id: resolutionId, worldAssembly: wass):
+                        ResolutionLinkView(viewModel: viewModelFactory.resolutionLinkViewModel(id: resolutionId, worldAssembly: wass), navigationPath: $navigationPath)
+                    }
+                case let .worldAssembly(worldAssembly):
+                    self.assemblyView(worldAssembly: worldAssembly)
+                }
+                
+            }
+        }
+    }
     
     @ViewBuilder private func placeVoteView(resolution: Resolution, worldAssembly: WorldAssembly) -> some View {
         HStack {
@@ -64,7 +97,7 @@ struct WorldAssemblyView: View {
         
         List {
             if let resolution = resolution {
-                ResolutionView(viewModel: viewModelFactory.resolutionViewModel(resolution))
+                ResolutionView(viewModel: viewModelFactory.resolutionViewModel(resolution), navigationPath: $navigationPath)
                 
                 if let localId = resolution.information?.localId, !localId.isEmpty {
                     voteView(resolution, worldAssembly: worldAssembly)
@@ -73,7 +106,6 @@ struct WorldAssemblyView: View {
                 }
             }
         }
-        .listStyle(InsetGroupedListStyle())
         .navigationTitle(worldAssembly.textDescription)
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -81,8 +113,9 @@ struct WorldAssemblyView: View {
     @ViewBuilder private func assemblyViewLink(worldAssembly: WorldAssembly) -> some View {
         let resolution = worldAssembly == WorldAssembly.general ? self.viewModel.generalAssemblyResolution : self.viewModel.securityCouncilResolution
         
-        NavigationLink(
-            destination: assemblyView(worldAssembly: worldAssembly)) {
+        Button {
+            navigationPath.append(WorldAssemblyNavigationDestination.worldAssembly(worldAssembly))
+        } label: {
             HStack {
                 Image(systemName: worldAssembly.iconName)
                 VStack {
@@ -98,15 +131,7 @@ struct WorldAssemblyView: View {
             }.frame(height: 64)
         }
         .disabled(resolution == nil)
-    }
-    
-    var body: some View {
-        List {
-            assemblyViewLink(worldAssembly: .general)
-            assemblyViewLink(worldAssembly: .security)
-        }
-        .listStyle(InsetGroupedListStyle())
-        .navigationTitle("World Assembly")
+        .tint(.primary)
     }
 }
 

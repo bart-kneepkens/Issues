@@ -9,6 +9,7 @@ import Foundation
 import Combine
 
 class APIResolutionProvider: ResolutionProvider {
+    
     let generalAssembly = CurrentValueSubject<Resolution?, Never>(nil)
     let securityCouncil = CurrentValueSubject<Resolution?, Never>(nil)
     
@@ -22,6 +23,20 @@ class APIResolutionProvider: ResolutionProvider {
     func fetchResolutions() {
         self.fetchResolution(for: .general)
         self.fetchResolution(for: .security)
+    }
+    
+    func fetchPastResolution(id: Int, worldAssembly: WorldAssembly) async -> Resolution? {
+        guard let dto = try? await NationStatesAPI
+            .fetchResolutionById(
+                authenticationContainer: authenticationContainer,
+                id: id,
+                worldAssembly: worldAssembly
+            ) else { return nil }
+        guard var resolution = Resolution(from: dto) else { return nil }
+        
+        resolution.information = try? await NationStatesAPI.fetchPastResolutionInformation(id: id, worldAssembly: worldAssembly, authenticationContainer: authenticationContainer)
+        
+        return resolution
     }
     
     func vote(for resolution: Resolution, worldAssembly: WorldAssembly, option: VoteOption, localId: String) -> AnyPublisher<VoteOption?, Never> {
@@ -45,13 +60,13 @@ class APIResolutionProvider: ResolutionProvider {
                     
                     if let resolution = resolution {
                         // Fetch information, which include HTML text and localId
-                        self.fetchResolutionInformation(for: worldAssembly, from: resolution)
+                        self.fetchResolutionInformation(for: worldAssembly)
                     }
                 })
         )
     }
     
-    private func fetchResolutionInformation(for worldAssembly: WorldAssembly, from resolution: Resolution) {
+    private func fetchResolutionInformation(for worldAssembly: WorldAssembly) {
         self.cancellables?.append(
             NationStatesAPI.fetchResolutionInformation(for: worldAssembly, authenticationContainer: self.authenticationContainer)
                 .receive(on: DispatchQueue.main)

@@ -110,6 +110,18 @@ extension URLBuilder {
         return components.url
     }
     
+    static func resolutionURL(with id: Int, worldAssembly: WorldAssembly) -> URL? {
+        guard var components = URLComponents(url: baseUrl, resolvingAgainstBaseURL: true) else { return nil }
+        components.queryItems = [
+            API_VERSION_QUERY_ITEM,
+            URLQueryItem(name: "wa", value: worldAssembly.councilId),
+            URLQueryItem(name: "id", value: String(id)),
+            URLQueryItem(name: "q", value: "resolution"),
+        ]
+        
+        return components.url
+    }
+    
     // Form URLs - the template significantly reduces response size
     static var generalAssemblyFormURL: URL? {
         URL(string: "https://www.nationstates.net/page=ga/template-overall=none")
@@ -117,5 +129,9 @@ extension URLBuilder {
     
     static var securityCouncilFormURL: URL? {
         URL(string: "https://www.nationstates.net/page=sc/template-overall=none")
+    }
+    
+    static func pastResolutionURL(id: Int, worldAssembly: WorldAssembly) -> URL? {
+        URL(string: "https://www.nationstates.net/page=WA_past_resolution/id=\(id)/council=\(worldAssembly.rawValue)/template-overall=none")
     }
 }

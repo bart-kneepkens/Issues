@@ -49,10 +49,6 @@ extension ResolutionResponseXMLParser: XMLParserDelegate {
             break
         case "PROPOSED_BY":
             resolution.proposedBy = foundCharacters
-        case "TOTAL_NATIONS_AGAINST":
-            resolution.totalNationsAgainst = Int(foundCharacters)
-        case "TOTAL_NATIONS_FOR":
-            resolution.totalNationsFor = Int(foundCharacters)
         case "TOTAL_VOTES_AGAINST":
             resolution.totalVotesAgainst = Int(foundCharacters)
         case "TOTAL_VOTES_FOR":

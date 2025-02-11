@@ -21,7 +21,6 @@ struct ContentView: View {
                 IssuesView(viewModel: viewModelFactory.issuesViewModel)
                     .tabItemStyled(with: .issues)
                 WorldAssemblyView(viewModel: viewModelFactory.worldAssemblyViewModel)
-                    .wrappedInDefaultNavigation()
                     .tabItemStyled(with: .worldAssembly)
                 NationView(viewModel: viewModelFactory.nationViewModel)
                     .wrappedInDefaultNavigation()

@@ -82,6 +82,10 @@ class ViewModelFactory {
         .init(resolution: resolution, nationDetailsProvider: nationDetailsProvider)
     }
     
+    func resolutionLinkViewModel(id: Int, worldAssembly: WorldAssembly) -> ResolutionLinkViewModel {
+        .init(resolutionId: id, worldAssembly: worldAssembly, resolutionProvider: resolutionProvider)
+    }
+    
     func fetchedNationViewModel(_ nationName: String) -> FetchedNationViewModel {
         .init(nationName, nationDetailsProvider: nationDetailsProvider)
     }

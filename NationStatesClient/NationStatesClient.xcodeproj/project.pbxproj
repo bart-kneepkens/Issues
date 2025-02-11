@@ -201,6 +201,8 @@
 		CC435BB42AB25C010024AFB7 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC435BA92AB250560024AFB7 /* Region.swift */; };
 		CC435BB52AB25C110024AFB7 /* RegionDetailsResponseXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC435BB22AB259AC0024AFB7 /* RegionDetailsResponseXMLParser.swift */; };
 		CC435BB72AB3A6650024AFB7 /* MockedRegionDetailsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC435BB62AB3A6650024AFB7 /* MockedRegionDetailsProvider.swift */; };
+		CC4A6D5F2D5810C4006BEA74 /* ResolutionLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4A6D5E2D5810C4006BEA74 /* ResolutionLinkView.swift */; };
+		CC4A6D612D5810F3006BEA74 /* ResolutionLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4A6D602D5810F3006BEA74 /* ResolutionLinkViewModel.swift */; };
 		CC9BB06C283FF7FF00FF22FE /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9BB06B283FF7FF00FF22FE /* MoreView.swift */; };
 		CC9BB06E284001B600FF22FE /* MoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9BB06D284001B600FF22FE /* MoreViewModel.swift */; };
 		CC9BB07628401D3000FF22FE /* FeedbackIntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9BB07528401D3000FF22FE /* FeedbackIntroductionView.swift */; };
@@ -406,6 +408,8 @@
 		CC435BB02AB258590024AFB7 /* APIRegionDetailsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRegionDetailsProvider.swift; sourceTree = "<group>"; };
 		CC435BB22AB259AC0024AFB7 /* RegionDetailsResponseXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionDetailsResponseXMLParser.swift; sourceTree = "<group>"; };
 		CC435BB62AB3A6650024AFB7 /* MockedRegionDetailsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedRegionDetailsProvider.swift; sourceTree = "<group>"; };
+		CC4A6D5E2D5810C4006BEA74 /* ResolutionLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolutionLinkView.swift; sourceTree = "<group>"; };
+		CC4A6D602D5810F3006BEA74 /* ResolutionLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolutionLinkViewModel.swift; sourceTree = "<group>"; };
 		CC9BB06B283FF7FF00FF22FE /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 		CC9BB06D284001B600FF22FE /* MoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewModel.swift; sourceTree = "<group>"; };
 		CC9BB07528401D3000FF22FE /* FeedbackIntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackIntroductionView.swift; sourceTree = "<group>"; };
@@ -724,6 +728,8 @@
 				AE1B488E25A129A7005F328B /* WorldAssemblyResolutionTextSheet.swift */,
 				AE0E0E3725A209420067A136 /* ResolutionView.swift */,
 				AE8FC6F325ABA8A500951B8D /* ResolutionViewModel.swift */,
+				CC4A6D5E2D5810C4006BEA74 /* ResolutionLinkView.swift */,
+				CC4A6D602D5810F3006BEA74 /* ResolutionLinkViewModel.swift */,
 			);
 			path = "World Assembly";
 			sourceTree = "<group>";
@@ -1184,6 +1190,7 @@
 				AEFF41DA2533834300206676 /* AnswerIssueResponseXMLParser.swift in Sources */,
 				CC435BAC2AB253530024AFB7 /* RegionView.swift in Sources */,
 				AEFF41CF2533808F00206676 /* NationStatesXMLParser.swift in Sources */,
+				CC4A6D5F2D5810C4006BEA74 /* ResolutionLinkView.swift in Sources */,
 				AE15A6D925310852004478C3 /* NationStatesAPI.swift in Sources */,
 				AE1C5A8725589EC5008811E6 /* RankingMO+.swift in Sources */,
 				CC096C512AC0E24400F75CBE /* NationLinkView.swift in Sources */,
@@ -1218,6 +1225,7 @@
 				AE0E0E4225A227260067A136 /* WorldAssembly.swift in Sources */,
 				AE79E351259B589800004D41 /* StringTransform+.swift in Sources */,
 				AE115F9A2559EC4700EB1932 /* Ranking.swift in Sources */,
+				CC4A6D612D5810F3006BEA74 /* ResolutionLinkViewModel.swift in Sources */,
 				AE32F9702544D5600037954D /* NationView.swift in Sources */,
 				AE790DD9256DA75A00051FD4 /* NationDetailsProvider.swift in Sources */,
 				AE115FA92559EC6B00EB1932 /* CompletedIssue.swift in Sources */,
