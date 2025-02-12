@@ -23,7 +23,7 @@ struct ToggleablePasswordField: View {
             Button(action: {
                 self.shouldRevealPassword.toggle()
             }, label: {
-                Image(systemName: "eyeglasses")
+                Image(systemName: shouldRevealPassword ? "eye.circle": "eye.slash.circle")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 30)

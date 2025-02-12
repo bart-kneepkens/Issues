@@ -43,8 +43,6 @@ class ResolutionResponseXMLParserTests: XCTestCase {
                                                         option: "Safety",
                                                         promoted: Date(timeIntervalSince1970: TimeInterval(1609261203)),
                                                         proposedBy: "merni",
-                                                        totalNationsAgainst: 159,
-                                                        totalNationsFor: 410,
                                                         totalVotesAgainst: 1067,
                                                         totalVotesFor: 1536))
     }

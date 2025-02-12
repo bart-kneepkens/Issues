@@ -45,22 +45,23 @@ struct SignInView: View {
     
     private var createNationFooter: some View {
         HStack {
-            Text("Don't have a nation yet?").textCase(.none)
+            Text("Don't have a nation yet?")
+            Spacer()
             Button(action: {
                 self.shouldShowSingupSheet.toggle()
             }) {
-                Text("Create one").foregroundColor(.accentColor).textCase(.none)
+                Text("Create one")
+                    .foregroundColor(.accentColor)
+                    .fontWeight(.medium)
+                    .font(.subheadline)
             }
         }
     }
     
     var body: some View {
-        ZStack {
+        VStack {
+            screenHeader
             Form {
-                Section {
-                   screenHeader
-                }
-                
                 Section(header: Text("Sign in to your nation").textCase(.none)) {
                     TextField("Nation name", text: $viewModel.nationName).disableAutocorrection(true)
                     ToggleablePasswordField(text: $viewModel.password)
@@ -77,8 +78,14 @@ struct SignInView: View {
                         Button(action: {
                             viewModel.attemptSignIn()
                         }) {
-                            Text("Sign in").fontWeight(.medium)
-                        }.disabled(viewModel.signInButtonDisabled)
+                            HStack {
+                                Spacer()
+                                Text("Sign in")
+                                    .fontWeight(.medium)
+                                Spacer()
+                            }
+                        }
+                        .disabled(viewModel.signInButtonDisabled)
                     }
                 }
                 
@@ -104,7 +111,9 @@ struct SignInView: View {
                     }
                 }
             }
+            
         }
+        .background(Color(UIColor.systemGroupedBackground))
     }
 }
 
