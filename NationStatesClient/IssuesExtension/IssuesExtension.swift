@@ -114,7 +114,7 @@ struct IssuesExtensionContents: View {
             SmallExtensionView(entry: entry)
         case .systemMedium:
             MediumExtensionView(entry: entry)
-        case .systemLarge:
+        case .systemLarge, .systemExtraLarge:
             LargeExtensionView(entry: entry)
         @unknown default:
             EmptyView()

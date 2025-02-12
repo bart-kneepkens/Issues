@@ -58,10 +58,8 @@ class APIResolutionProvider: ResolutionProvider {
                     case .security: self.securityCouncil.send(resolution)
                     }
                     
-                    if let resolution = resolution {
-                        // Fetch information, which include HTML text and localId
-                        self.fetchResolutionInformation(for: worldAssembly)
-                    }
+                    // Fetch information, which include HTML text 
+                    self.fetchResolutionInformation(for: worldAssembly)
                 })
         )
     }

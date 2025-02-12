@@ -31,7 +31,7 @@ struct WorldAssemblyView: View {
                 case let .link(linkType):
                     switch linkType {
                     case let .nation(name: nationName):
-                        NationLinkView(viewModel: viewModelFactory.nationLinkViewModel(nationName))
+                        FetchedNationView(viewModel: viewModelFactory.fetchedNationViewModel(nationName))
                     case let .region(name: regionName):
                         RegionView(viewModel: viewModelFactory.regionViewModel(regionName))
                     case let .otherResolution(id: resolutionId, worldAssembly: wass):

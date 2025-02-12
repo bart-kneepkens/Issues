@@ -41,22 +41,9 @@ struct ResolutionView: View {
     @ViewBuilder private var statisticsView: some View {
         PlainListRow(name: "Category", value: resolution.category)
         PlainListRow(name: "Proposed by", value: AnyView(proposedByView))
-            .onAppear {
-                Task {
-                    await self.viewModel.fetchProposedByNation()
-                }
-            }
         
         if let timeLeft = self.timeLeftToVote {
             PlainListRow(name: "Voting ends in", value: timeLeft)
-        }
-    }
-    
-    @ViewBuilder private var selectedLinkDestination: some View {
-        if case let .nation(nationName) = selectedLinkType {
-            FetchedNationView(viewModel: viewModelFactory.fetchedNationViewModel(nationName))
-        } else if case let .region(regionName) = selectedLinkType {
-            RegionView(viewModel: viewModelFactory.regionViewModel(regionName))
         }
     }
 

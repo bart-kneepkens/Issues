@@ -18,6 +18,9 @@ struct NationLinkView: View {
         case .initial(let nationName):
             Text(nationName)
                 .fontWeight(.medium)
+                .task {
+                    await viewModel.fetch()
+                }
         case .loaded(let nation):
             Text(nation.name)
                 .fontWeight(.medium)
@@ -61,12 +64,19 @@ extension NationLinkView {
         @Published
         var state: State
         
+        private let provider: NationDetailsProvider
+        
         init(nationName: String, nationDetailsProvider: NationDetailsProvider) {
             self.state = .initial(nationName)
-            Task {
-                if let nation = try? await nationDetailsProvider.fetchNationDetails(for: nationName) {
-                    await updateNation(nation: nation)
-                }
+            self.provider = nationDetailsProvider
+        }
+        
+        func fetch() async {
+            guard case .initial(let nationName) = state else {
+                return
+            }
+            if let nation = try? await provider.fetchNationDetails(for: nationName) {
+                await updateNation(nation: nation)
             }
         }
         
