@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var viewModel: ContentViewModel
+    @ObservedObject var moreBadgeViewModel: MoreBadgeViewModel
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     
     @ViewBuilder private var contents: some View {
@@ -31,6 +32,7 @@ struct ContentView: View {
                 MoreView(viewModel: viewModelFactory.moreViewModel)
                     .wrappedInDefaultNavigation()
                     .tabItemStyled(with: .more)
+                    .badge(moreBadgeViewModel.badgeValue)
             }
         }
     }
@@ -47,7 +49,10 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(viewModel:
-                        ContentViewModel(authenticationContainer: .init(), authenticationProvider: MockedAuthenticationProvider(success: true), nationDetailsProvider: MockedNationDetailsProvider(), resolutionProvider: MockedResolutionProvider()))
+                        ContentViewModel(authenticationContainer: .init(), authenticationProvider: MockedAuthenticationProvider(success: true), nationDetailsProvider: MockedNationDetailsProvider(), resolutionProvider: MockedResolutionProvider()),
+                    moreBadgeViewModel:
+                        MoreBadgeViewModel()
+        )
     }
 }
 #endif

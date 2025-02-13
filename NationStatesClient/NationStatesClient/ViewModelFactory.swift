@@ -46,6 +46,8 @@ class ViewModelFactory {
         .init(authenticationContainer: authenticationContainer, authenticationProvider: authenticationProvider, nationDetailsProvider: nationDetailsProvider, resolutionProvider: resolutionProvider)
     }
     
+    let moreBadgeViewModel = MoreBadgeViewModel()
+    
     lazy var issuesViewModel: IssuesViewModel = {
         .init(provider: issueProvider, completedIssueProvider: completedIssueProvider, authenticationContainer: authenticationContainer)
     }()

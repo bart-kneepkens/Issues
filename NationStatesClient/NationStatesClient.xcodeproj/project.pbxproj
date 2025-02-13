@@ -185,6 +185,7 @@
 		AEFF41E82535033600206676 /* PingResponseXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41E72535033600206676 /* PingResponseXMLParser.swift */; };
 		AEFF41ED253503B600206676 /* PingResponseXMLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41EC253503B600206676 /* PingResponseXMLParserTests.swift */; };
 		AEFF41FD2536589A00206676 /* URLRequest+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41FC2536589A00206676 /* URLRequest+.swift */; };
+		CC008BF92D5E7F3400BA520B /* MoreBadgeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008BF82D5E7F3400BA520B /* MoreBadgeViewModel.swift */; };
 		CC04D28A2AB73A7600C7F239 /* BBCodeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04D2892AB73A7600C7F239 /* BBCodeConverter.swift */; };
 		CC04D28B2AB769E600C7F239 /* BBCodeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04D2892AB73A7600C7F239 /* BBCodeConverter.swift */; };
 		CC04D28D2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04D28C2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift */; };
@@ -395,6 +396,7 @@
 		AEFF41E72535033600206676 /* PingResponseXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingResponseXMLParser.swift; sourceTree = "<group>"; };
 		AEFF41EC253503B600206676 /* PingResponseXMLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingResponseXMLParserTests.swift; sourceTree = "<group>"; };
 		AEFF41FC2536589A00206676 /* URLRequest+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+.swift"; sourceTree = "<group>"; };
+		CC008BF82D5E7F3400BA520B /* MoreBadgeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreBadgeViewModel.swift; sourceTree = "<group>"; };
 		CC04D2892AB73A7600C7F239 /* BBCodeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBCodeConverter.swift; sourceTree = "<group>"; };
 		CC04D28C2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineHTMLTextWebView.swift; sourceTree = "<group>"; };
 		CC096C502AC0E24400F75CBE /* NationLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationLinkView.swift; sourceTree = "<group>"; };
@@ -974,6 +976,7 @@
 				CC9BB07428401D1700FF22FE /* Feedback */,
 				CC9BB06B283FF7FF00FF22FE /* MoreView.swift */,
 				CC9BB06D284001B600FF22FE /* MoreViewModel.swift */,
+				CC008BF82D5E7F3400BA520B /* MoreBadgeViewModel.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -1185,6 +1188,7 @@
 				AE4AE6D925DC79BA00498D2D /* SearchNationView.swift in Sources */,
 				CCEADE3B2B0D59C400DEE2F7 /* RegionDetailsView.swift in Sources */,
 				CCB8E31228DFB0B500F88087 /* IdentifiableURL.swift in Sources */,
+				CC008BF92D5E7F3400BA520B /* MoreBadgeViewModel.swift in Sources */,
 				AE1C5A8C25589F9C008811E6 /* CompletedIssueMO+.swift in Sources */,
 				CC04D28A2AB73A7600C7F239 /* BBCodeConverter.swift in Sources */,
 				AEFF41DA2533834300206676 /* AnswerIssueResponseXMLParser.swift in Sources */,

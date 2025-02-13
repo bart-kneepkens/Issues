@@ -14,7 +14,10 @@ struct NationStatesClientApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView(viewModel: viewModelFactory.contentViewModel)
+            ContentView(
+                viewModel: viewModelFactory.contentViewModel,
+                moreBadgeViewModel: viewModelFactory.moreBadgeViewModel
+            )
         }
     }
 }

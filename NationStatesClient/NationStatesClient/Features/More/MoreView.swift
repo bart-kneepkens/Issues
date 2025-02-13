@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MoreView: View {
     
+    @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
+    
     @StateObject var viewModel: MoreViewModel
     
     private var contactSection: some View {
@@ -39,6 +41,9 @@ struct MoreView: View {
             accountSection
         }
         .navigationTitle("More")
+        .onAppear {
+            viewModelFactory.moreBadgeViewModel.clearBadge()
+        }
     }
 }
 
