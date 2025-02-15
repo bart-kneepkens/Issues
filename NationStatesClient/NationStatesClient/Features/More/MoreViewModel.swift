@@ -12,7 +12,6 @@ class MoreViewModel: ObservableObject {
     @Published var nation: Nation?
     
     private let authenticationContainer: AuthenticationContainer
-    private var cancellables: [Cancellable]? = []
     
     init(authenticationContainer: AuthenticationContainer) {
         self.authenticationContainer = authenticationContainer

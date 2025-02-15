@@ -12,6 +12,26 @@ struct MoreView: View {
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     
     @StateObject var viewModel: MoreViewModel
+    @ObservedObject var badgeViewModel: MoreBadgeViewModel
+    
+    var body: some View {
+        List {
+            if badgeViewModel.showsNotificationFeatureInterestElements {
+                interestSection
+            }
+            contactSection
+            accountSection
+        }
+        .navigationTitle("More")
+        .onAppear {
+            viewModelFactory.moreBadgeViewModel.clearBadge()
+        }
+    }
+    
+    @ViewBuilder
+    private var interestSection: some View {
+        NotificationFeatureInterestView(viewModel: viewModelFactory.notificaitonFeatureInterestSectionViewModel)
+    }
     
     private var contactSection: some View {
         Section {
@@ -34,23 +54,12 @@ struct MoreView: View {
             }.foregroundColor(.red)
         }
     }
-    
-    var body: some View {
-        List {
-            contactSection
-            accountSection
-        }
-        .navigationTitle("More")
-        .onAppear {
-            viewModelFactory.moreBadgeViewModel.clearBadge()
-        }
-    }
 }
 
 #if DEBUG
 struct PreferencesView_Previews: PreviewProvider {
     static var previews: some View {
-        MoreView(viewModel: .init(nation: .filler))
+        MoreView(viewModel: .init(nation: .filler), badgeViewModel: .init(notificationFeatureInterestProvider: MockedNotificationFeatureInterestProvider()))
     }
 }
 #endif

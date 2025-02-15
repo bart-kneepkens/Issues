@@ -29,10 +29,13 @@ struct ContentView: View {
                 RegionView(viewModel: viewModelFactory.currentRegionViewModel)
                     .wrappedInDefaultNavigation()
                     .tabItemStyled(with: .region)
-                MoreView(viewModel: viewModelFactory.moreViewModel)
-                    .wrappedInDefaultNavigation()
-                    .tabItemStyled(with: .more)
-                    .badge(moreBadgeViewModel.badgeValue)
+                MoreView(
+                    viewModel: viewModelFactory.moreViewModel,
+                    badgeViewModel: moreBadgeViewModel
+                )
+                .wrappedInDefaultNavigation()
+                .tabItemStyled(with: .more)
+                .badge(moreBadgeViewModel.badgeValue)
             }
         }
     }
@@ -41,6 +44,9 @@ struct ContentView: View {
         contents
             .onAppear {
                 self.viewModel.onAppear()
+            }
+            .task {
+                await moreBadgeViewModel.setup()
             }
     }
 }
@@ -51,7 +57,7 @@ struct ContentView_Previews: PreviewProvider {
         ContentView(viewModel:
                         ContentViewModel(authenticationContainer: .init(), authenticationProvider: MockedAuthenticationProvider(success: true), nationDetailsProvider: MockedNationDetailsProvider(), resolutionProvider: MockedResolutionProvider()),
                     moreBadgeViewModel:
-                        MoreBadgeViewModel()
+                        MoreBadgeViewModel(notificationFeatureInterestProvider: MockedNotificationFeatureInterestProvider())
         )
     }
 }

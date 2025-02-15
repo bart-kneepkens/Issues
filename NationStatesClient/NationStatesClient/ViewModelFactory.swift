@@ -18,6 +18,7 @@ class ViewModelFactory {
     private let regionDetailsProvider: RegionDetailsProvider
     private let resolutionProvider: ResolutionProvider
     private let authenticationProvider: AuthenticationProvider
+    private let notificationFeatureInterestProvider: NotificationFeatureInterestProvider
     
     init() {
         #if DEBUG
@@ -29,6 +30,7 @@ class ViewModelFactory {
             self.regionDetailsProvider = UITestMockProviders.regionDetailsProvider
             self.resolutionProvider = UITestMockProviders.resolutionProvider
             self.authenticationProvider = UITestMockProviders.authenticationProvider
+            self.notificationFeatureInterestProvider = UITestMockProviders.notificationFeatureInterestProvider
             return
         }
         #endif
@@ -40,13 +42,16 @@ class ViewModelFactory {
         self.regionDetailsProvider = APIRegionDetailsProvider(container: authenticationContainer)
         self.resolutionProvider = APIResolutionProvider(authenticationContainer: authenticationContainer)
         self.authenticationProvider = APIAuthenticationProvider(authenticationContainer: authenticationContainer)
+        self.notificationFeatureInterestProvider = APINotificationFeatureInterestProvider()
     }
     
     var contentViewModel: ContentViewModel {
         .init(authenticationContainer: authenticationContainer, authenticationProvider: authenticationProvider, nationDetailsProvider: nationDetailsProvider, resolutionProvider: resolutionProvider)
     }
     
-    let moreBadgeViewModel = MoreBadgeViewModel()
+    lazy var moreBadgeViewModel: MoreBadgeViewModel = {
+        .init(notificationFeatureInterestProvider: notificationFeatureInterestProvider)
+    }()
     
     lazy var issuesViewModel: IssuesViewModel = {
         .init(provider: issueProvider, completedIssueProvider: completedIssueProvider, authenticationContainer: authenticationContainer)
@@ -97,7 +102,7 @@ class ViewModelFactory {
     }
     
     var moreViewModel: MoreViewModel {
-        .init(authenticationContainer: self.authenticationContainer)
+        .init(authenticationContainer: authenticationContainer)
     }
     
     func nationLinkViewModel(_ nationName: String) -> NationLinkView.ViewModel {
@@ -105,6 +110,10 @@ class ViewModelFactory {
             nationName: nationName,
             nationDetailsProvider: nationDetailsProvider
         )
+    }
+    
+    var notificaitonFeatureInterestSectionViewModel: NotificationFeatureInterestViewModel {
+        .init(provider: notificationFeatureInterestProvider, authenticationContainer: authenticationContainer, nationDetailsProvider: nationDetailsProvider)
     }
 }
 

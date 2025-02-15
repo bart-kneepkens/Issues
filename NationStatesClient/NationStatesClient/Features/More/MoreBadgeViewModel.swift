@@ -12,24 +12,54 @@ final class MoreBadgeViewModel: ObservableObject {
     @Published
     var badgeValue: String?
     
+    @Published
+    var showsNotificationFeatureInterestElements = false
+    
+    private let notificationFeatureInterestProvider: NotificationFeatureInterestProvider
     private let userDefaults: UserDefaults
     
-    init(userDefaults: UserDefaults = .standard) {
+    init(
+        notificationFeatureInterestProvider: NotificationFeatureInterestProvider,
+        userDefaults: UserDefaults = .standard
+    ) {
+        self.notificationFeatureInterestProvider = notificationFeatureInterestProvider
         self.userDefaults = userDefaults
         
 #if DEBUG
         userDefaults.removeObject(forKey: Constants.didTapMoreBadgeAppVersionsKey)
 #endif
-        guard let persistentAppVersions = userDefaults.array(forKey: Constants.didTapMoreBadgeAppVersionsKey) as? [String],
-              let appVersion = Constants.appVersion,
-              persistentAppVersions.contains(appVersion) else {
-            badgeValue = "•"
-            return
+        
+    }
+    
+    func setup() async {
+        let serverIsReachable = await notificationFeatureInterestProvider.isReachable
+        
+        if serverIsReachable {
+            await MainActor.run {
+                showsNotificationFeatureInterestElements = true
+            }
+        }
+        
+        var hasPreviouslyShownBadge: Bool {
+            guard let appVersion = Constants.appVersion else { return false }
+            let persistentAppVersions = userDefaults.array(forKey: Constants.didTapMoreBadgeAppVersionsKey) as? [String] ?? []
+            return persistentAppVersions.contains(appVersion)
+        }
+        
+        
+        if serverIsReachable, !hasPreviouslyShownBadge {
+            await MainActor.run {
+                badgeValue = "•"
+            }
         }
     }
     
     func clearBadge() {
-        badgeValue = nil
+        Task {
+            await MainActor.run {
+                badgeValue = nil
+            }
+        }
         guard let appVersion = Constants.appVersion else { return }
         var persistentAppVersions = userDefaults.array(forKey: Constants.didTapMoreBadgeAppVersionsKey) as? [String] ?? []
         persistentAppVersions.append(appVersion)
