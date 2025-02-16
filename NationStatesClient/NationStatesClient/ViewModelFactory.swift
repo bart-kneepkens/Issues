@@ -19,6 +19,7 @@ class ViewModelFactory {
     private let resolutionProvider: ResolutionProvider
     private let authenticationProvider: AuthenticationProvider
     private let notificationFeatureInterestProvider: NotificationFeatureInterestProvider
+    private let worldAssemblyStatusProvider: WorldAssemblyStatusProvider
     
     init() {
         #if DEBUG
@@ -31,6 +32,7 @@ class ViewModelFactory {
             self.resolutionProvider = UITestMockProviders.resolutionProvider
             self.authenticationProvider = UITestMockProviders.authenticationProvider
             self.notificationFeatureInterestProvider = UITestMockProviders.notificationFeatureInterestProvider
+            self.worldAssemblyStatusProvider = UITestMockProviders.worldAssemblyStatusProvider
             return
         }
         #endif
@@ -43,6 +45,7 @@ class ViewModelFactory {
         self.resolutionProvider = APIResolutionProvider(authenticationContainer: authenticationContainer)
         self.authenticationProvider = APIAuthenticationProvider(authenticationContainer: authenticationContainer)
         self.notificationFeatureInterestProvider = APINotificationFeatureInterestProvider()
+        self.worldAssemblyStatusProvider = APIWorldAssemblyStatusProvider()
     }
     
     var contentViewModel: ContentViewModel {
@@ -78,7 +81,12 @@ class ViewModelFactory {
     }
     
     var worldAssemblyViewModel: WorldAssemblyViewModel {
-        .init(authenticationContainer: authenticationContainer, resolutionProvider: resolutionProvider, nationDetailsProvider: nationDetailsProvider)
+        .init(
+            authenticationContainer: authenticationContainer,
+            resolutionProvider: resolutionProvider,
+            nationDetailsProvider: nationDetailsProvider,
+            worldAssemblyStatusProvider: worldAssemblyStatusProvider
+        )
     }
     
     func signinViewModel(contentViewModel: ContentViewModel) -> SignInViewModel {

@@ -23,6 +23,13 @@ struct WorldAssemblyView: View {
             List {
                 assemblyViewLink(worldAssembly: .general)
                 assemblyViewLink(worldAssembly: .security)
+                
+                if let statusText = viewModel.worldAssemblyStatusText {
+                    Section("⚠ For your information") {
+                        Text(statusText)
+                            .font(.subheadline)
+                    }
+                }
             }
             .listStyle(.insetGrouped)
             .navigationTitle("World Assembly")
@@ -139,7 +146,7 @@ struct WorldAssemblyView: View {
 struct WorldAssemblyView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            WorldAssemblyView(viewModel: .init(authenticationContainer: .init(), resolutionProvider: MockedResolutionProvider(), nationDetailsProvider: MockedNationDetailsProvider()))
+            WorldAssemblyView(viewModel: .init(authenticationContainer: .init(), resolutionProvider: MockedResolutionProvider(), nationDetailsProvider: MockedNationDetailsProvider(), worldAssemblyStatusProvider: MockedWorldAssemblyStatusProvider()))
         }
     }
 }

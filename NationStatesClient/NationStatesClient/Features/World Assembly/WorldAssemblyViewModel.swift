@@ -25,20 +25,38 @@ class WorldAssemblyViewModel: ObservableObject {
             isVoting = false
         }
     }
+    
+    @Published var worldAssemblyStatusText: String?
 
-    private var resolutionProvider: ResolutionProvider
-    private var authenticationContainer: AuthenticationContainer
+    private let resolutionProvider: ResolutionProvider
+    private let authenticationContainer: AuthenticationContainer
+    private let worldAssemblyStatusProvider: WorldAssemblyStatusProvider
     private var cancellables: [Cancellable?]? = []
     
-    init(authenticationContainer: AuthenticationContainer, resolutionProvider: ResolutionProvider, nationDetailsProvider: NationDetailsProvider) {
+    init(
+        authenticationContainer: AuthenticationContainer,
+        resolutionProvider: ResolutionProvider,
+        nationDetailsProvider: NationDetailsProvider,
+        worldAssemblyStatusProvider: WorldAssemblyStatusProvider
+    ) {
         self.authenticationContainer = authenticationContainer
         self.resolutionProvider = resolutionProvider
+        self.worldAssemblyStatusProvider = worldAssemblyStatusProvider
         
         self.castedGeneralAssemblyVote = nationDetailsProvider.nationDetails.value?.generalAssemblyVote
         self.castedSecurityCouncilVote = nationDetailsProvider.nationDetails.value?.securityCouncilVote
 
+        // TODO: Weak references here
         self.cancellables?.append(resolutionProvider.generalAssembly.assign(to: \.generalAssemblyResolution, on: self))
         self.cancellables?.append(resolutionProvider.securityCouncil.assign(to: \.securityCouncilResolution, on: self))
+        
+        Task {
+            if let status = await worldAssemblyStatusProvider.status {
+                await MainActor.run {
+                    self.worldAssemblyStatusText = status
+                }
+            }
+        }
     }
     
     func vote(on resolution: Resolution, option: VoteOption, worldAssembly: WorldAssembly, localId: String) {

@@ -54,5 +54,9 @@ struct UITestMockProviders {
     static var notificationFeatureInterestProvider: NotificationFeatureInterestProvider {
         MockedNotificationFeatureInterestProvider()
     }
+    
+    static var worldAssemblyStatusProvider: WorldAssemblyStatusProvider {
+        MockedWorldAssemblyStatusProvider()
+    }
 }
 #endif
