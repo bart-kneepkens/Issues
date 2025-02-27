@@ -194,6 +194,7 @@
 		CC008C0A2D6297B400BA520B /* WorldAssemblyStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008C092D6297B400BA520B /* WorldAssemblyStatusProvider.swift */; };
 		CC008C0C2D6297EB00BA520B /* APIWorldAssemblyStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008C0B2D6297EB00BA520B /* APIWorldAssemblyStatusProvider.swift */; };
 		CC008C0E2D62996000BA520B /* MockedWorldAssemblyStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008C0D2D62996000BA520B /* MockedWorldAssemblyStatusProvider.swift */; };
+		CC008C112D7108D400BA520B /* EnrolledNations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008C102D7108D400BA520B /* EnrolledNations.swift */; };
 		CC04D28A2AB73A7600C7F239 /* BBCodeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04D2892AB73A7600C7F239 /* BBCodeConverter.swift */; };
 		CC04D28B2AB769E600C7F239 /* BBCodeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04D2892AB73A7600C7F239 /* BBCodeConverter.swift */; };
 		CC04D28D2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04D28C2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift */; };
@@ -414,6 +415,7 @@
 		CC008C092D6297B400BA520B /* WorldAssemblyStatusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldAssemblyStatusProvider.swift; sourceTree = "<group>"; };
 		CC008C0B2D6297EB00BA520B /* APIWorldAssemblyStatusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIWorldAssemblyStatusProvider.swift; sourceTree = "<group>"; };
 		CC008C0D2D62996000BA520B /* MockedWorldAssemblyStatusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedWorldAssemblyStatusProvider.swift; sourceTree = "<group>"; };
+		CC008C102D7108D400BA520B /* EnrolledNations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrolledNations.swift; sourceTree = "<group>"; };
 		CC04D2892AB73A7600C7F239 /* BBCodeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBCodeConverter.swift; sourceTree = "<group>"; };
 		CC04D28C2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineHTMLTextWebView.swift; sourceTree = "<group>"; };
 		CC096C502AC0E24400F75CBE /* NationLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationLinkView.swift; sourceTree = "<group>"; };
@@ -922,6 +924,7 @@
 		AEECD736254F45DC00D536AF /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				CC008C0F2D7108C300BA520B /* Notifications */,
 				CC435BA82AB24F620024AFB7 /* Region */,
 				AE79E382259C01D600004D41 /* World Assembly */,
 				AE8764EC252FAD9E00EFE031 /* Issues */,
@@ -995,6 +998,14 @@
 				CC008C0D2D62996000BA520B /* MockedWorldAssemblyStatusProvider.swift */,
 			);
 			path = WorldAssemblyStatusProvider;
+			sourceTree = "<group>";
+		};
+		CC008C0F2D7108C300BA520B /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				CC008C102D7108D400BA520B /* EnrolledNations.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		CC435BA82AB24F620024AFB7 /* Region */ = {
@@ -1260,6 +1271,7 @@
 				AE95AAA82590276000607C1B /* ToggleablePasswordField.swift in Sources */,
 				CC008C072D612CD700BA520B /* NotificationFeatureInterestViewModel.swift in Sources */,
 				AE669EFC25A528FD007725D0 /* PlainListRow.swift in Sources */,
+				CC008C112D7108D400BA520B /* EnrolledNations.swift in Sources */,
 				AE127F9A254F2A96004445E5 /* NationViewModel.swift in Sources */,
 				AE790DF9256EDC9D00051FD4 /* BasicImageCache.swift in Sources */,
 				CC9BB06C283FF7FF00FF22FE /* MoreView.swift in Sources */,

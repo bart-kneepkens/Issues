@@ -45,9 +45,6 @@ struct ContentView: View {
             .onAppear {
                 self.viewModel.onAppear()
             }
-            .task {
-                await moreBadgeViewModel.setup()
-            }
     }
 }
 

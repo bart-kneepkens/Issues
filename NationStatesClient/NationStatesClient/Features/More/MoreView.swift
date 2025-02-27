@@ -16,8 +16,8 @@ struct MoreView: View {
     
     var body: some View {
         List {
-            if badgeViewModel.showsNotificationFeatureInterestElements {
-                interestSection
+            if viewModel.isEnrolledForNotifications {
+                notificationEnrolledStatusView
             }
             contactSection
             accountSection
@@ -29,8 +29,10 @@ struct MoreView: View {
     }
     
     @ViewBuilder
-    private var interestSection: some View {
-        NotificationFeatureInterestView(viewModel: viewModelFactory.notificaitonFeatureInterestSectionViewModel)
+    private var notificationEnrolledStatusView: some View {
+        Section("From the developer") {
+            Text("\(viewModel.name) is enrolled for the upcoming issues notification feature. Please hang on while I get things ready!")
+        }
     }
     
     private var contactSection: some View {
@@ -57,9 +59,10 @@ struct MoreView: View {
 }
 
 #if DEBUG
-struct PreferencesView_Previews: PreviewProvider {
-    static var previews: some View {
-        MoreView(viewModel: .init(nation: .filler), badgeViewModel: .init(notificationFeatureInterestProvider: MockedNotificationFeatureInterestProvider()))
-    }
+#Preview {
+    MoreView(
+        viewModel: .init(authenticationContainer: MockedAuthenticationContainer(), nationDetailsProvider: MockedNationDetailsProvider()),
+        badgeViewModel: .init(notificationFeatureInterestProvider: MockedNotificationFeatureInterestProvider())
+    )
 }
 #endif

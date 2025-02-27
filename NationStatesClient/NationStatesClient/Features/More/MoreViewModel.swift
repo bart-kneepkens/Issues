@@ -11,14 +11,19 @@ import Combine
 class MoreViewModel: ObservableObject {
     @Published var nation: Nation?
     
-    private let authenticationContainer: AuthenticationContainer
+    let isEnrolledForNotifications: Bool
     
-    init(authenticationContainer: AuthenticationContainer) {
+    private let authenticationContainer: AuthenticationContainer
+
+    
+    init(authenticationContainer: AuthenticationContainer, nationDetailsProvider: NationDetailsProvider) {
         self.authenticationContainer = authenticationContainer
+        self.isEnrolledForNotifications = NotificationEnrolledNations.names.contains(authenticationContainer.nationName.lowercased())
+        nationDetailsProvider.nationDetails.assign(to: &$nation)
     }
     
     var name: String {
-        authenticationContainer.nationName
+        nation?.name ?? authenticationContainer.nationName
     }
     
     func signOut() {
@@ -26,11 +31,3 @@ class MoreViewModel: ObservableObject {
     }
 }
 
-#if DEBUG
-extension MoreViewModel {
-    convenience init(nation: Nation) {
-        self.init(authenticationContainer: .init())
-        self.nation = nation
-    }
-}
-#endif
