@@ -12,17 +12,14 @@ final class MoreBadgeViewModel: ObservableObject {
     @Published
     var badgeValue: String?
     
-    @Published
-    var showsNotificationFeatureInterestElements = false
-    
-    private let notificationFeatureInterestProvider: NotificationFeatureInterestProvider
+    private let notificationsProvider: NotificationsProvider
     private let userDefaults: UserDefaults
     
     init(
-        notificationFeatureInterestProvider: NotificationFeatureInterestProvider,
+        notificationsProvider: NotificationsProvider,
         userDefaults: UserDefaults = .standard
     ) {
-        self.notificationFeatureInterestProvider = notificationFeatureInterestProvider
+        self.notificationsProvider = notificationsProvider
         self.userDefaults = userDefaults
         
 #if DEBUG
@@ -32,13 +29,7 @@ final class MoreBadgeViewModel: ObservableObject {
     }
     
     func setup() async {
-        let serverIsReachable = await notificationFeatureInterestProvider.isReachable
-        
-        if serverIsReachable {
-            await MainActor.run {
-                showsNotificationFeatureInterestElements = true
-            }
-        }
+        let serverIsReachable = await notificationsProvider.isReachable
         
         var hasPreviouslyShownBadge: Bool {
             guard let appVersion = Constants.appVersion else { return false }

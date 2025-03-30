@@ -185,16 +185,17 @@
 		AEFF41ED253503B600206676 /* PingResponseXMLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41EC253503B600206676 /* PingResponseXMLParserTests.swift */; };
 		AEFF41FD2536589A00206676 /* URLRequest+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFF41FC2536589A00206676 /* URLRequest+.swift */; };
 		CC008BF92D5E7F3400BA520B /* MoreBadgeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008BF82D5E7F3400BA520B /* MoreBadgeViewModel.swift */; };
-		CC008BFC2D5E8D9000BA520B /* NotificationFeatureInterestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008BFB2D5E8D9000BA520B /* NotificationFeatureInterestView.swift */; };
 		CC008BFF2D5E8E0400BA520B /* ExperimentsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008BFE2D5E8E0400BA520B /* ExperimentsAPI.swift */; };
-		CC008C012D611CD100BA520B /* NotificationFeatureInterestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008C002D611CD100BA520B /* NotificationFeatureInterestProvider.swift */; };
-		CC008C032D611D5B00BA520B /* APINotificationFeatureInterestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008C022D611D5B00BA520B /* APINotificationFeatureInterestProvider.swift */; };
-		CC008C052D611F9800BA520B /* MockedNotificationFeatureInterestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008C042D611F9800BA520B /* MockedNotificationFeatureInterestProvider.swift */; };
-		CC008C072D612CD700BA520B /* NotificationFeatureInterestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008C062D612CD700BA520B /* NotificationFeatureInterestViewModel.swift */; };
 		CC008C0A2D6297B400BA520B /* WorldAssemblyStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008C092D6297B400BA520B /* WorldAssemblyStatusProvider.swift */; };
 		CC008C0C2D6297EB00BA520B /* APIWorldAssemblyStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008C0B2D6297EB00BA520B /* APIWorldAssemblyStatusProvider.swift */; };
 		CC008C0E2D62996000BA520B /* MockedWorldAssemblyStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008C0D2D62996000BA520B /* MockedWorldAssemblyStatusProvider.swift */; };
 		CC008C112D7108D400BA520B /* EnrolledNations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008C102D7108D400BA520B /* EnrolledNations.swift */; };
+		CC008C132D93657B00BA520B /* NotificationsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008C122D93657B00BA520B /* NotificationsAPI.swift */; };
+		CC008C162D97590300BA520B /* NotificationsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008C152D97590300BA520B /* NotificationsSectionView.swift */; };
+		CC008C182D97592A00BA520B /* NotificationsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008C172D97592A00BA520B /* NotificationsSectionViewModel.swift */; };
+		CC008C1B2D99EEE200BA520B /* NotificationsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008C1A2D99EEE200BA520B /* NotificationsProvider.swift */; };
+		CC008C1D2D99EFB300BA520B /* APINotificationsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008C1C2D99EFB300BA520B /* APINotificationsProvider.swift */; };
+		CC008C1F2D99F28E00BA520B /* MockedNotificationsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC008C1E2D99F28E00BA520B /* MockedNotificationsProvider.swift */; };
 		CC04D28A2AB73A7600C7F239 /* BBCodeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04D2892AB73A7600C7F239 /* BBCodeConverter.swift */; };
 		CC04D28B2AB769E600C7F239 /* BBCodeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04D2892AB73A7600C7F239 /* BBCodeConverter.swift */; };
 		CC04D28D2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04D28C2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift */; };
@@ -406,16 +407,17 @@
 		AEFF41EC253503B600206676 /* PingResponseXMLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingResponseXMLParserTests.swift; sourceTree = "<group>"; };
 		AEFF41FC2536589A00206676 /* URLRequest+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+.swift"; sourceTree = "<group>"; };
 		CC008BF82D5E7F3400BA520B /* MoreBadgeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreBadgeViewModel.swift; sourceTree = "<group>"; };
-		CC008BFB2D5E8D9000BA520B /* NotificationFeatureInterestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationFeatureInterestView.swift; sourceTree = "<group>"; };
 		CC008BFE2D5E8E0400BA520B /* ExperimentsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentsAPI.swift; sourceTree = "<group>"; };
-		CC008C002D611CD100BA520B /* NotificationFeatureInterestProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationFeatureInterestProvider.swift; sourceTree = "<group>"; };
-		CC008C022D611D5B00BA520B /* APINotificationFeatureInterestProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APINotificationFeatureInterestProvider.swift; sourceTree = "<group>"; };
-		CC008C042D611F9800BA520B /* MockedNotificationFeatureInterestProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedNotificationFeatureInterestProvider.swift; sourceTree = "<group>"; };
-		CC008C062D612CD700BA520B /* NotificationFeatureInterestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationFeatureInterestViewModel.swift; sourceTree = "<group>"; };
 		CC008C092D6297B400BA520B /* WorldAssemblyStatusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldAssemblyStatusProvider.swift; sourceTree = "<group>"; };
 		CC008C0B2D6297EB00BA520B /* APIWorldAssemblyStatusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIWorldAssemblyStatusProvider.swift; sourceTree = "<group>"; };
 		CC008C0D2D62996000BA520B /* MockedWorldAssemblyStatusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedWorldAssemblyStatusProvider.swift; sourceTree = "<group>"; };
 		CC008C102D7108D400BA520B /* EnrolledNations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrolledNations.swift; sourceTree = "<group>"; };
+		CC008C122D93657B00BA520B /* NotificationsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsAPI.swift; sourceTree = "<group>"; };
+		CC008C152D97590300BA520B /* NotificationsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSectionView.swift; sourceTree = "<group>"; };
+		CC008C172D97592A00BA520B /* NotificationsSectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSectionViewModel.swift; sourceTree = "<group>"; };
+		CC008C1A2D99EEE200BA520B /* NotificationsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsProvider.swift; sourceTree = "<group>"; };
+		CC008C1C2D99EFB300BA520B /* APINotificationsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APINotificationsProvider.swift; sourceTree = "<group>"; };
+		CC008C1E2D99F28E00BA520B /* MockedNotificationsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedNotificationsProvider.swift; sourceTree = "<group>"; };
 		CC04D2892AB73A7600C7F239 /* BBCodeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBCodeConverter.swift; sourceTree = "<group>"; };
 		CC04D28C2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineHTMLTextWebView.swift; sourceTree = "<group>"; };
 		CC096C502AC0E24400F75CBE /* NationLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationLinkView.swift; sourceTree = "<group>"; };
@@ -486,8 +488,8 @@
 		AE15A6CF253107AF004478C3 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				CC008C192D99EEC500BA520B /* Notifications */,
 				CC008C082D62979E00BA520B /* WorldAssemblyStatusProvider */,
-				CC008BFD2D5E8DF300BA520B /* NotificationFeatureInterestProvider */,
 				CC435BAD2AB257FC0024AFB7 /* RegionDetatilsProvider */,
 				AE795AC025A92725008D8EF4 /* Images */,
 				AE5D02EA259E4C0100492027 /* ResolutionProvider */,
@@ -500,6 +502,7 @@
 				AEFF41C92532776500206676 /* URLBuilder.swift */,
 				AE795AA225A91DCE008D8EF4 /* APIRequest.swift */,
 				CC008BFE2D5E8E0400BA520B /* ExperimentsAPI.swift */,
+				CC008C122D93657B00BA520B /* NotificationsAPI.swift */,
 				AE5EF20F2553342A0079389F /* AuthenticatedAPIRequest.swift */,
 				AE8981AE2530FD8D00D62766 /* AuthenticationContainer.swift */,
 				CC9CE64B2AAFAB2B00641990 /* MockedAuthenticationContainer.swift */,
@@ -971,25 +974,6 @@
 			path = API;
 			sourceTree = "<group>";
 		};
-		CC008BFA2D5E8D7700BA520B /* NotificationFeatureInterest */ = {
-			isa = PBXGroup;
-			children = (
-				CC008BFB2D5E8D9000BA520B /* NotificationFeatureInterestView.swift */,
-				CC008C062D612CD700BA520B /* NotificationFeatureInterestViewModel.swift */,
-			);
-			path = NotificationFeatureInterest;
-			sourceTree = "<group>";
-		};
-		CC008BFD2D5E8DF300BA520B /* NotificationFeatureInterestProvider */ = {
-			isa = PBXGroup;
-			children = (
-				CC008C002D611CD100BA520B /* NotificationFeatureInterestProvider.swift */,
-				CC008C022D611D5B00BA520B /* APINotificationFeatureInterestProvider.swift */,
-				CC008C042D611F9800BA520B /* MockedNotificationFeatureInterestProvider.swift */,
-			);
-			path = NotificationFeatureInterestProvider;
-			sourceTree = "<group>";
-		};
 		CC008C082D62979E00BA520B /* WorldAssemblyStatusProvider */ = {
 			isa = PBXGroup;
 			children = (
@@ -1004,6 +988,25 @@
 			isa = PBXGroup;
 			children = (
 				CC008C102D7108D400BA520B /* EnrolledNations.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		CC008C142D9758DB00BA520B /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				CC008C152D97590300BA520B /* NotificationsSectionView.swift */,
+				CC008C172D97592A00BA520B /* NotificationsSectionViewModel.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		CC008C192D99EEC500BA520B /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				CC008C1A2D99EEE200BA520B /* NotificationsProvider.swift */,
+				CC008C1C2D99EFB300BA520B /* APINotificationsProvider.swift */,
+				CC008C1E2D99F28E00BA520B /* MockedNotificationsProvider.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -1033,7 +1036,7 @@
 		CC9BB06A283FF73D00FF22FE /* More */ = {
 			isa = PBXGroup;
 			children = (
-				CC008BFA2D5E8D7700BA520B /* NotificationFeatureInterest */,
+				CC008C142D9758DB00BA520B /* Notifications */,
 				CC9BB07428401D1700FF22FE /* Feedback */,
 				CC9BB06B283FF7FF00FF22FE /* MoreView.swift */,
 				CC9BB06D284001B600FF22FE /* MoreViewModel.swift */,
@@ -1239,6 +1242,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE21043C254B8C3C005AC68C /* MockedAuthenticationProvider.swift in Sources */,
+				CC008C132D93657B00BA520B /* NotificationsAPI.swift in Sources */,
 				AE2EDE8C25584E3200042668 /* PersistentCompletedIssueProvider.swift in Sources */,
 				AEC2377A259D2239006F2CA8 /* WorldAssemblyHTMLParser.swift in Sources */,
 				CC0DDFCC2AC0706200D26B11 /* MissingFlagView.swift in Sources */,
@@ -1258,6 +1262,7 @@
 				AEFF41CF2533808F00206676 /* NationStatesXMLParser.swift in Sources */,
 				CC4A6D5F2D5810C4006BEA74 /* ResolutionLinkView.swift in Sources */,
 				AE15A6D925310852004478C3 /* NationStatesAPI.swift in Sources */,
+				CC008C1F2D99F28E00BA520B /* MockedNotificationsProvider.swift in Sources */,
 				AE1C5A8725589EC5008811E6 /* RankingMO+.swift in Sources */,
 				CC096C512AC0E24400F75CBE /* NationLinkView.swift in Sources */,
 				CC9BB06E284001B600FF22FE /* MoreViewModel.swift in Sources */,
@@ -1269,7 +1274,6 @@
 				CC096C532AC22BD300F75CBE /* FactbookView.swift in Sources */,
 				AE2EDE842558212F00042668 /* CompletedIssuesModel.xcdatamodeld in Sources */,
 				AE95AAA82590276000607C1B /* ToggleablePasswordField.swift in Sources */,
-				CC008C072D612CD700BA520B /* NotificationFeatureInterestViewModel.swift in Sources */,
 				AE669EFC25A528FD007725D0 /* PlainListRow.swift in Sources */,
 				CC008C112D7108D400BA520B /* EnrolledNations.swift in Sources */,
 				AE127F9A254F2A96004445E5 /* NationViewModel.swift in Sources */,
@@ -1293,7 +1297,6 @@
 				AE0E0E4225A227260067A136 /* WorldAssembly.swift in Sources */,
 				AE79E351259B589800004D41 /* StringTransform+.swift in Sources */,
 				AE115F9A2559EC4700EB1932 /* Ranking.swift in Sources */,
-				CC008BFC2D5E8D9000BA520B /* NotificationFeatureInterestView.swift in Sources */,
 				CC4A6D612D5810F3006BEA74 /* ResolutionLinkViewModel.swift in Sources */,
 				AE32F9702544D5600037954D /* NationView.swift in Sources */,
 				AE790DD9256DA75A00051FD4 /* NationDetailsProvider.swift in Sources */,
@@ -1305,7 +1308,6 @@
 				AE5D02FE259E528800492027 /* MockedResolutionProvider.swift in Sources */,
 				AE79E359259BB13600004D41 /* Resolution.swift in Sources */,
 				AEFF41CA2532776500206676 /* URLBuilder.swift in Sources */,
-				CC008C032D611D5B00BA520B /* APINotificationFeatureInterestProvider.swift in Sources */,
 				AE115FB12559F9C900EB1932 /* KeychainSecretsStorage.swift in Sources */,
 				AE5EF2102553342A0079389F /* AuthenticatedAPIRequest.swift in Sources */,
 				AEECD738254F465400D536AF /* Option.swift in Sources */,
@@ -1319,6 +1321,7 @@
 				AE6E69E7258AAE95009C81B5 /* SignInInProgressView.swift in Sources */,
 				AE5B6DAE260D4A7F005D130B /* EnvironmentValues.swift in Sources */,
 				AE7207C925993C4700839D8D /* Freedom.swift in Sources */,
+				CC008C182D97592A00BA520B /* NotificationsSectionViewModel.swift in Sources */,
 				AE8FC6F425ABA8A600951B8D /* ResolutionViewModel.swift in Sources */,
 				CC04D28D2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift in Sources */,
 				CC9BB07628401D3000FF22FE /* FeedbackIntroductionView.swift in Sources */,
@@ -1327,13 +1330,13 @@
 				AE62CAC525926E1D00DD8D46 /* NetworkSession.swift in Sources */,
 				AE8764D3252FA4E500EFE031 /* SignInView.swift in Sources */,
 				AE1C5A7825589E87008811E6 /* IssueMO+.swift in Sources */,
-				CC008C012D611CD100BA520B /* NotificationFeatureInterestProvider.swift in Sources */,
 				AE1C5A7025589DB9008811E6 /* OptionMO+.swift in Sources */,
 				CC435BB12AB258590024AFB7 /* APIRegionDetailsProvider.swift in Sources */,
 				AE6B13C42545C29800606A6A /* AnsweredIssueResult.swift in Sources */,
 				AE7207CF25993C6800839D8D /* Freedoms.swift in Sources */,
 				AE616F17254F0D5200C9107C /* ContentViewModel.swift in Sources */,
 				AE983A5C258D127900B112CB /* RankingView.swift in Sources */,
+				CC008C162D97590300BA520B /* NotificationsSectionView.swift in Sources */,
 				AE2EDE7825573CF100042668 /* MockedCompletedIssueProvider.swift in Sources */,
 				AE0E0E4925A227F80067A136 /* VoteOption.swift in Sources */,
 				AE0FEBE1256C786D000A4B57 /* Nation.swift in Sources */,
@@ -1341,14 +1344,15 @@
 				AE15A6C325310372004478C3 /* SecureStorage.swift in Sources */,
 				CCA6653D2AA14563001E860B /* Combine+.swift in Sources */,
 				AE4AE6DF25DDC0DD00498D2D /* SearchNationViewModel.swift in Sources */,
+				CC008C1D2D99EFB300BA520B /* APINotificationsProvider.swift in Sources */,
 				AEDED2CE253C6372007A376F /* AnsweredIssueSection.swift in Sources */,
 				AE8981AF2530FD8D00D62766 /* AuthenticationContainer.swift in Sources */,
 				CC10E36C28DE6EAC00870DD3 /* ComposeEmailView.swift in Sources */,
 				AE1C5A942558ACC0008811E6 /* HeadlineMO+.swift in Sources */,
 				AE8764F8252FADEF00EFE031 /* IssueDetailViewModel.swift in Sources */,
+				CC008C1B2D99EEE200BA520B /* NotificationsProvider.swift in Sources */,
 				AEFF41E82535033600206676 /* PingResponseXMLParser.swift in Sources */,
 				AE5D02F3259E4CEC00492027 /* APIResolutionProvider.swift in Sources */,
-				CC008C052D611F9800BA520B /* MockedNotificationFeatureInterestProvider.swift in Sources */,
 				AE8764A7252E6F2900EFE031 /* ContentView.swift in Sources */,
 				AE1C5A8225589EBC008811E6 /* ReclassifyMO+.swift in Sources */,
 				AE210432254B7CA4005AC68C /* AuthenticationProvider.swift in Sources */,

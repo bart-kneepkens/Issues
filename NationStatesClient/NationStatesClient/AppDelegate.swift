@@ -15,4 +15,17 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor(named: "AccentColor")
         return true
     }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenString = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+        NotificationCenter
+            .default
+            .post(name: .notificationsDeviceTokenDidChange, object: self, userInfo: ["token": tokenString])
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {}
+}
+
+extension Notification.Name {
+    static let notificationsDeviceTokenDidChange: Self = .init("notificationsDeviceTokenDidChange")
 }

@@ -18,7 +18,7 @@ class ViewModelFactory {
     private let regionDetailsProvider: RegionDetailsProvider
     private let resolutionProvider: ResolutionProvider
     private let authenticationProvider: AuthenticationProvider
-    private let notificationFeatureInterestProvider: NotificationFeatureInterestProvider
+    private let notificationsProvider: NotificationsProvider
     private let worldAssemblyStatusProvider: WorldAssemblyStatusProvider
     
     init() {
@@ -31,7 +31,7 @@ class ViewModelFactory {
             self.regionDetailsProvider = UITestMockProviders.regionDetailsProvider
             self.resolutionProvider = UITestMockProviders.resolutionProvider
             self.authenticationProvider = UITestMockProviders.authenticationProvider
-            self.notificationFeatureInterestProvider = UITestMockProviders.notificationFeatureInterestProvider
+            self.notificationsProvider = UITestMockProviders.notificationsProvider
             self.worldAssemblyStatusProvider = UITestMockProviders.worldAssemblyStatusProvider
             return
         }
@@ -44,7 +44,7 @@ class ViewModelFactory {
         self.regionDetailsProvider = APIRegionDetailsProvider(container: authenticationContainer)
         self.resolutionProvider = APIResolutionProvider(authenticationContainer: authenticationContainer)
         self.authenticationProvider = APIAuthenticationProvider(authenticationContainer: authenticationContainer)
-        self.notificationFeatureInterestProvider = APINotificationFeatureInterestProvider()
+        self.notificationsProvider = APINotificationsProvider(authenticationContainer: authenticationContainer)
         self.worldAssemblyStatusProvider = APIWorldAssemblyStatusProvider()
     }
     
@@ -53,7 +53,7 @@ class ViewModelFactory {
     }
     
     lazy var moreBadgeViewModel: MoreBadgeViewModel = {
-        .init(notificationFeatureInterestProvider: notificationFeatureInterestProvider)
+        .init(notificationsProvider: notificationsProvider)
     }()
     
     lazy var issuesViewModel: IssuesViewModel = {
@@ -120,8 +120,8 @@ class ViewModelFactory {
         )
     }
     
-    var notificaitonFeatureInterestSectionViewModel: NotificationFeatureInterestViewModel {
-        .init(provider: notificationFeatureInterestProvider, authenticationContainer: authenticationContainer, nationDetailsProvider: nationDetailsProvider)
+    var notificationsSectionViewModel: NotificationsSectionViewModel {
+        .init(notificationsProvider: notificationsProvider)
     }
 }
 

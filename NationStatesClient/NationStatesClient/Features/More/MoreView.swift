@@ -17,7 +17,9 @@ struct MoreView: View {
     var body: some View {
         List {
             if viewModel.isEnrolledForNotifications {
-                notificationEnrolledStatusView
+                NotificationsSectionView(
+                    viewModel: viewModelFactory.notificationsSectionViewModel
+                )
             }
             contactSection
             accountSection
@@ -25,13 +27,6 @@ struct MoreView: View {
         .navigationTitle("More")
         .onAppear {
             viewModelFactory.moreBadgeViewModel.clearBadge()
-        }
-    }
-    
-    @ViewBuilder
-    private var notificationEnrolledStatusView: some View {
-        Section("From the developer") {
-            Text("\(viewModel.name) is enrolled for the upcoming issues notification feature. Please hang on while I get things ready!")
         }
     }
     
@@ -62,7 +57,7 @@ struct MoreView: View {
 #Preview {
     MoreView(
         viewModel: .init(authenticationContainer: MockedAuthenticationContainer(), nationDetailsProvider: MockedNationDetailsProvider()),
-        badgeViewModel: .init(notificationFeatureInterestProvider: MockedNotificationFeatureInterestProvider())
+        badgeViewModel: .init(notificationsProvider: MockedNotificationsProvider())
     )
 }
 #endif
