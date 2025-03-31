@@ -10,8 +10,8 @@ import Foundation
 protocol NotificationsProvider {
     var isReachable: Bool { get async }
     @discardableResult
-    func enroll(deviceToken: String) async -> Bool
+    func register(deviceToken: String) async -> Bool
     @discardableResult
-    func disEnroll() async -> Bool
+    func unregister() async -> Bool
 }
 

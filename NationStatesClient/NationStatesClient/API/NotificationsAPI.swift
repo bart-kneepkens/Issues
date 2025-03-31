@@ -17,7 +17,7 @@ final class NotificationsAPI {
     
     var isReachable: Bool {
         get async {
-            guard let url = URLBuilder.healthURL else { return false }
+            guard let url = URLBuilder.registrationURL else { return false }
             var request = URLRequest(url: url)
             request.httpMethod = "HEAD"
             guard let response = try? await session.data(for: request).1 else { return false }
@@ -26,7 +26,7 @@ final class NotificationsAPI {
     }
     
     func register(nationName: String, pin: String, autologin: String, deviceToken: String) async -> Bool {
-        guard let url = URLBuilder.registerURL else { return false }
+        guard let url = URLBuilder.registrationURL else { return false }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         
@@ -41,6 +41,14 @@ final class NotificationsAPI {
         let response = try? await session.data(for: request).1
         return (response as? HTTPURLResponse)?.statusCode == 200
     }
+    
+    func unregister(nationName: String) async -> Bool {
+        guard let url = URLBuilder.registrationURL?.appending(queryItems: [.init(name: "nation", value: nationName)]) else { return false }
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        let response = try? await session.data(for: request).1
+        return (response as? HTTPURLResponse)?.statusCode == 200
+    }
 }
 
 extension NotificationsAPI {
@@ -49,12 +57,8 @@ extension NotificationsAPI {
             .init(string: Configuration.notificationsAPIBaseURL)
         }
         
-        static var healthURL: URL? {
-            baseURL?.appending(path: "health")
-        }
-        
-        static var registerURL: URL? {
-            baseURL?.appending(path: "register")
+        static var registrationURL: URL? {
+            baseURL?.appending(path: "registration")
         }
     }
 }

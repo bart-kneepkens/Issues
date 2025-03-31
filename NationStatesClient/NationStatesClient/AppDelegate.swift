@@ -13,6 +13,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         // SwiftUI (still) doesn't color Alert content properly to accentColor. Alright, let me help them along..
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor(named: "AccentColor")
+        UNUserNotificationCenter.current().delegate = self
         return true
     }
     
@@ -24,6 +25,18 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {}
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(
+            _ center: UNUserNotificationCenter,
+            willPresent notification: UNNotification,
+            withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+        ) {
+            // Show banner, play sound, and set badge even if the app is open
+            completionHandler([.banner, .sound, .badge])
+    }
 }
 
 extension Notification.Name {

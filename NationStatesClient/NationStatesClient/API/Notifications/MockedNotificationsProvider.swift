@@ -11,11 +11,11 @@ import Foundation
 class MockedNotificationsProvider: NotificationsProvider {
     var isReachable: Bool { true }
     
-    func enroll(deviceToken: String) async -> Bool {
+    func register(deviceToken: String) async -> Bool {
         true
     }
     
-    func disEnroll() async -> Bool {
+    func unregister() async -> Bool {
         true
     }
 }

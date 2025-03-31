@@ -22,7 +22,7 @@ final class APINotificationsProvider: NotificationsProvider {
         }
     }
     
-    func enroll(deviceToken: String) async -> Bool {
+    func register(deviceToken: String) async -> Bool {
         let nationName = authenticationContainer.nationName.lowercased()
         let pin = authenticationContainer.pin
         let autologin = authenticationContainer.autologin
@@ -31,7 +31,8 @@ final class APINotificationsProvider: NotificationsProvider {
         return await api.register(nationName: nationName, pin: pin, autologin: autologin, deviceToken: deviceToken)
     }
     
-    func disEnroll() async -> Bool {
-        false // TODO
+    func unregister() async -> Bool {
+        let nationName = authenticationContainer.nationName.lowercased()
+        return await api.unregister(nationName: nationName)
     }
 }

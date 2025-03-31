@@ -19,6 +19,10 @@ class NotificationsSectionViewModel: ObservableObject {
                 Task {
                     await requestAuthorizationAndRegisterLocally()
                 }
+            } else if oldValue == true, notificationsEnabled == false {
+                Task {
+                    await unregister()
+                }
             }
         }
     }
@@ -26,10 +30,11 @@ class NotificationsSectionViewModel: ObservableObject {
     private let notificationsProvider: NotificationsProvider
     private let notificationCenter = UNUserNotificationCenter.current()
     private var tokenCancellable: AnyCancellable?
+    private let userDefaults = UserDefaults.standard
 
     init(notificationsProvider: NotificationsProvider) {
         self.notificationsProvider = notificationsProvider
-        self.notificationsEnabled = UserDefaults.standard.bool(forKey: "notifications-enabled")
+        self.notificationsEnabled = userDefaults.bool(forKey: "notifications-enabled")
         
         NotificationCenter.default.addObserver(
             forName: .notificationsDeviceTokenDidChange,
@@ -60,8 +65,20 @@ class NotificationsSectionViewModel: ObservableObject {
     }
     
     private func registerWithNotificationsService(token: String) async {
-        if await notificationsProvider.enroll(deviceToken: token) {
-            UserDefaults.standard.setValue(true, forKey: "notifications-enabled")
+        let result = await notificationsProvider.register(deviceToken: token)
+        
+        if result == false {
+            await MainActor.run {
+                notificationsEnabled = false
+            }
         }
+        
+        userDefaults.setValue(result, forKey: notificationsEnabledPersistenceKey)
+    }
+    
+    private func unregister() async {
+        await notificationsProvider.unregister()
     }
 }
+
+private let notificationsEnabledPersistenceKey = "notifications-enabled"
