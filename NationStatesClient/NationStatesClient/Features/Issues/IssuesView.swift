@@ -12,28 +12,7 @@ struct IssuesView: View {
     @StateObject var viewModel: IssuesViewModel
     @State private var path = NavigationPath()
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
-    
-    @ViewBuilder private var fetchingIndicator: some View {
-        if self.viewModel.isFetchingIssues {
-            Section {
-                ProgressView()
-            }
-        }
-    }
-    
-    @ViewBuilder private var footerView: some View {
-        if let error = self.viewModel.error {
-            ErrorView(error: error) {
-                switch error {
-                case .unauthorized:
-                    self.viewModel.signOut()
-                default: break
-                }
-            }
-        } else if let result = self.viewModel.fetchIssuesResult, self.viewModel.issues.count != 5 {
-            Text("Next issue \(result.timeLeftForNextIssue)")
-            }
-    }
+    @EnvironmentObject var deeplinkHandler: DeeplinkHandler
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -64,10 +43,37 @@ struct IssuesView: View {
                 )
             }
             .onOpenURL { url in
-                guard let host = url.host(percentEncoded: false), let issueId = Int(host), let linkedIssue = viewModel.issues.first(where: { $0.id == issueId}) else { return }
+                deeplinkHandler.handle(url: url)
+            }
+            .onReceive(deeplinkHandler.$activeLink) { link in
+                guard let link else { return }
+                guard case .issue(let id) = link else { return }
+                guard let linkedIssue = viewModel.issues.first(where: { $0.id == id }) else { return }
                 path.append(linkedIssue)
             }
         }
+    }
+    
+    @ViewBuilder private var fetchingIndicator: some View {
+        if self.viewModel.isFetchingIssues {
+            Section {
+                ProgressView()
+            }
+        }
+    }
+    
+    @ViewBuilder private var footerView: some View {
+        if let error = self.viewModel.error {
+            ErrorView(error: error) {
+                switch error {
+                case .unauthorized:
+                    self.viewModel.signOut()
+                default: break
+                }
+            }
+        } else if let result = self.viewModel.fetchIssuesResult, self.viewModel.issues.count != 5 {
+                Text("Next issue \(result.timeLeftForNextIssue)")
+            }
     }
     
     @ViewBuilder private var pastIssuesButton: some View {

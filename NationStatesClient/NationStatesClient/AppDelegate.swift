@@ -8,6 +8,9 @@
 import UIKit
 
 class AppDelegate: NSObject, UIApplicationDelegate {
+    
+    let deeplinkHandler: DeeplinkHandler = .init()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         CensusScalesLoader.shared.load()
         
@@ -25,6 +28,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {}
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        if let urlString = response.notification.request.content.userInfo["url"] as? String, let url = URL(string: urlString) {
+            deeplinkHandler.handle(url: url)
+        }
+        completionHandler()
+    }
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {

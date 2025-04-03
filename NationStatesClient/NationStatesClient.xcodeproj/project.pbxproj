@@ -204,6 +204,7 @@
 		CC0DDFCC2AC0706200D26B11 /* MissingFlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0DDFCB2AC0706200D26B11 /* MissingFlagView.swift */; };
 		CC10E36A28DE692100870DD3 /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10E36928DE692100870DD3 /* SafariView.swift */; };
 		CC10E36C28DE6EAC00870DD3 /* ComposeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10E36B28DE6EAC00870DD3 /* ComposeEmailView.swift */; };
+		CC2E84D32D9F130000163ABB /* DeeplinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E84D22D9F130000163ABB /* DeeplinkHandler.swift */; };
 		CC435BAA2AB250560024AFB7 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC435BA92AB250560024AFB7 /* Region.swift */; };
 		CC435BAC2AB253530024AFB7 /* RegionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC435BAB2AB253530024AFB7 /* RegionView.swift */; };
 		CC435BAF2AB2580E0024AFB7 /* RegionDetailsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC435BAE2AB2580E0024AFB7 /* RegionDetailsProvider.swift */; };
@@ -425,6 +426,7 @@
 		CC0DDFCB2AC0706200D26B11 /* MissingFlagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissingFlagView.swift; sourceTree = "<group>"; };
 		CC10E36928DE692100870DD3 /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
 		CC10E36B28DE6EAC00870DD3 /* ComposeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeEmailView.swift; sourceTree = "<group>"; };
+		CC2E84D22D9F130000163ABB /* DeeplinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkHandler.swift; sourceTree = "<group>"; };
 		CC435BA92AB250560024AFB7 /* Region.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		CC435BAB2AB253530024AFB7 /* RegionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionView.swift; sourceTree = "<group>"; };
 		CC435BAE2AB2580E0024AFB7 /* RegionDetailsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionDetailsProvider.swift; sourceTree = "<group>"; };
@@ -927,6 +929,7 @@
 		AEECD736254F45DC00D536AF /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				CC2E84D12D9F12D600163ABB /* Deeplink */,
 				CC008C0F2D7108C300BA520B /* Notifications */,
 				CC435BA82AB24F620024AFB7 /* Region */,
 				AE79E382259C01D600004D41 /* World Assembly */,
@@ -1009,6 +1012,14 @@
 				CC008C1E2D99F28E00BA520B /* MockedNotificationsProvider.swift */,
 			);
 			path = Notifications;
+			sourceTree = "<group>";
+		};
+		CC2E84D12D9F12D600163ABB /* Deeplink */ = {
+			isa = PBXGroup;
+			children = (
+				CC2E84D22D9F130000163ABB /* DeeplinkHandler.swift */,
+			);
+			path = Deeplink;
 			sourceTree = "<group>";
 		};
 		CC435BA82AB24F620024AFB7 /* Region */ = {
@@ -1316,6 +1327,7 @@
 				AE795ABA25A926C2008D8EF4 /* URLResponse+.swift in Sources */,
 				AE06365D25AA6E750034B873 /* ViewModelFactory.swift in Sources */,
 				AE790DDF256DA7B300051FD4 /* APINationDetailsProvider.swift in Sources */,
+				CC2E84D32D9F130000163ABB /* DeeplinkHandler.swift in Sources */,
 				AE95AA96258EADCA00607C1B /* CreateNationWebView.swift in Sources */,
 				CCEADE392B0D4F0400DEE2F7 /* SearchRegionView.swift in Sources */,
 				AE6E69E7258AAE95009C81B5 /* SignInInProgressView.swift in Sources */,
@@ -1617,7 +1629,7 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
@@ -1646,7 +1658,7 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;

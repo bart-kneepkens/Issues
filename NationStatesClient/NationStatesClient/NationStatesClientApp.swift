@@ -18,6 +18,7 @@ struct NationStatesClientApp: App {
                 viewModel: viewModelFactory.contentViewModel,
                 moreBadgeViewModel: viewModelFactory.moreBadgeViewModel
             )
+            .environmentObject(appDelegate.deeplinkHandler)
         }
     }
 }

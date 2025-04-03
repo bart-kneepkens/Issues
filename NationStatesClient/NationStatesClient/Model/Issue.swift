@@ -43,7 +43,7 @@ extension IssueDTO: Equatable {}
 
 extension Issue {
     var deeplinkURL: URL? {
-        URL(string: "widget://\(id)")
+        URL(string: "issue://\(id)")
     }
 }
 

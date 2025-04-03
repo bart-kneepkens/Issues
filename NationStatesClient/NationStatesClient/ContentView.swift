@@ -11,6 +11,8 @@ struct ContentView: View {
     @ObservedObject var viewModel: ContentViewModel
     @ObservedObject var moreBadgeViewModel: MoreBadgeViewModel
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
+    @EnvironmentObject var deeplinkHandler: DeeplinkHandler
+    @State var selectedTab: Int = 0
     
     @ViewBuilder private var contents: some View {
         if viewModel.state == ContentViewModel.ContentViewModelState.initial {
@@ -18,7 +20,7 @@ struct ContentView: View {
         } else if viewModel.state == ContentViewModel.ContentViewModelState.signingIn {
             SignInProgressView(error: viewModel.error)
         } else {
-            TabView {
+            TabView(selection: $selectedTab) {
                 IssuesView(viewModel: viewModelFactory.issuesViewModel)
                     .tabItemStyled(with: .issues)
                 WorldAssemblyView(viewModel: viewModelFactory.worldAssemblyViewModel)
@@ -37,6 +39,14 @@ struct ContentView: View {
                 .tabItemStyled(with: .more)
                 .badge(moreBadgeViewModel.badgeValue)
             }
+            .onReceive(deeplinkHandler.$activeLink) { link in
+                guard let link else { return }
+                switch link {
+                case .issue:
+                    selectedTab = 0
+                }
+            }
+            
         }
     }
     
