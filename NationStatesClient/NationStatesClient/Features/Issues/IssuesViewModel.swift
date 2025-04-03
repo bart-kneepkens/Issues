@@ -8,12 +8,16 @@
 import Foundation
 import Combine
 import StoreKit
+import SwiftUI
 
 protocol IssueContainer {
     func didCompleteIssue(_ completedIssue: CompletedIssue)
 }
 
 class IssuesViewModel: ObservableObject {
+    
+    weak var deeplinkHandler: DeeplinkHandler?
+    
     var fetchIssuesResult: FetchIssuesResult? {
         didSet {
             if let result = self.fetchIssuesResult {
@@ -27,6 +31,8 @@ class IssuesViewModel: ObservableObject {
                 if result.issues.count < 5 {
                     setRefetchTimer(at: result.nextIssueDate)
                 }
+                
+                checkForDeeplink()
             }
         }
     }
@@ -34,6 +40,8 @@ class IssuesViewModel: ObservableObject {
     var isFetchingIssues: Bool = false
     var issues: [Issue] = []
     var completedIssues: [CompletedIssue] = []
+    
+    var navigationPath = NavigationPath()
     
     private let persistentContainer: CompletedIssueProvider
     private let provider: IssueProvider
@@ -96,6 +104,15 @@ class IssuesViewModel: ObservableObject {
     
     func signOut() {
         self.authenticationContainer.signOut()
+    }
+    
+    func checkForDeeplink() {
+        if let link = deeplinkHandler?.activeLink {
+            guard case .issue(let id) = link else { return }
+            guard let linkedIssue = issues.first(where: { $0.id == id }) else { return }
+            navigationPath.append(linkedIssue)
+            deeplinkHandler?.activeLink = nil
+        }
     }
     
     func requestAppStoreReviewIfNeeded() {

@@ -10,12 +10,11 @@ import Combine
 
 struct IssuesView: View {
     @StateObject var viewModel: IssuesViewModel
-    @State private var path = NavigationPath()
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     @EnvironmentObject var deeplinkHandler: DeeplinkHandler
     
     var body: some View {
-        NavigationStack(path: $path) {
+        NavigationStack(path: $viewModel.navigationPath) {
             List {
                 Section(footer: footerView) {
                     ForEach(viewModel.issues, id: \.id) { issue in
@@ -35,7 +34,8 @@ struct IssuesView: View {
             .navigationBarTitleDisplayMode(.large)
             .navigationBarItems(trailing: pastIssuesButton)
             .onAppear {
-                self.viewModel.updateIssues() // Throttled accordingly in VM
+                viewModel.deeplinkHandler = deeplinkHandler
+                viewModel.updateIssues() // Throttled accordingly in VM
             }
             .navigationDestination(for: Issue.self) { issue in
                 IssueDetailView(
@@ -44,12 +44,7 @@ struct IssuesView: View {
             }
             .onOpenURL { url in
                 deeplinkHandler.handle(url: url)
-            }
-            .onReceive(deeplinkHandler.$activeLink) { link in
-                guard let link else { return }
-                guard case .issue(let id) = link else { return }
-                guard let linkedIssue = viewModel.issues.first(where: { $0.id == id }) else { return }
-                path.append(linkedIssue)
+                viewModel.checkForDeeplink()
             }
         }
     }
