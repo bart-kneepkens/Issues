@@ -34,6 +34,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             deeplinkHandler.handle(url: url)
         }
         completionHandler()
+        UNUserNotificationCenter.current().setBadgeCount(0)
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
     }
 }
 

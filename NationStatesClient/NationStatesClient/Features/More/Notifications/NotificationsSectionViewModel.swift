@@ -13,19 +13,21 @@ import Combine
 class NotificationsSectionViewModel: ObservableObject {
     
     @Published var serverIsReachable: Bool?
-    @Published var notificationsEnabled: Bool {
+    @Published var notificationsToggleIsOn: Bool {
         didSet {
-            if oldValue == false, notificationsEnabled == true {
+            if notificationsToggleIsOn {
                 Task {
                     await requestAuthorizationAndRegisterLocally()
                 }
-            } else if oldValue == true, notificationsEnabled == false {
+            } else {
                 Task {
                     await unregister()
                 }
             }
         }
     }
+    
+    @Published var presentsAuthorizationAlert = false
     
     private let notificationsProvider: NotificationsProvider
     private let notificationCenter = UNUserNotificationCenter.current()
@@ -34,7 +36,7 @@ class NotificationsSectionViewModel: ObservableObject {
 
     init(notificationsProvider: NotificationsProvider) {
         self.notificationsProvider = notificationsProvider
-        self.notificationsEnabled = userDefaults.bool(forKey: "notifications-enabled")
+        self.notificationsToggleIsOn = userDefaults.bool(forKey: "notifications-enabled")
         
         NotificationCenter.default.addObserver(
             forName: .notificationsDeviceTokenDidChange,
@@ -56,8 +58,10 @@ class NotificationsSectionViewModel: ObservableObject {
     }
     
     private func requestAuthorizationAndRegisterLocally() async {
-        guard let authorization = try? await notificationCenter.requestAuthorization(options: [.alert, .badge, .sound]) else {
-            // Alert
+        let hasAuthorizationForNotifications = try? await notificationCenter.requestAuthorization(options: [.alert, .badge, .sound])
+        guard hasAuthorizationForNotifications == true else {
+            notificationsToggleIsOn = false
+            presentsAuthorizationAlert.toggle()
             return
         }
         
@@ -69,7 +73,7 @@ class NotificationsSectionViewModel: ObservableObject {
         
         if result == false {
             await MainActor.run {
-                notificationsEnabled = false
+                notificationsToggleIsOn = false
             }
         }
         
@@ -78,6 +82,7 @@ class NotificationsSectionViewModel: ObservableObject {
     
     private func unregister() async {
         await notificationsProvider.unregister()
+        userDefaults.setValue(false, forKey: notificationsEnabledPersistenceKey)
     }
 }
 

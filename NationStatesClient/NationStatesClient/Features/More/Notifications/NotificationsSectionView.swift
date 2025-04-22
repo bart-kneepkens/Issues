@@ -14,14 +14,26 @@ struct NotificationsSectionView: View {
     
     var body: some View {
         Section {
-            Toggle(isOn: $viewModel.notificationsEnabled, label: {
+            Toggle(isOn: $viewModel.notificationsToggleIsOn, label: {
                 Text("Enable push notifications")
             })
-            
+        
             serverStatus
         } header: {
             Text("Notifications (experimental)")
         }
+        .alert("Allow Notifications",
+               isPresented: $viewModel.presentsAuthorizationAlert) {
+            Button("Cancel", role: .cancel) { }
+            Button("Open Settings") { 
+                if let url = URL(string: UIApplication.openNotificationSettingsURLString) {
+                    UIApplication.shared.open(url)
+                }
+            }
+        }  message: {
+            Text("To use notifications, please go to settings and allow Issues to receive them")
+        }
+
     }
     
     private var serverStatus: some View {

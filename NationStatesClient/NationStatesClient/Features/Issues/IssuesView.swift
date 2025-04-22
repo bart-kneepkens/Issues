@@ -36,6 +36,11 @@ struct IssuesView: View {
             .onAppear {
                 viewModel.deeplinkHandler = deeplinkHandler
                 viewModel.updateIssues() // Throttled accordingly in VM
+                if case .issue = deeplinkHandler.activeLink {
+                    Task {
+                        try? await viewModel.refreshIssuesManually()
+                    }
+                }
             }
             .navigationDestination(for: Issue.self) { issue in
                 IssueDetailView(
