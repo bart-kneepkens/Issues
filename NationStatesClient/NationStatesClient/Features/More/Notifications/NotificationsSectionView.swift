@@ -12,33 +12,63 @@ struct NotificationsSectionView: View {
     @StateObject
     var viewModel: NotificationsSectionViewModel
     
-    var body: some View {
-        Section {
-            Toggle(isOn: $viewModel.notificationsToggleIsOn, label: {
-                Text("Enable push notifications")
-            })
-        
-            serverStatus
-        } header: {
-            Text("Notifications (experimental)")
-        }
-        .alert("Allow Notifications",
-               isPresented: $viewModel.presentsAuthorizationAlert) {
-            Button("Cancel", role: .cancel) { }
-            Button("Open Settings") { 
-                if let url = URL(string: UIApplication.openNotificationSettingsURLString) {
-                    UIApplication.shared.open(url)
+    private var toggleIsOn: Binding<Bool> {
+        .init {
+            viewModel.state == .active
+        } set: { newValue in
+            Task {
+                if newValue {
+                    await viewModel.requestAuthorizationAndRegisterLocally()
+                } else {
+                    await viewModel.unregister()
                 }
             }
-        }  message: {
-            Text("To use notifications, please go to settings and allow Issues to receive them")
         }
 
     }
     
+    var body: some View {
+        Section {
+            serverStatus
+            
+            switch viewModel.state {
+            case .initial, .denied:
+                Button {
+                    Task {
+                        await viewModel.didTap()
+                    }
+                } label: {
+                    Text("Allow Notifications")
+                }
+                .allowsHitTesting(viewModel.state != .granted)
+            case .granted, .active, .inactive:
+                notificationsToggleView
+            }
+        } header: {
+            Text("Notifications (experimental)")
+        } footer: {
+            if viewModel.state == .denied {
+                Text("Notifications for Issues have been turned off on this device. Change your notification settings to get updates.")
+            }
+        }
+    }
+    
+    private var notificationsToggleView: some View {
+        HStack {
+            Text("Push Notifications")
+            Spacer()
+            
+            if viewModel.state == .granted {
+                ProgressView()
+            } else {
+                Toggle(isOn: toggleIsOn) {}
+            }
+        }
+    }
+    
     private var serverStatus: some View {
         HStack {
-            Text("Server status")
+            Text("Server Status")
             Spacer()
             Circle()
                 .fill(serverStatusColor)
@@ -62,10 +92,12 @@ struct NotificationsSectionView: View {
 
 #if DEBUG
 #Preview {
-    List {
-        NotificationsSectionView(
-            viewModel: .init(notificationsProvider: MockedNotificationsProvider())
-        )
+    NavigationStack {
+        List {
+            NotificationsSectionView(
+                viewModel: .init(notificationsProvider: MockedNotificationsProvider())
+            )
+        }
     }
 }
 #endif

@@ -12,31 +12,43 @@ import Combine
 
 class NotificationsSectionViewModel: ObservableObject {
     
-    @Published var serverIsReachable: Bool?
-    @Published var notificationsToggleIsOn: Bool {
-        didSet {
-            if notificationsToggleIsOn {
-                Task {
-                    await requestAuthorizationAndRegisterLocally()
-                }
-            } else {
-                Task {
-                    await unregister()
-                }
-            }
-        }
+    enum State {
+        case initial
+        case denied
+        case granted
+        case active
+        case inactive
     }
     
-    @Published var presentsAuthorizationAlert = false
+    @Published var state: State = .initial
+    @Published var serverIsReachable: Bool?
     
     private let notificationsProvider: NotificationsProvider
     private let notificationCenter = UNUserNotificationCenter.current()
     private var tokenCancellable: AnyCancellable?
     private let userDefaults = UserDefaults.standard
+    
 
     init(notificationsProvider: NotificationsProvider) {
         self.notificationsProvider = notificationsProvider
-        self.notificationsToggleIsOn = userDefaults.bool(forKey: "notifications-enabled")
+        
+        Task {
+            let authorizationStatus = await notificationCenter.notificationSettings().authorizationStatus
+            switch authorizationStatus {
+            case .notDetermined: break
+            case .denied:
+                self.state = .denied
+            case .authorized, .provisional, .ephemeral:
+                if userDefaults.bool(forKey: "active") == true {
+                    self.state = .active
+                } else {
+                    self.state = .inactive
+                }
+            @unknown default:
+                break
+            }
+            
+        }
         
         NotificationCenter.default.addObserver(
             forName: .notificationsDeviceTokenDidChange,
@@ -49,6 +61,20 @@ class NotificationsSectionViewModel: ObservableObject {
             }
     }
     
+    @MainActor
+    func didTap() async {
+        switch state {
+        case .initial:
+            await requestAuthorizationAndRegisterLocally()
+        case .denied:
+            if let url = URL(string: UIApplication.openNotificationSettingsURLString) {
+                await UIApplication.shared.open(url)
+            }
+        default:
+            break
+        }
+    }
+    
     func fetchServerStatus() async {
         let isReachable = await notificationsProvider.isReachable
         
@@ -57,13 +83,14 @@ class NotificationsSectionViewModel: ObservableObject {
         }
     }
     
-    private func requestAuthorizationAndRegisterLocally() async {
+    func requestAuthorizationAndRegisterLocally() async {
         let hasAuthorizationForNotifications = try? await notificationCenter.requestAuthorization(options: [.alert, .badge, .sound])
         guard hasAuthorizationForNotifications == true else {
-            notificationsToggleIsOn = false
-            presentsAuthorizationAlert.toggle()
+            self.state = .denied
             return
         }
+        
+        self.state = .granted
         
         await UIApplication.shared.registerForRemoteNotifications()
     }
@@ -73,17 +100,19 @@ class NotificationsSectionViewModel: ObservableObject {
         
         if result == false {
             await MainActor.run {
-                notificationsToggleIsOn = false
+                self.state = .inactive
             }
+        } else {
+            self.state = .active
+            userDefaults.setValue(true, forKey: notificationsActivePersistenceKey)
         }
-        
-        userDefaults.setValue(result, forKey: notificationsEnabledPersistenceKey)
     }
     
-    private func unregister() async {
+    func unregister() async {
         await notificationsProvider.unregister()
-        userDefaults.setValue(false, forKey: notificationsEnabledPersistenceKey)
+        userDefaults.setValue(false, forKey: notificationsActivePersistenceKey)
+        self.state = .inactive
     }
 }
 
-private let notificationsEnabledPersistenceKey = "notifications-enabled"
+private let notificationsActivePersistenceKey = "notifications-active"
