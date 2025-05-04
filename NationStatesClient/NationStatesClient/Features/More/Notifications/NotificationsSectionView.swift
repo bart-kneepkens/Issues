@@ -17,11 +17,7 @@ struct NotificationsSectionView: View {
             viewModel.state == .active
         } set: { newValue in
             Task {
-                if newValue {
-                    await viewModel.requestAuthorizationAndRegisterLocally()
-                } else {
-                    await viewModel.unregister()
-                }
+                await viewModel.toggleWasUpdated(newValue: newValue)
             }
         }
 

@@ -25,7 +25,6 @@ class NotificationsSectionViewModel: ObservableObject {
     
     private let notificationsProvider: NotificationsProvider
     private let notificationCenter = UNUserNotificationCenter.current()
-    private var tokenCancellable: AnyCancellable?
     private let userDefaults = UserDefaults.standard
     
 
@@ -39,10 +38,10 @@ class NotificationsSectionViewModel: ObservableObject {
             case .denied:
                 self.state = .denied
             case .authorized, .provisional, .ephemeral:
-                if userDefaults.bool(forKey: "active") == true {
-                    self.state = .active
+                if userDefaults.bool(forKey: notificationsActivePersistenceKey) == true {
+                    await updateState(to: .active)
                 } else {
-                    self.state = .inactive
+                    await updateState(to: .inactive)
                 }
             @unknown default:
                 break
@@ -75,6 +74,14 @@ class NotificationsSectionViewModel: ObservableObject {
         }
     }
     
+    func toggleWasUpdated(newValue: Bool) async {
+        if newValue {
+            await requestAuthorizationAndRegisterLocally()
+        } else {
+            await unregister()
+        }
+    }
+    
     func fetchServerStatus() async {
         let isReachable = await notificationsProvider.isReachable
         
@@ -83,14 +90,14 @@ class NotificationsSectionViewModel: ObservableObject {
         }
     }
     
-    func requestAuthorizationAndRegisterLocally() async {
+    private func requestAuthorizationAndRegisterLocally() async {
         let hasAuthorizationForNotifications = try? await notificationCenter.requestAuthorization(options: [.alert, .badge, .sound])
         guard hasAuthorizationForNotifications == true else {
-            self.state = .denied
+            await updateState(to: .denied)
             return
         }
         
-        self.state = .granted
+        await updateState(to: .granted)
         
         await UIApplication.shared.registerForRemoteNotifications()
     }
@@ -99,19 +106,25 @@ class NotificationsSectionViewModel: ObservableObject {
         let result = await notificationsProvider.register(deviceToken: token)
         
         if result == false {
-            await MainActor.run {
-                self.state = .inactive
-            }
+            await updateState(to: .inactive)
         } else {
-            self.state = .active
-            userDefaults.setValue(true, forKey: notificationsActivePersistenceKey)
+            await updateState(to: .active)
         }
     }
     
-    func unregister() async {
+    private func unregister() async {
         await notificationsProvider.unregister()
-        userDefaults.setValue(false, forKey: notificationsActivePersistenceKey)
-        self.state = .inactive
+        await updateState(to: .inactive)
+    }
+    
+    @MainActor private func updateState(to newState: State) {
+        self.state = newState
+        
+        if newState == .active {
+            userDefaults.setValue(true, forKey: notificationsActivePersistenceKey)
+        } else if newState == .inactive {
+            userDefaults.setValue(false, forKey: notificationsActivePersistenceKey)
+        }
     }
 }
 
