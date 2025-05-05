@@ -23,13 +23,7 @@ struct WorldAssemblyView: View {
             List {
                 assemblyViewLink(worldAssembly: .general)
                 assemblyViewLink(worldAssembly: .security)
-                
-                if let statusText = viewModel.worldAssemblyStatusText {
-                    Section("⚠ For your information") {
-                        Text(statusText)
-                            .font(.subheadline)
-                    }
-                }
+                worldAssemblyStatusSectionView
             }
             .listStyle(.insetGrouped)
             .navigationTitle("World Assembly")
@@ -49,6 +43,13 @@ struct WorldAssemblyView: View {
                 }
                 
             }
+        }
+    }
+    
+    private var worldAssemblyStatusSectionView: some View {
+        Section("⚠ For your information") {
+            Text("The NationStates API currently doesn't support voting in the World Assembly, and recent bot protection rules have made it impossible to do so using other means. For now, World Assembly is read-only in Issues. More information can be found on the forum.")
+                .font(.subheadline)
         }
     }
     
@@ -146,7 +147,7 @@ struct WorldAssemblyView: View {
 struct WorldAssemblyView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            WorldAssemblyView(viewModel: .init(authenticationContainer: .init(), resolutionProvider: MockedResolutionProvider(), nationDetailsProvider: MockedNationDetailsProvider(), worldAssemblyStatusProvider: MockedWorldAssemblyStatusProvider()))
+            WorldAssemblyView(viewModel: .init(authenticationContainer: .init(), resolutionProvider: MockedResolutionProvider(), nationDetailsProvider: MockedNationDetailsProvider()))
         }
     }
 }

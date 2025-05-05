@@ -84,8 +84,7 @@ class ViewModelFactory {
         .init(
             authenticationContainer: authenticationContainer,
             resolutionProvider: resolutionProvider,
-            nationDetailsProvider: nationDetailsProvider,
-            worldAssemblyStatusProvider: worldAssemblyStatusProvider
+            nationDetailsProvider: nationDetailsProvider
         )
     }
     
