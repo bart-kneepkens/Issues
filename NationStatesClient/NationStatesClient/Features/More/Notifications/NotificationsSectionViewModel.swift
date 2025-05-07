@@ -115,16 +115,11 @@ class NotificationsSectionViewModel: ObservableObject {
     private func unregister() async {
         await notificationsProvider.unregister()
         await updateState(to: .inactive)
+        await UIApplication.shared.unregisterForRemoteNotifications()
     }
     
     @MainActor private func updateState(to newState: State) {
         self.state = newState
-        
-        if newState == .active {
-            userDefaults.setValue(true, forKey: notificationsActivePersistenceKey)
-        } else if newState == .inactive {
-            userDefaults.setValue(false, forKey: notificationsActivePersistenceKey)
-        }
     }
 }
 

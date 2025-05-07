@@ -31,7 +31,6 @@ class IssuesViewModel: ObservableObject {
                 }
                 
                 if let deferredLink {
-                    print("🐷 running deffered")
                     self.deferredLink = nil
                     try? resolveIssueDeeplink(link: deferredLink)
                 }

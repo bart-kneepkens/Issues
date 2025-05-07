@@ -14,11 +14,17 @@ class MoreViewModel: ObservableObject {
     let isEnrolledForNotifications: Bool
     
     private let authenticationContainer: AuthenticationContainer
+    private let notificationsProvider: NotificationsProvider
 
     
-    init(authenticationContainer: AuthenticationContainer, nationDetailsProvider: NationDetailsProvider) {
+    init(
+        authenticationContainer: AuthenticationContainer,
+        nationDetailsProvider: NationDetailsProvider,
+        notificationsProvider: NotificationsProvider
+    ) {
         self.authenticationContainer = authenticationContainer
         self.isEnrolledForNotifications = NotificationEnrolledNations.names.contains(authenticationContainer.nationName.lowercased())
+        self.notificationsProvider = notificationsProvider
         nationDetailsProvider.nationDetails.assign(to: &$nation)
     }
     
@@ -28,6 +34,9 @@ class MoreViewModel: ObservableObject {
     
     func signOut() {
         self.authenticationContainer.signOut()
+        Task {
+            await self.notificationsProvider.unregister()
+        }
     }
 }
 
