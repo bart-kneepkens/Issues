@@ -56,7 +56,7 @@ struct MoreView: View {
 #if DEBUG
 #Preview {
     MoreView(
-        viewModel: .init(authenticationContainer: MockedAuthenticationContainer(), nationDetailsProvider: MockedNationDetailsProvider()),
+        viewModel: .init(authenticationContainer: MockedAuthenticationContainer(), nationDetailsProvider: MockedNationDetailsProvider(), notificationsProvider: MockedNotificationsProvider()),
         badgeViewModel: .init(notificationsProvider: MockedNotificationsProvider())
     )
 }

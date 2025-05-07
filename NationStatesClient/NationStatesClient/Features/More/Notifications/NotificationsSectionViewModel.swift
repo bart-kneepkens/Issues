@@ -115,7 +115,6 @@ class NotificationsSectionViewModel: ObservableObject {
     private func unregister() async {
         await notificationsProvider.unregister()
         await updateState(to: .inactive)
-        await UIApplication.shared.unregisterForRemoteNotifications()
     }
     
     @MainActor private func updateState(to newState: State) {

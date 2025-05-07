@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class APINotificationsProvider: NotificationsProvider {
 
@@ -36,6 +37,7 @@ final class APINotificationsProvider: NotificationsProvider {
     func unregister() async -> Bool {
         let nationName = authenticationContainer.nationName.lowercased()
         userDefaults.setValue(false, forKey: notificationsActivePersistenceKey)
+        await UIApplication.shared.unregisterForRemoteNotifications()
         return await api.unregister(nationName: nationName)
     }
 }

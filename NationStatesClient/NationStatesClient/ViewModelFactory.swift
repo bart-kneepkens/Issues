@@ -109,7 +109,7 @@ class ViewModelFactory {
     }
     
     var moreViewModel: MoreViewModel {
-        .init(authenticationContainer: authenticationContainer, nationDetailsProvider: nationDetailsProvider)
+        .init(authenticationContainer: authenticationContainer, nationDetailsProvider: nationDetailsProvider, notificationsProvider: notificationsProvider)
     }
     
     func nationLinkViewModel(_ nationName: String) -> NationLinkView.ViewModel {
