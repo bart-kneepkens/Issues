@@ -34,13 +34,7 @@ struct IssuesView: View {
             .navigationBarTitleDisplayMode(.large)
             .navigationBarItems(trailing: pastIssuesButton)
             .onAppear {
-                viewModel.deeplinkHandler = deeplinkHandler
                 viewModel.updateIssues() // Throttled accordingly in VM
-                if case .issue = deeplinkHandler.activeLink {
-                    Task {
-                        try? await viewModel.refreshIssuesManually()
-                    }
-                }
             }
             .navigationDestination(for: Issue.self) { issue in
                 IssueDetailView(
@@ -49,7 +43,18 @@ struct IssuesView: View {
             }
             .onOpenURL { url in
                 deeplinkHandler.handle(url: url)
-                viewModel.checkForDeeplink()
+            }
+            .task(id: deeplinkHandler.activeLink) {
+                guard let link = deeplinkHandler.activeLink else { return }
+                do {
+                    try viewModel.resolveIssueDeeplink(link: link)
+                } catch {
+                    if case DeeplinkError.needsToBeDeferred = error {
+                        viewModel.deferredLink = link
+                    }
+                }
+                
+                deeplinkHandler.activeLink = nil
             }
         }
     }

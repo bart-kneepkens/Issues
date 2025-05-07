@@ -31,7 +31,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         if let urlString = response.notification.request.content.userInfo["url"] as? String, let url = URL(string: urlString) {
-            deeplinkHandler.handle(url: url)
+            DispatchQueue.main.async {
+                self.deeplinkHandler.handle(url: url)
+            }
         }
         completionHandler()
         UNUserNotificationCenter.current().setBadgeCount(0)

@@ -17,7 +17,7 @@ final class DeeplinkHandler: ObservableObject {
         self.activeLink = .from(url)
     }
     
-    enum Link {
+    enum Link: Equatable {
         case issue(Int)
         
         static func from(_ url: URL) -> Link? {
@@ -28,4 +28,8 @@ final class DeeplinkHandler: ObservableObject {
             return nil
         }
     }
+}
+
+enum DeeplinkError: Error {
+    case needsToBeDeferred
 }

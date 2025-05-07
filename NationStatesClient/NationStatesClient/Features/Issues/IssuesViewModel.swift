@@ -16,8 +16,6 @@ protocol IssueContainer {
 
 class IssuesViewModel: ObservableObject {
     
-    weak var deeplinkHandler: DeeplinkHandler?
-    
     var fetchIssuesResult: FetchIssuesResult? {
         didSet {
             if let result = self.fetchIssuesResult {
@@ -32,7 +30,11 @@ class IssuesViewModel: ObservableObject {
                     setRefetchTimer(at: result.nextIssueDate)
                 }
                 
-                checkForDeeplink()
+                if let deferredLink {
+                    print("🐷 running deffered")
+                    self.deferredLink = nil
+                    try? resolveIssueDeeplink(link: deferredLink)
+                }
             }
         }
     }
@@ -52,6 +54,8 @@ class IssuesViewModel: ObservableObject {
     private var refetchTimer: Timer?
     private var didJustAnswerAnIssue = false
     private var justAnsweredIssueId: Int?
+    
+    var deferredLink: DeeplinkHandler.Link?
     
     init(provider: IssueProvider, completedIssueProvider: CompletedIssueProvider, authenticationContainer: AuthenticationContainer) {
         self.provider = provider
@@ -106,12 +110,13 @@ class IssuesViewModel: ObservableObject {
         self.authenticationContainer.signOut()
     }
     
-    func checkForDeeplink() {
-        if let link = deeplinkHandler?.activeLink {
-            guard case .issue(let id) = link else { return }
-            guard let linkedIssue = issues.first(where: { $0.id == id }) else { return }
+    func resolveIssueDeeplink(link: DeeplinkHandler.Link) throws {
+        guard case .issue(let id) = link else { return }
+        
+        if let linkedIssue = issues.first(where: { $0.id == id }) {
             navigationPath.append(linkedIssue)
-            deeplinkHandler?.activeLink = nil
+        } else {
+            throw DeeplinkError.needsToBeDeferred
         }
     }
     
