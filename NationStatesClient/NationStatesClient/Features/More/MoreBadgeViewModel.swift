@@ -14,18 +14,25 @@ final class MoreBadgeViewModel: ObservableObject {
     
     private let notificationsProvider: NotificationsProvider
     private let userDefaults: UserDefaults
+    private let isEnrolledForNotifications: Bool
     
     init(
         notificationsProvider: NotificationsProvider,
+        authenticationContainer: AuthenticationContainer,
         userDefaults: UserDefaults = .standard
     ) {
         self.notificationsProvider = notificationsProvider
         self.userDefaults = userDefaults
         
+        self.isEnrolledForNotifications = NotificationEnrolledNations.names.contains(authenticationContainer.nationName.lowercased())
+        
 #if DEBUG
         userDefaults.removeObject(forKey: Constants.didTapMoreBadgeAppVersionsKey)
 #endif
-        
+      
+        Task {
+            await setup()
+        }
     }
     
     func setup() async {
@@ -38,7 +45,7 @@ final class MoreBadgeViewModel: ObservableObject {
         }
         
         
-        if serverIsReachable, !hasPreviouslyShownBadge {
+        if serverIsReachable, isEnrolledForNotifications, !hasPreviouslyShownBadge {
             await MainActor.run {
                 badgeValue = "•"
             }

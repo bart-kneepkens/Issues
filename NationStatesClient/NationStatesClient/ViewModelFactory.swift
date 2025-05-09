@@ -53,7 +53,7 @@ class ViewModelFactory {
     }
     
     lazy var moreBadgeViewModel: MoreBadgeViewModel = {
-        .init(notificationsProvider: notificationsProvider)
+        .init(notificationsProvider: notificationsProvider, authenticationContainer: authenticationContainer)
     }()
     
     lazy var issuesViewModel: IssuesViewModel = {

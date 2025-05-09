@@ -55,7 +55,7 @@ struct ContentView_Previews: PreviewProvider {
         ContentView(viewModel:
                         ContentViewModel(authenticationContainer: .init(), authenticationProvider: MockedAuthenticationProvider(success: true), nationDetailsProvider: MockedNationDetailsProvider(), resolutionProvider: MockedResolutionProvider()),
                     moreBadgeViewModel:
-                        MoreBadgeViewModel(notificationsProvider: MockedNotificationsProvider())
+                        MoreBadgeViewModel(notificationsProvider: MockedNotificationsProvider(), authenticationContainer: .init())
         )
     }
 }
