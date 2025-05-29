@@ -11,6 +11,7 @@ import SwiftUI
 struct NationStatesClientApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
+    @Environment(\.scenePhase) private var scenePhase
     
     var body: some Scene {
         WindowGroup {
@@ -19,6 +20,11 @@ struct NationStatesClientApp: App {
                 moreBadgeViewModel: viewModelFactory.moreBadgeViewModel
             )
             .environmentObject(appDelegate.deeplinkHandler)
+            .onChange(of: scenePhase) { phase in
+                if phase == .active {
+                    appDelegate.cleardBadgeAndNotifications()
+                }
+            }
         }
     }
 }

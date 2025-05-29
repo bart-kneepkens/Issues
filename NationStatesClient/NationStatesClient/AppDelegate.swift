@@ -35,9 +35,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                 self.deeplinkHandler.handle(url: url)
             }
         }
+        cleardBadgeAndNotifications()
         completionHandler()
-        UNUserNotificationCenter.current().setBadgeCount(0)
+    }
+    
+    func cleardBadgeAndNotifications() {
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        UNUserNotificationCenter.current().setBadgeCount(0)
     }
 }
 
