@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var viewModel: ContentViewModel
+    @StateObject var viewModel: ContentViewModel
     @ObservedObject var moreBadgeViewModel: MoreBadgeViewModel
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     @EnvironmentObject var deeplinkHandler: DeeplinkHandler
