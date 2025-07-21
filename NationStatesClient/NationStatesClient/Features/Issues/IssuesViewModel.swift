@@ -16,6 +16,8 @@ protocol IssueContainer {
 
 class IssuesViewModel: ObservableObject {
     
+    @Published var visibleIssueId: Int?
+    
     var fetchIssuesResult: FetchIssuesResult? {
         didSet {
             if let result = self.fetchIssuesResult {
@@ -113,7 +115,8 @@ class IssuesViewModel: ObservableObject {
         guard case .issue(let id) = link else { return }
         
         if let linkedIssue = issues.first(where: { $0.id == id }) {
-            navigationPath.append(linkedIssue)
+//            navigationPath.append(linkedIssue)
+            visibleIssueId = linkedIssue.id
         } else {
             throw DeeplinkError.needsToBeDeferred
         }

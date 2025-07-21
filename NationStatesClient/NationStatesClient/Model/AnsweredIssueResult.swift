@@ -21,6 +21,8 @@ struct AnsweredIssueResult {
     let reclassifications: [Reclassify]
     let rankings: [Ranking]
     var choice: Option
+    
+    var isDismissed: Bool { choice.id == Option.dismiss.id }
 }
 
 extension AnsweredIssueResult: DTOInitializable {
@@ -41,6 +43,17 @@ extension AnsweredIssueResult: DTOInitializable {
 
 #if DEBUG
 extension AnsweredIssueResult {
-    static var filler: AnsweredIssueResult = AnsweredIssueResult(from: .init(resultText: "This is the result", headlines: ["Headlines", "Is a song by drake"], reclassifications: [], rankings: [], choice: .init(id: 6, text: "sixth option")))!
+    static var filler: AnsweredIssueResult = AnsweredIssueResult(
+        from: .init(
+                    resultText: "This is the result",
+                    headlines: ["Headlines", "Is a song by drake"],
+                    reclassifications: [.init(type: 2, from: "cool", to: "cooler")],
+                    rankings: [
+                        .init(id: 10, score: 50, change: 5, percentualChange: 10),
+                        .init(id: 10, score: 50, change: 5, percentualChange: 10),
+                        .init(id: 10, score: 50, change: 5, percentualChange: 10)
+                    ],
+                    choice: .init(id: 6, text: "sixth option"))
+    )!
 }
 #endif

@@ -12,6 +12,21 @@ struct CompletedIssue {
     var result: AnsweredIssueResult
 }
 
+extension CompletedIssue: Hashable, Identifiable {
+    var id: Int {
+        issue.id
+    }
+    
+    static func == (lhs: CompletedIssue, rhs: CompletedIssue) -> Bool {
+        lhs.issue.id == rhs.issue.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(issue.id)
+        hasher.combine(result.choice.id)
+    }
+}
+
 extension CompletedIssue: DTOInitializable {
     typealias DTOEquivalent = CompletedIssueDTO
     

@@ -61,11 +61,21 @@ class ViewModelFactory {
     }()
     
     func issueDetailViewModel(for issue: Issue, with container: IssueContainer) -> IssueDetailViewModel {
-        .init(issue, provider: issueProvider, nationName: authenticationContainer.nationName, issueContainer: container)
+        .init(
+            issue,
+            provider: issueProvider,
+            nationDetailsProvider: nationDetailsProvider,
+            nationName: authenticationContainer.nationName,
+            issueContainer: container
+        )
     }
     
     func issueDetailViewModel(for completedIssue: CompletedIssue) -> IssueDetailViewModel {
-        .init(completedIssue: completedIssue, nationName: authenticationContainer.nationName)
+        .init(
+            completedIssue: completedIssue,
+            nationDetailsProvider: nationDetailsProvider,
+            nationName: authenticationContainer.nationName
+        )
     }
     
     var nationViewModel: NationViewModel {

@@ -205,6 +205,7 @@
 		CC10E36A28DE692100870DD3 /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10E36928DE692100870DD3 /* SafariView.swift */; };
 		CC10E36C28DE6EAC00870DD3 /* ComposeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10E36B28DE6EAC00870DD3 /* ComposeEmailView.swift */; };
 		CC2E84D32D9F130000163ABB /* DeeplinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E84D22D9F130000163ABB /* DeeplinkHandler.swift */; };
+		CC3D932A2E05DDCC00B46916 /* NewsPaperDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3D93292E05DD9F00B46916 /* NewsPaperDivider.swift */; };
 		CC435BAA2AB250560024AFB7 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC435BA92AB250560024AFB7 /* Region.swift */; };
 		CC435BAC2AB253530024AFB7 /* RegionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC435BAB2AB253530024AFB7 /* RegionView.swift */; };
 		CC435BAF2AB2580E0024AFB7 /* RegionDetailsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC435BAE2AB2580E0024AFB7 /* RegionDetailsProvider.swift */; };
@@ -224,6 +225,7 @@
 		CCA6653D2AA14563001E860B /* Combine+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA6653C2AA14563001E860B /* Combine+.swift */; };
 		CCB8E31228DFB0B500F88087 /* IdentifiableURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB8E31128DFB0B500F88087 /* IdentifiableURL.swift */; };
 		CCB8E31828DFBBA400F88087 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB8E31728DFBBA400F88087 /* Configuration.swift */; };
+		CCBE82682DF63688003F96C6 /* IssueCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE82672DF63688003F96C6 /* IssueCardView.swift */; };
 		CCEADE372B09591600DEE2F7 /* View+WidgetBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEADE362B09591600DEE2F7 /* View+WidgetBackground.swift */; };
 		CCEADE392B0D4F0400DEE2F7 /* SearchRegionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEADE382B0D4F0400DEE2F7 /* SearchRegionView.swift */; };
 		CCEADE3B2B0D59C400DEE2F7 /* RegionDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEADE3A2B0D59C400DEE2F7 /* RegionDetailsView.swift */; };
@@ -427,6 +429,7 @@
 		CC10E36928DE692100870DD3 /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
 		CC10E36B28DE6EAC00870DD3 /* ComposeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeEmailView.swift; sourceTree = "<group>"; };
 		CC2E84D22D9F130000163ABB /* DeeplinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkHandler.swift; sourceTree = "<group>"; };
+		CC3D93292E05DD9F00B46916 /* NewsPaperDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsPaperDivider.swift; sourceTree = "<group>"; };
 		CC435BA92AB250560024AFB7 /* Region.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		CC435BAB2AB253530024AFB7 /* RegionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionView.swift; sourceTree = "<group>"; };
 		CC435BAE2AB2580E0024AFB7 /* RegionDetailsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionDetailsProvider.swift; sourceTree = "<group>"; };
@@ -444,6 +447,7 @@
 		CCA6653C2AA14563001E860B /* Combine+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+.swift"; sourceTree = "<group>"; };
 		CCB8E31128DFB0B500F88087 /* IdentifiableURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableURL.swift; sourceTree = "<group>"; };
 		CCB8E31728DFBBA400F88087 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		CCBE82672DF63688003F96C6 /* IssueCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCardView.swift; sourceTree = "<group>"; };
 		CCEADE362B09591600DEE2F7 /* View+WidgetBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+WidgetBackground.swift"; sourceTree = "<group>"; };
 		CCEADE382B0D4F0400DEE2F7 /* SearchRegionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRegionView.swift; sourceTree = "<group>"; };
 		CCEADE3A2B0D59C400DEE2F7 /* RegionDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionDetailsView.swift; sourceTree = "<group>"; };
@@ -651,6 +655,7 @@
 		AE7207B825992DC000839D8D /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				CC3D93292E05DD9F00B46916 /* NewsPaperDivider.swift */,
 				AEF3FDC92603FEDF000233B8 /* View+.swift */,
 				AECBC6F125CC96EA00654D86 /* SnapshotHelper.swift */,
 				AEC23761259CA2DA006F2CA8 /* HTMLTextWebView.swift */,
@@ -851,6 +856,7 @@
 		AE8764EC252FAD9E00EFE031 /* Issues */ = {
 			isa = PBXGroup;
 			children = (
+				CCBE82672DF63688003F96C6 /* IssueCardView.swift */,
 				CCA665392A9BDE12001E860B /* Past Issues */,
 				AE8764DC252FA92300EFE031 /* IssuesView.swift */,
 				AE8764E1252FA92C00EFE031 /* IssuesViewModel.swift */,
@@ -1275,6 +1281,7 @@
 				AE15A6D925310852004478C3 /* NationStatesAPI.swift in Sources */,
 				CC008C1F2D99F28E00BA520B /* MockedNotificationsProvider.swift in Sources */,
 				AE1C5A8725589EC5008811E6 /* RankingMO+.swift in Sources */,
+				CC3D932A2E05DDCC00B46916 /* NewsPaperDivider.swift in Sources */,
 				CC096C512AC0E24400F75CBE /* NationLinkView.swift in Sources */,
 				CC9BB06E284001B600FF22FE /* MoreViewModel.swift in Sources */,
 				AE4F468C2597CF9B00CFC42E /* CreateNationSheet.swift in Sources */,
@@ -1335,6 +1342,7 @@
 				AE7207C925993C4700839D8D /* Freedom.swift in Sources */,
 				CC008C182D97592A00BA520B /* NotificationsSectionViewModel.swift in Sources */,
 				AE8FC6F425ABA8A600951B8D /* ResolutionViewModel.swift in Sources */,
+				CCBE82682DF63688003F96C6 /* IssueCardView.swift in Sources */,
 				CC04D28D2AB79BEE00C7F239 /* InlineHTMLTextWebView.swift in Sources */,
 				CC9BB07628401D3000FF22FE /* FeedbackIntroductionView.swift in Sources */,
 				AE8981AA2530FBA000D62766 /* MockedIssueProvider.swift in Sources */,
@@ -1629,18 +1637,18 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 54;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = NationStatesClient/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.7;
+				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "bart-kneepkens.NationStatesClient";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1658,18 +1666,18 @@
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 54;
 				DEVELOPMENT_ASSET_PATHS = "\"NationStatesClient/Preview Content\"";
 				DEVELOPMENT_TEAM = GY3SL5N58H;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = NationStatesClient/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.7;
+				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "bart-kneepkens.NationStatesClient";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

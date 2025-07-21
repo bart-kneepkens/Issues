@@ -11,21 +11,47 @@ struct PastIssuesView: View {
     let viewModelFactory: ViewModelFactory
     let completedIssues: [CompletedIssue]
     
+    @Environment(\.colorScheme) private var colorScheme
+    
+    @State var selectedIssueOverlay: CompletedIssue?
+    
     var body: some View {
-        List {
-            Section(footer: footer) {
-                ForEach(completedIssues.reversed(), id: \.issue.id) { completed in
-                    NavigationLink(completed.issue.title,
-                                   destination:
-                                    IssueDetailView(
-                                        viewModel: viewModelFactory.issueDetailViewModel(for: completed)
-                                    )
-                    )
+        ScrollView(.vertical) {
+            ForEach(completedIssues.reversed(), id: \.issue.id) { completed in
+                Button(action: {
+                    var transaction = Transaction()
+                    transaction.disablesAnimations = true
+
+                    withTransaction(transaction) {
+                        selectedIssueOverlay = completed
+                    }
+                }) {
+                    IssueCardView(viewModel: viewModelFactory.issueDetailViewModel(for: completed), isCompact: true)
+                        .padding()
+                        .shadow(radius: 2)
+                        .background {
+                            Image("PaperTexture")
+                                .resizable()
+                                .clipShape(RoundedRectangle(cornerRadius: 16))
+                                .padding()
+                                .offset(x: 5, y: 10)
+                                .shadow(radius: 5, x: 5, y: 5)
+                        }
                 }
+                
             }
         }
-        .listStyle(.insetGrouped)
         .navigationTitle("Past Issues")
+        .background {
+            Color(UIColor.systemGroupedBackground)
+                .ignoresSafeArea()
+        }
+        .fullScreenCover(item: $selectedIssueOverlay) { issue in
+            IssueDetailView(
+                viewModel: viewModelFactory.issueDetailViewModel(for: issue)
+            )
+            .presentationBackground(.clear)
+        }
     }
     
     private var footer: some View {

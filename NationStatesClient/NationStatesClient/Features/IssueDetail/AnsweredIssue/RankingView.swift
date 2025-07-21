@@ -19,17 +19,31 @@ struct RankingView: View {
     }
     
     var icon: some View {
-        Image(systemName: self.iconName)
+        Image(systemName: iconName)
+            .bold()
     }
     
     var body: some View {
-        HStack {
+        HStack(alignment: .bottom, spacing: .zero) {
             Text(self.ranking.scale.name)
-            Spacer()
-            icon
-            Text("\(String(format: "%.2f", self.ranking.percentualChange))%")
-                .foregroundColor(tintColor)
-                .font(.callout)
+//            Spacer()
+//            Text("..................................")
+//            NewsPaperDivider.horizontal
+//                .padding(.bottom, 8)
+            Rectangle()
+                .stroke(style: StrokeStyle(lineWidth: 1, dash: [2]))
+                .frame(height: 1)
+                .padding(8)
+                
+            HStack {
+                icon
+                Text("\(String(format: "%.2f", self.ranking.percentualChange))%")
+                    .font(.callout)
+                    
+            }
+//            .padding(12)
+            .foregroundStyle(tintColor)
+//            .background(Capsule().fill(tintColor))
         }
     }
 }

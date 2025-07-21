@@ -41,7 +41,7 @@ class MockedIssueProvider: IssueProvider {
     }
     
     func fetchIssuesAsync() async throws -> FetchIssuesResult? {
-        nil
+        FetchIssuesResult(issues: issues, timeLeftForNextIssue: "in 5 minutes", nextIssueDate: Date())
     }
 }
 #endif

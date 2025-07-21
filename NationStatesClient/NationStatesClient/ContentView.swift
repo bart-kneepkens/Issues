@@ -24,9 +24,6 @@ struct ContentView: View {
                     .tabItemStyled(with: .issues)
                 WorldAssemblyView(viewModel: viewModelFactory.worldAssemblyViewModel)
                     .tabItemStyled(with: .worldAssembly)
-                NationView(viewModel: viewModelFactory.nationViewModel)
-                    .wrappedInDefaultNavigation()
-                    .tabItemStyled(with: .nation)
                 RegionView(viewModel: viewModelFactory.currentRegionViewModel)
                     .wrappedInDefaultNavigation()
                     .tabItemStyled(with: .region)
@@ -82,7 +79,6 @@ private struct TabItemStyled: ViewModifier {
     enum TabBarItem {
         case issues
         case worldAssembly
-        case nation
         case region
         case more
         
@@ -90,7 +86,6 @@ private struct TabItemStyled: ViewModifier {
             switch self {
             case .issues: return "Issues"
             case .worldAssembly: return "World Assembly"
-            case .nation: return "Nation"
             case .region: return "Region"
             case .more: return "More"
             }
@@ -100,7 +95,6 @@ private struct TabItemStyled: ViewModifier {
             switch self {
             case .issues: return "newspaper"
             case .worldAssembly: return "camera.filters"
-            case .nation: return "flag"
             case .region: return "globe"
             case .more: return "ellipsis"
             }

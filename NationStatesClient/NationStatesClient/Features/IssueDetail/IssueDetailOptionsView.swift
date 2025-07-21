@@ -11,63 +11,89 @@ struct IssueDetailOptionsView: View {
     
     @Environment(\.dismiss) private var dismiss
     
+    @State var selectedOption: Option? = nil
+    
     var viewModel: IssueDetailViewModel
     
-    @State var selectedOption: Option? = nil
-    @State var isDismissing = false
+    var body: some View {
+        VStack {
+            fauxNavigationBar
+
+            List {
+                ForEach(viewModel.issue.options, id: \.id) { option in
+                    Section {
+                        OptionView(option: option) {
+                            self.selectedOption = option
+                        }
+                    }
+                }
+            }
+            .scrollContentBackground(.hidden)
+        }
+        .presentationBackground(Material.ultraThin)
+        .alert(item: $selectedOption) { option -> Alert in
+            Alert(
+                title: Text("Accept position #\(option.id + 1)?"),
+                primaryButton: .cancel(),
+                secondaryButton: .default(Text("Accept")) {
+                    viewModel.answer(with: option)
+                    dismiss()
+                }
+            )
+        }
+    }
+    
+    private var fauxNavigationBar: some View{
+        HStack {
+            Button(action: {
+                dismiss()
+            }) {
+                Image(systemName: "xmark.circle.fill")
+                    .resizable()
+                    .frame(width: 32, height: 32)
+                    .foregroundStyle(Color.primary, Material.thin)
+                
+            }
+            Spacer()
+        }
+        .padding([.top, .horizontal])
+    }
+}
+
+struct OptionView: View {
+    
+    let option: Option
+    let onPress: () -> Void
     
     var body: some View {
-        List {
-            ForEach(viewModel.issue.options, id: \.id) { option in
-                Section {
-                    Group {
-                        Text(option.text).font(.callout)
-                        HStack {
-                            Spacer()
-                            Button(action: {
-                                self.selectedOption = option
-                            }) {
-                                Text("Accept").fontWeight(.medium)
-                            }
-                            Spacer()
-                        }
-                    }
-                }
-                .alert(item: $selectedOption) { option -> Alert in
-                    Alert(
-                        title: Text("Accept position #\(option.id + 1)?"),
-                        primaryButton: .cancel(),
-                        secondaryButton: .default(Text("Accept")) {
-                            viewModel.answer(with: option)
-                            dismiss()
-                        }
-                    )
-                }
+        Button(action: {
+            onPress()
+        }) {
+            HStack {
+                Text(String(option.id + 1))
+                    .font(.caption)
+                
+                Rectangle()
+                    .fill(Color.primary)
+                    .frame(width: 0.5)
+                
+                Text(option.text)
+                    .font(.callout)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            Section {
-                Button("Dismiss this issue") {
-                    self.isDismissing.toggle()
-                }.foregroundColor(.red)
-            }
-            .alert(isPresented: $isDismissing, content: {
-                Alert(
-                    title: Text("Dismiss issue?"),
-                    primaryButton: .cancel(),
-                    secondaryButton: .destructive(Text("Dismiss")){
-                        viewModel.answer(with: Option.dismiss)
-                        dismiss()
-                    }
-                )
-            })
+            .padding(.vertical)
         }
-        .listStyle(InsetGroupedListStyle())
+        .buttonStyle(.plain)
     }
 }
 
 #if DEBUG
 struct IssueDetailOptionsView_Previews: PreviewProvider {
     static var previews: some View {
-        IssueDetailOptionsView(viewModel: IssueDetailViewModel(completedIssue: CompletedIssue(issue: .filler(), result: .filler), nationName: "elest_adra"))
+        Color.red
+            .sheet(isPresented: .constant(true)) {
+                IssueDetailOptionsView(viewModel: IssueDetailViewModel(completedIssue: CompletedIssue(issue: .filler(), result: .filler), nationDetailsProvider: MockedNationDetailsProvider(), nationName: "elest_adra"))
+            }
     }
 }
 #endif
