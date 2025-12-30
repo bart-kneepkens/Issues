@@ -27,11 +27,6 @@ class IssuesViewModel: ObservableObject {
                     self.objectWillChange.send()
                 }
                 
-                // `nextIssueDate` can't be trusted if all issues are awaiting response
-                if result.issues.count < 5 {
-                    setRefetchTimer(at: result.nextIssueDate)
-                }
-                
                 if let deferredLink {
                     self.deferredLink = nil
                     try? resolveIssueDeeplink(link: deferredLink)
@@ -92,7 +87,10 @@ class IssuesViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-   
+    var nationName: String {
+        authenticationContainer.nationName
+    }
+    
     @objc func updateIssues() {
         if let justAnsweredIssueId {
             self.issues = self.issues.filter({ $0.id != justAnsweredIssueId }) // Remove from currently visible issues
@@ -100,11 +98,6 @@ class IssuesViewModel: ObservableObject {
             self.objectWillChange.send()
         }
         self.shouldFetchPublisher.send(true)
-    }
-    
-    func refreshIssuesManually() async throws {
-        let fetchResult = try await provider.fetchIssuesAsync()
-        self.fetchIssuesResult = fetchResult
     }
     
     func signOut() {

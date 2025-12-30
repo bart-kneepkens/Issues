@@ -64,18 +64,17 @@ struct IssueCardView: View {
                 }
                 .font(.footnote)
             }
-                
-            
         }
         .foregroundStyle(Color.primary)
-        .frame(maxWidth: .infinity)
         .padding()
         .background(background)
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .clipShape(RoundedRectangle(cornerRadius: 32))
+        
     }
     
     @ViewBuilder private var background: some View {
         Image("PaperTexture")
+            .resizable()
     }
 }
 
@@ -88,7 +87,6 @@ extension IssueCardView {
 #if DEBUG
 #Preview {
     IssueCardView(viewModel: .init(.filler(), provider: MockedIssueProvider(), nationDetailsProvider: MockedNationDetailsProvider(), nationName: "Elest Adra", issueContainer: IssuesViewModel(provider: MockedIssueProvider(), completedIssueProvider: MockedCompletedIssueProvider(), authenticationContainer: .init())))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
         .padding()
 }
 

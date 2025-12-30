@@ -107,12 +107,9 @@ struct AnsweredIssueSection: View {
         .sheet(isPresented: $showsLegislationSheet) {
             List {
                 Section {
-                    OptionView(option: result.choice) {}
-                    .background(Color.clear)
+                    OptionView(option: result.choice)
                 }
             }
-            .scrollContentBackground(.hidden)
-            .presentationBackground(Material.ultraThin)
         }
         .background {
             ZStack {

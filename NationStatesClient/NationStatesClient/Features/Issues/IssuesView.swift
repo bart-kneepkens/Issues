@@ -9,6 +9,11 @@ import SwiftUI
 import Combine
 import UIKit
 
+fileprivate enum DisplayMode: String {
+    case issues = "Issues"
+    case pastIssues = "Past Issues"
+}
+
 struct IssuesView: View {
     @StateObject var viewModel: IssuesViewModel
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
@@ -16,66 +21,89 @@ struct IssuesView: View {
     
     @State var selectedIssueOverlay: Issue?
     
+    @State private var displayMode : DisplayMode = .issues
+    @State var showsWorldAssembly = false
+    
     @ViewBuilder private var content: some View {
-        if viewModel.issues.isEmpty {
-            background
+        
+        if viewModel.isFetchingIssues {
+            ProgressView()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {
-            cards
+            VStack {
+                HStack {
+                    toolbarTitle
+                    Button {
+                        showsWorldAssembly.toggle()
+                    } label: {
+                        if #available(iOS 26.0, *) {
+                            Image(systemName: "globe.europe.africa")
+                                .font(.system(size: 21))
+                                .tint(.primary)
+                                .padding(10)
+                                .glassEffect()
+                        } else {
+                            // Fallback on earlier versions
+                            Image(systemName: "globe.europe.africa")
+                                .font(.system(size: 21))
+                                .tint(.primary)
+                                .padding(10)
+                        }
+                    }
+                }
+                switch displayMode {
+                case .issues:
+                    cards
+                case .pastIssues:
+                    PastIssuesView(viewModelFactory: viewModelFactory, completedIssues: viewModel.completedIssues)
+                }
+            }
         }
     }
     
+    @ViewBuilder
+    var toolbarTitle: some View {
+        Menu {
+            Button {
+                displayMode = .issues
+            } label: {
+                Label("Issues", systemImage: "tray.full")
+                    .labelStyle(.titleAndIcon)
+            }
+            
+            Button {
+                displayMode = .pastIssues
+            } label: {
+                Label("Past Issues", systemImage: "clock.arrow.circlepath")
+                    .labelStyle(.titleAndIcon)
+            }
+            
+        } label: {
+            HStack {
+                Text(displayMode.rawValue)
+                    .font(.largeTitle)
+                    .bold()
+                    .tint(.primary)
+                
+                Image(systemName: "chevron.up.chevron.down")
+                    .fontWeight(.medium)
+                    .tint(.primary)
+                    .padding(.top, 8)
+                
+                Spacer()
+            }
+        }
+        
+    }
+
     var body: some View {
-        NavigationStack(path: $viewModel.navigationPath) {
-            content
-                .background(
-                   background
-                )
+        content
             .scrollTargetBehavior(.viewAligned)
             .scrollPosition(id: $viewModel.visibleIssueId)
-            .safeAreaPadding(.horizontal, 20)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                        Menu {
-                            NavigationLink {
-                                PastIssuesView(viewModelFactory: viewModelFactory, completedIssues: viewModel.completedIssues)
-                            } label: {
-                                Label("Past Issues", systemImage: "clock.arrow.circlepath")
-                                    .labelStyle(.titleAndIcon)
-                            }
-
-                        } label: {
-                            HStack {
-                                Text("Issues")
-                                    .font(.largeTitle)
-                                    .bold()
-                                    .tint(.primary)
-                                Image(systemName: "chevron.down")
-                                    .fontWeight(.medium)
-                                    .tint(.primary)
-                                    .padding(.top, 8)
-                                
-                                Spacer()
-                            }
-                        }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    nationButton
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Image(systemName: "globe")
-                        .onTapGesture {
-                            Task {
-                                try! await viewModel.refreshIssuesManually()
-                            }
-                        }
-                }
-            }
-            .navigationBarTitleDisplayMode(.large)
+            .safeAreaPadding()
             .onAppear {
                 viewModel.updateIssues() // Throttled accordingly in VM
             }
-
             .onOpenURL { url in
                 deeplinkHandler.handle(url: url)
             }
@@ -91,49 +119,72 @@ struct IssuesView: View {
                 
                 deeplinkHandler.activeLink = nil
             }
-            .fullScreenCover(item: $selectedIssueOverlay) { issue in
-                IssueDetailView(viewModel: viewModelFactory.issueDetailViewModel(for: issue, with: self.viewModel))
-                    .presentationBackground(.clear)
+            .sheet(item: $selectedIssueOverlay) { issue in
+                IssueDetailView(
+                    viewModel: viewModelFactory.issueDetailViewModel(
+                        for: issue,
+                        with: viewModel
+                    )
+                )
+                .presentationDetents([.large])
             }
+            .fullScreenCover(isPresented: $showsWorldAssembly, content: {
+                WorldAssemblyView(
+                    viewModel: viewModelFactory.worldAssemblyViewModel
+                )
+            })
             .background(background)
-            
-        }
+            .toolbar(.hidden)
     }
     
     @ViewBuilder private var background: some View {
         Color(UIColor.systemGroupedBackground)
             .ignoresSafeArea()
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     @ViewBuilder
     private var cards: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                ForEach(viewModel.issues, id: \.id) { issue in
-                    Button(action: {
-                        
-                        var transaction = Transaction()
-                        transaction.disablesAnimations = true
-
-                        withTransaction(transaction) {
+        if viewModel.issues.isEmpty {
+            emptyView
+        } else {
+            ScrollView(.horizontal) {
+                HStack {
+                    ForEach(viewModel.issues, id: \.id) { issue in
+                        Button {
                             selectedIssueOverlay = issue
+                        } label: {
+                            IssueCardView(
+                                viewModel: viewModelFactory.issueDetailViewModel(for: issue, with: viewModel)
+                            )
+                            .containerRelativeFrame(.horizontal)
+                            .id(issue.id)
                         }
-                        
-                    }) {
-                        IssueCardView(
-                            viewModel: viewModelFactory.issueDetailViewModel(for: issue, with: viewModel)
-                        )
-                        .containerRelativeFrame(.horizontal)
-                        .safeAreaPadding(.vertical, 20)
-                        .id(issue.id)
-                        .shadow(radius: 4)
-                        .contentShape(RoundedRectangle(cornerRadius: 16))
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
                 }
+                .scrollTargetLayout()
             }
-            .scrollTargetLayout()
+        }
+    }
+    
+    @ViewBuilder
+    private var emptyView: some View {
+        VStack(spacing: 16) {
+            Spacer()
+            Image(systemName: "tray")
+                .font(.system(.largeTitle))
+            
+            Text("No issues")
+                .bold()
+                .font(.title3)
+            
+            Text("Go on and enjoy your day, great Leader!")
+            
+            Spacer()
+            if let result = viewModel.fetchIssuesResult {
+                Label("Next issue: \(result.timeLeftForNextIssue)", systemImage: "clock")
+            }
         }
     }
     
@@ -156,41 +207,52 @@ struct IssuesView: View {
             }
         } else if let result = self.viewModel.fetchIssuesResult, self.viewModel.issues.count != 5 {
                 Text("Next issue \(result.timeLeftForNextIssue)")
-            }
-    }
-    
-    @ViewBuilder private var nationButton: some View {
-        NavigationLink {
-            NationView(viewModel: viewModelFactory.nationViewModel)
-        } label: {
-            CachedRemoteImage(url:  URL(string: viewModelFactory.nationViewModel.nation?.flagURL ?? ""))
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 40)
-                .clipShape(Circle())
-                .overlay {
-                    Circle().stroke(lineWidth: 4).foregroundStyle(Color.accentColor)
-                }
         }
     }
 }
 
 #if DEBUG
-struct IssuesView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            TabView {
-                IssuesView(viewModel:
-                            IssuesViewModel(provider: MockedIssueProvider(issues: [.filler(), .filler(1), .filler(2)]), completedIssueProvider: MockedCompletedIssueProvider(), authenticationContainer:.init())
-                )
-                .environmentObject(DeeplinkHandler())
-                .tabItem {
-                    Label {
-                        Text("gg")
-                    } icon: {
-                        Image(systemName: "cross")
-                    }
+#Preview {
+    TabView {
+        IssuesView(viewModel:
+                    IssuesViewModel(
+                        provider: MockedIssueProvider(
+                            issues: [.filler(), .filler(1), .filler(2)]
+                        ),
+                        completedIssueProvider: MockedCompletedIssueProvider(),
+                        authenticationContainer: MockedAuthenticationContainer()
+                    )
+        )
+        .environmentObject(DeeplinkHandler())
+        .tabItem {
+            Label {
+                Text("gg")
+            } icon: {
+                Image(systemName: "cross")
+            }
+            
+        }
+    }
+}
 
-                }
+#Preview("No new issues") {
+    TabView {
+        
+        IssuesView(viewModel:
+                    IssuesViewModel(
+                        provider: MockedIssueProvider(
+                            issues: []
+                        ),
+                        completedIssueProvider: MockedCompletedIssueProvider(),
+                        authenticationContainer: MockedAuthenticationContainer()
+                    )
+        )
+        .environmentObject(DeeplinkHandler())
+        .tabItem {
+            Label {
+                Text("gg")
+            } icon: {
+                Image(systemName: "cross")
             }
         }
     }

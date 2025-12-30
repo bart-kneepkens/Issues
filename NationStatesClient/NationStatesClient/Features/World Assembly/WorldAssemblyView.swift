@@ -17,6 +17,7 @@ struct WorldAssemblyView: View {
     @StateObject var viewModel: WorldAssemblyViewModel
     @State private var selectedVoteOption: VoteOption? = nil
     @State private var navigationPath = NavigationPath()
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         NavigationStack(path: $navigationPath) {
@@ -41,7 +42,15 @@ struct WorldAssemblyView: View {
                 case let .worldAssembly(worldAssembly):
                     self.assemblyView(worldAssembly: worldAssembly)
                 }
-                
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                }
             }
         }
     }

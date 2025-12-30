@@ -12,78 +12,96 @@ struct IssueDetailOptionsView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State var selectedOption: Option? = nil
+    @State var intendsToDismiss = false
     
     var viewModel: IssueDetailViewModel
     
     var body: some View {
-        VStack {
-            fauxNavigationBar
-
-            List {
-                ForEach(viewModel.issue.options, id: \.id) { option in
-                    Section {
-                        OptionView(option: option) {
-                            self.selectedOption = option
+        NavigationStack {
+                List(viewModel.issue.options, id: \.self, selection: $selectedOption) { option in
+                        Section {
+                            OptionView(option: option)
+                        }
+                }
+                .toolbarTitleDisplayMode(.inline)
+                .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItemGroup(placement: .bottomBar) {
+                    if intendsToDismiss && selectedOption == nil {
+                        Button {
+                            confirmOption(.dismiss)
+                        } label: {
+                            HStack {
+                                Image(systemName: "nosign")
+                                Text("Dismiss Issue?")
+                            }
+                            .bold()
+                            .foregroundStyle(Color.red)
+                        }
+                    } else {
+                        Button {
+                            withAnimation {
+                                intendsToDismiss = true
+                                selectedOption = nil
+                            }
+                        } label: {
+                            Image(systemName: "nosign")
                         }
                     }
+                    
+                    if let selectedOption {
+                        Spacer()
+                        confirmButton(option: selectedOption)
+                    }
                 }
+                
             }
-            .scrollContentBackground(.hidden)
-        }
-        .presentationBackground(Material.ultraThin)
-        .alert(item: $selectedOption) { option -> Alert in
-            Alert(
-                title: Text("Accept position #\(option.id + 1)?"),
-                primaryButton: .cancel(),
-                secondaryButton: .default(Text("Accept")) {
-                    viewModel.answer(with: option)
-                    dismiss()
-                }
-            )
         }
     }
     
-    private var fauxNavigationBar: some View{
-        HStack {
-            Button(action: {
-                dismiss()
-            }) {
-                Image(systemName: "xmark.circle.fill")
-                    .resizable()
-                    .frame(width: 32, height: 32)
-                    .foregroundStyle(Color.primary, Material.thin)
-                
+    private func confirmButton(option: Option) -> some View {
+        if #available(iOS 26.0, *) {
+            Button(role: .confirm) {
+                confirmOption(option)
+            } label: {
+                Text("Accept position #\(option.id + 1)")
+                    .bold()
             }
-            Spacer()
+        } else {
+            Button {
+                confirmOption(option)
+            } label: {
+                Text("Accept position #\(option.id + 1)")
+                    .bold()
+                    .foregroundStyle(Color.accentColor)
+            }
         }
-        .padding([.top, .horizontal])
+    }
+    
+    private func confirmOption(_ option: Option) {
+        viewModel.answer(with: option)
+        dismiss()
     }
 }
 
 struct OptionView: View {
     
     let option: Option
-    let onPress: () -> Void
     
     var body: some View {
-        Button(action: {
-            onPress()
-        }) {
-            HStack {
-                Text(String(option.id + 1))
-                    .font(.caption)
-                
-                Rectangle()
-                    .fill(Color.primary)
-                    .frame(width: 0.5)
-                
-                Text(option.text)
-                    .font(.callout)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            .padding(.vertical)
+        HStack {
+            Text(String(option.id + 1))
+                .font(.caption)
+            
+            Rectangle()
+                .fill(Color.primary)
+                .frame(width: 0.5)
+            
+            Text(option.text)
+                .font(.callout)
+                .fixedSize(horizontal: false, vertical: true)
         }
-        .buttonStyle(.plain)
+        .padding(.vertical)
     }
 }
 
@@ -93,6 +111,7 @@ struct IssueDetailOptionsView_Previews: PreviewProvider {
         Color.red
             .sheet(isPresented: .constant(true)) {
                 IssueDetailOptionsView(viewModel: IssueDetailViewModel(completedIssue: CompletedIssue(issue: .filler(), result: .filler), nationDetailsProvider: MockedNationDetailsProvider(), nationName: "elest_adra"))
+                    .presentationDetents([.large])
             }
     }
 }

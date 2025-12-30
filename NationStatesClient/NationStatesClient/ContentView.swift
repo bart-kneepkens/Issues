@@ -22,11 +22,9 @@ struct ContentView: View {
             TabView {
                 IssuesView(viewModel: viewModelFactory.issuesViewModel)
                     .tabItemStyled(with: .issues)
-                WorldAssemblyView(viewModel: viewModelFactory.worldAssemblyViewModel)
-                    .tabItemStyled(with: .worldAssembly)
-                RegionView(viewModel: viewModelFactory.currentRegionViewModel)
+                NationView(viewModel: viewModelFactory.nationViewModel)
                     .wrappedInDefaultNavigation()
-                    .tabItemStyled(with: .region)
+                    .tabItemStyled(with: .nation)
                 MoreView(
                     viewModel: viewModelFactory.moreViewModel,
                     badgeViewModel: moreBadgeViewModel
@@ -78,15 +76,13 @@ extension View {
 private struct TabItemStyled: ViewModifier {
     enum TabBarItem {
         case issues
-        case worldAssembly
-        case region
+        case nation
         case more
         
         var text: String {
             switch self {
             case .issues: return "Issues"
-            case .worldAssembly: return "World Assembly"
-            case .region: return "Region"
+            case .nation: return "Nation"
             case .more: return "More"
             }
         }
@@ -94,8 +90,7 @@ private struct TabItemStyled: ViewModifier {
         var iconName: String {
             switch self {
             case .issues: return "newspaper"
-            case .worldAssembly: return "camera.filters"
-            case .region: return "globe"
+            case .nation: return "building.columns"
             case .more: return "ellipsis"
             }
         }
