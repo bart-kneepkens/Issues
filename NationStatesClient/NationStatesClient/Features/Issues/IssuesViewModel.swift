@@ -14,32 +14,22 @@ protocol IssueContainer {
     func didCompleteIssue(_ completedIssue: CompletedIssue)
 }
 
+// TODO: Remove clunky fetching mechanism
+// TODO: Separate completely from Past Issues
+// TODO: Remove AppStore Review logic
 class IssuesViewModel: ObservableObject {
     
-    @Published var visibleIssueId: Int?
-    
-    var fetchIssuesResult: FetchIssuesResult? {
-        didSet {
-            if let result = self.fetchIssuesResult {
-                self.issues = result.issues
-                
-                DispatchQueue.main.async {
-                    self.objectWillChange.send()
-                }
-                
-                if let deferredLink {
-                    self.deferredLink = nil
-                    try? resolveIssueDeeplink(link: deferredLink)
-                }
-            }
-        }
+    enum State: Equatable {
+        case loading
+        case loaded([Issue])
+        case error(APIError)
     }
-    var error: APIError? = nil
-    var isFetchingIssues: Bool = false
-    var issues: [Issue] = []
-    var completedIssues: [CompletedIssue] = []
     
-    var navigationPath = NavigationPath()
+    @Published var visibleIssueId: Int?
+    @Published var state: State = .loading
+    
+    var fetchIssuesResult: FetchIssuesResult?
+    var completedIssues: [CompletedIssue] = []
     
     private let persistentContainer: CompletedIssueProvider
     private let provider: IssueProvider
@@ -47,7 +37,7 @@ class IssuesViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     private var shouldFetchPublisher = PassthroughSubject<Bool, Never>()
-    private var refetchTimer: Timer?
+    
     private var didJustAnswerAnIssue = false
     private var justAnsweredIssueId: Int?
     
@@ -58,15 +48,6 @@ class IssuesViewModel: ObservableObject {
         self.authenticationContainer = authenticationContainer
         self.persistentContainer = completedIssueProvider
         
-        self.shouldFetchPublisher
-            .throttle(for: .seconds(10), scheduler: DispatchQueue.main, latest: false)
-            .sink { [weak self] shouldShowProgressIndicator in
-                self?.fetchIssues(shouldShowProgressIndicator)
-                self?.requestAppStoreReviewIfNeeded()
-            }
-            .store(in: &cancellables)
-        
-        
         persistentContainer.fetchCompletedIssues()
             .sink(
                 receiveCompletion: { _ in },
@@ -75,40 +56,17 @@ class IssuesViewModel: ObservableObject {
                 }
             )
             .store(in: &cancellables)
-        
-        
-        authenticationContainer
-            .$hasSignedOut
-            .filter({ $0 })
-            .sink(receiveValue: { [weak self] _ in
-                self?.refetchTimer?.invalidate()
-                self?.refetchTimer = nil
-            })
-            .store(in: &cancellables)
     }
     
     var nationName: String {
         authenticationContainer.nationName
     }
     
-    @objc func updateIssues() {
-        if let justAnsweredIssueId {
-            self.issues = self.issues.filter({ $0.id != justAnsweredIssueId }) // Remove from currently visible issues
-            self.justAnsweredIssueId = nil
-            self.objectWillChange.send()
-        }
-        self.shouldFetchPublisher.send(true)
-    }
-    
-    func signOut() {
-        self.authenticationContainer.signOut()
-    }
-    
     func resolveIssueDeeplink(link: DeeplinkHandler.Link) throws {
         guard case .issue(let id) = link else { return }
+        guard case let .loaded(issues) = state else { return }
         
         if let linkedIssue = issues.first(where: { $0.id == id }) {
-//            navigationPath.append(linkedIssue)
             visibleIssueId = linkedIssue.id
         } else {
             throw DeeplinkError.needsToBeDeferred
@@ -126,44 +84,22 @@ class IssuesViewModel: ObservableObject {
         }
     }
     
-    private func fetchIssues(_ showProgress: Bool) {
-        guard !self.authenticationContainer.nationName.isEmpty else { return } // TODO: put this check at another level - so no outstanding requests can be done after sign out
-        
-        if showProgress {
-            self.isFetchingIssues = true
-            self.objectWillChange.send()
+    @MainActor
+    func fetch() async {
+        state = .loading
+        do {
+            let result = try await provider.fetchIssuesAsync()
+            state = .loaded(result?.issues ?? [])
+            
+            if let deferredLink {
+                self.deferredLink = nil
+                try? resolveIssueDeeplink(link: deferredLink)
+            }
+        } catch {
+            if let apiError = error as? APIError {
+                state = .error(apiError)
+            }
         }
-        
-        self.provider.fetchIssues()
-            .receive(on: DispatchQueue.main)
-            .catch({ [weak self] error -> AnyPublisher<FetchIssuesResult?, Never> in
-                self?.error = error
-                return Just(nil).eraseToAnyPublisher()
-            })
-            .handleEvents(receiveCompletion: { [weak self] completion in
-                    guard let self else { return }
-                    switch completion {
-                    case .finished:
-                        self.error = nil
-                    }
-                    
-                    if showProgress {
-                        self.isFetchingIssues = false
-                        self.objectWillChange.send()
-                    }
-            })
-            .assign(to: \.fetchIssuesResult, onWeak: self)
-            .store(in: &cancellables)
-    }
-    
-    private func setRefetchTimer(at date: Date) {
-        self.refetchTimer?.invalidate()
-        
-        let timer = Timer(fireAt: date.advanced(by: 5), interval: 0, target: self, selector: #selector(updateIssues), userInfo: nil, repeats: false)
-        
-        RunLoop.main.add(timer, forMode: .default)
-        
-        self.refetchTimer = timer
     }
 }
 
@@ -172,6 +108,7 @@ extension IssuesViewModel: IssueContainer {
         self.completedIssues.append(completedIssue)
         self.persistentContainer.storeCompletedIssue(completedIssue)
         self.didJustAnswerAnIssue = true
-        self.justAnsweredIssueId = completedIssue.issue.id
+        guard case let .loaded(issues) = state else { return }
+        state = .loaded(issues.filter({ $0 != completedIssue.issue }))
     }
 }

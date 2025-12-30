@@ -21,12 +21,11 @@ struct IssuesView: View {
     
     @State var selectedIssueOverlay: Issue?
     
-    @State private var displayMode : DisplayMode = .issues
+    @State private var displayMode: DisplayMode = .issues
     @State var showsWorldAssembly = false
     
     @ViewBuilder private var content: some View {
-        
-        if viewModel.isFetchingIssues {
+        if viewModel.state == .loading {
             ProgressView()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {
@@ -101,8 +100,8 @@ struct IssuesView: View {
             .scrollTargetBehavior(.viewAligned)
             .scrollPosition(id: $viewModel.visibleIssueId)
             .safeAreaPadding()
-            .onAppear {
-                viewModel.updateIssues() // Throttled accordingly in VM
+            .task {
+                await viewModel.fetch()
             }
             .onOpenURL { url in
                 deeplinkHandler.handle(url: url)
@@ -145,25 +144,27 @@ struct IssuesView: View {
     
     @ViewBuilder
     private var cards: some View {
-        if viewModel.issues.isEmpty {
-            emptyView
-        } else {
-            ScrollView(.horizontal) {
-                HStack {
-                    ForEach(viewModel.issues, id: \.id) { issue in
-                        Button {
-                            selectedIssueOverlay = issue
-                        } label: {
-                            IssueCardView(
-                                viewModel: viewModelFactory.issueDetailViewModel(for: issue, with: viewModel)
-                            )
-                            .containerRelativeFrame(.horizontal)
-                            .id(issue.id)
+        if case let .loaded(issues) = viewModel.state {
+            if issues.isEmpty {
+                emptyView
+            } else {
+                ScrollView(.horizontal) {
+                    HStack {
+                        ForEach(issues, id: \.id) { issue in
+                            Button {
+                                selectedIssueOverlay = issue
+                            } label: {
+                                IssueCardView(
+                                    viewModel: viewModelFactory.issueDetailViewModel(for: issue, with: viewModel)
+                                )
+                                .containerRelativeFrame(.horizontal)
+                                .id(issue.id)
+                            }
+                            .buttonStyle(.plain)
                         }
-                        .buttonStyle(.plain)
                     }
+                    .scrollTargetLayout()
                 }
-                .scrollTargetLayout()
             }
         }
     }
@@ -185,28 +186,6 @@ struct IssuesView: View {
             if let result = viewModel.fetchIssuesResult {
                 Label("Next issue: \(result.timeLeftForNextIssue)", systemImage: "clock")
             }
-        }
-    }
-    
-    @ViewBuilder private var fetchingIndicator: some View {
-        if self.viewModel.isFetchingIssues {
-            Section {
-                ProgressView()
-            }
-        }
-    }
-    
-    @ViewBuilder private var footerView: some View {
-        if let error = self.viewModel.error {
-            ErrorView(error: error) {
-                switch error {
-                case .unauthorized:
-                    self.viewModel.signOut()
-                default: break
-                }
-            }
-        } else if let result = self.viewModel.fetchIssuesResult, self.viewModel.issues.count != 5 {
-                Text("Next issue \(result.timeLeftForNextIssue)")
         }
     }
 }

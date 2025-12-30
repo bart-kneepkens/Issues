@@ -64,7 +64,7 @@ enum AuthenticationMode {
     }
 }
 
-enum APIError: Error {
+enum APIError: Error, Equatable {
     case unauthorized // 403
     case conflict // 409
     case notFound // 404
