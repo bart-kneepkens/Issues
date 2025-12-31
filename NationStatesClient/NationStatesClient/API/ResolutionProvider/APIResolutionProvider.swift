@@ -32,16 +32,9 @@ class APIResolutionProvider: ResolutionProvider {
                 id: id,
                 worldAssembly: worldAssembly
             ) else { return nil }
-        guard var resolution = Resolution(from: dto) else { return nil }
-        
-        resolution.information = try? await NationStatesAPI.fetchPastResolutionInformation(id: id, worldAssembly: worldAssembly, authenticationContainer: authenticationContainer)
-        
-        return resolution
+        return Resolution(from: dto)
     }
     
-    func vote(for resolution: Resolution, worldAssembly: WorldAssembly, option: VoteOption, localId: String) -> AnyPublisher<VoteOption?, Never> {
-        NationStatesAPI.vote(authenticationContainer: self.authenticationContainer, worldAssembly: worldAssembly, localId: localId, option: option)
-    }
     
     private func fetchResolution(for worldAssembly: WorldAssembly) {
         self.cancellables?.append(
@@ -56,24 +49,6 @@ class APIResolutionProvider: ResolutionProvider {
                     switch worldAssembly {
                     case .general: self.generalAssembly.send(resolution)
                     case .security: self.securityCouncil.send(resolution)
-                    }
-                    
-                    // Fetch information, which include HTML text 
-                    self.fetchResolutionInformation(for: worldAssembly)
-                })
-        )
-    }
-    
-    private func fetchResolutionInformation(for worldAssembly: WorldAssembly) {
-        self.cancellables?.append(
-            NationStatesAPI.fetchResolutionInformation(for: worldAssembly, authenticationContainer: self.authenticationContainer)
-                .receive(on: DispatchQueue.main)
-                .sink(receiveValue: { informationResponse in
-                    if let response = informationResponse {
-                        switch worldAssembly {
-                        case .general: self.generalAssembly.value?.information = response
-                        case .security: self.securityCouncil.value?.information = response
-                        }
                     }
                 })
         )

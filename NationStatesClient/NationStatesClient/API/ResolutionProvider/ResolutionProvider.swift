@@ -14,6 +14,5 @@ protocol ResolutionProvider {
     
     func fetchResolutions()
     func fetchPastResolution(id: Int, worldAssembly: WorldAssembly) async -> Resolution?
-    func vote(for resolution: Resolution, worldAssembly: WorldAssembly, option: VoteOption, localId: String) -> AnyPublisher<VoteOption?, Never>
 }
 

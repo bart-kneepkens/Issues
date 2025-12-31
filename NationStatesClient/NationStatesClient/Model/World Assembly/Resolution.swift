@@ -18,7 +18,7 @@ struct Resolution {
     let totalVotesAgainst: Int
     let totalVotesFor: Int
     
-    var information: ResolutionInformation?
+    var htmlText: String
 }
 
 extension Resolution {
@@ -37,9 +37,9 @@ extension Resolution {
 extension Resolution: DTOInitializable {
     typealias DTOEquivalent = ResolutionDTO
     init?(from dto: ResolutionDTO) {
-        guard let category = dto.category, let created = dto.created, let id = dto.id, let name = dto.name, let option = dto.option, let promoted = dto.promoted, let proposedBy = dto.proposedBy, let totalVotesAgainst = dto.totalVotesAgainst, let totalVotesFor = dto.totalVotesFor else { return nil }
+        guard let category = dto.category, let created = dto.created, let id = dto.id, let name = dto.name, let option = dto.option, let promoted = dto.promoted, let proposedBy = dto.proposedBy, let totalVotesAgainst = dto.totalVotesAgainst, let totalVotesFor = dto.totalVotesFor, let htmlText = dto.htmlText else { return nil }
         
-        self.init(category: category, created: created, id: id, name: name, option: option, promoted: promoted, proposedBy: proposedBy , totalVotesAgainst: totalVotesAgainst, totalVotesFor: totalVotesFor, information: nil)
+        self.init(category: category, created: created, id: id, name: name, option: option, promoted: promoted, proposedBy: proposedBy , totalVotesAgainst: totalVotesAgainst, totalVotesFor: totalVotesFor, htmlText: htmlText)
     }
 }
 
@@ -53,6 +53,7 @@ struct ResolutionDTO: Equatable {
     var proposedBy: String?
     var totalVotesAgainst: Int?
     var totalVotesFor: Int?
+    var htmlText: String?
 }
 
 #if DEBUG
@@ -67,7 +68,7 @@ extension Resolution {
         proposedBy: "Elest Adra",
         totalVotesAgainst: 420,
         totalVotesFor: 421,
-        information: nil
+        htmlText: "<b>Resolution Text</b>"
     )
 }
 #endif

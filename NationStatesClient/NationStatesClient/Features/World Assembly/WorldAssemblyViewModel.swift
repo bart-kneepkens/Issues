@@ -45,19 +45,4 @@ class WorldAssemblyViewModel: ObservableObject {
         self.cancellables?.append(resolutionProvider.generalAssembly.assign(to: \.generalAssemblyResolution, on: self))
         self.cancellables?.append(resolutionProvider.securityCouncil.assign(to: \.securityCouncilResolution, on: self))
     }
-    
-    func vote(on resolution: Resolution, option: VoteOption, worldAssembly: WorldAssembly, localId: String) {
-        self.isVoting = true
-        self.cancellables?.append(
-            self.resolutionProvider
-                .vote(for: resolution, worldAssembly: worldAssembly, option: option, localId: localId)
-                .receive(on: DispatchQueue.main)
-                .sink(receiveValue: { receivedOption in
-                    switch worldAssembly {
-                    case .general: self.castedGeneralAssemblyVote = receivedOption
-                    case .security: self.castedSecurityCouncilVote = receivedOption
-                    }
-                })
-        )
-    }
 }

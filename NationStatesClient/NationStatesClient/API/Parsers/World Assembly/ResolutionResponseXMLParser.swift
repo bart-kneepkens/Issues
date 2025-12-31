@@ -22,6 +22,12 @@ extension ResolutionResponseXMLParser: XMLParserDelegate {
         foundCharacters += string.trimmingCharacters(in: .newlines)
     }
     
+    func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) {
+        if let bbCode = String(data: CDATABlock, encoding: .utf8) {
+            resolution.htmlText = BBCodeConverter(bbCodeRawText: bbCode).htmlText
+        }
+    }
+    
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         // It's important to trim whitespaces only after the string has been completed.
         // Doing so in `parser(_ parser: XMLParser, foundCharacters string: String)` like the other parsers would not work with resolution names containing quotes or other characters.

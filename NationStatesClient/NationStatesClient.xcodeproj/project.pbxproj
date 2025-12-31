@@ -13,8 +13,6 @@
 		AE0E0E4325A227260067A136 /* WorldAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0E0E4125A227260067A136 /* WorldAssembly.swift */; };
 		AE0E0E4925A227F80067A136 /* VoteOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0E0E4825A227F80067A136 /* VoteOption.swift */; };
 		AE0E0E4A25A227F80067A136 /* VoteOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0E0E4825A227F80067A136 /* VoteOption.swift */; };
-		AE0E0E5025A22A970067A136 /* ResolutionInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0E0E4F25A22A970067A136 /* ResolutionInformation.swift */; };
-		AE0E0E5125A22A970067A136 /* ResolutionInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0E0E4F25A22A970067A136 /* ResolutionInformation.swift */; };
 		AE0FEBE1256C786D000A4B57 /* Nation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0FEBE0256C786D000A4B57 /* Nation.swift */; };
 		AE0FEBE7256D9648000A4B57 /* NationDetailsResponseXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0FEBE6256D9648000A4B57 /* NationDetailsResponseXMLParser.swift */; };
 		AE0FEBED256D9738000A4B57 /* NationDetailsXMLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0FEBEC256D9738000A4B57 /* NationDetailsXMLParserTests.swift */; };
@@ -274,7 +272,6 @@
 		AE0E0E3725A209420067A136 /* ResolutionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolutionView.swift; sourceTree = "<group>"; };
 		AE0E0E4125A227260067A136 /* WorldAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldAssembly.swift; sourceTree = "<group>"; };
 		AE0E0E4825A227F80067A136 /* VoteOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteOption.swift; sourceTree = "<group>"; };
-		AE0E0E4F25A22A970067A136 /* ResolutionInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolutionInformation.swift; sourceTree = "<group>"; };
 		AE0FEBE0256C786D000A4B57 /* Nation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nation.swift; sourceTree = "<group>"; };
 		AE0FEBE6256D9648000A4B57 /* NationDetailsResponseXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationDetailsResponseXMLParser.swift; sourceTree = "<group>"; };
 		AE0FEBEC256D9738000A4B57 /* NationDetailsXMLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationDetailsXMLParserTests.swift; sourceTree = "<group>"; };
@@ -730,7 +727,6 @@
 				AE79E358259BB13600004D41 /* Resolution.swift */,
 				AE0E0E4125A227260067A136 /* WorldAssembly.swift */,
 				AE0E0E4825A227F80067A136 /* VoteOption.swift */,
-				AE0E0E4F25A22A970067A136 /* ResolutionInformation.swift */,
 			);
 			path = "World Assembly";
 			sourceTree = "<group>";
@@ -1305,7 +1301,6 @@
 				AE8764E7252FAA0C00EFE031 /* Issue.swift in Sources */,
 				AE790DF3256DC6E700051FD4 /* MockedNationDetailsProvider.swift in Sources */,
 				AE1B488F25A129A7005F328B /* WorldAssemblyResolutionTextSheet.swift in Sources */,
-				AE0E0E5025A22A970067A136 /* ResolutionInformation.swift in Sources */,
 				AE5BDB9C2548BE0400F3954D /* IssueProvider.swift in Sources */,
 				AEF3FDCA2603FEDF000233B8 /* View+.swift in Sources */,
 				AE8764DD252FA92300EFE031 /* IssuesView.swift in Sources */,
@@ -1484,7 +1479,6 @@
 				AED8B69F255F47CE008F9769 /* FetchIssuesResult.swift in Sources */,
 				AED8B6E5255F482C008F9769 /* PingResponseXMLParser.swift in Sources */,
 				AED8B6B3255F47E9008F9769 /* AuthenticationContainer.swift in Sources */,
-				AE0E0E5125A22A970067A136 /* ResolutionInformation.swift in Sources */,
 				AE795AB025A926A4008D8EF4 /* Error+.swift in Sources */,
 				AE6D8347256473B500FA1CF7 /* InformationText.swift in Sources */,
 				AE7F804025A0967C00F138B6 /* MockedResolutionProvider.swift in Sources */,

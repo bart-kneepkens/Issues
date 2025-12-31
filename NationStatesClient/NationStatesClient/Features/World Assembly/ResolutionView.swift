@@ -57,10 +57,9 @@ struct ResolutionView: View {
                     .frame(height: 72)) {}
         
         Section {
-            if let information = resolution.information, let htmlText = information.textHTML {
-                Button(action: {
+                Button {
                     self.showingResolutionTextSheet.toggle()
-                }) {
+                } label: {
                     HStack {
                         Image(systemName: "book")
                         Text("Read Resolution").fontWeight(.medium)
@@ -71,10 +70,11 @@ struct ResolutionView: View {
                     onDismiss: {
                         if let preparedLinkType = viewModel.preparedLinkType {
                             navigationPath.append(WorldAssemblyNavigationDestination.link(preparedLinkType))
+                            viewModel.preparedLinkType = nil
                         }
                     },
                     content: {
-                        WorldAssemblyResolutionTextSheet(htmlText: htmlText)
+                        WorldAssemblyResolutionTextSheet(htmlText: resolution.htmlText)
                             .onLinkTap { link in
                                 viewModel.preparedLinkType = link
                                 self.showingResolutionTextSheet = false
@@ -82,19 +82,22 @@ struct ResolutionView: View {
                     }
                 )
             }
+        
         }
     }
-}
 
 #if DEBUG
-struct ResolutionView_Previews: PreviewProvider {
-    static var previews: some View {
+#Preview {
         NavigationView {
             List {
-                ResolutionView(viewModel: ResolutionViewModel(resolution: .filler, nationDetailsProvider: MockedNationDetailsProvider()), navigationPath: .constant(.init()))
+                ResolutionView(
+                    viewModel: ResolutionViewModel(
+                        resolution: .filler,
+                        nationDetailsProvider: MockedNationDetailsProvider()
+                    ),
+                    navigationPath: .constant(.init())
+                )
             }
-            .listStyle(InsetGroupedListStyle())
         }
-    }
 }
 #endif
