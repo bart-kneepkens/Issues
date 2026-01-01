@@ -15,6 +15,14 @@ struct SearchView: View {
         case region
     }
     
+    enum SearchState {
+        case initial
+        case loading(SearchType)
+        case showingNation(Nation)
+        case showingRegion(Region)
+        case error(APIError)
+    }
+    
     let regionProvider: RegionDetailsProvider
     let nationProvider: NationDetailsProvider
     
@@ -24,11 +32,16 @@ struct SearchView: View {
     @StateObject
     fileprivate var debouncer: SearchQueryDebouncer = .init()
     
+    @State var searchState: SearchState = .initial
+    
     @State
     var fetchedRegion: Region?
     @State
     var fetchedNation: Nation?
     
+    
+    @State
+    var loading = false
     @State
     var error: APIError?
     
@@ -42,24 +55,31 @@ struct SearchView: View {
                 .pickerStyle(.palette)
                 .padding()
             }
-            
-            List {
-                if type == .nation, let nation = fetchedNation {
+            Spacer()
+            switch searchState {
+            case .initial:
+                Text("Search away..")
+            case .loading:
+                ProgressView()
+            case .showingNation(let nation):
+                List {
                     NationDetailsView(nation: nation)
                         .onTapGesture {
                             self.hideKeyboard()
                         }
-                } else if let fetchedRegion {
-                    RegionDetailsView(region: fetchedRegion)
+                }
+            case .showingRegion(let region):
+                List {
+                    RegionDetailsView(region: region)
                         .onTapGesture {
                             self.hideKeyboard()
                         }
-                } else if let error {
-                    ErrorView(error: error, onPress: nil)
-                } else {
-                    EmptyView()
                 }
+            case .error(let error):
+                ErrorView(error: error, onPress: nil)
             }
+            
+            Spacer()
         }
         .navigationTitle("Search")
         .navigationBarTitleDisplayMode(.inline)
@@ -70,6 +90,10 @@ struct SearchView: View {
             isSearchFocused.toggle()
         }
         .onChange(of: debouncer.debouncedQuery) {
+            if debouncer.debouncedQuery == "" {
+                searchState = .initial
+                return
+            }
             Task {
                 if type == .nation {
                     await searchForNation(query: debouncer.debouncedQuery)
@@ -81,18 +105,24 @@ struct SearchView: View {
     }
     
     private func searchForNation(query: String) async {
+        searchState = .loading(.nation)
         if let nation = try? await nationProvider.fetchNationDetails(for: debouncer.debouncedQuery) {
             self.fetchedNation = nation
+            searchState = .showingNation(nation)
         } else {
             self.error = .nationNotFound
+            searchState = .error(.nationNotFound)
         }
     }
     
     private func searchForRegion(query: String) async {
+        searchState = .loading(.region)
         if let region = await regionProvider.fetchRegionDetails(with: debouncer.debouncedQuery) {
             self.fetchedRegion = region
+            searchState = .showingRegion(region)
         } else {
             self.error = .regionNotFound
+            searchState = .error(.regionNotFound)
         }
     }
 }
