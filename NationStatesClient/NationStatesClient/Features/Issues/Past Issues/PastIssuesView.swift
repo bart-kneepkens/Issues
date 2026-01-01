@@ -66,8 +66,6 @@ struct PastIssuesView: View {
                 
             }
         }
-//        .navigationTitle("Past Issues")
-        .navigationBarBackButtonHidden(true)
         .background {
             Color(UIColor.systemGroupedBackground)
                 .ignoresSafeArea()

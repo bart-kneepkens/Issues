@@ -11,6 +11,7 @@ struct PlainListRow: View {
     let name: String
     let value: String?
     let valueView: AnyView?
+    var action: (() -> Void)?
     
     init(name: String, value: String) {
         self.name = name
@@ -24,6 +25,13 @@ struct PlainListRow: View {
         self.value = nil
     }
     
+    init(name: String, value: String, action: @escaping (() -> Void)) {
+        self.name = name
+        self.value = value
+        self.valueView = nil
+        self.action = action
+    }
+    
     var body: some View {
         HStack {
             Text("\(name):")
@@ -31,7 +39,15 @@ struct PlainListRow: View {
             if let valueView = self.valueView {
                 valueView
             } else if let value = self.value {
-                Text(value).fontWeight(.medium)
+                if let action {
+                    Button {
+                        action()
+                    } label: {
+                        Text(value).fontWeight(.medium)
+                    }
+                } else {
+                    Text(value).fontWeight(.medium)
+                }
             }
         }
     }

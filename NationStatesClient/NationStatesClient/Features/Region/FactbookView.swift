@@ -9,6 +9,29 @@ import SwiftUI
 import Combine
 import UIKit
 
+struct Wrapped<T: View>: View {
+    @StateObject var navigation = Navigation()
+    @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
+    @ViewBuilder var content: T
+    
+    var body: some View {
+        NavigationStack(path: $navigation.path) {
+            content
+                .environmentObject(navigation)
+                .navigationDestination(for: NationDestionation.self) { destination in
+                    switch destination {
+                    case .nation(name: let nationName):
+                        FetchedNationView(viewModel: viewModelFactory.fetchedNationViewModel(nationName))
+                            .environmentObject(navigation)
+                    case .region(name: let regionName):
+                        RegionView(viewModel: viewModelFactory.regionViewModel(regionName))
+                            .environmentObject(navigation)
+                    }
+                }
+        }
+    }
+}
+
 struct FactbookView: View {
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     
@@ -22,7 +45,7 @@ struct FactbookView: View {
             .frame(height: viewModel.contentHeight)
             .listRowInsets(.init(top: 8, leading: 8, bottom: 8, trailing: 8))
             .sheet(item: $viewModel.selectedInternalLink) { linkType in
-                NavigationView {
+                Wrapped {
                     switch linkType {
                     case .nation(name: let nationName):
                         FetchedNationView(viewModel: viewModelFactory.fetchedNationViewModel(nationName))
@@ -30,6 +53,7 @@ struct FactbookView: View {
                         RegionView(viewModel: viewModelFactory.regionViewModel(regionName))
                     }
                 }
+                .presentationDragIndicator(.visible)
             }
             .sheet(item: $viewModel.selectedExternalLink) { externalLink in
                 SafariView(url: externalLink.url)

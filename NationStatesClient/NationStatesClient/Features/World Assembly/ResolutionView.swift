@@ -11,7 +11,7 @@ struct ResolutionView: View {
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     @StateObject var viewModel: ResolutionViewModel
     @State private var showingResolutionTextSheet = false
-    
+    @State private var showingProposerSheet = false
     @State private var selectedLinkType: WorldAssemblyResolutionTextSheet.LinkType?
     
     @Binding var navigationPath: NavigationPath
@@ -32,15 +32,19 @@ struct ResolutionView: View {
         return nil
     }
     
-    @ViewBuilder private var proposedByView: some View {
-        NationLinkView(
-            viewModel: viewModelFactory.nationLinkViewModel(self.resolution.proposedBy)
-        )
-    }
-    
     @ViewBuilder private var statisticsView: some View {
         PlainListRow(name: "Category", value: resolution.category)
-        PlainListRow(name: "Proposed by", value: AnyView(proposedByView))
+        PlainListRow(
+            name: "Proposed by",
+            value: resolution.proposedBy,
+            action: { showingProposerSheet.toggle() }
+        )
+        .sheet(isPresented: $showingProposerSheet) {
+            Wrapped {
+                FetchedNationView(viewModel: viewModelFactory.fetchedNationViewModel(resolution.proposedBy))
+            }
+            .presentationDragIndicator(.visible)
+        }
         
         if let timeLeft = self.timeLeftToVote {
             PlainListRow(name: "Voting ends in", value: timeLeft)
@@ -53,8 +57,12 @@ struct ResolutionView: View {
             statisticsView
         }
         
-        Section(header: VotesDistributionChart(votesFor: resolution.totalVotesFor, votesAgainst: resolution.totalVotesAgainst)
-                    .frame(height: 72)) {}
+        Section(
+            header: VotesDistributionChart(
+                votesFor: resolution.totalVotesFor,
+                votesAgainst: resolution.totalVotesAgainst
+        )
+        .frame(height: 72)) {}
         
         Section {
                 Button {

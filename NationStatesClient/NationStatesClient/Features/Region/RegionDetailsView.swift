@@ -11,6 +11,8 @@ import SwiftUI
 struct RegionDetailsView: View {
     
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
+    @EnvironmentObject var navigation: Navigation
+    @State var showsWADelegateDetails = false
     
     let region: Region
     
@@ -61,8 +63,15 @@ struct RegionDetailsView: View {
         if let delegateNationName {
             PlainListRow(
                 name: title,
-                value: AnyView(NationLinkView(viewModel: viewModelFactory.nationLinkViewModel(delegateNationName)))
+                value: delegateNationName,
+                action: { showsWADelegateDetails.toggle() }
             )
+            .sheet(isPresented: $showsWADelegateDetails) {
+                Wrapped {
+                    FetchedNationView(viewModel: viewModelFactory.fetchedNationViewModel(delegateNationName))
+                }
+                .presentationDragIndicator(.visible)
+            }
         } else {
             PlainListRow(name: title, value: "None")
         }
@@ -75,7 +84,8 @@ struct RegionDetailsView: View {
         if let founderNationName {
             PlainListRow(
                 name: title,
-                value: AnyView(NationLinkView(viewModel: viewModelFactory.nationLinkViewModel(founderNationName)))
+                value: founderNationName,
+                action: { navigation.push(.nation(name: founderNationName)) }
             )
         } else {
             PlainListRow(

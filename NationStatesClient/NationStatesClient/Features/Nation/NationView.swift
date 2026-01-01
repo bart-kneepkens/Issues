@@ -10,14 +10,17 @@ import SwiftUI
 struct NationDetailsView: View {
     let nation: Nation
     
+    @EnvironmentObject var navigation: Navigation
+    
     var body: some View {
-        VStack(alignment: .center, spacing: 10) {
-            flagView(nation.flagURL)
-            nameView(fullName: nation.fullName, name: nation.name)
-            categoryView(nation.category)
-            mottoView(nation.motto)
+        Section {
+            VStack(alignment: .center, spacing: 10) {
+                flagView(nation.flagURL)
+                nameView(fullName: nation.fullName, name: nation.name)
+                categoryView(nation.category)
+                mottoView(nation.motto)
+            }
         }
-        .padding(.bottom)
         
         generalStatisticsView(nation.populationMillions, currency: nation.currency, animal:nation.animal)
         
@@ -28,10 +31,8 @@ struct NationDetailsView: View {
     
     @ViewBuilder private func nameView(fullName: String, name: String) -> some View {
         let prefix = fullName.replacingOccurrences(of: name, with: "")
-        Group {
-            Text(prefix)
-            Text(name).font(.title).bold()
-        }
+        Text(prefix)
+        Text(name).font(.title).bold()
     }
     
     @ViewBuilder private func categoryView(_ category: String) -> some View {
@@ -75,7 +76,7 @@ struct NationDetailsView: View {
     
     @ViewBuilder private func regionView(_ regionName: String, influence: String) -> some View {
         Section {
-            PlainListRow(name: "Region", value: regionName)
+            PlainListRow(name: "Region", value: regionName, action: { navigation.push(.region(name: regionName)) })
             PlainListRow(name: "Influence", value: influence)
         }
     }
@@ -84,22 +85,39 @@ struct NationDetailsView: View {
 struct NationView: View {
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     @StateObject var viewModel: NationViewModel
+    @StateObject var navigation = Navigation()
     
     var body: some View {
-        List {
-            self.listContents
-        }
-        .listStyle(.insetGrouped)
-        .refreshable {
-            await viewModel.refresh()
-        }
-        .navigationTitle("Nation")
-        .toolbar {
-            NavigationLink(
-                destination: SearchNationView(viewModel: viewModelFactory.searchNationViewModel),
-                label: {
-                    Image(systemName: "magnifyingglass")
-                })
+        NavigationStack(path: $navigation.path) {
+            List {
+                self.listContents
+            }
+            .refreshable {
+                await viewModel.refresh()
+            }
+            .toolbar {
+                if navigation.path.isEmpty {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        NavigationLink(
+                            destination: SearchNationView(viewModel: viewModelFactory.searchNationViewModel),
+                            label: {
+                                Image(systemName: "magnifyingglass")
+                            }
+                        )
+                    }
+                }
+            }
+            .toolbarTitleDisplayMode(.inline)
+            .navigationDestination(for: NationDestionation.self) { route in
+                switch route {
+                case .region(name: let name):
+                    RegionView(viewModel: viewModelFactory.regionViewModel(name))
+                        .environmentObject(navigation)
+                case .nation(name: let name):
+                    EmptyView()
+                }
+            }
+            .environmentObject(navigation)
         }
     }
     
@@ -119,12 +137,32 @@ struct NationView: View {
     }
 }
 
-#if DEBUG
-struct NationView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            NationView(viewModel: .init(nation: .filler, name: "Le Nation "))
-        }
+final class Navigation: ObservableObject {
+    @Published var path = NavigationPath()
+    
+    func push(_ destination: NationDestionation) {
+        path.append(destination)
     }
+}
+
+extension EnvironmentValues {
+    private struct NavigationKey: EnvironmentKey {
+        static let defaultValue = Navigation()
+    }
+
+    var navigation: Navigation {
+        get { self[NavigationKey.self] }
+        set { self[NavigationKey.self] = newValue }
+    }
+}
+
+enum NationDestionation: Hashable {
+    case region(name: String)
+    case nation(name: String)
+}
+
+#if DEBUG
+#Preview {
+    NationView(viewModel: .init(nation: .filler, name: "Le Nation "))
 }
 #endif
