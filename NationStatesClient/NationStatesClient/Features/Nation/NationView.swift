@@ -99,7 +99,7 @@ struct NationView: View {
                 if navigation.path.isEmpty {
                     ToolbarItem(placement: .topBarTrailing) {
                         NavigationLink(
-                            destination: SearchNationView(viewModel: viewModelFactory.searchNationViewModel),
+                            destination: viewModelFactory.searchView,
                             label: {
                                 Image(systemName: "magnifyingglass")
                             }

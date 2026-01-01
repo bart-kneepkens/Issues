@@ -22,13 +22,13 @@ struct RegionView: View {
             await viewModel.refreshRegion()
         }
         .navigationTitle(viewModel.region?.name ?? "")
-        .toolbar {
-            NavigationLink(
-                destination: viewModelFactory.searchRegionView,
-                label: {
-                    Image(systemName: "magnifyingglass")
-                })
-        }
+//        .toolbar {
+//            NavigationLink(
+//                destination: viewModelFactory.searchRegionView,
+//                label: {
+//                    Image(systemName: "magnifyingglass")
+//                })
+//        }
     }
     
     @ViewBuilder

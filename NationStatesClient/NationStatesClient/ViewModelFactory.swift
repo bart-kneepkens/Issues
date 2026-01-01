@@ -114,10 +114,6 @@ class ViewModelFactory {
         .init(nationName, nationDetailsProvider: nationDetailsProvider)
     }
     
-    var searchNationViewModel: SearchNationViewModel {
-        .init(nationDetailsProvider: nationDetailsProvider)
-    }
-    
     var moreViewModel: MoreViewModel {
         .init(authenticationContainer: authenticationContainer, nationDetailsProvider: nationDetailsProvider, notificationsProvider: notificationsProvider)
     }
@@ -130,8 +126,9 @@ class ViewModelFactory {
 // MARK: - MV 🎉
 
 extension ViewModelFactory {
-    var searchRegionView: SearchRegionView {
-        SearchRegionView(provider: regionDetailsProvider)
+    
+    var searchView: SearchView {
+        .init(regionProvider: regionDetailsProvider, nationProvider: nationDetailsProvider)
     }
 }
 
