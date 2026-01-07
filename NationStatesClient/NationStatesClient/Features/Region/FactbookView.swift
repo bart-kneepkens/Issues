@@ -34,17 +34,36 @@ struct Wrapped<T: View>: View {
 
 struct FactbookView: View {
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
+    @EnvironmentObject var navigateion: Navigation
+    @Environment(\.isPresented) private var isPresented
     
     @StateObject var viewModel: FactbookViewModel
+    
+    // TODO: Change it to a direct destination
+    @State var sheetLinkType: LinkType?
     
     var body: some View {
         InlineHTMLTextWebView(html: viewModel.html, dynamicHeight: $viewModel.contentHeight)
             .onLinkTap { url in
-                viewModel.didTapLink(with: url)
+                if let selectedLink = LinkType.type(from: url) {
+                    if isPresented {
+                        switch selectedLink {
+                        case .nation(name: let nationName):
+                            navigateion.push(.nation(name: nationName))
+                        case .region(name: let regionName):
+                            navigateion.push(.region(name: regionName))
+                        }
+                    } else {
+                        sheetLinkType = selectedLink
+                    }
+                } else if let external = ExternalLink(link: url) {
+                    viewModel.selectedExternalLink = external
+                }
+                
             }
             .frame(height: viewModel.contentHeight)
             .listRowInsets(.init(top: 8, leading: 8, bottom: 8, trailing: 8))
-            .sheet(item: $viewModel.selectedInternalLink) { linkType in
+            .sheet(item: $sheetLinkType) { linkType in
                 Wrapped {
                     switch linkType {
                     case .nation(name: let nationName):
@@ -110,14 +129,6 @@ extension FactbookView {
         
         init(html: String) {
             self.html = html
-        }
-        
-        func didTapLink(with url: String) {
-            if let selectedLink = LinkType.type(from: url) {
-                self.selectedInternalLink = selectedLink
-            } else if let externalLink = ExternalLink(link: url) {
-                self.selectedExternalLink = externalLink
-            }
         }
     }
 }

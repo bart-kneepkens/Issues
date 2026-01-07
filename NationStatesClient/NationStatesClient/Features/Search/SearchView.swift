@@ -48,13 +48,19 @@ struct SearchView: View {
     var body: some View {
         VStack {
             if isSearchFocused {
-                Picker("", selection: $type) {
-                    Text("Nation").tag(SearchType.nation)
-                    Text("Region").tag(SearchType.region)
+                if #available(iOS 26.0, *) {
+                    Picker("", selection: $type) {
+                        Text("Nation").tag(SearchType.nation)
+                        Text("Region").tag(SearchType.region)
+                    }
+                    .pickerStyle(.palette)
+                    .glassEffect()
+                    
+                } else {
+                    // Fallback on earlier versions
                 }
-                .pickerStyle(.palette)
-                .padding()
             }
+            
             Spacer()
             switch searchState {
             case .initial:
@@ -80,12 +86,14 @@ struct SearchView: View {
             }
             
             Spacer()
+            
+           
         }
-        .navigationTitle("Search")
-        .navigationBarTitleDisplayMode(.inline)
+        .background(Color(UIColor.systemGroupedBackground))
         .searchable(text: $debouncer.query)
         .searchFocused($isSearchFocused)
         .disableAutocorrection(true)
+        .safeAreaPadding()
         .onAppear {
             isSearchFocused.toggle()
         }

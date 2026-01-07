@@ -20,18 +20,27 @@ struct ContentView: View {
             SignInProgressView(error: viewModel.error)
         } else {
             TabView {
-                IssuesView(viewModel: viewModelFactory.issuesViewModel)
-                    .tabItemStyled(with: .issues)
-                NationView(viewModel: viewModelFactory.nationViewModel)
+                Tab("Issues", systemImage: "newspaper") {
+                    IssuesView(viewModel: viewModelFactory.issuesViewModel)
+                }
+                
+                Tab("Nation", systemImage: "building.columns") {
+                    NationView(viewModel: viewModelFactory.nationViewModel)
+                        .wrappedInDefaultNavigation()
+                }
+                Tab("Region", systemImage: "map") {
+                    RegionView(viewModel: viewModelFactory.currentRegionViewModel)
+                        .wrappedInDefaultNavigation()
+                }
+                
+                Tab("More", systemImage: "ellipsis") {
+                    MoreView(
+                        viewModel: viewModelFactory.moreViewModel,
+                        badgeViewModel: moreBadgeViewModel
+                    )
                     .wrappedInDefaultNavigation()
-                    .tabItemStyled(with: .nation)
-                MoreView(
-                    viewModel: viewModelFactory.moreViewModel,
-                    badgeViewModel: moreBadgeViewModel
-                )
-                .wrappedInDefaultNavigation()
-                .tabItemStyled(with: .more)
-                .badge(moreBadgeViewModel.badgeValue)
+                }
+                .badge(moreTabBadge)
             }
         }
     }
@@ -41,6 +50,13 @@ struct ContentView: View {
             .onAppear {
                 self.viewModel.onAppear()
             }
+    }
+    
+    private var moreTabBadge: Text? {
+        guard let badgeValue = moreBadgeViewModel.badgeValue else {
+            return nil
+        }
+        return Text(badgeValue)
     }
 }
 

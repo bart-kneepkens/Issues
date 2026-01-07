@@ -90,7 +90,7 @@ struct IssueDetailView: View {
                 }
                 
                 ToolbarItem(placement: .principal) {
-                    Text("\(viewModel.nationName) Timespace")
+                    Text("\(viewModel.nationName) Times")
                         .font(.custom("Copperplate", size: 20))
                         .foregroundStyle(Color.primary)
                 }

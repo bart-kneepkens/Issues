@@ -37,7 +37,7 @@ struct ResolutionView: View {
         PlainListRow(
             name: "Proposed by",
             value: resolution.proposedBy,
-            action: { showingProposerSheet.toggle() }
+            action: { navigationPath.append(WorldAssemblyNavigationDestination.link(.nation(name: resolution.proposedBy ))) }
         )
         .sheet(isPresented: $showingProposerSheet) {
             Wrapped {

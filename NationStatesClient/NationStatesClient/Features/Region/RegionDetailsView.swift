@@ -12,7 +12,8 @@ struct RegionDetailsView: View {
     
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     @EnvironmentObject var navigation: Navigation
-    @State var showsWADelegateDetails = false
+    @Environment(\.isPresented) private var isPresented
+    @State var sheetNation: NationNamePresentable?
     
     let region: Region
     
@@ -21,10 +22,17 @@ struct RegionDetailsView: View {
             HStack {
                 Spacer()
                 VStack(spacing: 10) {
+                    Text(region.name).font(.title).bold()
                     flagView(region: region)
                     Text("\(region.numberOfNations) Nations")
                 }
                 Spacer()
+            }
+            .sheet(item: $sheetNation) { nationPresentable in
+                Wrapped {
+                    FetchedNationView(viewModel: viewModelFactory.fetchedNationViewModel(nationPresentable.nationName))
+                }
+                .presentationDragIndicator(.visible)
             }
             
             PlainListRow(name: "Regional power", value: region.power)
@@ -32,6 +40,8 @@ struct RegionDetailsView: View {
             founderViewRow(founderNationName: region.founderName)
             foundedViewRow(foundedTime: region.foundedTime)
         }
+        .listRowSeparator(.hidden)
+        
 
         if let factbookHTML = region.factbookHTML {
             Section("Factbook") {
@@ -64,14 +74,8 @@ struct RegionDetailsView: View {
             PlainListRow(
                 name: title,
                 value: delegateNationName,
-                action: { showsWADelegateDetails.toggle() }
+                action: { presentNation(delegateNationName) }
             )
-            .sheet(isPresented: $showsWADelegateDetails) {
-                Wrapped {
-                    FetchedNationView(viewModel: viewModelFactory.fetchedNationViewModel(delegateNationName))
-                }
-                .presentationDragIndicator(.visible)
-            }
         } else {
             PlainListRow(name: title, value: "None")
         }
@@ -85,7 +89,7 @@ struct RegionDetailsView: View {
             PlainListRow(
                 name: title,
                 value: founderNationName,
-                action: { navigation.push(.nation(name: founderNationName)) }
+                action: { presentNation(founderNationName) }
             )
         } else {
             PlainListRow(
@@ -108,4 +112,29 @@ struct RegionDetailsView: View {
         format.dateStyle = .medium
         return format
     }()
+    
+    private func presentNation(_ name: String) {
+        if isPresented {
+            navigation.push(.nation(name: name))
+        } else {
+            sheetNation = .init(nationName: name)
+        }
+    }
+    
+    struct NationNamePresentable: Identifiable {
+        var id: String {
+            nationName
+        }
+        
+        let nationName: String
+    }
 }
+
+#if DEBUG
+
+#Preview {
+    List {
+        RegionDetailsView(region: .filler)
+    }
+}
+#endif

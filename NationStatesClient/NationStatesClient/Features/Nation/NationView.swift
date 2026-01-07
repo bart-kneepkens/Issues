@@ -11,6 +11,10 @@ struct NationDetailsView: View {
     let nation: Nation
     
     @EnvironmentObject var navigation: Navigation
+    @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
+    @State var showsRegionSheet = false
+    
+    @Environment(\.isPresented) private var isPresented
     
     var body: some View {
         Section {
@@ -76,7 +80,23 @@ struct NationDetailsView: View {
     
     @ViewBuilder private func regionView(_ regionName: String, influence: String) -> some View {
         Section {
-            PlainListRow(name: "Region", value: regionName, action: { navigation.push(.region(name: regionName)) })
+            PlainListRow(
+                name: "Region",
+                value: regionName,
+                action: {
+                    if !isPresented {
+                        showsRegionSheet.toggle()
+                    } else {
+                        navigation.push(.region(name: regionName))
+                    }
+                }
+            )
+            .sheet(isPresented: $showsRegionSheet) {
+                Wrapped {
+                    RegionView(viewModel: viewModelFactory.regionViewModel(regionName))
+                }
+                    .presentationDragIndicator(.visible)
+            }
             PlainListRow(name: "Influence", value: influence)
         }
     }
@@ -84,6 +104,7 @@ struct NationDetailsView: View {
 
 struct NationView: View {
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
+    @Environment(\.isPresented) private var isPresented
     @StateObject var viewModel: NationViewModel
     @StateObject var navigation = Navigation()
     
@@ -96,7 +117,7 @@ struct NationView: View {
                 await viewModel.refresh()
             }
             .toolbar {
-                if navigation.path.isEmpty {
+                if !isPresented {
                     ToolbarItem(placement: .topBarTrailing) {
                         NavigationLink(
                             destination: viewModelFactory.searchView,
@@ -108,15 +129,6 @@ struct NationView: View {
                 }
             }
             .toolbarTitleDisplayMode(.inline)
-            .navigationDestination(for: NationDestionation.self) { route in
-                switch route {
-                case .region(name: let name):
-                    RegionView(viewModel: viewModelFactory.regionViewModel(name))
-                        .environmentObject(navigation)
-                case .nation(name: let name):
-                    EmptyView()
-                }
-            }
             .environmentObject(navigation)
         }
     }

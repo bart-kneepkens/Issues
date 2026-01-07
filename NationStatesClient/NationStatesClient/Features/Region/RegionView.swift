@@ -10,25 +10,29 @@ import Combine
 
 struct RegionView: View {
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
+    @Environment(\.isPresented) private var isPresented
     
     @ObservedObject var viewModel: RegionViewModel
+    @StateObject var navigation = Navigation()
     
     var body: some View {
         List {
             listContents
         }
-        .listStyle(.insetGrouped)
         .refreshable {
             await viewModel.refreshRegion()
         }
-        .navigationTitle(viewModel.region?.name ?? "")
-//        .toolbar {
-//            NavigationLink(
-//                destination: viewModelFactory.searchRegionView,
-//                label: {
-//                    Image(systemName: "magnifyingglass")
-//                })
-//        }
+        .toolbar {
+            if !isPresented {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink(
+                        destination: viewModelFactory.searchView,
+                        label: {
+                            Image(systemName: "magnifyingglass")
+                        })
+                }
+            }
+        }
     }
     
     @ViewBuilder
