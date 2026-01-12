@@ -171,6 +171,8 @@ extension EnvironmentValues {
 enum NationDestionation: Hashable {
     case region(name: String)
     case nation(name: String)
+    case link(WorldAssemblyResolutionTextSheet.LinkType)
+    case worldAssembly(WorldAssembly, Resolution)
 }
 
 #if DEBUG

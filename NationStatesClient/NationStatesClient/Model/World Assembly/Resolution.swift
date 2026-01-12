@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Resolution {
+struct Resolution: Hashable {
     let category: String
     let created: Date
     let id: String

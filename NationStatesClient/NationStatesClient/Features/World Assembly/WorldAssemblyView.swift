@@ -16,32 +16,16 @@ struct WorldAssemblyView: View {
     @Environment(\.viewModelFactory) var viewModelFactory: ViewModelFactory
     @StateObject var viewModel: WorldAssemblyViewModel
     @State private var selectedVoteOption: VoteOption? = nil
-    @State private var navigationPath = NavigationPath()
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var navigation: Navigation
     
     var body: some View {
-        NavigationStack(path: $navigationPath) {
             List {
                 assemblyViewLink(worldAssembly: .general)
                 assemblyViewLink(worldAssembly: .security)
             }
             .listStyle(.insetGrouped)
             .navigationTitle("World Assembly")
-            .navigationDestination(for: WorldAssemblyNavigationDestination.self) { destination in
-                switch destination {
-                case let .link(linkType):
-                    switch linkType {
-                    case let .nation(name: nationName):
-                        FetchedNationView(viewModel: viewModelFactory.fetchedNationViewModel(nationName))
-                    case let .region(name: regionName):
-                        RegionView(viewModel: viewModelFactory.regionViewModel(regionName))
-                    case let .otherResolution(id: resolutionId, worldAssembly: wass):
-                        ResolutionLinkView(viewModel: viewModelFactory.resolutionLinkViewModel(id: resolutionId, worldAssembly: wass), navigationPath: $navigationPath)
-                    }
-                case let .worldAssembly(worldAssembly):
-                    self.assemblyView(worldAssembly: worldAssembly)
-                }
-            }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
@@ -51,7 +35,6 @@ struct WorldAssemblyView: View {
                     }
                 }
             }
-        }
     }
     
     @ViewBuilder private func assemblyView(worldAssembly: WorldAssembly) -> some View {
@@ -59,7 +42,7 @@ struct WorldAssemblyView: View {
         
         List {
             if let resolution = resolution {
-                ResolutionView(viewModel: viewModelFactory.resolutionViewModel(resolution), navigationPath: $navigationPath)
+                ResolutionView(viewModel: viewModelFactory.resolutionViewModel(resolution))
             }
         }
         .navigationTitle(worldAssembly.textDescription)
@@ -70,7 +53,9 @@ struct WorldAssemblyView: View {
         let resolution = worldAssembly == WorldAssembly.general ? self.viewModel.generalAssemblyResolution : self.viewModel.securityCouncilResolution
         
         Button {
-            navigationPath.append(WorldAssemblyNavigationDestination.worldAssembly(worldAssembly))
+            if let resolution {
+                navigation.push(.worldAssembly(worldAssembly, resolution))
+            }
         } label: {
             HStack {
                 Image(systemName: worldAssembly.iconName)

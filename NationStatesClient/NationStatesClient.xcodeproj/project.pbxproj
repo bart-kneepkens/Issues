@@ -200,6 +200,7 @@
 		CC10E36A28DE692100870DD3 /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10E36928DE692100870DD3 /* SafariView.swift */; };
 		CC10E36C28DE6EAC00870DD3 /* ComposeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10E36B28DE6EAC00870DD3 /* ComposeEmailView.swift */; };
 		CC2E84D32D9F130000163ABB /* DeeplinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E84D22D9F130000163ABB /* DeeplinkHandler.swift */; };
+		CC35E1DD2F15A8840018A989 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = CC35E1DC2F15A8840018A989 /* AppIcon.icon */; };
 		CC3D932A2E05DDCC00B46916 /* NewsPaperDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3D93292E05DD9F00B46916 /* NewsPaperDivider.swift */; };
 		CC435BAA2AB250560024AFB7 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC435BA92AB250560024AFB7 /* Region.swift */; };
 		CC435BAC2AB253530024AFB7 /* RegionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC435BAB2AB253530024AFB7 /* RegionView.swift */; };
@@ -218,7 +219,6 @@
 		CC9CE64C2AAFAB2B00641990 /* MockedAuthenticationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9CE64B2AAFAB2B00641990 /* MockedAuthenticationContainer.swift */; };
 		CC9F33D12F0710F70015CA09 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9F33D02F0710F40015CA09 /* SearchView.swift */; };
 		CC9F33D32F0711400015CA09 /* SearchView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9F33D22F07113E0015CA09 /* SearchView+ViewModel.swift */; };
-		CC9F33D52F0F14090015CA09 /* Issues.icon in Resources */ = {isa = PBXBuildFile; fileRef = CC9F33D42F0F14090015CA09 /* Issues.icon */; };
 		CCA6653B2A9BDE20001E860B /* PastIssuesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA6653A2A9BDE20001E860B /* PastIssuesView.swift */; };
 		CCA6653D2AA14563001E860B /* Combine+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA6653C2AA14563001E860B /* Combine+.swift */; };
 		CCB8E31228DFB0B500F88087 /* IdentifiableURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB8E31128DFB0B500F88087 /* IdentifiableURL.swift */; };
@@ -422,6 +422,7 @@
 		CC10E36928DE692100870DD3 /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
 		CC10E36B28DE6EAC00870DD3 /* ComposeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeEmailView.swift; sourceTree = "<group>"; };
 		CC2E84D22D9F130000163ABB /* DeeplinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkHandler.swift; sourceTree = "<group>"; };
+		CC35E1DC2F15A8840018A989 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		CC3D93292E05DD9F00B46916 /* NewsPaperDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsPaperDivider.swift; sourceTree = "<group>"; };
 		CC435BA92AB250560024AFB7 /* Region.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		CC435BAB2AB253530024AFB7 /* RegionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionView.swift; sourceTree = "<group>"; };
@@ -438,7 +439,6 @@
 		CC9CE64B2AAFAB2B00641990 /* MockedAuthenticationContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedAuthenticationContainer.swift; sourceTree = "<group>"; };
 		CC9F33D02F0710F40015CA09 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		CC9F33D22F07113E0015CA09 /* SearchView+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchView+ViewModel.swift"; sourceTree = "<group>"; };
-		CC9F33D42F0F14090015CA09 /* Issues.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Issues.icon; sourceTree = "<group>"; };
 		CCA6653A2A9BDE20001E860B /* PastIssuesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastIssuesView.swift; sourceTree = "<group>"; };
 		CCA6653C2AA14563001E860B /* Combine+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+.swift"; sourceTree = "<group>"; };
 		CCB8E31128DFB0B500F88087 /* IdentifiableURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableURL.swift; sourceTree = "<group>"; };
@@ -797,8 +797,8 @@
 				AE8764A6252E6F2900EFE031 /* ContentView.swift */,
 				AE06365C25AA6E750034B873 /* ViewModelFactory.swift */,
 				AE75FFA12619EC2100C407EE /* Launch Screen.storyboard */,
-				CC9F33D42F0F14090015CA09 /* Issues.icon */,
 				AE8764A8252E6F2A00EFE031 /* Assets.xcassets */,
+				CC35E1DC2F15A8840018A989 /* AppIcon.icon */,
 				AE8764AD252E6F2A00EFE031 /* Info.plist */,
 				AEAB981E2628DD2000C505BD /* Settings.bundle */,
 				AE8764AA252E6F2A00EFE031 /* Preview Content */,
@@ -1224,10 +1224,10 @@
 			files = (
 				AE4BACC12544E6E500B391B4 /* CensusScales.plist in Resources */,
 				AE8764AC252E6F2A00EFE031 /* Preview Assets.xcassets in Resources */,
-				CC9F33D52F0F14090015CA09 /* Issues.icon in Resources */,
 				AEAB981F2628DD2000C505BD /* Settings.bundle in Resources */,
 				AE75FFA22619EC2100C407EE /* Launch Screen.storyboard in Resources */,
 				AE8764A9252E6F2A00EFE031 /* Assets.xcassets in Resources */,
+				CC35E1DD2F15A8840018A989 /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1630,7 +1630,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = Issues;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1659,7 +1659,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = Issues;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = NationStatesClient/NationStatesClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";

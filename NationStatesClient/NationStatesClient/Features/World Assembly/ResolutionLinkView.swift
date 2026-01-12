@@ -12,8 +12,6 @@ struct ResolutionLinkView: View {
     
     @StateObject var viewModel: ResolutionLinkViewModel
     
-    @Binding var navigationPath: NavigationPath
-    
     
     var body: some View {
         switch viewModel.state {
@@ -24,7 +22,7 @@ struct ResolutionLinkView: View {
                 }
         case .loaded(let resolution):
             List {
-                ResolutionView(viewModel: viewModelFactory.resolutionViewModel(resolution), navigationPath: $navigationPath)
+                ResolutionView(viewModel: viewModelFactory.resolutionViewModel(resolution))
             }
             .navigationTitle(viewModel.navigationTitle)
             .navigationBarTitleDisplayMode(.inline)

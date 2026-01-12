@@ -19,15 +19,39 @@ struct Wrapped<T: View>: View {
             content
                 .environmentObject(navigation)
                 .navigationDestination(for: NationDestionation.self) { destination in
-                    switch destination {
-                    case .nation(name: let nationName):
-                        FetchedNationView(viewModel: viewModelFactory.fetchedNationViewModel(nationName))
-                            .environmentObject(navigation)
-                    case .region(name: let regionName):
-                        RegionView(viewModel: viewModelFactory.regionViewModel(regionName))
-                            .environmentObject(navigation)
-                    }
+                    createDestination(destination)
                 }
+        }
+    }
+    
+    @ViewBuilder
+    private func createDestination(_ destination: NationDestionation) -> some View {
+        switch destination {
+        case .nation(name: let nationName):
+            FetchedNationView(viewModel: viewModelFactory.fetchedNationViewModel(nationName))
+                .environmentObject(navigation)
+        case .region(name: let regionName):
+            RegionView(viewModel: viewModelFactory.regionViewModel(regionName))
+                .environmentObject(navigation)
+        case let .link(linkType):
+            switch linkType {
+            case let .nation(name: nationName):
+                    FetchedNationView(viewModel: viewModelFactory.fetchedNationViewModel(nationName))
+                    .environmentObject(navigation)
+            case let .region(name: regionName):
+                    RegionView(viewModel: viewModelFactory.regionViewModel(regionName))
+                    .environmentObject(navigation)
+            case let .otherResolution(id: resolutionId, worldAssembly: wass):
+                ResolutionLinkView(viewModel: viewModelFactory.resolutionLinkViewModel(id: resolutionId, worldAssembly: wass))
+                    .environmentObject(navigation)
+            }
+        case let .worldAssembly(assembly, resolution):
+            List {
+                ResolutionView(viewModel: viewModelFactory.resolutionViewModel(resolution))
+            }
+            .navigationTitle(assembly.textDescription)
+            .navigationBarTitleDisplayMode(.inline)
+            .environmentObject(navigation)
         }
     }
 }

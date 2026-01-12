@@ -128,9 +128,11 @@ struct IssuesView: View {
                 .presentationDetents([.large])
             }
             .fullScreenCover(isPresented: $showsWorldAssembly, content: {
-                WorldAssemblyView(
-                    viewModel: viewModelFactory.worldAssemblyViewModel
-                )
+                Wrapped {
+                    WorldAssemblyView(
+                        viewModel: viewModelFactory.worldAssemblyViewModel
+                    )
+                }
             })
             .background(background)
             .toolbar(.hidden)

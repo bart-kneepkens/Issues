@@ -14,7 +14,7 @@ struct ResolutionView: View {
     @State private var showingProposerSheet = false
     @State private var selectedLinkType: WorldAssemblyResolutionTextSheet.LinkType?
     
-    @Binding var navigationPath: NavigationPath
+    @EnvironmentObject var navigation: Navigation
     
     private var resolution: Resolution {
         self.viewModel.resolution
@@ -37,7 +37,9 @@ struct ResolutionView: View {
         PlainListRow(
             name: "Proposed by",
             value: resolution.proposedBy,
-            action: { navigationPath.append(WorldAssemblyNavigationDestination.link(.nation(name: resolution.proposedBy ))) }
+            action: {
+                navigation.push(.nation(name: resolution.proposedBy))
+            }
         )
         .sheet(isPresented: $showingProposerSheet) {
             Wrapped {
@@ -77,8 +79,7 @@ struct ResolutionView: View {
                     isPresented: $showingResolutionTextSheet,
                     onDismiss: {
                         if let preparedLinkType = viewModel.preparedLinkType {
-                            navigationPath.append(WorldAssemblyNavigationDestination.link(preparedLinkType))
-                            viewModel.preparedLinkType = nil
+                            navigation.push(.link(preparedLinkType))
                         }
                     },
                     content: {
@@ -87,6 +88,7 @@ struct ResolutionView: View {
                                 viewModel.preparedLinkType = link
                                 self.showingResolutionTextSheet = false
                             }
+                            .presentationDragIndicator(.visible)
                     }
                 )
             }
@@ -102,8 +104,7 @@ struct ResolutionView: View {
                     viewModel: ResolutionViewModel(
                         resolution: .filler,
                         nationDetailsProvider: MockedNationDetailsProvider()
-                    ),
-                    navigationPath: .constant(.init())
+                    )
                 )
             }
         }
