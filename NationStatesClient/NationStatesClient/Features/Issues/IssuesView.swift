@@ -166,6 +166,7 @@ struct IssuesView: View {
                         }
                     }
                     .scrollTargetLayout()
+                    .padding(.bottom)
                 }
             }
         }
@@ -218,7 +219,6 @@ struct IssuesView: View {
 
 #Preview("No new issues") {
     TabView {
-        
         IssuesView(viewModel:
                     IssuesViewModel(
                         provider: MockedIssueProvider(

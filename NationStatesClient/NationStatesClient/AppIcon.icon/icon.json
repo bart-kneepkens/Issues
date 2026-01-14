@@ -1,9 +1,6 @@
 {
   "fill" : {
-    "linear-gradient" : [
-      "display-p3:0.97647,0.96863,0.96078,1.00000",
-      "extended-srgb:0.00000,0.50200,0.00000,1.00000"
-    ],
+    "automatic-gradient" : "extended-srgb:0.00000,0.50200,0.00000,1.00000",
     "orientation" : {
       "start" : {
         "x" : 0.5,
@@ -21,33 +18,120 @@
       "layers" : [
         {
           "fill" : {
-            "automatic-gradient" : "display-p3:0.00000,0.00000,0.00000,1.00000",
-            "orientation" : {
-              "start" : {
-                "x" : 0.5,
-                "y" : 1
-              },
-              "stop" : {
-                "x" : 0.5,
-                "y" : 0.05035013355372539
-              }
-            }
+            "solid" : "display-p3:0.00000,0.00000,0.00000,1.00000"
+          },
+          "hidden" : false,
+          "image-name" : "Image 4.png",
+          "name" : "Image 4",
+          "opacity" : 1,
+          "position" : {
+            "scale" : 0.6,
+            "translation-in-points" : [
+              179.43094632111854,
+              171.22021662453835
+            ]
+          }
+        }
+      ],
+      "name" : "Check",
+      "opacity" : 1,
+      "shadow" : {
+        "kind" : "layer-color",
+        "opacity" : 0.5
+      },
+      "specular" : false,
+      "translucency" : {
+        "enabled" : false,
+        "value" : 1
+      }
+    },
+    {
+      "blur-material" : null,
+      "layers" : [
+        {
+          "image-name" : "Image 2.png",
+          "name" : "Image 2",
+          "opacity" : 0.25,
+          "position" : {
+            "scale" : 1.4,
+            "translation-in-points" : [
+              0,
+              65.21072107479728
+            ]
+          }
+        },
+        {
+          "glass" : true,
+          "hidden" : false,
+          "image-name" : "Image 2.png",
+          "name" : "Image 2",
+          "opacity" : 0.25,
+          "position" : {
+            "scale" : 1.4,
+            "translation-in-points" : [
+              0,
+              150.36791027817202
+            ]
+          }
+        },
+        {
+          "image-name" : "Image 2.png",
+          "name" : "Image 2",
+          "opacity" : 0.25,
+          "position" : {
+            "scale" : 1.4,
+            "translation-in-points" : [
+              0,
+              -10.95060837253294
+            ]
+          }
+        },
+        {
+          "glass" : true,
+          "image-name" : "Image 3.png",
+          "name" : "Image 3",
+          "opacity" : 0.41,
+          "position" : {
+            "scale" : 0.48,
+            "translation-in-points" : [
+              179.9190577961446,
+              198.0320603758155
+            ]
+          }
+        },
+        {
+          "image-name" : "Image 3.png",
+          "name" : "Image 3",
+          "opacity" : 0.41,
+          "position" : {
+            "scale" : 0.48,
+            "translation-in-points" : [
+              -170.89318238169807,
+              198.0320603758155
+            ]
+          }
+        },
+        {
+          "fill" : {
+            "solid" : "display-p3:0.94118,0.91373,0.88235,1.00000"
           },
           "glass" : true,
-          "hidden" : true,
-          "image-name" : "Big I solid font vector.svg",
-          "name" : "Big I solid font vector",
+          "hidden" : false,
+          "image-name" : "Image.png",
+          "name" : "Rect",
+          "opacity" : 0.62,
           "position" : {
-            "scale" : 0.74,
+            "scale" : 1,
             "translation-in-points" : [
-              0.37000000000011823,
+              0,
               0
             ]
           }
         }
       ],
       "lighting" : "individual",
-      "name" : "Group",
+      "name" : "Form",
+      "opacity" : 1,
       "shadow" : {
         "kind" : "neutral",
         "opacity" : 0.5
@@ -55,7 +139,7 @@
       "specular" : true,
       "translucency" : {
         "enabled" : false,
-        "value" : 0.5
+        "value" : 0.04
       }
     },
     {
@@ -67,12 +151,12 @@
           "hidden" : false,
           "image-name" : "Image 9.png",
           "name" : "Image 9",
-          "opacity" : 0.64,
+          "opacity" : 0.08,
           "position" : {
             "scale" : 3.17,
             "translation-in-points" : [
-              348.79631012813593,
-              90.50291027817207
+              184.67405779614455,
+              -167.45427892520274
             ]
           }
         }

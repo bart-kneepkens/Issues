@@ -23,8 +23,9 @@ struct SignInProgressView: View {
             
             Text(progressIndicator.0)
             
+            Spacer()
+            
             if let error = error {
-                Spacer()
                 ErrorView(error: error, onPress: nil)
                     .opacity(0.5)
             }
@@ -46,6 +47,6 @@ private let progressIndicators: [String: String] = [
 
 struct SignInProgressView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInProgressView(error: .timedOut)
+        SignInProgressView()
     }
 }

@@ -16,12 +16,14 @@ struct ContentView: View {
     @ViewBuilder private var contents: some View {
         if viewModel.state == ContentViewModel.ContentViewModelState.initial {
             SignInView(viewModel: viewModelFactory.signinViewModel(contentViewModel: viewModel))
-        } else if viewModel.state == ContentViewModel.ContentViewModelState.signingIn {
-            SignInProgressView(error: viewModel.error)
         } else {
             TabView {
                 Tab("Issues", systemImage: "newspaper") {
-                    IssuesView(viewModel: viewModelFactory.issuesViewModel)
+                    if viewModel.state == .signingIn {
+                        SignInProgressView(error: viewModel.error)
+                    } else {
+                        IssuesView(viewModel: viewModelFactory.issuesViewModel)
+                    }
                 }
                 
                 Tab("Nation", systemImage: "building.columns") {
@@ -42,6 +44,7 @@ struct ContentView: View {
                 }
                 .badge(moreTabBadge)
             }
+            .allowsHitTesting(viewModel.state == .signedIn)
         }
     }
     

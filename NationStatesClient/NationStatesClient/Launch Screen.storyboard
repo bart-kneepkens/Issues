@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,17 +17,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" image="forest" translatesAutoresizingMaskIntoConstraints="NO" id="ThU-xT-R8r">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                            </imageView>
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YwI-Et-z30">
+                                <rect key="frame" x="0.0" y="779" width="414" height="117"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <items>
+                                    <tabBarItem title="Issues" image="newspaper.fill" catalog="system" id="ROW-Ow-t1l">
+                                        <imageReference key="selectedImage" image="newspaper" catalog="system" symbolScale="small"/>
+                                    </tabBarItem>
+                                    <tabBarItem title="Nation" image="building.columns.fill" catalog="system" id="DHR-OY-6iW">
+                                        <imageReference key="selectedImage" image="newspaper" catalog="system" symbolScale="small"/>
+                                    </tabBarItem>
+                                    <tabBarItem title="Region" image="map.fill" catalog="system" id="qIB-yo-9hr"/>
+                                    <tabBarItem systemItem="more" id="h5v-bW-VWY"/>
+                                </items>
+                            </tabBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="ThU-xT-R8r" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Ejd-ER-ZOc"/>
-                            <constraint firstItem="ThU-xT-R8r" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="VpL-p8-bdP"/>
-                            <constraint firstAttribute="trailing" secondItem="ThU-xT-R8r" secondAttribute="trailing" id="XZ5-Bv-Ys6"/>
-                            <constraint firstAttribute="bottom" secondItem="ThU-xT-R8r" secondAttribute="bottom" id="y9Z-eT-QWU"/>
+                            <constraint firstItem="YwI-Et-z30" firstAttribute="bottom" secondItem="Ze5-6b-2t3" secondAttribute="bottom" symbolic="YES" id="9lq-3N-YFW"/>
+                            <constraint firstItem="YwI-Et-z30" firstAttribute="trailing" secondItem="Bcu-3y-fUS" secondAttribute="trailing" id="UV4-kB-5k5"/>
+                            <constraint firstItem="YwI-Et-z30" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="nSD-2r-8eK"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -35,6 +47,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="forest" width="1734" height="1156"/>
+        <image name="building.columns.fill" catalog="system" width="128" height="112"/>
+        <image name="map.fill" catalog="system" width="128" height="110"/>
+        <image name="newspaper" catalog="system" width="128" height="111"/>
+        <image name="newspaper.fill" catalog="system" width="128" height="112"/>
+        <systemColor name="systemGroupedBackgroundColor">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>
