@@ -127,8 +127,20 @@ class ViewModelFactory {
 
 extension ViewModelFactory {
     
-    var searchView: SearchView {
-        .init(regionProvider: regionDetailsProvider, nationProvider: nationDetailsProvider)
+    var nationSearchView: SearchView<Nation, NationDetailsView> {
+        SearchView { [nationDetailsProvider] query in
+            try await nationDetailsProvider.fetchNationDetails(for: query)
+        } content: { nation in
+            NationDetailsView(nation: nation)
+        }
+    }
+    
+    var regionSearchView: SearchView<Region, RegionDetailsView> {
+        SearchView { [regionDetailsProvider] query in
+            try await regionDetailsProvider.fetchRegionDetails(with: query)
+        } content: { region in
+            RegionDetailsView(region: region)
+        }
     }
 }
 

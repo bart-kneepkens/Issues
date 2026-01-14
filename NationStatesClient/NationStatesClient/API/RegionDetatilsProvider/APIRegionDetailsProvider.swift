@@ -15,12 +15,9 @@ final class APIRegionDetailsProvider: RegionDetailsProvider {
         self.authenticationContainer = container
     }
     
-    func fetchRegionDetails(with regionName: String) async -> Region? {
-        do {
-            let dto = try await NationStatesAPI.fetchRegionDetails(authenticationContainer: authenticationContainer, for: regionName)
-            return Region(from: dto)
-        } catch {
-            return nil
-        }
+    func fetchRegionDetails(with regionName: String) async throws -> Region {
+        let dto = try await NationStatesAPI.fetchRegionDetails(authenticationContainer: authenticationContainer, for: regionName)
+        guard let region = Region(from: dto) else { throw APIError.unknown(code: 1)}
+        return region
     }
 }

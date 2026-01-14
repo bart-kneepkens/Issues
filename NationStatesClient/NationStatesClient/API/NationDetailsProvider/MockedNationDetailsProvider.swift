@@ -16,7 +16,7 @@ class MockedNationDetailsProvider: NationDetailsProvider {
         self.nationDetails.send(.filler)
     }
     
-    func fetchNationDetails(for nationName: String) async throws -> Nation? {
+    func fetchNationDetails(for nationName: String) async throws -> Nation {
         .filler
     }
     

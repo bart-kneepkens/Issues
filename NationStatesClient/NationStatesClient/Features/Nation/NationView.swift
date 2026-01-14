@@ -120,7 +120,7 @@ struct NationView: View {
                 if !isPresented {
                     ToolbarItem(placement: .topBarTrailing) {
                         NavigationLink(
-                            destination: viewModelFactory.searchView,
+                            destination: viewModelFactory.nationSearchView,
                             label: {
                                 Image(systemName: "magnifyingglass")
                             }

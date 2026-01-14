@@ -8,78 +8,70 @@
 import SwiftUI
 import UIKit
 
-struct SearchView: View {
-    
-    enum SearchType {
-        case nation
-        case region
-    }
-    
+struct SearchView<Result, Content: View>: View {
+
     enum SearchState {
         case initial
-        case loading(SearchType)
-        case showingNation(Nation)
-        case showingRegion(Region)
+        case loading
+        case showing(Result)
         case error(APIError)
     }
     
-    let regionProvider: RegionDetailsProvider
-    let nationProvider: NationDetailsProvider
+    let fetch: (String) async throws -> Result
+    let content: (Result) -> Content
     
-    @State var type: SearchType = .nation
-    @FocusState var isSearchFocused: Bool
+    @FocusState
+    var isSearchFocused: Bool
     
     @StateObject
     fileprivate var debouncer: SearchQueryDebouncer = .init()
     
-    @State var searchState: SearchState = .initial
-    
     @State
-    var fetchedRegion: Region?
-    @State
-    var fetchedNation: Nation?
-    
-    
-    @State
-    var loading = false
-    @State
-    var error: APIError?
+    var searchState: SearchState = .initial
     
     var body: some View {
-        VStack {
-            if isSearchFocused {
-                if #available(iOS 26.0, *) {
-                    Picker("", selection: $type) {
-                        Text("Nation").tag(SearchType.nation)
-                        Text("Region").tag(SearchType.region)
-                    }
-                    .pickerStyle(.palette)
-                    .glassEffect()
+        contents
+            .background(
+                Color(UIColor.systemGroupedBackground)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            )
+            .searchable(text: $debouncer.query)
+            .searchFocused($isSearchFocused)
+            .disableAutocorrection(true)
+            .safeAreaPadding()
+            .onAppear {
+                isSearchFocused.toggle()
+            }
+            .onChange(of: debouncer.debouncedQuery) {
+                if debouncer.debouncedQuery == "" {
+                    searchState = .initial
+                    return
+                }
+                Task {
+                    searchState = .loading
                     
-                } else {
-                    // Fallback on earlier versions
+                    do {
+                        let result = try await fetch(debouncer.debouncedQuery)
+                        searchState = .showing(result)
+                    } catch let error as APIError {
+                        searchState = .error(error)
+                    }
                 }
             }
-            
+    }
+    
+    private var contents: some View {
+        VStack {
             Spacer()
             switch searchState {
             case .initial:
                 Text("Search away..")
             case .loading:
                 ProgressView()
-            case .showingNation(let nation):
+            case .showing(let result):
                 List {
-                    NationDetailsView(nation: nation)
-                        .onTapGesture {
-                            self.hideKeyboard()
-                        }
-                }
-            case .showingRegion(let region):
-                List {
-                    RegionDetailsView(region: region)
-                        .onTapGesture {
-                            self.hideKeyboard()
-                        }
+                    content(result)
+                        .onTapGesture { hideKeyboard() }
                 }
             case .error(let error):
                 ErrorView(error: error, onPress: nil)
@@ -89,55 +81,17 @@ struct SearchView: View {
             
            
         }
-        .background(Color(UIColor.systemGroupedBackground))
-        .searchable(text: $debouncer.query)
-        .searchFocused($isSearchFocused)
-        .disableAutocorrection(true)
-        .safeAreaPadding()
-        .onAppear {
-            isSearchFocused.toggle()
-        }
-        .onChange(of: debouncer.debouncedQuery) {
-            if debouncer.debouncedQuery == "" {
-                searchState = .initial
-                return
-            }
-            Task {
-                if type == .nation {
-                    await searchForNation(query: debouncer.debouncedQuery)
-                } else {
-                    await searchForRegion(query: debouncer.debouncedQuery)
-                }
-            }
-        }
-    }
-    
-    private func searchForNation(query: String) async {
-        searchState = .loading(.nation)
-        if let nation = try? await nationProvider.fetchNationDetails(for: debouncer.debouncedQuery) {
-            self.fetchedNation = nation
-            searchState = .showingNation(nation)
-        } else {
-            self.error = .nationNotFound
-            searchState = .error(.nationNotFound)
-        }
-    }
-    
-    private func searchForRegion(query: String) async {
-        searchState = .loading(.region)
-        if let region = await regionProvider.fetchRegionDetails(with: debouncer.debouncedQuery) {
-            self.fetchedRegion = region
-            searchState = .showingRegion(region)
-        } else {
-            self.error = .regionNotFound
-            searchState = .error(.regionNotFound)
-        }
     }
 }
 
 #if DEBUG
 #Preview {
-    SearchView(regionProvider: MockedRegionDetailsProvider(), nationProvider: MockedNationDetailsProvider())
+    SearchView<Nation, NationDetailsView> { query in
+        try await MockedNationDetailsProvider().fetchNationDetails(for: query)
+    } content: { nation in
+        NationDetailsView(nation: nation)
+    }
+
 }
 #endif
 

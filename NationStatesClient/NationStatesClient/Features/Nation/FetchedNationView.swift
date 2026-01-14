@@ -43,9 +43,8 @@ class FetchedNationViewModel: ObservableObject {
         self.state = .loading(nationName)
         
         do {
-            if let nation = try await nationDetailsProvider.fetchNationDetails(for: nationName) {
-                self.state = .loaded(nation)
-            }
+            let nation = try await nationDetailsProvider.fetchNationDetails(for: nationName)
+            self.state = .loaded(nation)
         } catch {
             self.state = .error(error.asAPIError)
         }

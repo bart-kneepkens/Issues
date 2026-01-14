@@ -28,9 +28,10 @@ class APINationDetailsProvider: NationDetailsProvider {
         }
     }
     
-    func fetchNationDetails(for nationName: String) async throws -> Nation? {
+    func fetchNationDetails(for nationName: String) async throws -> Nation {
         let dto = try await NationStatesAPI.fetchNationDetails(authenticationContainer: authenticationContainer, for: nationName)
-        return Nation(from: dto)
+        guard let nation = Nation(from: dto) else { throw APIError.unknown(code: 1)}
+        return nation
     }
     
     @MainActor

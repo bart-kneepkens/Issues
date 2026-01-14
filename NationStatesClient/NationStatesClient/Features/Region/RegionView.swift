@@ -20,13 +20,13 @@ struct RegionView: View {
             listContents
         }
         .refreshable {
-            await viewModel.refreshRegion()
+            try? await viewModel.refreshRegion()
         }
         .toolbar {
             if !isPresented {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink(
-                        destination: viewModelFactory.searchView,
+                        destination: viewModelFactory.regionSearchView,
                         label: {
                             Image(systemName: "magnifyingglass")
                         })
@@ -79,15 +79,15 @@ extension RegionView {
             defer { self.regionName = regionName }
         }
         
-        func refreshRegion() async {
+        func refreshRegion() async throws {
             guard let regionName else { return }
-            let region = await regionDetailsProvider.fetchRegionDetails(with: regionName)
+            let region = try await regionDetailsProvider.fetchRegionDetails(with: regionName)
             await updateRegion(with: region)
         }
         
         private func fetchRegion() async {
             guard region == nil else { return }
-            await refreshRegion()
+            try? await refreshRegion()
         }
         
         @MainActor

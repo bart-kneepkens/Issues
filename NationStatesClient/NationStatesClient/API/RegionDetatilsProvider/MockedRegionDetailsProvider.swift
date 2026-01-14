@@ -9,7 +9,7 @@ import Foundation
 
 #if DEBUG
 class MockedRegionDetailsProvider: RegionDetailsProvider {
-    func fetchRegionDetails(with regionName: String) async -> Region? {
+    func fetchRegionDetails(with regionName: String) async -> Region {
         Region.filler
     }
 }

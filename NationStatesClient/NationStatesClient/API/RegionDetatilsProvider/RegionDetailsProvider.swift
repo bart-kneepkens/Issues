@@ -8,5 +8,5 @@
 import Foundation
 
 protocol RegionDetailsProvider {
-    func fetchRegionDetails(with regionName: String) async -> Region?
+    func fetchRegionDetails(with regionName: String) async throws -> Region
 }
